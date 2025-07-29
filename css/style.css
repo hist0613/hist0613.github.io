@@ -335,28 +335,121 @@ footer {
 /* Publication badges */
 .pub-badge {
   display: inline-block;
-  padding: 2px 6px;
+  padding: 2px 4px;
   margin-right: 8px;
   font-size: 11px;
   font-weight: bold;
   border-radius: 3px;
   text-transform: uppercase;
   color: white;
-  vertical-align: middle;
+  vertical-align: top;
+  min-width: 20px;
+  text-align: center;
+  position: absolute;
+  left: 0;
 }
 
 .badge-journal {
-  background-color: #2e7d32; /* Green */
+  background-color: #558b5a; /* Muted Green */
 }
 
 .badge-conference {
-  background-color: #1976d2; /* Blue */
+  background-color: #4a90a4; /* Muted Blue */
 }
 
 .badge-workshop {
-  background-color: #f57c00; /* Orange */
+  background-color: #c4873a; /* Muted Orange */
 }
 
 .badge-arxiv {
-  background-color: #d32f2f; /* Red */
+  background-color: #b85450; /* Muted Red */
+}
+
+/* Publication list styling */
+.sparse-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sparse-list li {
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 35px;
+}
+
+/* Publication filter buttons */
+.filter-btn {
+  display: inline-block;
+  padding: 3px 6px;
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: bold;
+  border: 2px solid;
+  border-radius: 3px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  vertical-align: middle;
+  user-select: none;
+}
+
+.filter-btn:hover {
+  opacity: 0.7;
+  transform: scale(1.05);
+}
+
+.filter-btn:not(.active) {
+  opacity: 0.4;
+}
+
+.filter-btn:not(.active):hover {
+  opacity: 0.6;
+}
+
+.filter-btn.journal {
+  color: #558b5a;
+  border-color: #558b5a;
+}
+
+.filter-btn.conference {
+  color: #4a90a4;
+  border-color: #4a90a4;
+}
+
+.filter-btn.workshop {
+  color: #c4873a;
+  border-color: #c4873a;
+}
+
+.filter-btn.arxiv {
+  color: #b85450;
+  border-color: #b85450;
+}
+
+.filter-btn.active.journal {
+  background-color: #558b5a;
+  color: white;
+}
+
+.filter-btn.active.conference {
+  background-color: #4a90a4;
+  color: white;
+}
+
+.filter-btn.active.workshop {
+  background-color: #c4873a;
+  color: white;
+}
+
+.filter-btn.active.arxiv {
+  background-color: #b85450;
+  color: white;
+}
+
+.pub-item {
+  transition: opacity 0.3s ease;
+}
+
+.pub-item.hidden {
+  display: none;
 }
