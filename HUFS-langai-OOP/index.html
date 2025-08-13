@@ -14,7 +14,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link href="../css/github-light.css" rel="stylesheet">
   <link href="../css/style.css" rel="stylesheet">
-  
+
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -22,7 +22,7 @@
       color: #2c3e50;
       background-color: #f8f9fa;
     }
-    
+
     .header-section {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
@@ -30,7 +30,7 @@
       text-align: center;
       border-bottom: 3px solid #5a67d8;
     }
-    
+
     .header-section h1 {
       font-size: 2.8rem;
       font-weight: 700;
@@ -38,19 +38,19 @@
       letter-spacing: -0.5px;
       color: white;
     }
-    
+
     .header-section h2 {
       font-size: 1.2rem;
       font-weight: 400;
       margin-bottom: 15px;
       color: #e2e8f0;
     }
-    
+
     .header-section .university {
       font-size: 1rem;
       opacity: 0.9;
     }
-    
+
     .nav-pills .nav-link {
       color: #495057;
       border-radius: 25px;
@@ -58,16 +58,16 @@
       padding: 10px 20px;
       transition: all 0.3s;
     }
-    
+
     .nav-pills .nav-link.active {
       background-color: #667eea;
       border-color: #667eea;
     }
-    
+
     .nav-pills .nav-link:hover {
       background-color: #f8f9fa;
     }
-    
+
     .course-card {
       background: white;
       border-radius: 10px;
@@ -76,7 +76,7 @@
       margin-bottom: 30px;
       border-left: 4px solid #667eea;
     }
-    
+
     .course-objectives {
       background: #f8f9fa;
       border-radius: 8px;
@@ -84,17 +84,17 @@
       margin: 20px 0;
       border: 1px solid #e9ecef;
     }
-    
+
     .course-objectives h4 {
       color: #495057;
       margin-bottom: 15px;
     }
-    
+
     .course-objectives ul li {
       margin-bottom: 8px;
       padding-left: 10px;
     }
-    
+
     .schedule-table {
       background: white;
       border-radius: 10px;
@@ -102,7 +102,7 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       border: 1px solid #dee2e6;
     }
-    
+
     .schedule-table th {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
@@ -111,14 +111,14 @@
       text-align: left;
       border-bottom: 2px solid #5a67d8;
     }
-    
+
     .schedule-table td {
       padding: 18px 15px;
       border-bottom: 1px solid #e9ecef;
       vertical-align: middle;
       line-height: 1.5;
     }
-    
+
     .week-number {
       background: #667eea;
       color: white;
@@ -130,7 +130,7 @@
       min-width: 60px;
       text-align: center;
     }
-    
+
     .phase-label {
       background: #e2e8f0;
       color: #4a5568;
@@ -141,11 +141,22 @@
       display: inline-block;
       margin-top: 4px;
     }
-    
-    .phase-basic { background: #fed7d7; color: #c53030; }
-    .phase-intermediate { background: #feebc8; color: #dd6b20; }
-    .phase-advanced { background: #c6f6d5; color: #38a169; }
-    
+
+    .phase-basic {
+      background: #fed7d7;
+      color: #c53030;
+    }
+
+    .phase-intermediate {
+      background: #feebc8;
+      color: #dd6b20;
+    }
+
+    .phase-advanced {
+      background: #c6f6d5;
+      color: #38a169;
+    }
+
     .resource-link {
       display: inline-block;
       margin: 3px;
@@ -157,14 +168,14 @@
       font-size: 0.85rem;
       transition: all 0.3s;
     }
-    
+
     .resource-link:hover {
       background: #5a67d8;
       color: white;
       text-decoration: none;
       transform: translateY(-1px);
     }
-    
+
     .evaluation-section {
       background: white;
       border-radius: 10px;
@@ -172,7 +183,7 @@
       padding: 30px;
       margin: 30px 0;
     }
-    
+
     .evaluation-percentage {
       background: #667eea;
       color: white;
@@ -181,7 +192,7 @@
       font-weight: 500;
       font-size: 0.85rem;
     }
-    
+
     .resources-section {
       background: white;
       border-radius: 10px;
@@ -189,7 +200,7 @@
       padding: 30px;
       margin: 30px 0;
     }
-    
+
     .announcement-box {
       background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
       border-radius: 10px;
@@ -197,7 +208,7 @@
       margin: 30px 0;
       color: white;
     }
-    
+
     .section-title {
       color: #2c3e50;
       font-weight: 600;
@@ -206,7 +217,7 @@
       border-bottom: 2px solid #667eea;
       font-size: 1.4rem;
     }
-    
+
     .quick-links {
       display: flex;
       justify-content: center;
@@ -214,7 +225,7 @@
       gap: 15px;
       margin: 30px 0;
     }
-    
+
     .quick-link {
       background: #667eea;
       color: white;
@@ -226,7 +237,7 @@
       transition: all 0.3s;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    
+
     .quick-link:hover {
       background: #5a67d8;
       color: white;
@@ -234,7 +245,7 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
-    
+
     .footer-section {
       background: #2c3e50;
       color: white;
@@ -242,16 +253,16 @@
       text-align: center;
       margin-top: 60px;
     }
-    
+
     .footer-section a {
       color: #667eea;
       text-decoration: none;
     }
-    
+
     .footer-section a:hover {
       color: #5a67d8;
     }
-    
+
     .code-highlight {
       background: #f7fafc;
       border: 1px solid #e2e8f0;
@@ -289,10 +300,10 @@
     <div id="overview" class="course-card">
       <h3 class="section-title"><i class="fas fa-graduation-cap"></i> 강의 개요</h3>
       <p class="lead">
-        Python 기초부터 시작하여 객체지향프로그래밍의 핵심 개념을 체계적으로 학습합니다. 
+        Python 기초부터 시작하여 객체지향프로그래밍의 핵심 개념을 체계적으로 학습합니다.
         현대 소프트웨어 개발에서 널리 사용되는 OOP 패턴과 실무 사례를 중심으로 진행합니다.
       </p>
-      
+
       <div class="course-objectives">
         <h4><i class="fas fa-bullseye"></i> 학습 목표</h4>
         <ul>
@@ -329,7 +340,7 @@
     <!-- Course Information -->
     <div id="instructor" class="course-card">
       <h3 class="section-title"><i class="fas fa-info-circle"></i> 과목 정보</h3>
-      
+
       <div class="row">
         <div class="col-md-6">
           <h5><i class="fas fa-id-card text-primary"></i> 과목 기본정보</h5>
@@ -574,7 +585,7 @@
     <!-- Evaluation System -->
     <div id="evaluation" class="evaluation-section">
       <h3 class="section-title"><i class="fas fa-chart-pie"></i> 평가 체계</h3>
-      
+
       <div class="row">
         <div class="col-md-6">
           <table class="table table-sm">
@@ -613,12 +624,12 @@
     <!-- Learning Resources -->
     <div id="resources" class="resources-section">
       <h3 class="section-title"><i class="fas fa-code"></i> 학습 자료 및 도구</h3>
-      
+
       <div class="alert alert-info">
-        <i class="fas fa-info-circle"></i> <strong>학습 자료:</strong> 별도의 지정 교재는 없습니다. 
+        <i class="fas fa-info-circle"></i> <strong>학습 자료:</strong> 별도의 지정 교재는 없습니다.
         강의자료와 온라인 리소스를 활용하여 학습을 진행합니다.
       </div>
-      
+
       <div class="row">
         <div class="col-md-6">
           <h5><i class="fas fa-tools text-warning"></i> 개발 환경 설정</h5>
@@ -628,7 +639,7 @@
             # Google Colab 사용 가능
           </div>
         </div>
-        
+
         <div class="col-md-6">
           <h5><i class="fas fa-graduation-cap text-success"></i> 학습 방식</h5>
           <ul class="list-unstyled">
@@ -645,7 +656,7 @@
     <div class="announcement-box">
       <h4><i class="fas fa-bullhorn text-white"></i> 공지사항</h4>
       <ul class="mb-0">
-        <li><i class="fas fa-code text-white me-2"></i>모든 실습은 Python 3.9 이상 환경에서 진행됩니다.</li>
+        <li><i class="fas fa-code text-white me-2"></i>모든 실습은 Python 3.11 이상 환경에서 진행됩니다.</li>
         <li><i class="fas fa-laptop text-white me-2"></i>개인 노트북 지참 필수 (개발 환경 설치 필요).</li>
         <li><i class="fas fa-github text-white me-2"></i>GitHub을 통한 코드 제출 및 버전 관리를 진행합니다.</li>
         <li><i class="fas fa-chalkboard-teacher text-white me-2"></i>두 명의 교수가 함께하는 팀티칭으로 진행됩니다.</li>
