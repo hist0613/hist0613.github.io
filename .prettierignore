@@ -1,0 +1,4 @@
+# Do not format HTML files with Prettier
+**/*.html
+
+
