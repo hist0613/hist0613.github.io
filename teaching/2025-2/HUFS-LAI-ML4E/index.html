@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>영어분석을위한기계학습 - 한국외국어대학교</title>
+  <meta name="description" content="한국외국어대학교 영어분석을위한기계학습 강의 페이지">
+  <meta name="robots" content="noindex, nofollow">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="../css/github-light.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
+  
+  <style>
+    .phase-label {
+      background: #e2e8f0;
+      color: #4a5568;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .phase-basic {
+      background: #fed7d7;
+      color: #c53030;
+    }
+
+    .phase-intermediate {
+      background: #feebc8;
+      color: #dd6b20;
+    }
+
+    .phase-advanced {
+      background: #c6f6d5;
+      color: #38a169;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #2c3e50;
+      background-color: #f8f9fa;
+    }
+    
+    .header-section {
+      background: linear-gradient(135deg, #38b2ac 0%, #4a5568 100%);
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+      border-bottom: 3px solid #319795;
+    }
+    
+    .header-section h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+      color: white;
+    }
+    
+    .header-section h2 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 15px;
+      color: #e2e8f0;
+    }
+    
+    .header-section .university {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    
+    .nav-pills .nav-link {
+      color: #495057;
+      border-radius: 25px;
+      margin: 0 5px;
+      padding: 10px 20px;
+      transition: all 0.3s;
+    }
+    
+    .nav-pills .nav-link.active {
+      background-color: #38b2ac;
+      border-color: #38b2ac;
+    }
+    
+    .nav-pills .nav-link:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .course-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin-bottom: 30px;
+      border-left: 4px solid #38b2ac;
+    }
+    
+    .course-objectives {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      border: 1px solid #e9ecef;
+    }
+    
+    .course-objectives h4 {
+      color: #495057;
+      margin-bottom: 15px;
+    }
+    
+    .course-objectives ul li {
+      margin-bottom: 8px;
+      padding-left: 10px;
+    }
+    
+    .instructor-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .instructor-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 20px;
+      border: 3px solid #38b2ac;
+    }
+    
+    .schedule-table {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .schedule-table {
+      border: 1px solid #dee2e6;
+    }
+    
+    .schedule-table th {
+      background: linear-gradient(135deg, #38b2ac 0%, #4a5568 100%);
+      color: white;
+      padding: 15px;
+      font-weight: 600;
+      text-align: left;
+      border-bottom: 2px solid #319795;
+    }
+    
+    .schedule-table td {
+      padding: 18px 15px;
+      border-bottom: 1px solid #e9ecef;
+      vertical-align: middle;
+      line-height: 1.5;
+    }
+    
+    .week-number {
+      background: #38b2ac;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      display: inline-block;
+      min-width: 60px;
+      text-align: center;
+    }
+    
+    .resource-link {
+      display: inline-block;
+      margin: 3px;
+      padding: 6px 12px;
+      background: #38b2ac;
+      color: white;
+      border-radius: 15px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+    
+    .resource-link:hover {
+      background: #319795;
+      color: white;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+    
+    .evaluation-section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin: 30px 0;
+    }
+    
+    .evaluation-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+    
+    .evaluation-item:last-child {
+      border-bottom: none;
+    }
+    
+    .evaluation-percentage {
+      background: #38b2ac;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+    
+    .grade-scale {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    
+    .grade-scale .row {
+      text-align: center;
+    }
+    
+    .grade-item {
+      background: white;
+      border-radius: 8px;
+      padding: 15px 10px;
+      margin: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .grade-letter {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #38b2ac;
+    }
+    
+    .resources-section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin: 30px 0;
+    }
+    
+    .announcement-box {
+      background: linear-gradient(135deg, #38b2ac 0%, #4299e1 100%);
+      border-radius: 10px;
+      padding: 25px;
+      margin: 30px 0;
+      color: white;
+    }
+    
+    .section-title {
+      color: #2c3e50;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #38b2ac;
+      font-size: 1.4rem;
+    }
+    
+    .quick-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 30px 0;
+    }
+    
+    .quick-link {
+      background: #38b2ac;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .quick-link:hover {
+      background: #319795;
+      color: white;
+      text-decoration: none;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+    
+    .footer-section {
+      background: #2c3e50;
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+      margin-top: 60px;
+    }
+    
+    .footer-section a {
+      color: #38b2ac;
+      text-decoration: none;
+    }
+    
+    .footer-section a:hover {
+      color: #319795;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header-section">
+    <div class="container">
+      <h1>영어분석을위한기계학습</h1>
+      <h2>Machine Learning for English Analysis</h2>
+      <p class="university"><strong>한국외국어대학교 Language & AI 융합학부</strong></p>
+      <p class="university">Hankuk University of Foreign Studies</p>
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <!-- Quick Links -->
+    <div class="quick-links">
+      <a href="#overview" class="quick-link"><i class="fas fa-graduation-cap"></i> 강의 개요</a>
+      <a href="#instructor" class="quick-link"><i class="fas fa-info-circle"></i> 과목 정보</a>
+      <a href="#schedule" class="quick-link"><i class="fas fa-calendar-alt"></i> 강의 계획</a>
+      <a href="#evaluation" class="quick-link"><i class="fas fa-chart-pie"></i> 평가 체계</a>
+      <a href="#resources" class="quick-link"><i class="fas fa-laptop-code"></i> 참고 자료</a>
+    </div>
+
+    <!-- Course Overview -->
+    <div id="overview" class="course-card">
+      <h3 class="section-title"><i class="fas fa-graduation-cap"></i> 강의 개요</h3>
+      <p class="lead">
+        영어 텍스트 분석에 특화된 기계학습 기법을 학습합니다. 자연어처리의 기초부터 최신 트랜스포머 모델까지,
+        영어 데이터를 활용한 실무 중심의 교육을 제공합니다.
+      </p>
+      
+      <div class="course-objectives">
+        <h4><i class="fas fa-bullseye"></i> 학습 목표</h4>
+        <ul>
+          <li><i class="fas fa-check text-success me-2"></i>영어 텍스트 전처리 및 특성 추출 기법 습득</li>
+          <li><i class="fas fa-check text-success me-2"></i>자연어처리를 위한 기계학습 알고리즘 이해</li>
+          <li><i class="fas fa-check text-success me-2"></i>영어 텍스트 분류, 감정 분석, 기계 번역 모델 구현</li>
+          <li><i class="fas fa-check text-success me-2"></i>트랜스포머 기반 모델(BERT, GPT) 활용법 학습</li>
+        </ul>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <h5><i class="fas fa-info-circle text-primary"></i> 강의 정보</h5>
+          <ul class="list-unstyled">
+            <li><strong>강의 시간:</strong> 화요일 3,4,5교시 (11:00-14:00)</li>
+            <li><strong>강의실:</strong> 교수학습개발원 108호 (PC실습실)</li>
+            <li><strong>학점:</strong> 3학점</li>
+            <li><strong>수강권장 사전지식:</strong> Python 기초, 기계학습의이해, 영어 독해</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h5><i class="fas fa-tools text-primary"></i> 사용 도구</h5>
+          <ul class="list-unstyled">
+            <li><strong>언어:</strong> Python 3.11+</li>
+            <li><strong>라이브러리:</strong> NLTK, spaCy, Transformers</li>
+            <li><strong>딥러닝:</strong> PyTorch, Hugging Face</li>
+            <li><strong>환경:</strong> Google Colab, Jupyter Notebook</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Information -->
+    <div id="instructor" class="course-card">
+      <h3 class="section-title"><i class="fas fa-info-circle"></i> 과목 정보</h3>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <h5><i class="fas fa-id-card text-primary"></i> 과목 기본정보</h5>
+          <ul class="list-unstyled">
+            <li><strong>과목명:</strong> 영어분석을위한기계학습</li>
+            <li><strong>과목코드:</strong> M03111201</li>
+            <li><strong>개설학과:</strong> Language & AI 융합학부</li>
+            <li><strong>담당교수:</strong> 최승택</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h5><i class="fas fa-graduation-cap text-primary"></i> 핵심역량</h5>
+          <ul class="list-unstyled">
+            <li><i class="fas fa-check text-success me-2"></i>언어 분석 능력</li>
+            <li><i class="fas fa-check text-success me-2"></i>기술 활용 능력</li>
+            <li><i class="fas fa-check text-success me-2"></i>창의적 사고 능력</li>
+            <li><i class="fas fa-check text-success me-2"></i>데이터 분석 능력</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Schedule -->
+    <div id="schedule" class="course-card">
+      <h3 class="section-title"><i class="fas fa-calendar-alt"></i> 강의 계획</h3>
+      <table class="schedule-table table">
+        <thead>
+          <tr>
+            <th style="width: 12%;">주차</th>
+            <th style="width: 25%;">주제</th>
+            <th style="width: 43%;">세부 내용</th>
+            <th style="width: 20%;">자료</th>
+          </tr>
+        </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="week-number">1주차</span><br>
+            <small class="text-muted">2025.09.02</small><br>
+            <span class="phase-label phase-basic">기초</span>
+          </td>
+          <td>Introduction to NLP</td>
+          <td>자연어처리 개요, 영어 텍스트 특징</td>
+          <td>
+            <a href="#" class="resource-link">강의자료</a>
+            <a href="#" class="resource-link">실습코드</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">2주차</span><br>
+            <small class="text-muted">2025.09.09</small><br>
+            <span class="phase-label phase-basic">전처리</span>
+          </td>
+          <td>Text Preprocessing</td>
+          <td>Tokenization, Stemming, Lemmatization</td>
+          <td>
+            <a href="#" class="resource-link">강의자료</a>
+            <a href="#" class="resource-link">실습코드</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">3주차</span><br>
+            <small class="text-muted">2025.09.16</small><br>
+            <span class="phase-label phase-basic">특성추출</span>
+          </td>
+          <td>Feature Extraction</td>
+          <td>Bag-of-Words, TF-IDF, N-grams</td>
+          <td>
+            <a href="#" class="resource-link">강의자료</a>
+            <a href="#" class="resource-link">실습코드</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">4주차</span><br>
+            <small class="text-muted">2025.09.23</small><br>
+            <span class="phase-label phase-intermediate">분류</span>
+          </td>
+          <td>Text Classification</td>
+          <td>영어 텍스트 분류, 스팸 필터링</td>
+          <td>
+            <a href="#" class="resource-link">강의자료</a>
+            <a href="#" class="resource-link">실습코드</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">5주차</span><br>
+            <small class="text-muted">2025.09.30</small><br>
+            <span class="phase-label phase-intermediate">감정분석</span>
+          </td>
+          <td>Sentiment Analysis</td>
+          <td>영어 리뷰 감정 분석, 극성 분류</td>
+          <td>
+            <a href="#" class="resource-link">강의자료</a>
+            <a href="#" class="resource-link">실습코드</a>
+          </td>
+        </tr>
+        <tr style="background-color: #f8f9fa; color: #6c757d;">
+          <td>
+            <span class="week-number" style="background: #6c757d;">6주차</span><br>
+            <small class="text-muted">2025.10.07</small><br>
+            <span class="phase-label">휴강</span>
+          </td>
+          <td>추석 연휴로 인한 휴강</td>
+          <td>추석 연휴 (10.6~10.9)</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">7주차</span><br>
+            <small class="text-muted">2025.10.14</small><br>
+            <span class="phase-label phase-intermediate">워드임베딩</span>
+          </td>
+          <td>Word Embeddings</td>
+          <td>Word2Vec, GloVe, FastText</td>
+          <td>
+            <a href="#" class="resource-link">강의자료</a>
+            <a href="#" class="resource-link">실습코드</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">8주차</span><br>
+            <small class="text-muted">2025.10.21</small><br>
+            <span class="phase-label">중간고사</span>
+          </td>
+          <td>중간고사</td>
+          <td>1-7주차 내용 평가 (중간고사 기간: 10.20~10.24)</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">9주차</span><br>
+            <small class="text-muted">2025.10.28</small><br>
+            <span class="phase-label phase-intermediate">시퀀스모델</span>
+          </td>
+          <td>Sequence Models</td>
+          <td>RNN, LSTM for English Text</td>
+          <td>
+            <a href="#" class="resource-link">강의자료</a>
+            <a href="#" class="resource-link">실습코드</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">10주차</span><br>
+            <small class="text-muted">2025.11.04</small><br>
+            <span class="phase-label phase-advanced">어텐션</span>
+          </td>
+          <td>Attention Mechanism</td>
+          <td>Attention, Seq2Seq 모델</td>
+          <td>
+            <a href="#" class="resource-link">강의자료</a>
+            <a href="#" class="resource-link">실습코드</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">11주차</span><br>
+            <small class="text-muted">2025.11.11</small><br>
+            <span class="phase-label phase-advanced">트랜스포머</span>
+          </td>
+          <td>Transformer Models</td>
+          <td>Transformer Architecture 이해</td>
+          <td>
+            <a href="#" class="resource-link">강의자료</a>
+            <a href="#" class="resource-link">실습코드</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">12주차</span><br>
+            <small class="text-muted">2025.11.18</small><br>
+            <span class="phase-label phase-advanced">BERT</span>
+          </td>
+          <td>BERT and Applications</td>
+          <td>BERT 모델 활용, Fine-tuning</td>
+          <td>
+            <a href="#" class="resource-link">강의자료</a>
+            <a href="#" class="resource-link">실습코드</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">13주차</span><br>
+            <small class="text-muted">2025.11.25</small><br>
+            <span class="phase-label phase-advanced">GPT</span>
+          </td>
+          <td>Generative Models</td>
+          <td>GPT, 영어 텍스트 생성</td>
+          <td>
+            <a href="#" class="resource-link">강의자료</a>
+            <a href="#" class="resource-link">실습코드</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">14주차</span><br>
+            <small class="text-muted">2025.12.02</small><br>
+            <span class="phase-label phase-advanced">번역</span>
+          </td>
+          <td>Machine Translation</td>
+          <td>영어-한국어 기계번역</td>
+          <td>
+            <a href="#" class="resource-link">강의자료</a>
+            <a href="#" class="resource-link">실습코드</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">15주차</span><br>
+            <small class="text-muted">2025.12.09</small><br>
+            <span class="phase-label phase-advanced">프로젝트</span>
+          </td>
+          <td>Final Projects</td>
+          <td>최종 프로젝트 발표</td>
+          <td>
+            <a href="#" class="resource-link">프로젝트</a>
+          </td>
+        </tr>
+        <tr style="border-bottom: 4px solid #3498db; box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);">
+          <td>
+            <span class="week-number">16주차</span><br>
+            <small class="text-muted">2025.12.16</small><br>
+            <span class="phase-label">기말고사</span>
+          </td>
+          <td>기말고사</td>
+          <td>전체 내용 종합 평가 (기말고사 기간: 12.15~12.19)</td>
+          <td>-</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Evaluation System -->
+    <div id="evaluation" class="evaluation-section">
+      <h3 class="section-title"><i class="fas fa-chart-pie"></i> 평가 체계</h3>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <td><i class="fas fa-file-alt text-primary me-2"></i>중간고사</td>
+                <td class="text-end"><span class="evaluation-percentage">30%</span></td>
+              </tr>
+              <tr>
+                <td><i class="fas fa-file-alt text-primary me-2"></i>기말고사</td>
+                <td class="text-end"><span class="evaluation-percentage">30%</span></td>
+              </tr>
+              <tr>
+                <td><i class="fas fa-user-check text-primary me-2"></i>출석 및 참여</td>
+                <td class="text-end"><span class="evaluation-percentage">10%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <td><i class="fas fa-code text-primary me-2"></i>실습 과제</td>
+                <td class="text-end"><span class="evaluation-percentage">20%</span></td>
+              </tr>
+              <tr>
+                <td><i class="fas fa-project-diagram text-primary me-2"></i>최종 프로젝트</td>
+                <td class="text-end"><span class="evaluation-percentage">10%</span></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-center text-muted"><small>총합 100%</small></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+    </div>
+
+    <!-- Learning Resources -->
+    <div id="resources" class="resources-section">
+      <h3 class="section-title"><i class="fas fa-laptop-code"></i> 학습 자료 및 도구</h3>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <h5><i class="fas fa-book text-success"></i> 교재</h5>
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> 별도의 지정 교재는 없습니다. 강의자료와 온라인 리소스를 활용합니다.
+          </div>
+          
+          <h5><i class="fas fa-tools text-warning"></i> 필수 소프트웨어</h5>
+          <ul class="list-unstyled">
+            <li><i class="fas fa-arrow-right text-muted me-2"></i>Python 3.11 이상</li>
+            <li><i class="fas fa-arrow-right text-muted me-2"></i>NLTK, spaCy, Transformers 라이브러리</li>
+            <li><i class="fas fa-arrow-right text-muted me-2"></i>Hugging Face Datasets</li>
+          </ul>
+        </div>
+        
+        <div class="col-md-6">
+          <h5><i class="fas fa-globe text-primary"></i> 추천 온라인 자료</h5>
+          <div class="alert alert-secondary">
+            <i class="fas fa-info-circle"></i> 강의 진행에 따라 유용한 영어 코퍼스와 데이터셋을 소개할 예정입니다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Announcements -->
+    <div class="announcement-box">
+      <h4><i class="fas fa-bullhorn text-warning"></i> 공지사항</h4>
+      <ul class="mb-0">
+        <li><i class="fas fa-language text-info me-2"></i>수업은 한국어로 진행되지만, 영어 텍스트 데이터를 다룹니다.</li>
+        <li><i class="fas fa-laptop text-info me-2"></i>개인 노트북 지참을 권장합니다 (Google Colab 사용 가능).</li>
+        <li><i class="fas fa-upload text-info me-2"></i>과제 제출은 온라인 학습관리시스템을 통해 진행됩니다.</li>
+        <li><i class="fas fa-project-diagram text-info me-2"></i>최종 프로젝트는 영어 텍스트 분석 주제로 자유롭게 선택할 수 있습니다.</li>
+        <li><i class="fas fa-comments text-info me-2"></i>질문이나 토론은 수업 시간 또는 이메일을 통해 환영합니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-section">
+    <div class="container">
+      <p>&copy; 2025 한국외국어대학교 Language & AI 융합학부 영어분석을위한기계학습 강의</p>
+      <p><a href="../../../index.html"><i class="fas fa-home"></i> 메인 페이지로 돌아가기</a></p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

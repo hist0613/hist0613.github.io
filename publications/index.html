@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Seungtaek Choi - Publications</title>
+  <meta name="description" content="Seungtaek Choi's publications">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <link href="../css/github-light.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="nav-links">
+      <a href="../index.html" class="nav-link">About</a>
+      <a href="../publications/" class="nav-link active">Publications</a>
+      <a href="../teaching/" class="nav-link">Teaching</a>
+    </div>
+  </nav>
+
+  <div class="content">
+    <h1>Publications</h1>
+    
+    <div style="margin-bottom: 25px;">
+      <div style="display: flex; justify-content: space-between; gap: 30px;">
+        <div style="flex: 1; text-align: center;">
+          <h4 style="margin-bottom: 10px; color: #666; font-size: 14px;">Publications by Year</h4>
+          <div style="width: 100%; height: 160px;">
+            <canvas id="publicationsChart"></canvas>
+          </div>
+        </div>
+        <div style="flex: 1; text-align: center;">
+          <h4 style="margin-bottom: 10px; color: #666; font-size: 14px;">Top Venues (J+C)</h4>
+          <div style="width: 100%; height: 160px;">
+            <canvas id="venuesChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Publications
+      <span class="filter-btn journal active" data-type="journal" title="Click to toggle Journal papers">J</span>
+      <span class="filter-btn conference active" data-type="conference"
+        title="Click to toggle Conference papers">C</span>
+      <span class="filter-btn workshop active" data-type="workshop" title="Click to toggle Workshop papers">W</span>
+      <span class="filter-btn arxiv active" data-type="arxiv" title="Click to toggle ArXiv/Preprint papers">A</span>
+    </h3>
+
+    <ul class="sparse-list">
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C25</span><b>Towards Fully-Automated Materials Discovery via
+          Large-Scale Synthesis Dataset and Expert-Level LLM-as-a-Judge</b> [<a
+          href="https://arxiv.org/pdf/2502.16457">PDF</a>] <br />
+        Heegyu Kim, Taeyang Jeon, <u>Seungtaek Choi</u>, Ji Hoon Hong, Dong Won Jeon, Ga-Yeon Baek, Gyeong-Won Kwak,
+        Dong-Hee Lee, Jisu Bae, Chihoon Lee, Yunseo Kim, Seon-Jin Choi, Jin-Seong Park, Sung Beom Cho, Hyunsouk
+        Cho<sup>†</sup> <br />
+        CIKM 2025 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C24</span><b>Rethinking the Training Paradigm of Discrete Token-Based
+          Multimodal LLMs: An Analysis of Text-Centric Bias</b> <br />
+        Wansik Jo, Jooyeong Na, Soyeon Hong, <u>Seungtaek Choi</u>, Hyunsouk Cho<sup>†</sup> <br />
+        CIKM 2025 <br />
+      </li>
+      <li class="pub-item journal">
+        <span class="pub-badge badge-journal">J4</span><b>Overcoming Source Object Grounding for Semantic Image
+          Editing</b> <br />
+        Yeonjoon Jung, <u>Seungtaek Choi</u>, Seung-won Hwang<sup>&#8224;</sup> <br />
+        TACL 2025 <br />
+      </li>
+      <li class="pub-item arxiv">
+        <span class="pub-badge badge-arxiv">A2</span><b>Trillion 7B Technical Report</b> [<a
+          href="https://arxiv.org/pdf/2504.15431">PDF</a>] <br />
+        Sungjun Han, Juyoung Suk, Suyeong An, Hyungguk Kim, Kyuseok Kim, Wonsuk Yang, <u>Seungtaek Choi</u>, Jamin Shin
+        (Trillion Labs) <br />
+        arXiv 2025 (technical report of <a
+          href="https://huggingface.co/trillionlabs/Trillion-7B-preview">Trillion-7B-preview</a>) <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C23</span><b>FLEX: Expert-level False-Less EXecution Metric for
+          Reliable Text-to-SQL Benchmark</b> [<a href="https://arxiv.org/pdf/2409.19014">PDF</a>] <br />
+        Heegyu Kim, Taeyang Jeong, Seunghwan Choi, <u>Seungtaek Choi</u>, Hyunsouk Cho<sup>&#8224;</sup> <br />
+        NAACL 2025 <br />
+      </li>
+      <li class="pub-item journal">
+        <span class="pub-badge badge-journal">J3</span><b>ScoreCL: Augmentation-Adaptive Contrastive Learning via
+          Score-Matching Function</b> [<a href="https://arxiv.org/pdf/2306.04175">PDF</a>] <br />
+        Jin-Young Kim<sup>&#8224;</sup>, Soonwoo Kwon, Hyojun Go, Yunsung Lee, <u>Seungtaek Choi</u>, Hyun-Gyoon
+        Kim<sup>&#8224;</sup> <br />
+        Machine Learning 2025 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C22</span><b>Interventional Speech Noise Injection for ASR
+          Generalizable Spoken Language Understanding</b> [<a href="https://arxiv.org/pdf/2410.15609">PDF</a>] <br />
+        Yeonjoon Jung, Jaseseong Lee, <u>Seungtaek Choi</u>, Dohyeon Lee, Minsoo Kim, Seung-won Hwang<sup>&#8224;</sup>
+        <br />
+        EMNLP 2024 <br />
+      </li>
+      <li class="pub-item arxiv">
+        <span class="pub-badge badge-arxiv">A1</span><b>Efficient and Effective Vocabulary Expansion Towards
+          Multilingual Large Language Models</b> [<a href="https://arxiv.org/pdf/2402.14714.pdf">PDF</a>] <br />
+        Seungduk Kim*, <u>Seungtaek Choi*</u>, Myeongho Jeong (* equal contribution) <br />
+        arXiv 2024 (technical report of <a href="https://huggingface.co/yanolja/EEVE-Korean-10.8B-v1.0">EEVE-Korean</a>)
+        <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C21</span><b>Multi-Architecture Multi-Expert Diffusion Models</b> [<a
+          href="https://arxiv.org/pdf/2306.04990.pdf">PDF</a>] <br />
+        Yunsung Lee*, JinYoung Kim*, Hyojun Go*, Myeongho Jeong, Shinhyeok Oh, <u>Seungtaek Choi</u><sup>&#8224;</sup>
+        (* equal contribution) <br />
+        AAAI 2024 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C20</span><b>Addressing Negative Transfer in Diffusion Models</b> [<a
+          href="https://arxiv.org/pdf/2306.00354.pdf">PDF</a>] <br />
+        Hyojun Go*, JinYoung Kim*, Yunsung Lee*, Seunghyun Lee*, Shinhyeok Oh, Hyeongdon Moon, <u>Seungtaek
+          Choi</u><sup>&#8224;</sup> (* equal contribution) <br />
+        NeurIPS 2023 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C19</span><b>Addressing Cold Start Problem for End-to-end Automatic
+          Speech Scoring</b> [<a href="https://arxiv.org/pdf/2306.14310.pdf">PDF</a>] <br />
+        Jungbae Park, <u>Seungtaek Choi</u><sup>&#8224;</sup> <br />
+        INTERSPEECH 2023 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C18</span><b>Cross Encoding As Augmentation: Towards Effective
+          Educational Text Classification</b> [<a href="https://arxiv.org/pdf/2305.18977.pdf">PDF</a>] <br />
+        Hyun Seung Lee*, <u>Seungtaek Choi*</u><sup>&#8224;</sup>, Yunsung Lee, Hyeongdon Moon, Shinhyeok Oh, Myeongho
+        Jeong, Hyojun Go, Christian Wallraven (* equal contribution) <br />
+        Findings of ACL 2023 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C17</span><b>Evaluation of Question Generation Needs More
+          References</b> [<a href="https://arxiv.org/pdf/2305.16626.pdf">PDF</a>] <br />
+        Shinhyeok Oh*, Hyojun Go*, Hyeongdon Moon, Yunsung Lee, Myeongho Jeong, Hyun Seung Lee, <u>Seungtaek
+          Choi</u><sup>&#8224;</sup> (* equal contribution) <br />
+        Findings of ACL 2023 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C16</span><b>Retrieval-augmented Instructional Video Encoding for Dense
+          Video Captioning</b> [<a href="https://aclanthology.org/2023.findings-acl.543.pdf">PDF</a>] <br />
+        Yeonjoon Jung, <u>Seungtaek Choi</u>, Seung-won Hwang<sup>&#8224;</sup>, Jihyuk Kim, Minji Seo, Minsoo Kim
+        <br />
+        Findings of ACL 2023 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C15</span><b>On Complementarity Objectives for Hybrid Retrieval</b> [<a
+          href="https://aclanthology.org/2023.acl-long.746.pdf">PDF</a>] <br />
+        Dohyeon Lee, Seung-won Hwang<sup>&#8224;</sup>, Kyungjae Lee, <u>Seungtaek Choi</u>, Sunghyun Park <br />
+        ACL 2023 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C14</span><b>Towards Practical Plug-and-Play Diffusion Models</b> [<a
+          href="https://arxiv.org/pdf/2212.05973.pdf">PDF</a>] <br />
+        Hyojun Go*, Yunsung Lee*, JinYoung Kim*, Seunghyun Lee, Myeongho Jeong, Hyun Seung Lee, <u>Seungtaek
+          Choi</u><sup>&#8224;</sup> (* equal contribution) <br />
+        CVPR 2023 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C13</span><b>Evaluating the Knowledge Dependency of Questions</b> [<a
+          href="https://aclanthology.org/2022.emnlp-main.718.pdf">PDF</a>] <br />
+        Hyeongdon Moon*, Yoonseok Yang*, Jamin Shin, Hangyeol Yu, Seunghyun Lee, Myeongho Jeong, Juneyoung Park, Minsam
+        Kim, <u>Seungtaek Choi</u><sup>&#8224;</sup> (* equal contribution) <br />
+        EMNLP 2022 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C12</span><b>Towards Compositional Generalization in Code Search</b>
+        [<a href="https://aclanthology.org/2022.emnlp-main.737.pdf">PDF</a>] <br />
+        Hojae Han, Seung-won Hwang<sup>&#8224;</sup>, Shuai Lu, Nan Duan, <u>Seungtaek Choi</u> <br />
+        EMNLP 2022 (short) <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C11</span><b>Debiasing Event Understanding for Visual Commonsense
+          Tasks</b> [<a href="https://aclanthology.org/2022.findings-acl.65.pdf">PDF</a>] <br />
+        Minji Seo*, Yeonjoon Jung*, <u>Seungtaek Choi</u>, Seung-won Hwang<sup>&#8224;</sup>, Bei Liu (* equal
+        contribution) <br />
+        Findings of ACL 2022 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C10</span><b>C<sup>2</sup>L: Causally Contrastive Learning for Robust
+          Text Classification</b> [<a href="https://ojs.aaai.org/index.php/AAAI/article/view/21296">PDF</a>] <br />
+        <u>Seungtaek Choi*</u>, Myeongho Jeong*, Hojae Han, Seung-won Hwang<sup>&#8224;</sup> (* equal contribution)
+        <br />
+        AAAI 2022 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C9</span><b>Structure-Augmented Keyphrase Generation</b> [<a
+          href="https://aclanthology.org/2021.emnlp-main.209.pdf">PDF</a>] <br />
+        Jihyuk Kim, Myeongho Jeong, <u>Seungtaek Choi</u>, Seung-won Hwang<sup>&#8224;</sup> <br />
+        EMNLP 2021 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C8</span><b>Counterfactual Generative Smoothing for Imbalanced Natural
+          Language Classification</b> [<a href="https://dl.acm.org/doi/pdf/10.1145/3459637.3482077">PDF</a>] <br />
+        Hojae Han, <u>Seungtaek Choi</u>, Myeongho Jeong, Jin-woo Park, Seung-won Hwang<sup>&#8224;</sup> <br />
+        CIKM 2021 (short) <br />
+      </li>
+      <li class="pub-item journal">
+        <span class="pub-badge badge-journal">J2</span><b>Label and Context Augmentation for Response Selection at
+          DSTC8</b> [<a href="https://ieeexplore.ieee.org/document/9420274">PDF</a>] <br />
+        Myeongho Jeong*, <u>Seungtaek Choi*</u>, Jinyoung Yeo, Seung-won Hwang<sup>&#8224;</sup> (* equal contribution)
+        <br />
+        TASLP 2021 (2nd/3rd prize at DSTC8 Track2 Sub-task1) <br />
+      </li>
+      <li class="pub-item workshop">
+        <span class="pub-badge badge-workshop">W1</span><b>Label-Efficient Training for Next Response Selection</b> [<a
+          href="https://www.aclweb.org/anthology/2020.sustainlp-1.22.pdf">PDF</a>] <br />
+        <u>Seungtaek Choi*</u>, Myeongho Jeong*, Jinyoung Yeo, Seung-won Hwang<sup>&#8224;</sup> (* equal contribution)
+        <br />
+        EMNLP 2020 (workshop, SustaiNLP)<br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C7</span><b>Retrieval-Augmented Controllable Review Generation</b> [<a
+          href="https://www.aclweb.org/anthology/2020.coling-main.207.pdf">PDF</a>] <br />
+        Jihyeok Kim, <u>Seungtaek Choi</u>, Reinald Kim Amplayo, Seung-won Hwang<sup>&#8224;</sup> <br />
+        COLING 2020 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C6</span><b>Less is More: Attention Supervision with Counterfactuals
+          for Text Classification</b> [<a href="https://www.aclweb.org/anthology/2020.emnlp-main.543.pdf">PDF</a>]
+        <br />
+        <u>Seungtaek Choi</u>, Haeju Park, Jinyoung Yeo, Seung-won Hwang<sup>&#8224;</sup> <br />
+        EMNLP 2020 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C5</span><b>Conditional Response Augmentation for Dialogue using
+          Knowledge Distillation</b> [<a href="http://www.interspeech2020.org/uploadfile/pdf/Thu-1-9-2.pdf">PDF</a>]
+        <br />
+        Myeongho Jeong*, <u>Seungtaek Choi*</u>, Hojae Han, Kyungho Kim, Seung-won Hwang<sup>&#8224;</sup> (* equal
+        contribution) <br />
+        INTERSPEECH 2020<br />
+      </li>
+      <li class="pub-item journal">
+        <span class="pub-badge badge-journal">J1</span><b>Meta-Supervision for Attention using Counterfactual
+          Estimation</b> [<a href="https://link.springer.com/content/pdf/10.1007/s41019-020-00119-z.pdf">PDF</a>] <br />
+        <u>Seungtaek Choi</u>, Haeju Park, Seung-won Hwang<sup>&#8224;</sup> <br />
+        DSEJ 2020 (Highly Rated ICDM Issue Invitation) <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C4</span><b>Counterfactual Attention Supervision</b> [<a
+          href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8970893" class="link-in-list">PDF</a>] <br />
+        <u>Seungtaek Choi</u>, Haeju Park, Seung-won Hwang<sup>&#8224;</sup> <br />
+        ICDM 2019 (short) <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C3</span><b>MICRON: Multigranular Interaction for Contextualizing
+          Representation in Non-factoid Question Answering</b> [<a href="https://www.aclweb.org/anthology/D19-1601.pdf"
+          class="link-in-list">PDF</a>] <br />
+        Hojae Han*, <u>Seungtaek Choi*</u>, Haeju Park, Seung-won Hwang<sup>&#8224;</sup> (* equal contribution) <br />
+        EMNLP 2019 (short) <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C2</span><b>Visual Choice of Plausible Alternatives: An Evaluation of
+          Image-based Commonsense Causal Reasoning</b> [<a href="https://www.aclweb.org/anthology/L18-1316.pdf"
+          class="link-in-list">PDF</a>] <br />
+        Jinyoung Yeo, Gyungbok Lee*, Gengyu Wang*, <u>Seungtaek Choi</u>, Hyunsouk Cho, Reinald Kim Amplayo, Seung-won
+        Hwang<sup>&#8224;</sup> (* equal contribution) <br />
+        LREC 2018 <br />
+      </li>
+      <li class="pub-item conference">
+        <span class="pub-badge badge-conference">C1</span><b>Machine-translated Knowledge Transfer for Commonsense
+          Causal Reasoning</b> [<a href="https://aaai.org/ocs/index.php/AAAI/AAAI18/paper/view/17445/15909"
+          class="link-in-list">PDF</a>] <br />
+        Jinyoung Yeo, Gengyu Wang, Hyunsouk Cho, <u>Seungtaek Choi</u>, Seung-won Hwang<sup>&#8224;</sup> <br />
+        AAAI 2018 <br />
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    jQuery(document).ready(function () {
+      jQuery('[data-toggle="tooltip"]').tooltip({ html: true });
+
+      // Publication filter functionality
+      $('.filter-btn').click(function () {
+        $(this).toggleClass('active');
+
+        // Get all active filter types
+        var activeTypes = [];
+        $('.filter-btn.active').each(function () {
+          activeTypes.push($(this).data('type'));
+        });
+
+        // Show/hide publications based on active filters
+        $('.pub-item').each(function () {
+          var shouldShow = false;
+          for (var i = 0; i < activeTypes.length; i++) {
+            if ($(this).hasClass(activeTypes[i])) {
+              shouldShow = true;
+              break;
+            }
+          }
+
+          if (shouldShow) {
+            $(this).removeClass('hidden');
+          } else {
+            $(this).addClass('hidden');
+          }
+        });
+      });
+
+      // Create publications by year chart
+      const yearData = {};
+      $('.pub-item').each(function() {
+        const text = $(this).text();
+        const yearMatch = text.match(/\b(20\d{2})\b/);
+        if (yearMatch) {
+          const year = yearMatch[1];
+          if (!yearData[year]) {
+            yearData[year] = { journal: 0, conference: 0, workshop: 0, arxiv: 0 };
+          }
+          
+          if ($(this).hasClass('journal')) yearData[year].journal++;
+          else if ($(this).hasClass('conference')) yearData[year].conference++;
+          else if ($(this).hasClass('workshop')) yearData[year].workshop++;
+          else if ($(this).hasClass('arxiv')) yearData[year].arxiv++;
+        }
+      });
+
+      const years = Object.keys(yearData).sort();
+      const journalData = years.map(year => yearData[year].journal);
+      const conferenceData = years.map(year => yearData[year].conference);
+      const workshopData = years.map(year => yearData[year].workshop);
+      const arxivData = years.map(year => yearData[year].arxiv);
+      const totalData = years.map(year => yearData[year].journal + yearData[year].conference + yearData[year].workshop + yearData[year].arxiv);
+      
+      // Calculate cumulative totals
+      const cumulativeData = [];
+      let cumulative = 0;
+      for (let i = 0; i < totalData.length; i++) {
+        cumulative += totalData[i];
+        cumulativeData.push(cumulative);
+      }
+
+      const ctx = document.getElementById('publicationsChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: years,
+          datasets: [
+            {
+              label: 'Journal',
+              data: journalData,
+              backgroundColor: 'rgba(85, 139, 90, 0.8)',
+              stack: 'publications'
+            },
+            {
+              label: 'Conference',
+              data: conferenceData,
+              backgroundColor: 'rgba(74, 144, 164, 0.8)',
+              stack: 'publications'
+            },
+            {
+              label: 'Workshop',
+              data: workshopData,
+              backgroundColor: 'rgba(196, 135, 58, 0.8)',
+              stack: 'publications'
+            },
+            {
+              label: 'ArXiv',
+              data: arxivData,
+              backgroundColor: 'rgba(184, 84, 80, 0.8)',
+              stack: 'publications'
+            },
+            {
+              label: 'Cumulative',
+              data: cumulativeData,
+              type: 'line',
+              borderColor: 'rgba(37, 99, 235, 1)',
+              backgroundColor: 'rgba(37, 99, 235, 0.1)',
+              borderWidth: 2,
+              fill: false,
+              pointRadius: 3,
+              pointBackgroundColor: 'rgba(37, 99, 235, 1)',
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+              labels: {
+                boxWidth: 12,
+                font: { size: 10 },
+                padding: 8
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { font: { size: 10 } }
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Papers per Year',
+                font: { size: 9 }
+              },
+              ticks: { 
+                stepSize: 1,
+                font: { size: 10 }
+              }
+            },
+            y1: {
+              type: 'linear',
+              position: 'right',
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Cumulative Total',
+                font: { size: 9 }
+              },
+              ticks: { 
+                stepSize: 5,
+                font: { size: 10 }
+              },
+              grid: { drawOnChartArea: false }
+            }
+          }
+        }
+      });
+
+      // Create venues chart
+      const venueCounts = {};
+      $('.pub-item').each(function() {
+        // Only count conference and journal papers, skip workshops and arxiv
+        if (!$(this).hasClass('conference') && !$(this).hasClass('journal')) {
+          return;
+        }
+        
+        const text = $(this).text();
+        
+        // Extract venue from the last line before <br> tags
+        const lines = text.split('\n').map(line => line.trim()).filter(line => line);
+        if (lines.length > 2) {
+          // Get the venue line (usually the last meaningful line)
+          let venueLine = lines[lines.length - 1];
+          
+          // Clean up venue name (remove years, extra text)
+          venueLine = venueLine.replace(/\b20\d{2}\b/g, '').trim();
+          venueLine = venueLine.replace(/\(.*?\)/g, '').trim();
+          venueLine = venueLine.replace(/\s+/g, ' ');
+          
+          // Remove common suffixes and prefixes
+          venueLine = venueLine.replace(/^(Findings of |Proceedings of )/i, '');
+          venueLine = venueLine.replace(/ (short|long|main)$/i, '');
+          
+          // Skip very short or very long venue names, and filter out common non-venue text
+          if (venueLine.length > 2 && venueLine.length < 25 && 
+              !venueLine.includes('technical report') && 
+              !venueLine.includes('equal contribution') &&
+              !venueLine.includes('Highly Rated') &&
+              !venueLine.includes('workshop') &&
+              !venueLine.toLowerCase().includes('sustainlp')) {
+            venueCounts[venueLine] = (venueCounts[venueLine] || 0) + 1;
+          }
+        }
+      });
+
+      // Sort venues by count and take top 8
+      const sortedVenues = Object.entries(venueCounts)
+        .sort(([,a], [,b]) => b - a)
+        .slice(0, 8);
+      
+      const venueNames = sortedVenues.map(([name]) => name);
+      const venueCounts_data = sortedVenues.map(([,count]) => count);
+
+      const venueCtx = document.getElementById('venuesChart').getContext('2d');
+      new Chart(venueCtx, {
+        type: 'bar',
+        data: {
+          labels: venueNames,
+          datasets: [{
+            data: venueCounts_data,
+            backgroundColor: [
+              'rgba(59, 130, 246, 0.7)',
+              'rgba(16, 185, 129, 0.7)', 
+              'rgba(245, 101, 101, 0.7)',
+              'rgba(251, 191, 36, 0.7)',
+              'rgba(139, 92, 246, 0.7)',
+              'rgba(236, 72, 153, 0.7)'
+            ],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              ticks: { 
+                stepSize: 1,
+                font: { size: 10 }
+              }
+            },
+            y: {
+              ticks: { font: { size: 10 } }
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

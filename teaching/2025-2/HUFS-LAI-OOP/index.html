@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>객체지향프로그래밍 - 한국외국어대학교</title>
+  <meta name="description" content="한국외국어대학교 객체지향프로그래밍 강의 페이지">
+  <meta name="robots" content="noindex, nofollow">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="../css/github-light.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #2c3e50;
+      background-color: #f8f9fa;
+    }
+
+    .header-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+      border-bottom: 3px solid #5a67d8;
+    }
+
+    .header-section h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+      color: white;
+    }
+
+    .header-section h2 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 15px;
+      color: #e2e8f0;
+    }
+
+    .header-section .university {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .nav-pills .nav-link {
+      color: #495057;
+      border-radius: 25px;
+      margin: 0 5px;
+      padding: 10px 20px;
+      transition: all 0.3s;
+    }
+
+    .nav-pills .nav-link.active {
+      background-color: #667eea;
+      border-color: #667eea;
+    }
+
+    .nav-pills .nav-link:hover {
+      background-color: #f8f9fa;
+    }
+
+    .course-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin-bottom: 30px;
+      border-left: 4px solid #667eea;
+    }
+
+    .course-objectives {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      border: 1px solid #e9ecef;
+    }
+
+    .course-objectives h4 {
+      color: #495057;
+      margin-bottom: 15px;
+    }
+
+    .course-objectives ul li {
+      margin-bottom: 8px;
+      padding-left: 10px;
+    }
+
+    .schedule-table {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border: 1px solid #dee2e6;
+    }
+
+    .schedule-table th {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px;
+      font-weight: 600;
+      text-align: left;
+      border-bottom: 2px solid #5a67d8;
+    }
+
+    .schedule-table td {
+      padding: 18px 15px;
+      border-bottom: 1px solid #e9ecef;
+      vertical-align: middle;
+      line-height: 1.5;
+    }
+
+    .week-number {
+      background: #667eea;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      display: inline-block;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .phase-label {
+      background: #e2e8f0;
+      color: #4a5568;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .phase-basic {
+      background: #fed7d7;
+      color: #c53030;
+    }
+
+    .phase-intermediate {
+      background: #feebc8;
+      color: #dd6b20;
+    }
+
+    .phase-advanced {
+      background: #c6f6d5;
+      color: #38a169;
+    }
+
+    .resource-link {
+      display: inline-block;
+      margin: 3px;
+      padding: 6px 12px;
+      background: #667eea;
+      color: white;
+      border-radius: 15px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+
+    .resource-link:hover {
+      background: #5a67d8;
+      color: white;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .evaluation-section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin: 30px 0;
+    }
+
+    .evaluation-percentage {
+      background: #667eea;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+
+    .resources-section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin: 30px 0;
+    }
+
+    .announcement-box {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      border-radius: 10px;
+      padding: 25px;
+      margin: 30px 0;
+      color: white;
+    }
+
+    .section-title {
+      color: #2c3e50;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #667eea;
+      font-size: 1.4rem;
+    }
+
+    .quick-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 30px 0;
+    }
+
+    .quick-link {
+      background: #667eea;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .quick-link:hover {
+      background: #5a67d8;
+      color: white;
+      text-decoration: none;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .footer-section {
+      background: #2c3e50;
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .footer-section a {
+      color: #667eea;
+      text-decoration: none;
+    }
+
+    .footer-section a:hover {
+      color: #5a67d8;
+    }
+
+    .code-highlight {
+      background: #f7fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #2d3748;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header-section">
+    <div class="container">
+      <h1>객체지향프로그래밍</h1>
+      <h2>Object-Oriented Programming with Python</h2>
+      <p class="university"><strong>한국외국어대학교 Language & AI 융합학부</strong></p>
+      <p class="university">Hankuk University of Foreign Studies</p>
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <!-- Quick Links -->
+    <div class="quick-links">
+      <a href="#overview" class="quick-link"><i class="fas fa-graduation-cap"></i> 강의 개요</a>
+      <a href="#instructor" class="quick-link"><i class="fas fa-info-circle"></i> 과목 정보</a>
+      <a href="#schedule" class="quick-link"><i class="fas fa-calendar-alt"></i> 강의 계획</a>
+      <a href="#evaluation" class="quick-link"><i class="fas fa-chart-pie"></i> 평가 체계</a>
+      <a href="#resources" class="quick-link"><i class="fas fa-code"></i> 참고 자료</a>
+    </div>
+
+    <!-- Course Overview -->
+    <div id="overview" class="course-card">
+      <h3 class="section-title"><i class="fas fa-graduation-cap"></i> 강의 개요</h3>
+      <p class="lead">
+        Python 기초부터 시작하여 객체지향프로그래밍의 핵심 개념을 체계적으로 학습합니다.
+        현대 소프트웨어 개발에서 널리 사용되는 OOP 패턴과 실무 사례를 중심으로 진행합니다.
+      </p>
+
+      <div class="course-objectives">
+        <h4><i class="fas fa-bullseye"></i> 학습 목표</h4>
+        <ul>
+          <li><i class="fas fa-check text-success me-2"></i>Python 기초 문법과 프로그래밍 원리 습득</li>
+          <li><i class="fas fa-check text-success me-2"></i>객체지향프로그래밍의 4대 원리 (캡슐화, 상속, 다형성, 추상화) 이해</li>
+          <li><i class="fas fa-check text-success me-2"></i>클래스 설계와 객체 간 상호작용 구현</li>
+          <li><i class="fas fa-check text-success me-2"></i>실무에서 활용되는 디자인 패턴과 최적화 기법</li>
+          <li><i class="fas fa-check text-success me-2"></i>체계적이고 재사용 가능한 코드 작성 능력</li>
+        </ul>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <h5><i class="fas fa-info-circle text-primary"></i> 강의 정보</h5>
+          <ul class="list-unstyled">
+            <li><strong>강의 시간:</strong> 수요일 4,5,6교시 (12:00-15:00)</li>
+            <li><strong>강의실:</strong> 교수학습개발원 108호 (PC실습실)</li>
+            <li><strong>학점:</strong> 3학점</li>
+            <li><strong>선수과목:</strong> 프로그래밍 기초, Python 기본 문법</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h5><i class="fas fa-tools text-primary"></i> 개발 환경</h5>
+          <ul class="list-unstyled">
+            <li><strong>언어:</strong> Python 3.11+</li>
+            <li><strong>IDE:</strong> VS Code, Jupyter Notebook</li>
+            <li><strong>도구:</strong> Git</li>
+            <li><strong>환경:</strong> Google Colab 활용 가능</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Information -->
+    <div id="instructor" class="course-card">
+      <h3 class="section-title"><i class="fas fa-info-circle"></i> 과목 정보</h3>
+
+      <div class="row">
+        <div class="col-md-6">
+          <h5><i class="fas fa-id-card text-primary"></i> 과목 기본정보</h5>
+          <ul class="list-unstyled">
+            <li><strong>과목명:</strong> 객체지향프로그래밍</li>
+            <li><strong>과목코드:</strong> M03111201</li>
+            <li><strong>개설학과:</strong> Language & AI 융합학부</li>
+            <li><strong>담당교수:</strong> 최승택, 김예찬 (팀티칭)</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h5><i class="fas fa-graduation-cap text-primary"></i> 핵심역량</h5>
+          <ul class="list-unstyled">
+            <li><i class="fas fa-check text-success me-2"></i>논리적 사고능력</li>
+            <li><i class="fas fa-check text-success me-2"></i>문제해결능력</li>
+            <li><i class="fas fa-check text-success me-2"></i>창의적 설계능력</li>
+            <li><i class="fas fa-check text-success me-2"></i>협업·소통능력</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Schedule -->
+    <div id="schedule" class="course-card">
+      <h3 class="section-title"><i class="fas fa-calendar-alt"></i> 강의 계획</h3>
+      <table class="schedule-table table">
+        <thead>
+          <tr>
+            <th style="width: 10%;">주차</th>
+            <th style="width: 8%;">담당</th>
+            <th style="width: 20%;">주제</th>
+            <th style="width: 32%;">세부 내용</th>
+            <th style="width: 15%;">과제 (GitHub 제출)</th>
+            <th style="width: 15%;">자료</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="week-number">1주차</span><br>
+              <small class="text-muted">2025.09.03</small><br>
+              <span class="phase-label phase-basic">Python 기초</span>
+            </td>
+            <td><a href="https://hist0613.github.io/" target="_blank">최승택</a></td>
+            <td>Course Intro, Git/GitHub & Python 기초</td>
+            <td>강의 소개, Git 기초, GitHub 사용법, Python 환경 설정, 변수, 데이터 타입, 연산자, 조건문, 반복문, 리스트와 딕셔너리</td>
+            <td>GitHub 계정 생성, Repository 생성, Python 기초 문법 연습 파일들을 강의 중 실습으로 커밋</td>
+            <td>
+              <a href="#" class="resource-link">강의자료</a>
+              <a href="#" class="resource-link">실습코드</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="week-number">2주차</span><br>
+              <small class="text-muted">2025.09.10</small><br>
+              <span class="phase-label phase-basic">Python 기초</span>
+            </td>
+            <td><a href="https://hist0613.github.io/" target="_blank">최승택</a></td>
+            <td>함수, 매개변수, 모듈</td>
+            <td>함수 정의, 매개변수 전달 방식, 기본값/가변인자, 모듈과 패키지 기초</td>
+            <td>간단한 계산기 프로그램 작성 (함수 사용, 모듈화)</td>
+            <td>
+              <a href="#" class="resource-link">강의자료</a>
+              <a href="#" class="resource-link">실습코드</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="week-number">3주차</span><br>
+              <small class="text-muted">2025.09.17</small><br>
+              <span class="phase-label phase-intermediate">OOP 시작</span>
+            </td>
+            <td><a href="https://hist0613.github.io/" target="_blank">최승택</a></td>
+            <td>구조체와 클래스</td>
+            <td>데이터 구조화, 클래스 정의, 객체 생성, 속성과 메서드, 구조적 프로그래밍 vs OOP</td>
+            <td>Student 클래스 설계 및 구현 (이름, 나이, 성적 관리)</td>
+            <td>
+              <a href="#" class="resource-link">강의자료</a>
+              <a href="#" class="resource-link">실습코드</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="week-number">4주차</span><br>
+              <small class="text-muted">2025.09.24</small><br>
+              <span class="phase-label phase-intermediate">OOP 핵심</span>
+            </td>
+            <td><a href="https://hist0613.github.io/" target="_blank">최승택</a></td>
+            <td>생성자와 소멸자</td>
+            <td>__init__ 생성자, __del__ 소멸자, __new__ 메서드, 객체 생성 과정, 메모리 관리</td>
+            <td>BankAccount 클래스 구현 (생성자, 입금, 출금 메서드)</td>
+            <td>
+              <a href="#" class="resource-link">강의자료</a>
+              <a href="#" class="resource-link">실습코드</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="week-number">5주차</span><br>
+              <small class="text-muted">2025.10.01</small><br>
+              <span class="phase-label phase-intermediate">OOP 핵심</span>
+            </td>
+            <td><a href="https://hist0613.github.io/" target="_blank">최승택</a></td>
+            <td>연산자 오버로딩과 캡슐화</td>
+            <td>특수 메서드(__add__, __sub__, __eq__, __lt__), 연산자 오버로딩, 접근 제어와 캡슐화</td>
+            <td>Vector 클래스 구현 (벡터 연산자 오버로딩)</td>
+            <td>
+              <a href="#" class="resource-link">강의자료</a>
+              <a href="#" class="resource-link">실습코드</a>
+            </td>
+          </tr>
+          <tr style="background-color: #f8f9fa; color: #6c757d;">
+            <td>
+              <span class="week-number" style="background: #6c757d;">6주차</span><br>
+              <small class="text-muted">2025.10.08</small><br>
+              <span class="phase-label">휴강</span>
+            </td>
+            <td>-</td>
+            <td>추석 연휴로 인한 휴강</td>
+            <td>추석 연휴 (10.6~10.9)</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="week-number">7주차</span><br>
+              <small class="text-muted">2025.10.15</small><br>
+              <span class="phase-label phase-intermediate">OOP 핵심</span>
+            </td>
+            <td><a href="https://hist0613.github.io/" target="_blank">최승택</a></td>
+            <td>모듈, 파일 입출력, 문자열 처리</td>
+            <td>모듈과 패키지, 파일 읽기/쓰기, 직렬화, 문자열 처리와 정규표현식</td>
+            <td>텍스트 파일 처리 프로그램 (CSV 데이터 분석)</td>
+            <td>
+              <a href="#" class="resource-link">강의자료</a>
+              <a href="#" class="resource-link">실습코드</a>
+            </td>
+          </tr>
+          <tr style="border-bottom: 4px solid #667eea; box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);">
+            <td>
+              <span class="week-number">8주차</span><br>
+              <small class="text-muted">2025.10.22</small><br>
+              <span class="phase-label">중간고사</span>
+            </td>
+            <td>-</td>
+            <td>중간고사</td>
+            <td>1-7주차 내용 평가 (중간고사 기간: 10.20~10.24)</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="week-number">9주차</span><br>
+              <small class="text-muted">2025.10.29</small><br>
+              <span class="phase-label phase-advanced">고급 OOP</span>
+            </td>
+            <td><a href="https://sites.google.com/view/yeachan/" target="_blank">김예찬</a></td>
+            <td>재귀와 상속</td>
+            <td>재귀적 알고리즘과 클래스 설계, 상속 개념, 부모-자식 클래스, super(), 메서드 오버라이딩</td>
+            <td>Animal-Dog-Cat 상속 구조 구현</td>
+            <td>
+              <a href="#" class="resource-link">강의자료</a>
+              <a href="#" class="resource-link">실습코드</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="week-number">10주차</span><br>
+              <small class="text-muted">2025.11.05</small><br>
+              <span class="phase-label phase-advanced">고급 OOP</span>
+            </td>
+            <td><a href="https://sites.google.com/view/yeachan/" target="_blank">김예찬</a></td>
+            <td>다형성과 가상 함수</td>
+            <td>다형성 개념, 메서드 오버라이딩, 추상 메서드, abc 모듈, 런타임 다형성</td>
+            <td>Shape-Circle-Rectangle 다형성 구현</td>
+            <td>
+              <a href="#" class="resource-link">강의자료</a>
+              <a href="#" class="resource-link">실습코드</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="week-number">11주차</span><br>
+              <small class="text-muted">2025.11.12</small><br>
+              <span class="phase-label phase-advanced">고급 OOP</span>
+            </td>
+            <td><a href="https://sites.google.com/view/yeachan/" target="_blank">김예찬</a></td>
+            <td>템플릿과 제네릭</td>
+            <td>typing 모듈, TypeVar, Generic 클래스, 타입 힌트, 제네릭 프로그래밍</td>
+            <td>Generic Stack 클래스 구현</td>
+            <td>
+              <a href="#" class="resource-link">강의자료</a>
+              <a href="#" class="resource-link">실습코드</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="week-number">12주차</span><br>
+              <small class="text-muted">2025.11.19</small><br>
+              <span class="phase-label phase-advanced">고급 OOP</span>
+            </td>
+            <td><a href="https://sites.google.com/view/yeachan/" target="_blank">김예찬</a></td>
+            <td>예외 처리</td>
+            <td>try/except/finally, 사용자 정의 예외, 예외 계층구조, 예외 안전 코드 작성</td>
+            <td>로버스트 파일 처리 시스템 구현</td>
+            <td>
+              <a href="#" class="resource-link">강의자료</a>
+              <a href="#" class="resource-link">실습코드</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="week-number">13주차</span><br>
+              <small class="text-muted">2025.11.26</small><br>
+              <span class="phase-label phase-advanced">고급 OOP</span>
+            </td>
+            <td><a href="https://sites.google.com/view/yeachan/" target="_blank">김예찬</a></td>
+            <td>표준 라이브러리와 디자인 패턴</td>
+            <td>collections, itertools, functools, Singleton, Factory, Observer 패턴</td>
+            <td>디자인 패턴 구현 과제</td>
+            <td>
+              <a href="#" class="resource-link">강의자료</a>
+              <a href="#" class="resource-link">실습코드</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="week-number">14주차</span><br>
+              <small class="text-muted">2025.12.03</small><br>
+              <span class="phase-label phase-advanced">고급 OOP</span>
+            </td>
+            <td><a href="https://sites.google.com/view/yeachan/" target="_blank">김예찬</a></td>
+            <td>종합 프로젝트와 실무 적용</td>
+            <td>Matrix 클래스 구현, 파일 입출력 시스템, OOP 개념 종합 리뷰, 실무 프로젝트 사례</td>
+            <td>최종 프로젝트 발표 및 제출
+            <td>
+              <a href="#" class="resource-link">강의자료</a>
+              <a href="#" class="resource-link">실습코드</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="week-number">15주차</span><br>
+              <small class="text-muted">2025.12.10</small><br>
+              <span class="phase-label">보강주간</span>
+            </td>
+            <td>-</td>
+            <td>보강주간</td>
+            <td>기말고사 전 보강 및 질의응답 주간 (12.8~12.12)</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="week-number">16주차</span><br>
+              <small class="text-muted">2025.12.17</small><br>
+              <span class="phase-label">기말고사</span>
+            </td>
+            <td>-</td>
+            <td>기말고사</td>
+            <td>전체 내용 종합 평가 (기말고사 기간: 12.15~12.19)</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Evaluation System -->
+    <div id="evaluation" class="evaluation-section">
+      <h3 class="section-title"><i class="fas fa-chart-pie"></i> 평가 체계</h3>
+
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <td><i class="fas fa-file-alt text-primary me-2"></i>중간고사</td>
+                <td class="text-end"><span class="evaluation-percentage">35%</span></td>
+              </tr>
+              <tr>
+                <td><i class="fas fa-file-alt text-primary me-2"></i>기말고사</td>
+                <td class="text-end"><span class="evaluation-percentage">35%</span></td>
+              </tr>
+              <tr>
+                <td><i class="fas fa-user-check text-primary me-2"></i>출석 및 참여</td>
+                <td class="text-end"><span class="evaluation-percentage">10%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <td><i class="fas fa-code text-primary me-2"></i>실습 과제</td>
+                <td class="text-end"><span class="evaluation-percentage">20%</span></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-center text-muted"><small>총합 100%</small></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learning Resources -->
+    <div id="resources" class="resources-section">
+      <h3 class="section-title"><i class="fas fa-code"></i> 학습 자료 및 도구</h3>
+
+      <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i> <strong>학습 자료:</strong> 별도의 지정 교재는 없습니다.
+        강의자료와 온라인 리소스를 활용하여 학습을 진행합니다.
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <h5><i class="fas fa-tools text-warning"></i> 개발 환경 설정</h5>
+          <div class="code-highlight">
+            # Python 3.11+ 설치<br>
+            # IDE: VS Code 또는 Jupyter Notebook<br>
+            # Google Colab 사용 가능
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <h5><i class="fas fa-graduation-cap text-success"></i> 학습 방식</h5>
+          <ul class="list-unstyled">
+            <li><i class="fas fa-arrow-right text-muted me-2"></i>이론과 실습이 결합된 수업</li>
+            <li><i class="fas fa-arrow-right text-muted me-2"></i>단계별 코딩 과제</li>
+            <li><i class="fas fa-arrow-right text-muted me-2"></i>실시간 코드 리뷰</li>
+            <li><i class="fas fa-arrow-right text-muted me-2"></i>팀티칭을 통한 다각적 접근</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Announcements -->
+    <div class="announcement-box">
+      <h4><i class="fas fa-bullhorn text-white"></i> 공지사항</h4>
+      <ul class="mb-0">
+        <li><i class="fas fa-code text-white me-2"></i>모든 실습은 Python 3.11 이상 환경에서 진행됩니다.</li>
+        <li><i class="fas fa-laptop text-white me-2"></i>개인 노트북 지참 필수 (개발 환경 설치 필요).</li>
+        <li><i class="fas fa-github text-white me-2"></i>GitHub을 통한 코드 제출 및 버전 관리를 진행합니다.</li>
+        <li><i class="fas fa-chalkboard-teacher text-white me-2"></i>두 명의 교수가 함께하는 팀티칭으로 진행됩니다.</li>
+        <li><i class="fas fa-lightbulb text-white me-2"></i>개별 실습과 코드 리뷰를 중심으로 진행합니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-section">
+    <div class="container">
+      <p>&copy; 2025 한국외국어대학교 Language & AI 융합학부 객체지향프로그래밍 강의</p>
+      <p><a href="../index.html"><i class="fas fa-home"></i> 메인 페이지로 돌아가기</a></p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
