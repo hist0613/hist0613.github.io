@@ -176,6 +176,13 @@
       transform: translateY(-1px);
     }
 
+    .resource-link.disabled {
+      background: #cbd5e0;
+      color: #a0aec0;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
     .evaluation-section {
       background: white;
       border-radius: 10px;
@@ -371,9 +378,8 @@
           <tr>
             <th style="width: 10%;">주차</th>
             <th style="width: 8%;">담당</th>
-            <th style="width: 20%;">주제</th>
-            <th style="width: 32%;">세부 내용</th>
-            <th style="width: 15%;">과제 (GitHub 제출)</th>
+            <th style="width: 25%;">주제</th>
+            <th style="width: 42%;">세부 내용</th>
             <th style="width: 15%;">자료</th>
           </tr>
         </thead>
@@ -385,12 +391,10 @@
               <span class="phase-label phase-basic">Python 기초</span>
             </td>
             <td><a href="https://hist0613.github.io/" target="_blank">최승택</a></td>
-            <td>Course Intro, Git/GitHub & Python 기초</td>
-            <td>강의 소개, Git 기초, GitHub 사용법, Python 환경 설정, 변수, 데이터 타입, 연산자, 조건문, 반복문, 리스트와 딕셔너리</td>
-            <td>GitHub 계정 생성, Repository 생성, Python 기초 문법 연습 파일들을 강의 중 실습으로 커밋</td>
+            <td>Introduction</td>
+            <td>강의 소개 및 GitHub 실습</td>
             <td>
-              <a href="#" class="resource-link">강의자료</a>
-              <a href="#" class="resource-link">실습코드</a>
+              <span class="resource-link disabled">강의자료</span>
             </td>
           </tr>
           <tr>
@@ -402,10 +406,8 @@
             <td><a href="https://hist0613.github.io/" target="_blank">최승택</a></td>
             <td>함수, 매개변수, 모듈</td>
             <td>함수 정의, 매개변수 전달 방식, 기본값/가변인자, 모듈과 패키지 기초</td>
-            <td>간단한 계산기 프로그램 작성 (함수 사용, 모듈화)</td>
             <td>
-              <a href="#" class="resource-link">강의자료</a>
-              <a href="#" class="resource-link">실습코드</a>
+              <span class="resource-link disabled">강의자료</span>
             </td>
           </tr>
           <tr>
@@ -417,10 +419,8 @@
             <td><a href="https://hist0613.github.io/" target="_blank">최승택</a></td>
             <td>구조체와 클래스</td>
             <td>데이터 구조화, 클래스 정의, 객체 생성, 속성과 메서드, 구조적 프로그래밍 vs OOP</td>
-            <td>Student 클래스 설계 및 구현 (이름, 나이, 성적 관리)</td>
             <td>
-              <a href="#" class="resource-link">강의자료</a>
-              <a href="#" class="resource-link">실습코드</a>
+              <span class="resource-link disabled">강의자료</span>
             </td>
           </tr>
           <tr>
@@ -432,10 +432,8 @@
             <td><a href="https://hist0613.github.io/" target="_blank">최승택</a></td>
             <td>생성자와 소멸자</td>
             <td>__init__ 생성자, __del__ 소멸자, __new__ 메서드, 객체 생성 과정, 메모리 관리</td>
-            <td>BankAccount 클래스 구현 (생성자, 입금, 출금 메서드)</td>
             <td>
-              <a href="#" class="resource-link">강의자료</a>
-              <a href="#" class="resource-link">실습코드</a>
+              <span class="resource-link disabled">강의자료</span>
             </td>
           </tr>
           <tr>
@@ -447,10 +445,8 @@
             <td><a href="https://hist0613.github.io/" target="_blank">최승택</a></td>
             <td>연산자 오버로딩과 캡슐화</td>
             <td>특수 메서드(__add__, __sub__, __eq__, __lt__), 연산자 오버로딩, 접근 제어와 캡슐화</td>
-            <td>Vector 클래스 구현 (벡터 연산자 오버로딩)</td>
             <td>
-              <a href="#" class="resource-link">강의자료</a>
-              <a href="#" class="resource-link">실습코드</a>
+              <span class="resource-link disabled">강의자료</span>
             </td>
           </tr>
           <tr style="background-color: #f8f9fa; color: #6c757d;">
@@ -463,7 +459,6 @@
             <td>추석 연휴로 인한 휴강</td>
             <td>추석 연휴 (10.6~10.9)</td>
             <td>-</td>
-            <td>-</td>
           </tr>
           <tr>
             <td>
@@ -474,10 +469,8 @@
             <td><a href="https://hist0613.github.io/" target="_blank">최승택</a></td>
             <td>모듈, 파일 입출력, 문자열 처리</td>
             <td>모듈과 패키지, 파일 읽기/쓰기, 직렬화, 문자열 처리와 정규표현식</td>
-            <td>텍스트 파일 처리 프로그램 (CSV 데이터 분석)</td>
             <td>
-              <a href="#" class="resource-link">강의자료</a>
-              <a href="#" class="resource-link">실습코드</a>
+              <span class="resource-link disabled">강의자료</span>
             </td>
           </tr>
           <tr style="border-bottom: 4px solid #667eea; box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);">
@@ -490,7 +483,6 @@
             <td>중간고사</td>
             <td>1-7주차 내용 평가 (중간고사 기간: 10.20~10.24)</td>
             <td>-</td>
-            <td>-</td>
           </tr>
           <tr>
             <td>
@@ -501,10 +493,8 @@
             <td><a href="https://sites.google.com/view/yeachan/" target="_blank">김예찬</a></td>
             <td>재귀와 상속</td>
             <td>재귀적 알고리즘과 클래스 설계, 상속 개념, 부모-자식 클래스, super(), 메서드 오버라이딩</td>
-            <td>Animal-Dog-Cat 상속 구조 구현</td>
             <td>
-              <a href="#" class="resource-link">강의자료</a>
-              <a href="#" class="resource-link">실습코드</a>
+              <span class="resource-link disabled">강의자료</span>
             </td>
           </tr>
           <tr>
@@ -516,10 +506,8 @@
             <td><a href="https://sites.google.com/view/yeachan/" target="_blank">김예찬</a></td>
             <td>다형성과 가상 함수</td>
             <td>다형성 개념, 메서드 오버라이딩, 추상 메서드, abc 모듈, 런타임 다형성</td>
-            <td>Shape-Circle-Rectangle 다형성 구현</td>
             <td>
-              <a href="#" class="resource-link">강의자료</a>
-              <a href="#" class="resource-link">실습코드</a>
+              <span class="resource-link disabled">강의자료</span>
             </td>
           </tr>
           <tr>
@@ -531,10 +519,8 @@
             <td><a href="https://sites.google.com/view/yeachan/" target="_blank">김예찬</a></td>
             <td>템플릿과 제네릭</td>
             <td>typing 모듈, TypeVar, Generic 클래스, 타입 힌트, 제네릭 프로그래밍</td>
-            <td>Generic Stack 클래스 구현</td>
             <td>
-              <a href="#" class="resource-link">강의자료</a>
-              <a href="#" class="resource-link">실습코드</a>
+              <span class="resource-link disabled">강의자료</span>
             </td>
           </tr>
           <tr>
@@ -546,10 +532,8 @@
             <td><a href="https://sites.google.com/view/yeachan/" target="_blank">김예찬</a></td>
             <td>예외 처리</td>
             <td>try/except/finally, 사용자 정의 예외, 예외 계층구조, 예외 안전 코드 작성</td>
-            <td>로버스트 파일 처리 시스템 구현</td>
             <td>
-              <a href="#" class="resource-link">강의자료</a>
-              <a href="#" class="resource-link">실습코드</a>
+              <span class="resource-link disabled">강의자료</span>
             </td>
           </tr>
           <tr>
@@ -561,10 +545,8 @@
             <td><a href="https://sites.google.com/view/yeachan/" target="_blank">김예찬</a></td>
             <td>표준 라이브러리와 디자인 패턴</td>
             <td>collections, itertools, functools, Singleton, Factory, Observer 패턴</td>
-            <td>디자인 패턴 구현 과제</td>
             <td>
-              <a href="#" class="resource-link">강의자료</a>
-              <a href="#" class="resource-link">실습코드</a>
+              <span class="resource-link disabled">강의자료</span>
             </td>
           </tr>
           <tr>
@@ -576,10 +558,8 @@
             <td><a href="https://sites.google.com/view/yeachan/" target="_blank">김예찬</a></td>
             <td>종합 프로젝트와 실무 적용</td>
             <td>Matrix 클래스 구현, 파일 입출력 시스템, OOP 개념 종합 리뷰, 실무 프로젝트 사례</td>
-            <td>최종 프로젝트 발표 및 제출
             <td>
-              <a href="#" class="resource-link">강의자료</a>
-              <a href="#" class="resource-link">실습코드</a>
+              <span class="resource-link disabled">강의자료</span>
             </td>
           </tr>
           <tr>
@@ -592,7 +572,6 @@
             <td>보강주간</td>
             <td>기말고사 전 보강 및 질의응답 주간 (12.8~12.12)</td>
             <td>-</td>
-            <td>-</td>
           </tr>
           <tr>
             <td>
@@ -603,7 +582,6 @@
             <td>-</td>
             <td>기말고사</td>
             <td>전체 내용 종합 평가 (기말고사 기간: 12.15~12.19)</td>
-            <td>-</td>
             <td>-</td>
           </tr>
         </tbody>

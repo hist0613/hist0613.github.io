@@ -195,6 +195,13 @@
       text-decoration: none;
       transform: translateY(-1px);
     }
+
+    .resource-link.disabled {
+      background: #cbd5e0;
+      color: #a0aec0;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
     
     .evaluation-section {
       background: white;
@@ -346,17 +353,17 @@
     <div id="overview" class="course-card">
       <h3 class="section-title"><i class="fas fa-graduation-cap"></i> 강의 개요</h3>
       <p class="lead">
-        영어 텍스트 분석에 특화된 기계학습 기법을 학습합니다. 자연어처리의 기초부터 최신 트랜스포머 모델까지,
-        영어 데이터를 활용한 실무 중심의 교육을 제공합니다.
+        영어학 전공자를 위한 실용적인 기계학습 강의입니다. 복잡한 수학 없이도 영어 텍스트 분석 도구를 활용할 수 있도록 하는 것이 목표입니다.
+        Python과 다양한 라이브러리를 통해 실습 위주로 진행합니다.
       </p>
       
       <div class="course-objectives">
         <h4><i class="fas fa-bullseye"></i> 학습 목표</h4>
         <ul>
-          <li><i class="fas fa-check text-success me-2"></i>영어 텍스트 전처리 및 특성 추출 기법 습득</li>
-          <li><i class="fas fa-check text-success me-2"></i>자연어처리를 위한 기계학습 알고리즘 이해</li>
-          <li><i class="fas fa-check text-success me-2"></i>영어 텍스트 분류, 감정 분석, 기계 번역 모델 구현</li>
-          <li><i class="fas fa-check text-success me-2"></i>트랜스포머 기반 모델(BERT, GPT) 활용법 학습</li>
+          <li><i class="fas fa-check text-success me-2"></i>영어 텍스트 데이터 처리 기초 기술 습득</li>
+          <li><i class="fas fa-check text-success me-2"></i>감정분석, 텍스트 분류 등 실용적 응용</li>
+          <li><i class="fas fa-check text-success me-2"></i>영어 문서 검색과 정보 추출</li>
+          <li><i class="fas fa-check text-success me-2"></i>최신 NLP 도구와 모델 활용법 이해</li>
         </ul>
       </div>
 
@@ -364,18 +371,18 @@
         <div class="col-md-6">
           <h5><i class="fas fa-info-circle text-primary"></i> 강의 정보</h5>
           <ul class="list-unstyled">
-            <li><strong>강의 시간:</strong> 화요일 3,4,5교시 (11:00-14:00)</li>
-            <li><strong>강의실:</strong> 교수학습개발원 108호 (PC실습실)</li>
+            <li><strong>강의 시간:</strong> 화요일 1,2,3교시 (09:00-12:00)</li>
+            <li><strong>강의실:</strong> 대학원6503</li>
             <li><strong>학점:</strong> 3학점</li>
-            <li><strong>수강권장 사전지식:</strong> Python 기초, 기계학습의이해, 영어 독해</li>
+            <li><strong>수강권장 사전지식:</strong> Python 기초, 선형대수, 확률·통계 기초</li>
           </ul>
         </div>
         <div class="col-md-6">
           <h5><i class="fas fa-tools text-primary"></i> 사용 도구</h5>
           <ul class="list-unstyled">
             <li><strong>언어:</strong> Python 3.11+</li>
-            <li><strong>라이브러리:</strong> NLTK, spaCy, Transformers</li>
-            <li><strong>딥러닝:</strong> PyTorch, Hugging Face</li>
+            <li><strong>라이브러리:</strong> NumPy, Pandas, Scikit-learn, NLTK</li>
+            <li><strong>딥러닝:</strong> PyTorch</li>
             <li><strong>환경:</strong> Google Colab, Jupyter Notebook</li>
           </ul>
         </div>
@@ -391,8 +398,8 @@
           <h5><i class="fas fa-id-card text-primary"></i> 과목 기본정보</h5>
           <ul class="list-unstyled">
             <li><strong>과목명:</strong> 영어분석을위한기계학습</li>
-            <li><strong>과목코드:</strong> M03111201</li>
-            <li><strong>개설학과:</strong> Language & AI 융합학부</li>
+            <li><strong>과목코드:</strong> A10403102</li>
+            <li><strong>개설학과:</strong> ELLT학과 (Department of English Linguistics & Language Technology)</li>
             <li><strong>담당교수:</strong> 최승택</li>
           </ul>
         </div>
@@ -400,9 +407,9 @@
           <h5><i class="fas fa-graduation-cap text-primary"></i> 핵심역량</h5>
           <ul class="list-unstyled">
             <li><i class="fas fa-check text-success me-2"></i>언어 분석 능력</li>
-            <li><i class="fas fa-check text-success me-2"></i>기술 활용 능력</li>
-            <li><i class="fas fa-check text-success me-2"></i>창의적 사고 능력</li>
-            <li><i class="fas fa-check text-success me-2"></i>데이터 분석 능력</li>
+            <li><i class="fas fa-check text-success me-2"></i>디지털 리터러시</li>
+            <li><i class="fas fa-check text-success me-2"></i>실용적 문제 해결</li>
+            <li><i class="fas fa-check text-success me-2"></i>학제간 융합 사고</li>
           </ul>
         </div>
       </div>
@@ -427,63 +434,58 @@
             <small class="text-muted">2025.09.02</small><br>
             <span class="phase-label phase-basic">기초</span>
           </td>
-          <td>Introduction to NLP</td>
-          <td>자연어처리 개요, 영어 텍스트 특징</td>
+          <td>Introduction</td>
+          <td>강의 소개 및 GitHub 실습</td>
           <td>
-            <a href="#" class="resource-link">강의자료</a>
-            <a href="#" class="resource-link">실습코드</a>
+            <span class="resource-link disabled">강의자료</span>
           </td>
         </tr>
         <tr>
           <td>
             <span class="week-number">2주차</span><br>
             <small class="text-muted">2025.09.09</small><br>
-            <span class="phase-label phase-basic">전처리</span>
+            <span class="phase-label phase-basic">기초</span>
           </td>
-          <td>Text Preprocessing</td>
-          <td>Tokenization, Stemming, Lemmatization</td>
+          <td>Mathematical Foundations</td>
+          <td>Linear Algebra</td>
           <td>
-            <a href="#" class="resource-link">강의자료</a>
-            <a href="#" class="resource-link">실습코드</a>
+            <span class="resource-link disabled">강의자료</span>
           </td>
         </tr>
         <tr>
           <td>
             <span class="week-number">3주차</span><br>
             <small class="text-muted">2025.09.16</small><br>
-            <span class="phase-label phase-basic">특성추출</span>
+            <span class="phase-label phase-basic">기초</span>
           </td>
-          <td>Feature Extraction</td>
-          <td>Bag-of-Words, TF-IDF, N-grams</td>
+          <td>Optimization</td>
+          <td>Gradient Descent 등 최적화 알고리즘</td>
           <td>
-            <a href="#" class="resource-link">강의자료</a>
-            <a href="#" class="resource-link">실습코드</a>
+            <span class="resource-link disabled">강의자료</span>
           </td>
         </tr>
         <tr>
           <td>
             <span class="week-number">4주차</span><br>
             <small class="text-muted">2025.09.23</small><br>
-            <span class="phase-label phase-intermediate">분류</span>
+            <span class="phase-label phase-intermediate">지도학습</span>
           </td>
-          <td>Text Classification</td>
-          <td>영어 텍스트 분류, 스팸 필터링</td>
+          <td>Supervised Learning (1)</td>
+          <td>Regression</td>
           <td>
-            <a href="#" class="resource-link">강의자료</a>
-            <a href="#" class="resource-link">실습코드</a>
+            <span class="resource-link disabled">강의자료</span>
           </td>
         </tr>
         <tr>
           <td>
             <span class="week-number">5주차</span><br>
             <small class="text-muted">2025.09.30</small><br>
-            <span class="phase-label phase-intermediate">감정분석</span>
+            <span class="phase-label phase-intermediate">지도학습</span>
           </td>
-          <td>Sentiment Analysis</td>
-          <td>영어 리뷰 감정 분석, 극성 분류</td>
+          <td>Supervised Learning (2)</td>
+          <td>Classification</td>
           <td>
-            <a href="#" class="resource-link">강의자료</a>
-            <a href="#" class="resource-link">실습코드</a>
+            <span class="resource-link disabled">강의자료</span>
           </td>
         </tr>
         <tr style="background-color: #f8f9fa; color: #6c757d;">
@@ -500,13 +502,12 @@
           <td>
             <span class="week-number">7주차</span><br>
             <small class="text-muted">2025.10.14</small><br>
-            <span class="phase-label phase-intermediate">워드임베딩</span>
+            <span class="phase-label phase-intermediate">비지도학습</span>
           </td>
-          <td>Word Embeddings</td>
-          <td>Word2Vec, GloVe, FastText</td>
+          <td>Unsupervised Learning (1)</td>
+          <td>kNN, Decision Trees, Clustering</td>
           <td>
-            <a href="#" class="resource-link">강의자료</a>
-            <a href="#" class="resource-link">실습코드</a>
+            <span class="resource-link disabled">강의자료</span>
           </td>
         </tr>
         <tr>
@@ -523,90 +524,84 @@
           <td>
             <span class="week-number">9주차</span><br>
             <small class="text-muted">2025.10.28</small><br>
-            <span class="phase-label phase-intermediate">시퀀스모델</span>
+            <span class="phase-label phase-intermediate">비지도학습</span>
           </td>
-          <td>Sequence Models</td>
-          <td>RNN, LSTM for English Text</td>
+          <td>Unsupervised Learning (2)</td>
+          <td>Dimension Reduction</td>
           <td>
-            <a href="#" class="resource-link">강의자료</a>
-            <a href="#" class="resource-link">실습코드</a>
+            <span class="resource-link disabled">강의자료</span>
           </td>
         </tr>
         <tr>
           <td>
             <span class="week-number">10주차</span><br>
             <small class="text-muted">2025.11.04</small><br>
-            <span class="phase-label phase-advanced">어텐션</span>
+            <span class="phase-label phase-advanced">신경망</span>
           </td>
-          <td>Attention Mechanism</td>
-          <td>Attention, Seq2Seq 모델</td>
+          <td>Neural Networks (1)</td>
+          <td>ANN</td>
           <td>
-            <a href="#" class="resource-link">강의자료</a>
-            <a href="#" class="resource-link">실습코드</a>
+            <span class="resource-link disabled">강의자료</span>
           </td>
         </tr>
         <tr>
           <td>
             <span class="week-number">11주차</span><br>
             <small class="text-muted">2025.11.11</small><br>
-            <span class="phase-label phase-advanced">트랜스포머</span>
+            <span class="phase-label phase-advanced">신경망</span>
           </td>
-          <td>Transformer Models</td>
-          <td>Transformer Architecture 이해</td>
+          <td>Neural Networks (2)</td>
+          <td>Autoencoder</td>
           <td>
-            <a href="#" class="resource-link">강의자료</a>
-            <a href="#" class="resource-link">실습코드</a>
+            <span class="resource-link disabled">강의자료</span>
           </td>
         </tr>
         <tr>
           <td>
             <span class="week-number">12주차</span><br>
             <small class="text-muted">2025.11.18</small><br>
-            <span class="phase-label phase-advanced">BERT</span>
+            <span class="phase-label phase-advanced">딥러닝</span>
           </td>
-          <td>BERT and Applications</td>
-          <td>BERT 모델 활용, Fine-tuning</td>
+          <td>Deep Learning (1)</td>
+          <td>CNN</td>
           <td>
-            <a href="#" class="resource-link">강의자료</a>
-            <a href="#" class="resource-link">실습코드</a>
+            <span class="resource-link disabled">강의자료</span>
           </td>
         </tr>
         <tr>
           <td>
             <span class="week-number">13주차</span><br>
             <small class="text-muted">2025.11.25</small><br>
-            <span class="phase-label phase-advanced">GPT</span>
+            <span class="phase-label phase-advanced">딥러닝</span>
           </td>
-          <td>Generative Models</td>
-          <td>GPT, 영어 텍스트 생성</td>
+          <td>Deep Learning (2)</td>
+          <td>RNN</td>
           <td>
-            <a href="#" class="resource-link">강의자료</a>
-            <a href="#" class="resource-link">실습코드</a>
+            <span class="resource-link disabled">강의자료</span>
           </td>
         </tr>
         <tr>
           <td>
             <span class="week-number">14주차</span><br>
             <small class="text-muted">2025.12.02</small><br>
-            <span class="phase-label phase-advanced">번역</span>
+            <span class="phase-label phase-advanced">고급주제</span>
           </td>
-          <td>Machine Translation</td>
-          <td>영어-한국어 기계번역</td>
+          <td>Advanced Topics (1)</td>
+          <td>XAI</td>
           <td>
-            <a href="#" class="resource-link">강의자료</a>
-            <a href="#" class="resource-link">실습코드</a>
+            <span class="resource-link disabled">강의자료</span>
           </td>
         </tr>
         <tr>
           <td>
             <span class="week-number">15주차</span><br>
             <small class="text-muted">2025.12.09</small><br>
-            <span class="phase-label phase-advanced">프로젝트</span>
+            <span class="phase-label phase-advanced">고급주제</span>
           </td>
-          <td>Final Projects</td>
-          <td>최종 프로젝트 발표</td>
+          <td>Advanced Topics (2)</td>
+          <td>Active Learning, PINN</td>
           <td>
-            <a href="#" class="resource-link">프로젝트</a>
+            <span class="resource-link disabled">강의자료</span>
           </td>
         </tr>
         <tr style="border-bottom: 4px solid #3498db; box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);">
@@ -633,11 +628,11 @@
             <tbody>
               <tr>
                 <td><i class="fas fa-file-alt text-primary me-2"></i>중간고사</td>
-                <td class="text-end"><span class="evaluation-percentage">30%</span></td>
+                <td class="text-end"><span class="evaluation-percentage">35%</span></td>
               </tr>
               <tr>
                 <td><i class="fas fa-file-alt text-primary me-2"></i>기말고사</td>
-                <td class="text-end"><span class="evaluation-percentage">30%</span></td>
+                <td class="text-end"><span class="evaluation-percentage">35%</span></td>
               </tr>
               <tr>
                 <td><i class="fas fa-user-check text-primary me-2"></i>출석 및 참여</td>
@@ -652,10 +647,6 @@
               <tr>
                 <td><i class="fas fa-code text-primary me-2"></i>실습 과제</td>
                 <td class="text-end"><span class="evaluation-percentage">20%</span></td>
-              </tr>
-              <tr>
-                <td><i class="fas fa-project-diagram text-primary me-2"></i>최종 프로젝트</td>
-                <td class="text-end"><span class="evaluation-percentage">10%</span></td>
               </tr>
               <tr>
                 <td colspan="2" class="text-center text-muted"><small>총합 100%</small></td>
@@ -681,15 +672,15 @@
           <h5><i class="fas fa-tools text-warning"></i> 필수 소프트웨어</h5>
           <ul class="list-unstyled">
             <li><i class="fas fa-arrow-right text-muted me-2"></i>Python 3.11 이상</li>
-            <li><i class="fas fa-arrow-right text-muted me-2"></i>NLTK, spaCy, Transformers 라이브러리</li>
-            <li><i class="fas fa-arrow-right text-muted me-2"></i>Hugging Face Datasets</li>
+            <li><i class="fas fa-arrow-right text-muted me-2"></i>Jupyter Notebook 또는 Google Colab</li>
+            <li><i class="fas fa-arrow-right text-muted me-2"></i>NumPy, Pandas, Scikit-learn 라이브러리</li>
           </ul>
         </div>
         
         <div class="col-md-6">
           <h5><i class="fas fa-globe text-primary"></i> 추천 온라인 자료</h5>
           <div class="alert alert-secondary">
-            <i class="fas fa-info-circle"></i> 강의 진행에 따라 유용한 영어 코퍼스와 데이터셋을 소개할 예정입니다.
+            <i class="fas fa-info-circle"></i> 강의 진행에 따라 유용한 온라인 자료와 추천 강의를 안내할 예정입니다.
           </div>
         </div>
       </div>
@@ -699,10 +690,10 @@
     <div class="announcement-box">
       <h4><i class="fas fa-bullhorn text-warning"></i> 공지사항</h4>
       <ul class="mb-0">
-        <li><i class="fas fa-language text-info me-2"></i>수업은 한국어로 진행되지만, 영어 텍스트 데이터를 다룹니다.</li>
+        <li><i class="fas fa-python text-info me-2"></i>모든 실습은 Python을 기반으로 진행됩니다.</li>
         <li><i class="fas fa-laptop text-info me-2"></i>개인 노트북 지참을 권장합니다 (Google Colab 사용 가능).</li>
         <li><i class="fas fa-upload text-info me-2"></i>과제 제출은 온라인 학습관리시스템을 통해 진행됩니다.</li>
-        <li><i class="fas fa-project-diagram text-info me-2"></i>최종 프로젝트는 영어 텍스트 분석 주제로 자유롭게 선택할 수 있습니다.</li>
+        <li><i class="fas fa-clock text-info me-2"></i>출석은 매 수업 시작 시 확인하며, 출석률이 평가에 반영될 수 있습니다.</li>
         <li><i class="fas fa-comments text-info me-2"></i>질문이나 토론은 수업 시간 또는 이메일을 통해 환영합니다.</li>
       </ul>
     </div>
