@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>통번역과 AI III - 한국외국어대학교</title>
+  <meta name="description" content="한국외국어대학교 통번역과 AI III 강의 페이지">
+  <meta name="robots" content="noindex, nofollow">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="../../css/github-light.css" rel="stylesheet">
+  <link href="../../css/style.css" rel="stylesheet">
+  
+  <style>
+    /* ... (Same styles as above) ... */
+    .phase-label {
+      background: #e2e8f0;
+      color: #4a5568;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      display: inline-block;
+      margin-top: 4px;
+    }
+    .phase-basic { background: #fed7d7; color: #c53030; }
+    .phase-intermediate { background: #feebc8; color: #dd6b20; }
+    .phase-advanced { background: #c6f6d5; color: #38a169; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #2c3e50; background-color: #f8f9fa; }
+    
+    .header-section { background: linear-gradient(135deg, #a8ff78 0%, #78ffd6 100%); color: #2c3e50; padding: 40px 0; text-align: center; border-bottom: 3px solid #00b894; }
+    .header-section h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; color: #2d3436; }
+    .header-section h2 { font-size: 1.2rem; font-weight: 400; margin-bottom: 15px; color: #2d3436; }
+    .header-section .university { font-size: 1rem; opacity: 0.9; }
+
+    /* Reusing essential styles */
+    .nav-pills .nav-link { color: #495057; border-radius: 25px; margin: 0 5px; padding: 10px 20px; transition: all 0.3s; }
+    .nav-pills .nav-link.active { background-color: #00b894; border-color: #00b894; }
+    
+    .course-card { background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 30px; margin-bottom: 30px; border-left: 4px solid #00b894; }
+    .course-objectives { background: #f8f9fa; border-radius: 8px; padding: 20px; margin: 20px 0; border: 1px solid #e9ecef; }
+    .course-objectives h4 { color: #495057; margin-bottom: 15px; }
+    .course-objectives ul li { margin-bottom: 8px; padding-left: 10px; }
+    
+    .schedule-table { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #dee2e6; }
+    .schedule-table th { background: linear-gradient(135deg, #00b894 0%, #00cec9 100%); color: white; padding: 15px; font-weight: 600; text-align: left; border-bottom: 2px solid #00aa88; }
+    .schedule-table td { padding: 18px 15px; border-bottom: 1px solid #e9ecef; vertical-align: middle; line-height: 1.5; }
+    .week-number { background: #00b894; color: white; padding: 6px 10px; border-radius: 20px; font-weight: 500; font-size: 0.85rem; display: inline-block; min-width: 60px; text-align: center; }
+    
+    .resource-link { display: inline-block; margin: 3px; padding: 6px 12px; background: #00b894; color: white; border-radius: 15px; text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
+    .resource-link:hover { background: #00cec9; color: white; text-decoration: none; transform: translateY(-1px); }
+    .resource-link.disabled { background: #cbd5e0; color: #a0aec0; cursor: not-allowed; pointer-events: none; }
+    
+    .evaluation-percentage { background: #00b894; color: white; padding: 4px 8px; border-radius: 3px; font-weight: 500; font-size: 0.85rem; }
+    
+    .quick-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin: 30px 0; }
+    .quick-link { background: #00b894; color: white; padding: 10px 18px; border-radius: 25px; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: all 0.3s; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+    .quick-link:hover { background: #00cec9; color: white; text-decoration: none; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); }
+    
+    .section-title { color: #2c3e50; font-weight: 600; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid #00b894; font-size: 1.4rem; }
+     .announcement-box { background: linear-gradient(135deg, #55efc4 0%, #81ecec 100%); border-radius: 10px; padding: 25px; margin: 30px 0; color: #2d3436; }
+    
+    .footer-section { background: #2c3e50; color: white; padding: 40px 0; text-align: center; margin-top: 60px; }
+    .footer-section a { color: #00b894; text-decoration: none; }
+    .footer-section a:hover { color: #00cec9; }
+  </style>
+</head>
+
+<body>
+  <div class="header-section">
+    <div class="container">
+      <h1>통번역과 AI III</h1>
+      <h2>AI in Translation and Interpreting III</h2>
+      <p class="university"><strong>한국외국어대학교</strong></p>
+      <p class="university">Hankuk University of Foreign Studies</p>
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <div class="quick-links">
+      <a href="#overview" class="quick-link"><i class="fas fa-graduation-cap"></i> 강의 개요</a>
+      <a href="#instructor" class="quick-link"><i class="fas fa-info-circle"></i> 과목 정보</a>
+      <a href="#schedule" class="quick-link"><i class="fas fa-calendar-alt"></i> 강의 계획</a>
+    </div>
+
+    <!-- Course Overview -->
+    <div id="overview" class="course-card">
+      <h3 class="section-title"><i class="fas fa-graduation-cap"></i> 강의 개요</h3>
+      <p class="lead">
+        인공지능 기반 번역 기술의 발전 과정을 이해하고, 최신 신경망 기계번역(NMT) 및 대형언어모델(LLM)을 활용한 번역 실습을 진행합니다.
+      </p>
+      
+      <div class="course-objectives">
+        <h4><i class="fas fa-bullseye"></i> 학습 목표</h4>
+        <ul>
+          <li><i class="fas fa-check text-success me-2"></i>기계번역의 원리 이해</li>
+          <li><i class="fas fa-check text-success me-2"></i>CAT Tools 및 AI 번역 도구 활용 능력 배양</li>
+          <li><i class="fas fa-check text-success me-2"></i>LLM 기반 번역 및 Post-editing 실습</li>
+        </ul>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <h5><i class="fas fa-info-circle text-primary"></i> 강의 정보</h5>
+          <ul class="list-unstyled">
+            <li><strong>강의 시간:</strong> 금요일 7,8교시</li>
+            <li><strong>강의실:</strong> 본관 (예정)</li>
+            <li><strong>학점:</strong> 2학점</li>
+            <li><strong>수강권장 사전지식:</strong> 통번역 기초</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Schedule -->
+    <div id="schedule" class="course-card">
+      <h3 class="section-title"><i class="fas fa-calendar-alt"></i> 강의 계획 (15주)</h3>
+      <table class="schedule-table table">
+        <thead>
+          <tr>
+            <th style="width: 12%;">주차</th>
+            <th style="width: 25%;">주제</th>
+            <th style="width: 43%;">세부 내용</th>
+            <th style="width: 20%;">자료</th>
+          </tr>
+        </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="week-number">1주차</span><br>
+            <small class="text-muted">2026.03.06</small><br>
+            <span class="phase-label phase-basic">Intro</span>
+          </td>
+          <td>Introduction</td>
+          <td>강의 소개 및 오리엔테이션</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">2주차</span><br>
+            <small class="text-muted">2026.03.13</small><br>
+            <span class="phase-label phase-basic">History</span>
+          </td>
+          <td>Machine Translation History</td>
+          <td>RBMT, SMT, NMT</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">3주차</span><br>
+            <small class="text-muted">2026.03.20</small><br>
+            <span class="phase-label phase-basic">NMT</span>
+          </td>
+          <td>Neural Machine Translation</td>
+          <td>Encoder-Decoder, Attention</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">4주차</span><br>
+            <small class="text-muted">2026.03.27</small><br>
+            <span class="phase-label phase-basic">Metrics</span>
+          </td>
+          <td>Translation Evaluation</td>
+          <td>BLEU, TER, Comet, Meteor</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">5주차</span><br>
+            <small class="text-muted">2026.04.03</small><br>
+            <span class="phase-label phase-intermediate">Tools</span>
+          </td>
+          <td>CAT Tools</td>
+          <td>Trados, MemoQ Basics</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">6주차</span><br>
+            <small class="text-muted">2026.04.10</small><br>
+            <span class="phase-label phase-intermediate">AI Tools</span>
+          </td>
+          <td>AI Translation Tools</td>
+          <td>DeepL, Google Translate, Papago</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">7주차</span><br>
+            <small class="text-muted">2026.04.17</small><br>
+            <span class="phase-label phase-intermediate">PE</span>
+          </td>
+          <td>Post-Editing (PE)</td>
+          <td>MTPE Guidelines & Practice</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr style="border-bottom: 4px solid #3498db; box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);">
+          <td>
+            <span class="week-number">8주차</span><br>
+            <small class="text-muted">2026.04.24</small><br>
+            <span class="phase-label">중간고사</span>
+          </td>
+          <td>중간고사</td>
+          <td>이론 및 실습 평가</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">9주차</span><br>
+            <small class="text-muted">2026.05.01</small><br>
+            <span class="phase-label phase-advanced">LLM</span>
+          </td>
+          <td>LLM for Translation (1)</td>
+          <td>Prompt Engineering for Translation</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">10주차</span><br>
+            <small class="text-muted">2026.05.08</small><br>
+            <span class="phase-label phase-advanced">LLM</span>
+          </td>
+          <td>LLM for Translation (2)</td>
+          <td>Context-aware Translation</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">11주차</span><br>
+            <small class="text-muted">2026.05.15</small><br>
+            <span class="phase-label phase-advanced">Practice</span>
+          </td>
+          <td>Translation Project (1)</td>
+          <td>Technical Document Translation</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">12주차</span><br>
+            <small class="text-muted">2026.05.22</small><br>
+            <span class="phase-label phase-advanced">Practice</span>
+          </td>
+          <td>Translation Project (2)</td>
+          <td>Literary / Media Translation with AI</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">13주차</span><br>
+            <small class="text-muted">2026.05.29</small><br>
+            <span class="phase-label phase-advanced">Ethics</span>
+          </td>
+          <td>AI Ethics & Future</td>
+          <td>Translator's Role in AI Era</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">14주차</span><br>
+            <small class="text-muted">2026.06.05</small><br>
+            <span class="phase-label phase-advanced">Review</span>
+          </td>
+          <td>Course Review</td>
+          <td>Overall Review & Discussion</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr style="border-bottom: 4px solid #3498db; box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);">
+          <td>
+            <span class="week-number">15주차</span><br>
+            <small class="text-muted">2026.06.12</small><br>
+            <span class="phase-label">기말고사</span>
+          </td>
+          <td>기말고사</td>
+          <td>최종 평가</td>
+          <td>-</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Announcements -->
+    <div class="announcement-box">
+      <h4><i class="fas fa-bullhorn"></i> 공지사항</h4>
+      <ul class="mb-0">
+        <li><i class="fas fa-info-circle me-2"></i>금요일 7,8교시 수업입니다.</li>
+        <li><i class="fas fa-laptop me-2"></i>실습을 위해 노트북을 지참해주세요.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-section">
+    <div class="container">
+      <p>&copy; 2026 한국외국어대학교 통번역과 AI III 강의</p>
+      <p><a href="../../teaching/"><i class="fas fa-home"></i> 목록으로 돌아가기</a></p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>멀티모달개론 - 한국외국어대학교</title>
+  <meta name="description" content="한국외국어대학교 멀티모달개론 강의 페이지">
+  <meta name="robots" content="noindex, nofollow">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="../../css/github-light.css" rel="stylesheet">
+  <link href="../../css/style.css" rel="stylesheet">
+  
+  <style>
+    .phase-label {
+      background: #e2e8f0;
+      color: #4a5568;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .phase-basic {
+      background: #fed7d7;
+      color: #c53030;
+    }
+
+    .phase-intermediate {
+      background: #feebc8;
+      color: #dd6b20;
+    }
+
+    .phase-advanced {
+      background: #c6f6d5;
+      color: #38a169;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #2c3e50;
+      background-color: #f8f9fa;
+    }
+    
+    .header-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+      border-bottom: 3px solid #5a67d8;
+    }
+    
+    .header-section h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+      color: white;
+    }
+    
+    .header-section h2 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 15px;
+      color: #e2e8f0;
+    }
+    
+    .header-section .university {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    
+    .nav-pills .nav-link {
+      color: #495057;
+      border-radius: 25px;
+      margin: 0 5px;
+      padding: 10px 20px;
+      transition: all 0.3s;
+    }
+    
+    .nav-pills .nav-link.active {
+      background-color: #667eea;
+      border-color: #667eea;
+    }
+    
+    .nav-pills .nav-link:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .course-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin-bottom: 30px;
+      border-left: 4px solid #667eea;
+    }
+    
+    .course-objectives {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      border: 1px solid #e9ecef;
+    }
+    
+    .course-objectives h4 {
+      color: #495057;
+      margin-bottom: 15px;
+    }
+    
+    .course-objectives ul li {
+      margin-bottom: 8px;
+      padding-left: 10px;
+    }
+    
+    .instructor-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .instructor-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 20px;
+      border: 3px solid #667eea;
+    }
+    
+    .schedule-table {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .schedule-table {
+      border: 1px solid #dee2e6;
+    }
+    
+    .schedule-table th {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px;
+      font-weight: 600;
+      text-align: left;
+      border-bottom: 2px solid #5a67d8;
+    }
+    
+    .schedule-table td {
+      padding: 18px 15px;
+      border-bottom: 1px solid #e9ecef;
+      vertical-align: middle;
+      line-height: 1.5;
+    }
+    
+    .week-number {
+      background: #667eea;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      display: inline-block;
+      min-width: 60px;
+      text-align: center;
+    }
+    
+    .resource-link {
+      display: inline-block;
+      margin: 3px;
+      padding: 6px 12px;
+      background: #667eea;
+      color: white;
+      border-radius: 15px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+    
+    .resource-link:hover {
+      background: #5a6fd8;
+      color: white;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .resource-link.disabled {
+      background: #cbd5e0;
+      color: #a0aec0;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    
+    .evaluation-section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin: 30px 0;
+    }
+    
+    .evaluation-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+    
+    .evaluation-item:last-child {
+      border-bottom: none;
+    }
+    
+    .evaluation-percentage {
+      background: #667eea;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+    
+    .grade-scale {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    
+    .grade-scale .row {
+      text-align: center;
+    }
+    
+    .grade-item {
+      background: white;
+      border-radius: 8px;
+      padding: 15px 10px;
+      margin: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .grade-letter {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #667eea;
+    }
+    
+    .resources-section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin: 30px 0;
+    }
+    
+    .announcement-box {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      border-radius: 10px;
+      padding: 25px;
+      margin: 30px 0;
+      color: white;
+    }
+    
+    .section-title {
+      color: #2c3e50;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #667eea;
+      font-size: 1.4rem;
+    }
+    
+    .quick-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 30px 0;
+    }
+    
+    .quick-link {
+      background: #667eea;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .quick-link:hover {
+      background: #5a67d8;
+      color: white;
+      text-decoration: none;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+    
+    .footer-section {
+      background: #2c3e50;
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+      margin-top: 60px;
+    }
+    
+    .footer-section a {
+      color: #667eea;
+      text-decoration: none;
+    }
+    
+    .footer-section a:hover {
+      color: #5a67d8;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header-section">
+    <div class="container">
+      <h1>멀티모달개론</h1>
+      <h2>Introduction to Multimodal AI</h2>
+      <p class="university"><strong>한국외국어대학교 Language & AI 융합학부</strong></p>
+      <p class="university">Hankuk University of Foreign Studies</p>
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <!-- Quick Links -->
+    <div class="quick-links">
+      <a href="#overview" class="quick-link"><i class="fas fa-graduation-cap"></i> 강의 개요</a>
+      <a href="#instructor" class="quick-link"><i class="fas fa-info-circle"></i> 과목 정보</a>
+      <a href="#schedule" class="quick-link"><i class="fas fa-calendar-alt"></i> 강의 계획</a>
+      <a href="#evaluation" class="quick-link"><i class="fas fa-chart-pie"></i> 평가 체계</a>
+      <a href="#resources" class="quick-link"><i class="fas fa-laptop-code"></i> 참고 자료</a>
+    </div>
+
+    <!-- Course Overview -->
+    <div id="overview" class="course-card">
+      <h3 class="section-title"><i class="fas fa-graduation-cap"></i> 강의 개요</h3>
+      <p class="lead">
+        텍스트, 이미지, 오디오 등 다양한 모달리티를 결합하여 처리하는 멀티모달 인공지능의 기초 이론과 응용을 학습합니다.
+      </p>
+      
+      <div class="course-objectives">
+        <h4><i class="fas fa-bullseye"></i> 학습 목표</h4>
+        <ul>
+          <li><i class="fas fa-check text-success me-2"></i>멀티모달 데이터의 특성 이해</li>
+          <li><i class="fas fa-check text-success me-2"></i>Vision-Language 모델의 구조 학습</li>
+          <li><i class="fas fa-check text-success me-2"></i>멀티모달 융합 기술 습득</li>
+        </ul>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <h5><i class="fas fa-info-circle text-primary"></i> 강의 정보</h5>
+          <ul class="list-unstyled">
+            <li><strong>강의 시간:</strong> 수요일 7,8,9교시 (15:00-18:00)</li>
+            <li><strong>강의실:</strong> 공학관 207호 (예정)</li>
+            <li><strong>학점:</strong> 3학점</li>
+            <li><strong>수강권장 사전지식:</strong> 딥러닝 기초</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h5><i class="fas fa-tools text-primary"></i> 사용 도구</h5>
+          <ul class="list-unstyled">
+            <li><strong>언어:</strong> Python</li>
+            <li><strong>라이브러리:</strong> PyTorch, HuggingFace</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Information -->
+    <div id="instructor" class="course-card">
+      <h3 class="section-title"><i class="fas fa-info-circle"></i> 과목 정보</h3>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <h5><i class="fas fa-id-card text-primary"></i> 과목 기본정보</h5>
+          <ul class="list-unstyled">
+            <li><strong>과목명:</strong> 멀티모달개론</li>
+            <li><strong>개설학과:</strong> Language & AI 융합학부</li>
+            <li><strong>담당교수:</strong> 최승택</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Schedule -->
+    <div id="schedule" class="course-card">
+      <h3 class="section-title"><i class="fas fa-calendar-alt"></i> 강의 계획</h3>
+      <table class="schedule-table table">
+        <thead>
+          <tr>
+            <th style="width: 12%;">주차</th>
+            <th style="width: 25%;">주제</th>
+            <th style="width: 43%;">세부 내용</th>
+            <th style="width: 20%;">자료</th>
+          </tr>
+        </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="week-number">1주차</span><br>
+            <small class="text-muted">2026.03.04</small><br>
+            <span class="phase-label phase-basic">Intro</span>
+          </td>
+          <td>Introduction</td>
+          <td>강의 소개 및 오리엔테이션</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">2주차</span><br>
+            <small class="text-muted">2026.03.11</small><br>
+            <span class="phase-label phase-basic">기초</span>
+          </td>
+          <td>Multimodal Basics</td>
+          <td>멀티모달 학습의 기초 개념</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">3주차</span><br>
+            <small class="text-muted">2026.03.18</small><br>
+            <span class="phase-label phase-basic">Vision</span>
+          </td>
+          <td>Computer Vision Review</td>
+          <td>CNN, ViT 기초</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">4주차</span><br>
+            <small class="text-muted">2026.03.25</small><br>
+            <span class="phase-label phase-basic">Language</span>
+          </td>
+          <td>NLP Review</td>
+          <td>Transformer, BERT, GPT</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">5주차</span><br>
+            <small class="text-muted">2026.04.01</small><br>
+            <span class="phase-label phase-intermediate">Fusion</span>
+          </td>
+          <td>Multimodal Fusion</td>
+          <td>Early/Late Fusion, Co-attention</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">6주차</span><br>
+            <small class="text-muted">2026.04.08</small><br>
+            <span class="phase-label phase-intermediate">V-L</span>
+          </td>
+          <td>Vision-Language Models (1)</td>
+          <td>CLIP, ALIGN</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">7주차</span><br>
+            <small class="text-muted">2026.04.15</small><br>
+            <span class="phase-label phase-intermediate">V-L</span>
+          </td>
+          <td>Vision-Language Models (2)</td>
+          <td>Flamingo, BLIP</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">8주차</span><br>
+            <small class="text-muted">2026.04.22</small><br>
+            <span class="phase-label">중간고사</span>
+          </td>
+          <td>중간고사</td>
+          <td>전반부 내용 평가</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">9주차</span><br>
+            <small class="text-muted">2026.04.29</small><br>
+            <span class="phase-label phase-advanced">Generation</span>
+          </td>
+          <td>Multimodal Generation (1)</td>
+          <td>Text-to-Image Generation (GAN, VAE)</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">10주차</span><br>
+            <small class="text-muted">2026.05.06</small><br>
+            <span class="phase-label phase-advanced">Generation</span>
+          </td>
+          <td>Multimodal Generation (2)</td>
+          <td>Diffusion Models</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">11주차</span><br>
+            <small class="text-muted">2026.05.13</small><br>
+            <span class="phase-label phase-advanced">Advanced</span>
+          </td>
+          <td>Large Multimodal Models (1)</td>
+          <td>LLaVA, GPT-4V</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">12주차</span><br>
+            <small class="text-muted">2026.05.20</small><br>
+            <span class="phase-label phase-advanced">Advanced</span>
+          </td>
+          <td>Large Multimodal Models (2)</td>
+          <td>Recent Architectures</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">13주차</span><br>
+            <small class="text-muted">2026.05.27</small><br>
+            <span class="phase-label phase-advanced">Audio</span>
+          </td>
+          <td>Audio-Language Models</td>
+          <td>Speech/Music Processing</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr style="background-color: #f8f9fa; color: #6c757d;">
+          <td>
+            <span class="week-number" style="background: #6c757d;">14주차</span><br>
+            <small class="text-muted">2026.06.03</small><br>
+            <span class="phase-label">휴강</span>
+          </td>
+          <td>지방선거일</td>
+          <td>제9회 전국동시지방선거 (휴강)</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">15주차</span><br>
+            <small class="text-muted">2026.06.10</small><br>
+            <span class="phase-label phase-advanced">Project</span>
+          </td>
+          <td>Final Project / Advanced Topics</td>
+          <td>프로젝트 발표 및 정리 (보강주)</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr style="border-bottom: 4px solid #3498db; box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);">
+          <td>
+            <span class="week-number">16주차</span><br>
+            <small class="text-muted">2026.06.17</small><br>
+            <span class="phase-label">기말고사</span>
+          </td>
+          <td>기말고사</td>
+          <td>전체 내용 종합 평가</td>
+          <td>-</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Evaluation System -->
+    <div id="evaluation" class="evaluation-section">
+      <h3 class="section-title"><i class="fas fa-chart-pie"></i> 평가 체계</h3>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <td><i class="fas fa-file-alt text-primary me-2"></i>중간고사</td>
+                <td class="text-end"><span class="evaluation-percentage">35%</span></td>
+              </tr>
+              <tr>
+                <td><i class="fas fa-file-alt text-primary me-2"></i>기말고사</td>
+                <td class="text-end"><span class="evaluation-percentage">35%</span></td>
+              </tr>
+              <tr>
+                <td><i class="fas fa-user-check text-primary me-2"></i>출석 및 참여</td>
+                <td class="text-end"><span class="evaluation-percentage">10%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <td><i class="fas fa-code text-primary me-2"></i>프로젝트/과제</td>
+                <td class="text-end"><span class="evaluation-percentage">20%</span></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-center text-muted"><small>총합 100%</small></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+    </div>
+
+    <!-- Learning Resources -->
+    <div id="resources" class="resources-section">
+      <h3 class="section-title"><i class="fas fa-laptop-code"></i> 학습 자료 및 도구</h3>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <h5><i class="fas fa-book text-success"></i> 교재</h5>
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> 강의자료 및 논문 제공
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Announcements -->
+    <div class="announcement-box">
+      <h4><i class="fas fa-bullhorn text-warning"></i> 공지사항</h4>
+      <ul class="mb-0">
+        <li><i class="fas fa-info-circle text-info me-2"></i>수요일 7,8,9교시 수업입니다.</li>
+        <li><i class="fas fa-calendar-check text-info me-2"></i>6월 3일은 지방선거로 휴강입니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-section">
+    <div class="container">
+      <p>&copy; 2026 한국외국어대학교 Language & AI 융합학부 멀티모달개론 강의</p>
+      <p><a href="../../teaching/"><i class="fas fa-home"></i> 목록으로 돌아가기</a></p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

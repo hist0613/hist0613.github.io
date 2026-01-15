@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>정보검색및추천시스템 - 한국외국어대학교</title>
+  <meta name="description" content="한국외국어대학교 정보검색및추천시스템 강의 페이지">
+  <meta name="robots" content="noindex, nofollow">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="../../css/github-light.css" rel="stylesheet">
+  <link href="../../css/style.css" rel="stylesheet">
+  
+  <style>
+    .phase-label {
+      background: #e2e8f0;
+      color: #4a5568;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .phase-basic {
+      background: #fed7d7;
+      color: #c53030;
+    }
+
+    .phase-intermediate {
+      background: #feebc8;
+      color: #dd6b20;
+    }
+
+    .phase-advanced {
+      background: #c6f6d5;
+      color: #38a169;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #2c3e50;
+      background-color: #f8f9fa;
+    }
+    
+    .header-section {
+      background: linear-gradient(135deg, #FF6B6B 0%, #556270 100%);
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+      border-bottom: 3px solid #C44D58;
+    }
+    
+    .header-section h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+      color: white;
+    }
+    
+     .header-section h2 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 15px;
+      color: #e2e8f0;
+    }
+    
+    .header-section .university {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    
+    /* Reusing other styles from main template */
+    .nav-pills .nav-link { color: #495057; border-radius: 25px; margin: 0 5px; padding: 10px 20px; transition: all 0.3s; }
+    .nav-pills .nav-link.active { background-color: #FF6B6B; border-color: #FF6B6B; }
+    .nav-pills .nav-link:hover { background-color: #f8f9fa; }
+    
+    .course-card { background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 30px; margin-bottom: 30px; border-left: 4px solid #FF6B6B; }
+    .course-objectives { background: #f8f9fa; border-radius: 8px; padding: 20px; margin: 20px 0; border: 1px solid #e9ecef; }
+    .course-objectives h4 { color: #495057; margin-bottom: 15px; }
+    .course-objectives ul li { margin-bottom: 8px; padding-left: 10px; }
+    
+    .instructor-card { background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 25px; text-align: center; margin-bottom: 30px; }
+    .instructor-photo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 20px; border: 3px solid #FF6B6B; }
+    
+    .schedule-table { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #dee2e6; }
+    .schedule-table th { background: linear-gradient(135deg, #FF6B6B 0%, #556270 100%); color: white; padding: 15px; font-weight: 600; text-align: left; border-bottom: 2px solid #C44D58; }
+    .schedule-table td { padding: 18px 15px; border-bottom: 1px solid #e9ecef; vertical-align: middle; line-height: 1.5; }
+    
+    .week-number { background: #FF6B6B; color: white; padding: 6px 10px; border-radius: 20px; font-weight: 500; font-size: 0.85rem; display: inline-block; min-width: 60px; text-align: center; }
+    
+    .resource-link { display: inline-block; margin: 3px; padding: 6px 12px; background: #FF6B6B; color: white; border-radius: 15px; text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
+    .resource-link:hover { background: #E25050; color: white; text-decoration: none; transform: translateY(-1px); }
+    .resource-link.disabled { background: #cbd5e0; color: #a0aec0; cursor: not-allowed; pointer-events: none; }
+    
+    .evaluation-section { background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 30px; margin: 30px 0; }
+    .evaluation-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #e9ecef; }
+    .evaluation-item:last-child { border-bottom: none; }
+    .evaluation-percentage { background: #FF6B6B; color: white; padding: 4px 8px; border-radius: 3px; font-weight: 500; font-size: 0.85rem; }
+    
+    .resources-section { background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 30px; margin: 30px 0; }
+    .announcement-box { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); border-radius: 10px; padding: 25px; margin: 30px 0; color: #555; }
+    .announcement-box h4 { color: #d63384; }
+    .announcement-box li i { color: #d63384; }
+    
+    .section-title { color: #2c3e50; font-weight: 600; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid #FF6B6B; font-size: 1.4rem; }
+    
+    .quick-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin: 30px 0; }
+    .quick-link { background: #FF6B6B; color: white; padding: 10px 18px; border-radius: 25px; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: all 0.3s; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+    .quick-link:hover { background: #E25050; color: white; text-decoration: none; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); }
+    
+    .footer-section { background: #2c3e50; color: white; padding: 40px 0; text-align: center; margin-top: 60px; }
+    .footer-section a { color: #FF6B6B; text-decoration: none; }
+    .footer-section a:hover { color: #E25050; }
+  </style>
+</head>
+
+<body>
+  <div class="header-section">
+    <div class="container">
+      <h1>정보검색및추천시스템</h1>
+      <h2>Information Retrieval and Recommender System</h2>
+      <p class="university"><strong>한국외국어대학교 Language & AI 융합학부</strong></p>
+      <p class="university">Hankuk University of Foreign Studies</p>
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <!-- Quick Links -->
+    <div class="quick-links">
+      <a href="#overview" class="quick-link"><i class="fas fa-graduation-cap"></i> 강의 개요</a>
+      <a href="#instructor" class="quick-link"><i class="fas fa-info-circle"></i> 과목 정보</a>
+      <a href="#schedule" class="quick-link"><i class="fas fa-calendar-alt"></i> 강의 계획</a>
+      <a href="#evaluation" class="quick-link"><i class="fas fa-chart-pie"></i> 평가 체계</a>
+      <a href="#resources" class="quick-link"><i class="fas fa-laptop-code"></i> 참고 자료</a>
+    </div>
+
+    <!-- Course Overview -->
+    <div id="overview" class="course-card">
+      <h3 class="section-title"><i class="fas fa-graduation-cap"></i> 강의 개요</h3>
+      <p class="lead">
+        대규모 텍스트 데이터의 검색 원리와 사용자 맞춤형 추천 시스템의 핵심 알고리즘을 학습합니다.
+      </p>
+      
+      <div class="course-objectives">
+        <h4><i class="fas fa-bullseye"></i> 학습 목표</h4>
+        <ul>
+          <li><i class="fas fa-check text-success me-2"></i>정보 검색 엔진의 아키텍처 이해</li>
+          <li><i class="fas fa-check text-success me-2"></i>다양한 추천 알고리즘 구현 및 분석</li>
+          <li><i class="fas fa-check text-success me-2"></i>실제 데이터를 활용한 검색 및 추천 시스템 구축</li>
+        </ul>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <h5><i class="fas fa-info-circle text-primary"></i> 강의 정보</h5>
+          <ul class="list-unstyled">
+            <li><strong>강의 시간:</strong> 금요일 1,2,3교시 (09:00-12:00)</li>
+            <li><strong>강의실:</strong> 공학관 101호 (예정)</li>
+            <li><strong>학점:</strong> 3학점</li>
+            <li><strong>수강권장 사전지식:</strong> 자료구조, 선형대수</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h5><i class="fas fa-tools text-primary"></i> 사용 도구</h5>
+          <ul class="list-unstyled">
+            <li><strong>언어:</strong> Python</li>
+            <li><strong>라이브러리:</strong> Scikit-learn, PyTorch, Surprise</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Information -->
+    <div id="instructor" class="course-card">
+      <h3 class="section-title"><i class="fas fa-info-circle"></i> 과목 정보</h3>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <h5><i class="fas fa-id-card text-primary"></i> 과목 기본정보</h5>
+          <ul class="list-unstyled">
+            <li><strong>과목명:</strong> 정보검색및추천시스템</li>
+            <li><strong>개설학과:</strong> Language & AI 융합학부</li>
+            <li><strong>담당교수:</strong> 최승택</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Schedule -->
+    <div id="schedule" class="course-card">
+      <h3 class="section-title"><i class="fas fa-calendar-alt"></i> 강의 계획 (15주)</h3>
+      <table class="schedule-table table">
+        <thead>
+          <tr>
+            <th style="width: 12%;">주차</th>
+            <th style="width: 25%;">주제</th>
+            <th style="width: 43%;">세부 내용</th>
+            <th style="width: 20%;">자료</th>
+          </tr>
+        </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="week-number">1주차</span><br>
+            <small class="text-muted">2026.03.06</small><br>
+            <span class="phase-label phase-basic">Intro</span>
+          </td>
+          <td>Introduction</td>
+          <td>강의 소개 및 오리엔테이션</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">2주차</span><br>
+            <small class="text-muted">2026.03.13</small><br>
+            <span class="phase-label phase-basic">IR Basics</span>
+          </td>
+          <td>Boolean Retrieval</td>
+          <td>Inverted Index, Boolean Queries</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">3주차</span><br>
+            <small class="text-muted">2026.03.20</small><br>
+            <span class="phase-label phase-basic">IR Basics</span>
+          </td>
+          <td>Vector Space Model</td>
+          <td>TF-IDF, Cosine Similarity</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">4주차</span><br>
+            <small class="text-muted">2026.03.27</small><br>
+            <span class="phase-label phase-basic">Evaluation</span>
+          </td>
+          <td>IR Evaluation</td>
+          <td>Precision, Recall, F1, MAP</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">5주차</span><br>
+            <small class="text-muted">2026.04.03</small><br>
+            <span class="phase-label phase-intermediate">Advanced IR</span>
+          </td>
+          <td>Probabilistic IR</td>
+          <td>BM25, Language Models</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">6주차</span><br>
+            <small class="text-muted">2026.04.10</small><br>
+            <span class="phase-label phase-intermediate">RecSys</span>
+          </td>
+          <td>Recommender System Intro</td>
+          <td>Content-based Filtering</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">7주차</span><br>
+            <small class="text-muted">2026.04.17</small><br>
+            <span class="phase-label phase-intermediate">RecSys</span>
+          </td>
+          <td>Collaborative Filtering</td>
+          <td>User-based, Item-based CF</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr style="border-bottom: 4px solid #3498db; box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);">
+          <td>
+            <span class="week-number">8주차</span><br>
+            <small class="text-muted">2026.04.24</small><br>
+            <span class="phase-label">중간고사</span>
+          </td>
+          <td>중간고사</td>
+          <td>전반부 내용 평가</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">9주차</span><br>
+            <small class="text-muted">2026.05.01</small><br>
+            <span class="phase-label phase-advanced">Matrix</span>
+          </td>
+          <td>Matrix Factorization</td>
+          <td>SVD, ALS, SGD</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">10주차</span><br>
+            <small class="text-muted">2026.05.08</small><br>
+            <span class="phase-label phase-advanced">Deep Learning</span>
+          </td>
+          <td>Neural IR</td>
+          <td>Dense Retrieval (DPR, ColBERT)</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">11주차</span><br>
+            <small class="text-muted">2026.05.15</small><br>
+            <span class="phase-label phase-advanced">Deep Learning</span>
+          </td>
+          <td>Neural RecSys (1)</td>
+          <td>Neural CF, Wide & Deep</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">12주차</span><br>
+            <small class="text-muted">2026.05.22</small><br>
+            <span class="phase-label phase-advanced">Deep Learning</span>
+          </td>
+          <td>Neural RecSys (2)</td>
+          <td>Sequence-based RecSys (BERT4Rec)</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">13주차</span><br>
+            <small class="text-muted">2026.05.29</small><br>
+            <span class="phase-label phase-advanced">Graph</span>
+          </td>
+          <td>Graph Neural Networks</td>
+          <td>GNN for Recommendation</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="week-number">14주차</span><br>
+            <small class="text-muted">2026.06.05</small><br>
+            <span class="phase-label phase-advanced">Advanced</span>
+          </td>
+          <td>Bandits & RL</td>
+          <td>Exploration vs Exploitation</td>
+          <td>
+            <span class="resource-link disabled">강의자료</span>
+          </td>
+        </tr>
+        <tr style="border-bottom: 4px solid #3498db; box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);">
+          <td>
+            <span class="week-number">15주차</span><br>
+            <small class="text-muted">2026.06.12</small><br>
+            <span class="phase-label">기말고사</span>
+          </td>
+          <td>기말고사</td>
+          <td>전체 내용 종합 평가</td>
+          <td>-</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Evaluation System -->
+    <div id="evaluation" class="evaluation-section">
+      <h3 class="section-title"><i class="fas fa-chart-pie"></i> 평가 체계</h3>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <td><i class="fas fa-file-alt text-primary me-2"></i>중간고사</td>
+                <td class="text-end"><span class="evaluation-percentage">35%</span></td>
+              </tr>
+              <tr>
+                <td><i class="fas fa-file-alt text-primary me-2"></i>기말고사</td>
+                <td class="text-end"><span class="evaluation-percentage">35%</span></td>
+              </tr>
+              <tr>
+                <td><i class="fas fa-user-check text-primary me-2"></i>출석 및 참여</td>
+                <td class="text-end"><span class="evaluation-percentage">10%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <td><i class="fas fa-code text-primary me-2"></i>프로젝트/과제</td>
+                <td class="text-end"><span class="evaluation-percentage">20%</span></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-center text-muted"><small>총합 100%</small></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+    </div>
+
+    <!-- Announcements -->
+    <div class="announcement-box">
+      <h4><i class="fas fa-bullhorn"></i> 공지사항</h4>
+      <ul class="mb-0">
+        <li><i class="fas fa-info-circle me-2"></i>금요일 1,2,3교시 수업입니다.</li>
+        <li><i class="fas fa-calendar-check me-2"></i>총 15주로 진행됩니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-section">
+    <div class="container">
+      <p>&copy; 2026 한국외국어대학교 Language & AI 융합학부 정보검색및추천시스템 강의</p>
+      <p><a href="../../teaching/"><i class="fas fa-home"></i> 목록으로 돌아가기</a></p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
