@@ -4,6 +4,8 @@ const state = {
     activeTrack: null,
     activeMD: null, // MD index
     activeGroup: null, // similar_id
+    activeLayer: null, // 'L1', 'L2', 'L3', 'L4'
+    activeLayerTag: null, // 'literacy', 'core', 'app' (Optional sub-filter)
     showNew: true, // Default: show suggested
     similarityMode: true // Always on
 };
@@ -19,7 +21,7 @@ const modal = document.getElementById('courseModal');
 function init() {
     calculateSimilarityColors(); // Calculate ID numbering first
     renderFilters();
-    renderTable();
+    renderTable(); // Standard Semester Table
     setupEvents();
 }
 
@@ -27,15 +29,97 @@ function init() {
 function renderFilters() {
     // Tracks
     trackContainer.innerHTML = '';
+    
+    // -- Layer Filters (New / Refined) --
+    // Definition of Filter Groups
+    // Structure: [ { label: 'L1: Basics', filters: [{id:'L1', tag:'literacy', name:'AI 기초'}] } ... ]
+    
+    // We want a list of buttons that might be Grouped.
+    // L1: [AI 기초]
+    // L2: [AI 코어] [AI 활용]
+    // ...
+    
+    // Let's manually build the layer buttons array
+    const layerButtons = [
+        { layer: 'L1', tag: 'literacy', label: 'L1: AI 기초', cls: 'layer-l1' },
+        { layer: 'L2', tag: 'core', label: 'L2: AI 코어', cls: 'layer-core' },
+        { layer: 'L2', tag: 'app', label: 'L2: AI 활용', cls: 'layer-app' },
+        { layer: 'L3', tag: 'core', label: 'L3: AI 심화', cls: 'layer-core' },
+        { layer: 'L3', tag: 'app', label: 'L3: AI 융합', cls: 'layer-app' },
+        { layer: 'L4', tag: 'core', label: 'L4: AI 아키텍트', cls: 'layer-core' },
+        { layer: 'L4', tag: 'app', label: 'L4: AI 리더십', cls: 'layer-app' }
+    ];
+
+    let layerContainer = document.getElementById('layer-filters');
+    if (!layerContainer) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'controls';
+        wrapper.id = 'layer-controls'; // wrapper
+        
+        const label = document.createElement('span');
+        label.className = 'filter-label';
+        label.textContent = 'Curriculum Layers:';
+        wrapper.appendChild(label);
+
+        layerContainer = document.createElement('div');
+        layerContainer.id = 'layer-filters';
+        layerContainer.className = 'chip-group';
+        wrapper.appendChild(layerContainer);
+
+        // Insert as first control
+        const controlsWrapper = document.querySelector('.controls-wrapper');
+        controlsWrapper.insertBefore(wrapper, controlsWrapper.firstChild); // Top
+    }
+
+    layerContainer.innerHTML = '';
+    
+    layerButtons.forEach(btnDef => {
+        const btn = document.createElement('div');
+        btn.className = 'filter-chip layer-chip';
+        // Add specific class for styling if needed
+        btn.classList.add(btnDef.cls); 
+        
+        // Visual styling for Core vs App?
+        // Let's just use text for now.
+        btn.innerHTML = `<span style="font-weight:700;">${btnDef.label}</span>`;
+        
+        btn.onclick = () => {
+            // Toggle Logic
+            const isActive = (state.activeLayer === btnDef.layer && state.activeLayerTag === btnDef.tag);
+            
+            if (isActive) {
+                state.activeLayer = null;
+                state.activeLayerTag = null;
+            } else {
+                state.activeLayer = btnDef.layer;
+                state.activeLayerTag = btnDef.tag;
+                
+                // Clear others
+                state.activeTrack = null;
+                state.activeMD = null;
+                state.activeGroup = null; 
+            }
+            updateFilterState();
+            updateHighlights();
+        };
+        layerContainer.appendChild(btn);
+    });
+
+
+    // Tracks
     tracks.forEach(track => {
         const btn = document.createElement('div');
         btn.className = 'filter-chip';
-        btn.innerHTML = `<span style="font-weight:800; margin-right:4px; color:var(--accent-color)">${track.group_number}</span> ${track.title}`; 
+        // Add Track ID (T1..) badge inside
+        btn.innerHTML = `<span style="font-weight:800; margin-right:4px; color:var(--accent-color)">T${track.group_number}</span> ${track.title}`; 
         btn.onclick = () => {
             if (state.activeTrack === track.id) state.activeTrack = null;
             else {
                 state.activeTrack = track.id;
-                state.activeMD = null; // Exclusive
+                state.activeMD = null; 
+                state.activeLayer = null; 
+                state.activeLayerTag = null;
+                state.activeGroup = null;
             }
             updateFilterState();
             updateHighlights();
@@ -53,7 +137,10 @@ function renderFilters() {
             if (state.activeMD === idx) state.activeMD = null;
             else {
                 state.activeMD = idx;
-                state.activeTrack = null; // Exclusive
+                state.activeTrack = null; 
+                state.activeLayer = null; 
+                state.activeLayerTag = null;
+                state.activeGroup = null;
             }
             updateFilterState();
             updateHighlights();
@@ -61,41 +148,70 @@ function renderFilters() {
         mdContainer.appendChild(btn);
     });
 
-    // --- "Show New" Toggle ---
-    let toggleContainer = document.getElementById('new-toggle-container');
-    if (!toggleContainer) {
-        toggleContainer = document.createElement('div');
-        toggleContainer.id = 'new-toggle-container';
-        toggleContainer.className = 'controls';
-        toggleContainer.style.marginLeft = 'auto'; // Right align if possible
-        
-        const label = document.createElement('label');
-        label.style.display = 'flex';
-        label.style.alignItems = 'center';
-        label.style.gap = '6px';
-        label.style.fontSize = '0.85rem';
-        label.style.fontWeight = '600';
-        label.style.color = '#475569';
-        label.style.cursor = 'pointer';
+    // --- Controls Container ---
+    let controlsContainer = document.getElementById('header-controls-right');
+    if (!controlsContainer) {
+        controlsContainer = document.createElement('div');
+        controlsContainer.id = 'header-controls-right';
+        controlsContainer.className = 'controls';
+        controlsContainer.style.marginLeft = 'auto'; 
+        controlsContainer.style.display = 'flex';
+        controlsContainer.style.gap = '16px';
+        controlsContainer.style.alignItems = 'center';
 
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.checked = state.showNew;
-        checkbox.onchange = (e) => {
-            state.showNew = e.target.checked;
-            renderTable(); // Re-render table to remove items
-        };
-
-        label.appendChild(checkbox);
-        label.appendChild(document.createTextNode('Show New Courses (AI+X)'));
-        toggleContainer.appendChild(label);
-
-        // Append to header controls
-        document.querySelector('.controls').appendChild(toggleContainer);
+        document.querySelector('.controls-wrapper').appendChild(controlsContainer);
     }
+    
+    // Clear & Rebuild
+    controlsContainer.innerHTML = '';
+
+    // Show New Courses Toggle
+    const newToggleLabel = document.createElement('label');
+    newToggleLabel.style.display = 'flex';
+    newToggleLabel.style.alignItems = 'center';
+    newToggleLabel.style.gap = '6px';
+    newToggleLabel.style.fontSize = '0.85rem';
+    newToggleLabel.style.fontWeight = '600';
+    newToggleLabel.style.color = '#475569';
+    newToggleLabel.style.cursor = 'pointer';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = state.showNew;
+    checkbox.onchange = (e) => {
+        state.showNew = e.target.checked;
+        renderTable(); 
+    };
+
+    newToggleLabel.appendChild(checkbox);
+    newToggleLabel.appendChild(document.createTextNode('Show New Courses (AI+X)'));
+    controlsContainer.appendChild(newToggleLabel);
 }
 
 function updateFilterState() {
+    // Layers
+    const layerContainer = document.getElementById('layer-filters');
+    if(layerContainer) {
+        // We know the order of buttons matches our definitions
+        const buttons = layerContainer.querySelectorAll('.filter-chip');
+        const defs = [
+            { layer: 'L1', tag: 'literacy' },
+            { layer: 'L2', tag: 'core' }, { layer: 'L2', tag: 'app' },
+            { layer: 'L3', tag: 'core' }, { layer: 'L3', tag: 'app' },
+            { layer: 'L4', tag: 'core' }, { layer: 'L4', tag: 'app' }
+        ];
+        
+        buttons.forEach((btn, i) => {
+            const def = defs[i];
+            if (def.layer === state.activeLayer && def.tag === state.activeLayerTag) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    // Tracks
     const trackChips = trackContainer.querySelectorAll('.filter-chip');
     trackChips.forEach((chip, i) => {
         const track = tracks[i];
@@ -103,6 +219,7 @@ function updateFilterState() {
         else chip.classList.remove('active');
     });
 
+    // MD
     const mdChips = mdContainer.querySelectorAll('.filter-chip');
     mdChips.forEach((chip, i) => {
         if (i === state.activeMD) chip.classList.add('active');
@@ -118,12 +235,12 @@ function renderTable() {
     const headerRow = document.createElement('div');
     headerRow.className = 'table-header';
     
-    // Semester Label Header
     const emptyCell = document.createElement('div');
     emptyCell.className = 'col-header semester-col';
     emptyCell.textContent = 'Sem';
     headerRow.appendChild(emptyCell);
 
+    // Department Columns
     departments.forEach(dept => {
         const cell = document.createElement('div');
         cell.className = 'col-header';
@@ -146,7 +263,7 @@ function renderTable() {
         const row = document.createElement('div');
         row.className = 'table-row';
 
-        // Label
+        // Row Label
         const label = document.createElement('div');
         label.className = 'row-label';
         label.textContent = `${sem.g}-${sem.s}`;
@@ -158,12 +275,12 @@ function renderTable() {
             cell.className = 'cell';
 
             // Filter courses
-            const courses = courseData.filter(c => 
-                c.dept === dept.id && 
-                c.grade === sem.g && 
-                c.semester === sem.s &&
-                (state.showNew || !c.suggested) // Visibility Check
-            );
+            const courses = courseData.filter(c => {
+                if (c.dept !== dept.id) return false;
+                if (c.grade !== sem.g || c.semester !== sem.s) return false;
+                if (!state.showNew && c.suggested) return false;
+                return true;
+            });
 
             // Sort: BSM -> Major_Req -> Major_Sel -> Capstone
             const orderScore = { "BSM": 1, "Major_Req": 2, "Major_Sel": 3, "Capstone": 10 }; 
@@ -179,12 +296,16 @@ function renderTable() {
                 card.textContent = course.name;
                 card.dataset.cat = course.category;
                 card.dataset.similar = course.similar_id || "";
+                
+                // Add Layer Data Attributes
+                card.dataset.layer = course.layer || "";
+                card.dataset.layerTag = course.layer_tag || "";
 
                 // --- Track & Similarity Badges ---
                 const badgeContainer = document.createElement('div');
                 badgeContainer.className = 'track-badges';
                 
-                // 1. Similarity Group Badge (The "Color" Group)
+                // 1. Similarity Group Badge
                 if (course.similar_id && simNumberMap.has(course.similar_id)) {
                     const simNum = simNumberMap.get(course.similar_id);
                     const color = simColorMap.get(course.similar_id);
@@ -193,20 +314,21 @@ function renderTable() {
                     badge.className = 'track-badge sim-badge';
                     badge.textContent = simNum;
                     badge.style.backgroundColor = color;
-                    badge.style.color = '#fff'; // White text for colored badges
+                    badge.style.color = '#fff'; 
                     badge.style.borderColor = color;
                     badge.title = `Similarity Group ${simNum} (Click to Filter)`;
                     
-                    // Interaction
                     badge.style.cursor = 'pointer';
                     badge.onclick = (e) => {
-                        e.stopPropagation(); // Stop card click
+                        e.stopPropagation();
                         if (state.activeGroup === course.similar_id) {
                             state.activeGroup = null;
                         } else {
                             state.activeGroup = course.similar_id;
                             state.activeTrack = null;
                             state.activeMD = null;
+                            state.activeLayer = null;
+                            state.activeLayerTag = null;
                         }
                         updateFilterState();
                         updateHighlights();
@@ -215,7 +337,7 @@ function renderTable() {
                     badgeContainer.appendChild(badge);
                 }
 
-                // 2. Track Badges (The "Curriculum" Tracks)
+                // 2. Track Badges
                 if (course.similar_id) {
                     const matchingTracks = tracks.filter(t => t.required_similars.includes(course.similar_id));
                     if (matchingTracks.length > 0) {
@@ -224,7 +346,7 @@ function renderTable() {
                         matchingTracks.forEach(t => {
                             const badge = document.createElement('span');
                             badge.className = 'track-badge';
-                            badge.textContent = `T${t.group_number}`; // Distinguish Track (T1) from Group (1)
+                            badge.textContent = `T${t.group_number}`; 
                             badge.title = t.title; 
                             
                             if (state.activeTrack === t.id) {
@@ -258,14 +380,12 @@ function renderTable() {
         tableContainer.appendChild(row);
     });
 
-    // Determine Similarity Colors
-    // calculateSimilarityColors(); // Moved to init
     updateHighlights();
 }
 
 // 3. Logic & Highlights
 const simColorMap = new Map();
-const simNumberMap = new Map(); // Store group numbers for similar_ids
+const simNumberMap = new Map(); 
 const similarityColors = [
     '#F87171', '#FBBF24', '#34D399', '#60A5FA', '#818CF8', '#A78BFA', '#F472B6'
 ];
@@ -285,7 +405,6 @@ function calculateSimilarityColors() {
     let colorIdx = 0;
     let numIdx = 1;
 
-    // Sort to ensure deterministic numbering
     Object.keys(counts).sort().forEach(sid => {
         if (counts[sid] > 1) {
             simColorMap.set(sid, similarityColors[colorIdx % similarityColors.length]);
@@ -301,36 +420,46 @@ function updateHighlights() {
     
     // Check active requirements
     let targetSimilars = new Set();
-    let specificSimilar = null;
-    const hasActiveFilter = state.activeTrack || state.activeMD !== null || state.activeGroup;
+    const hasActiveFilter = state.activeTrack || state.activeMD !== null || state.activeGroup || state.activeLayer;
 
     if (state.activeGroup) {
-        specificSimilar = state.activeGroup;
+        // Direct group selection
+        targetSimilars.add(state.activeGroup);
     } else if (state.activeTrack) {
         const t = tracks.find(tr => tr.id === state.activeTrack);
         if(t) targetSimilars = new Set(t.required_similars);
     } else if (state.activeMD !== null) {
         const md = microDegrees[state.activeMD];
         if(md) targetSimilars = new Set(md.courses);
-    }
+    } 
+    // Layer filter uses dataset
 
     cards.forEach(card => {
         const sid = card.dataset.similar;
+        const layer = card.dataset.layer;
+        const layerTag = card.dataset.layerTag;
 
-        // Reset visual state (keep .suggested class though)
+        // Reset visual state
         card.classList.remove('highlighted', 'dimmed', 'similar');
         card.style.backgroundColor = '';
         card.style.borderColor = ''; 
-        // Note: borderColor reset might remove default border for suggested?
-        // Let's re-apply empty to let CSS take over, or specific.
         
         // 1. Filter Logic
         if (hasActiveFilter) {
             let match = false;
             
-            if (state.activeGroup) {
+            if (state.activeLayer) {
+                // Layer-based match
+                // Must match BOTH layer and tag (if tag is refined)
+                match = (layer === state.activeLayer);
+                if (match && state.activeLayerTag) {
+                     match = (layerTag === state.activeLayerTag);
+                }
+            } else if (state.activeGroup) {
+                // Similarity Group match
                 match = (sid === state.activeGroup);
             } else {
+                // Track/MD match via similars
                 match = (sid && targetSimilars.has(sid));
             }
 
@@ -365,7 +494,7 @@ function openModal(course, dept) {
             sisters.forEach(s => {
                 const d = departments.find(dep => dep.id === s.dept);
                 const li = document.createElement('li');
-                li.textContent = `${d.name} : ${s.name} (${s.grade}-${s.semester})`;
+                li.textContent = `${d.name} : ${s.name} (${s.grade}-${s.semester}) [${s.layer || ''}]`;
                 list.appendChild(li);
             });
         } else {
@@ -375,15 +504,15 @@ function openModal(course, dept) {
         list.innerHTML = '<li>연계된 타 학과 과목이 없습니다.</li>';
     }
 
-    // Modal Description Update ? 
-    // Maybe add logic to show if it is "Suggested / New".
+    // Modal Description
+    const layerInfo = `${course.layer || 'N/A'}-${course.layer_tag || ''}`;
     if(course.suggested) {
         document.getElementById('modalDesc').textContent = 
-            `* 이 과목은 AI+X 융합 교육과정을 위해 신설이 제안된 과목입니다.`;
+            `* 이 과목은 AI+X 융합 교육과정을 위해 신설이 제안된 과목입니다. (Layer: ${layerInfo})`;
         document.getElementById('modalDesc').style.color = 'var(--accent-color)';
     } else {
         document.getElementById('modalDesc').textContent = 
-            `이 과목은 해당 트랙의 핵심 교과목입니다.`;
+            `이 과목은 해당 트랙의 핵심 교과목입니다. (Layer: ${layerInfo})`;
         document.getElementById('modalDesc').style.color = '#334155';
     }
 
@@ -396,6 +525,8 @@ function setupEvents() {
         state.activeTrack = null;
         state.activeMD = null;
         state.activeGroup = null;
+        state.activeLayer = null;
+        state.activeLayerTag = null;
         updateFilterState();
         updateHighlights();
     };
