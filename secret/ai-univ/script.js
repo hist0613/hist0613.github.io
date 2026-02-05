@@ -41,13 +41,13 @@ function renderFilters() {
     
     // Let's manually build the layer buttons array
     const layerButtons = [
-        { layer: 'L1', tag: 'literacy', label: 'L1: AI 기초', cls: 'layer-l1' },
-        { layer: 'L2', tag: 'core', label: 'L2: AI 코어', cls: 'layer-core' },
-        { layer: 'L2', tag: 'app', label: 'L2: AI 활용', cls: 'layer-app' },
-        { layer: 'L3', tag: 'core', label: 'L3: AI 심화', cls: 'layer-core' },
-        { layer: 'L3', tag: 'app', label: 'L3: AI 융합', cls: 'layer-app' },
-        { layer: 'L4', tag: 'core', label: 'L4: AI 아키텍트', cls: 'layer-core' },
-        { layer: 'L4', tag: 'app', label: 'L4: AI 리더십', cls: 'layer-app' }
+        { layer: 'L0', tag: 'literacy', label: 'L0: AI 기초', cls: 'layer-l0' },
+        { layer: 'L1', tag: 'core', label: 'L1: AI 코어', cls: 'layer-core' },
+        { layer: 'L1', tag: 'app', label: 'L1: AI 활용', cls: 'layer-app' },
+        { layer: 'L2', tag: 'core', label: 'L2: AI 심화', cls: 'layer-core' },
+        { layer: 'L2', tag: 'app', label: 'L2: AI 융합', cls: 'layer-app' },
+        { layer: 'L3', tag: 'core', label: 'L3: AI 아키텍트', cls: 'layer-core' },
+        { layer: 'L3', tag: 'app', label: 'L3: AI 리더십', cls: 'layer-app' }
     ];
 
     let layerContainer = document.getElementById('layer-filters');
@@ -195,10 +195,10 @@ function updateFilterState() {
         // We know the order of buttons matches our definitions
         const buttons = layerContainer.querySelectorAll('.filter-chip');
         const defs = [
-            { layer: 'L1', tag: 'literacy' },
+            { layer: 'L0', tag: 'literacy' },
+            { layer: 'L1', tag: 'core' }, { layer: 'L1', tag: 'app' },
             { layer: 'L2', tag: 'core' }, { layer: 'L2', tag: 'app' },
-            { layer: 'L3', tag: 'core' }, { layer: 'L3', tag: 'app' },
-            { layer: 'L4', tag: 'core' }, { layer: 'L4', tag: 'app' }
+            { layer: 'L3', tag: 'core' }, { layer: 'L3', tag: 'app' }
         ];
         
         buttons.forEach((btn, i) => {
