@@ -107,11 +107,20 @@ function renderFilters() {
 
 
     // Tracks
+    // Tracks
+    trackContainer.innerHTML = '';
+    // Single container for 6 major tracks
+    trackContainer.style.flexDirection = 'row';
+    trackContainer.style.alignItems = 'center';
+
     tracks.forEach(track => {
         const btn = document.createElement('div');
         btn.className = 'filter-chip';
+        const tColor = track.color || '#3b82f6';
+        btn.style.borderColor = tColor;
+        btn.style.color = tColor;
         // Add Track ID (T1..) badge inside
-        btn.innerHTML = `<span style="font-weight:800; margin-right:4px; color:var(--accent-color)">T${track.group_number}</span> ${track.title}`; 
+        btn.innerHTML = `<span style="font-weight:800; margin-right:4px;">T${track.group_number}</span> ${track.title}`; 
         btn.onclick = () => {
             if (state.activeTrack === track.id) state.activeTrack = null;
             else {
@@ -126,6 +135,8 @@ function renderFilters() {
         };
         trackContainer.appendChild(btn);
     });
+
+    // Micro Degrees
 
     // Micro Degrees
     mdContainer.innerHTML = '';
@@ -215,8 +226,16 @@ function updateFilterState() {
     const trackChips = trackContainer.querySelectorAll('.filter-chip');
     trackChips.forEach((chip, i) => {
         const track = tracks[i];
-        if (track.id === state.activeTrack) chip.classList.add('active');
-        else chip.classList.remove('active');
+        const tColor = track.color || '#3b82f6';
+        if (track.id === state.activeTrack) {
+            chip.classList.add('active');
+            chip.style.backgroundColor = tColor;
+            chip.style.color = '#fff';
+        } else {
+            chip.classList.remove('active');
+            chip.style.backgroundColor = '#fff';
+            chip.style.color = tColor;
+        }
     });
 
     // MD

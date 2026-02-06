@@ -313,44 +313,58 @@ const courseData = [
 
 const  tracks = [
   {
-    id: "edu_ai",
+    id: "ai_core_agentic",
     group_number: 1,
-    title: "교육 AI (Edu AI)",
-    description: "AI 기반 개인화 교육 및 튜터링 시스템 개발 전문가",
-    required_similars: ["lai_intro", "nlp_intro", "ai_tutor", "prompt_eng", "hci"],
-    recommanded_grade: "ELLT + LAI 협력 과정"
+    title: "AI 코어 & 에이전틱 AI",
+    description: "AI/ML 핵심 알고리즘 설계 및 에이전틱 AI 시스템 구축 전문가",
+    required_similars: ["ai_intro", "ml", "dl", "prob_stat", "linear_alg", "cv", "rl", "nlp_intro", "ai_algo", "distributed_ml", "intro_prog"],
+    recommanded_grade: "컴퓨터공학부 + AI데이터융합 + Language&AI",
+    color: "#4f46e5" 
   },
   {
-    id: "regional_ai",
+    id: "physical_ai_smart",
     group_number: 2,
-    title: "지역학 AI (Area Studies AI)",
-    description: "다국어 처리 및 지역 특화 데이터 분석 전문가 양성",
-    required_similars: ["mt", "auto_interpre", "regional_bigdata", "regional_data_analysis", "multimodal", "culture_llm"],
-    recommanded_grade: "국제지역대학/서양어대학 + LAI/SSAI 협력 과정"
+    title: "피지컬 AI & 스마트 시스템",
+    description: "로봇, 자율주행 등 물리 세계를 인지·판단·행동하는 AI 시스템 설계",
+    required_similars: ["ai_intro", "ml", "dl", "iot", "robotics", "sig_sys", "digital_twin", "edge_ai", "sensor_fusion", "embedded", "speech_proc", "vision", "os", "network", "sys_prog", "data_comm", "security", "logic_circuits", "capstone_ice"],
+    recommanded_grade: "정보통신(개편) + 컴퓨터공학부 + Language&AI",
+    color: "#ea580c"
   },
   {
-    id: "finance_ai",
+    id: "language_ai_comm",
     group_number: 3,
-    title: "금융 AI (Finance AI)",
-    description: "금융 데이터 분석 및 핀테크 기술 습득",
-    required_similars: ["regression", "tsa_fin", "ml", "advanced_llm", "algo_trading", "fin_ds"],
-    recommanded_grade: "IME + FAI 협력 과정"
+    title: "언어 AI & 글로벌 커뮤니케이션",
+    description: "다국어 NLP, 음성처리, 자동통번역 기술 개발 및 응용",
+    required_similars: ["ai_intro", "ml", "dl", "lai_intro", "nlp_intro", "speech_proc", "practical_speech", "text_mining", "linguistics", "auto_interpre", "corpus", "culture_llm"],
+    recommanded_grade: "Language&AI + 컴퓨터공학부 + Social Science&AI",
+    color: "#10b981"
   },
   {
-    id: "media_ai",
+    id: "data_science_analytics",
     group_number: 4,
-    title: "미디어 AI (Media AI)",
-    description: "멀티모달 콘텐츠 생성 및 추천 시스템 개발",
-    required_similars: ["metavese", "bigdata", "video_gen", "media_data_lab", "dl", "multimodal"],
-    recommanded_grade: "MEDIA + SSAI 협력 과정"
+    title: "데이터사이언스 & AI 분석",
+    description: "대규모 데이터 수집·분석 및 도메인 의사결정 지원 전문가",
+    required_similars: ["ai_intro", "ml", "dl", "prob_stat", "linear_alg", "ds_intro", "bigdata", "db", "regression", "tsa", "dm", "social_method", "fin_data_analysis", "unstruct_dm"],
+    recommanded_grade: "AI데이터융합 + Finance&AI + Social Science&AI",
+    color: "#06b6d4"
   },
   {
-    id: "healthcare_ai",
+    id: "dis_finance_biz",
     group_number: 5,
-    title: "헬스케어 AI",
-    description: "의료 데이터 분석 및 질병 예측 모델링",
-    required_similars: ["prob_stat", "ml", "medical_data", "disease_pred", "dm", "survival"],
-    recommanded_grade: "IME + AID 협력 과정"
+    title: "AI 금융 & 비즈니스",
+    description: "핀테크, 금융공학, ESG 분석 등 금융 영역의 AI 응용",
+    required_similars: ["ai_intro", "ml", "dl", "fin_intro", "fintech", "blockchain", "esg", "fin_data", "ai_ethics", "investment", "algo_trading", "tsa_fin"],
+    recommanded_grade: "Finance&AI + AI데이터융합 + 컴퓨터공학부",
+    color: "#7c3aed"
+  },
+  {
+    id: "social_innovation_policy",
+    group_number: 6,
+    title: "AI 사회혁신 & 공공정책",
+    description: "AI·데이터 기반 사회문제 해결 및 공공정책/거버넌스 설계",
+    required_similars: ["ai_intro", "ml", "dl", "social_method", "regional_data", "ai_ethics", "sna", "text_social", "social_ds", "social_prog", "public_policy", "policy_ai"],
+    recommanded_grade: "Social Science&AI + Language&AI + Finance&AI",
+    color: "#e11d48"
   }
 ];
 
