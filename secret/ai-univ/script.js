@@ -435,7 +435,48 @@ function renderTable() {
     applyGravitySort(-1); // Up
     applyGravitySort(1);  // Down Again
 
-    // 3. Render Rows
+    // --- HORIZONTAL SYNCHRONIZATION (New) ---
+    // Ensure consistent internal ordering within rows.
+    // If "AI Math" is generally at the top, it should be at the top in ALL columns.
+    
+    semesters.forEach(sem => {
+        // 1. Calculate Average Rank for each similar_id in this row
+        const rankSum = {}; // sid -> sum of indices
+        const rankCount = {}; // sid -> count
+        
+        displayDepts.forEach(dept => {
+            const key = `${dept.id},${sem.g},${sem.s}`;
+            const courses = cellMap.get(key) || [];
+            courses.forEach((c, idx) => {
+                const sid = c.similar_id || `nosim_${c.name}`; // Treat non-sim as unique items
+                if (!rankSum[sid]) { rankSum[sid] = 0; rankCount[sid] = 0; }
+                rankSum[sid] += idx;
+                rankCount[sid]++;
+            });
+        });
+        
+        const avgRank = {};
+        Object.keys(rankSum).forEach(sid => {
+            avgRank[sid] = rankSum[sid] / rankCount[sid];
+        });
+        
+        // 2. Re-Sort each cell based on Average Rank
+        displayDepts.forEach(dept => {
+            const key = `${dept.id},${sem.g},${sem.s}`;
+            const courses = cellMap.get(key);
+            if (courses && courses.length > 1) {
+                courses.sort((a, b) => {
+                    const sidA = a.similar_id || `nosim_${a.name}`;
+                    const sidB = b.similar_id || `nosim_${b.name}`;
+                    const rankA = avgRank[sidA] !== undefined ? avgRank[sidA] : 999;
+                    const rankB = avgRank[sidB] !== undefined ? avgRank[sidB] : 999;
+                    return rankA - rankB;
+                });
+            }
+        });
+    });
+
+    // 3. Render Rows (Compact - No Spacers)
     semesters.forEach(sem => {
         const row = document.createElement('div');
         row.className = 'table-row';
@@ -542,6 +583,11 @@ function renderTable() {
                 card.onclick = () => openModal(course, dept);
 
                 cell.appendChild(card);
+                
+                // Grid Attributes for SVG logic (Post-render)
+                const rowIdx = (sem.g - 1) * 2 + (sem.s - 1); 
+                card.dataset.gridR = rowIdx;
+                card.dataset.gridC = colIdx;
             });
 
             row.appendChild(cell);
