@@ -7,7 +7,8 @@ const state = {
     activeLayer: null, // 'L1', 'L2', 'L3', 'L4'
     activeLayerTag: null, // 'literacy', 'core', 'app' (Optional sub-filter)
     showNew: true, // Default: show suggested
-    similarityMode: true // Always on
+    similarityMode: true, // Always on
+    viewMode: 'all' // 'all', 'ai', 'ax'
 };
 
 // DOM Elements
@@ -197,6 +198,53 @@ function renderFilters() {
     newToggleLabel.appendChild(checkbox);
     newToggleLabel.appendChild(document.createTextNode('Show New Courses (AI+X)'));
     controlsContainer.appendChild(newToggleLabel);
+
+    // View Mode Controls
+    const viewGroup = document.createElement('div');
+    viewGroup.className = 'view-mode-group';
+    viewGroup.style.display = 'flex';
+    viewGroup.style.gap = '8px';
+    viewGroup.style.marginLeft = '16px';
+    viewGroup.style.paddingLeft = '16px';
+    viewGroup.style.borderLeft = '1px solid #cbd5e1';
+
+    const modes = [
+        { id: 'all', label: 'Full View' },
+        { id: 'ai', label: 'AI Majors' },
+        { id: 'ax', label: 'AX Majors' }
+    ];
+
+    modes.forEach(m => {
+        const btn = document.createElement('button');
+        btn.className = 'view-btn';
+        if (state.viewMode === m.id) btn.classList.add('active');
+        btn.textContent = m.label;
+        btn.style.padding = '4px 12px';
+        btn.style.borderRadius = '6px';
+        btn.style.border = '1px solid #e2e8f0';
+        btn.style.cursor = 'pointer';
+        btn.style.fontSize = '0.85rem';
+        btn.style.fontWeight = '600';
+        
+        // Active Style
+        if (state.viewMode === m.id) {
+            btn.style.background = '#0f172a';
+            btn.style.color = '#fff';
+            btn.style.borderColor = '#0f172a';
+        } else {
+            btn.style.background = '#fff';
+            btn.style.color = '#64748b';
+        }
+
+        btn.onclick = () => {
+            state.viewMode = m.id;
+            renderFilters(); // Re-render buttons
+            renderTable(); // Re-render table
+        };
+        viewGroup.appendChild(btn);
+    });
+
+    controlsContainer.appendChild(viewGroup);
 }
 
 function updateFilterState() {
@@ -259,8 +307,25 @@ function renderTable() {
     emptyCell.textContent = 'Sem';
     headerRow.appendChild(emptyCell);
 
-    // Department Columns
-    departments.forEach(dept => {
+    // Department Columns - Filtering & Sorting
+    let displayDepts = departments;
+    
+    // 1. Filter by View Mode
+    if (state.viewMode === 'ai') {
+        displayDepts = departments.filter(d => d.group === 'AI' || d.group === 'General');
+    } else if (state.viewMode === 'ax') {
+        displayDepts = departments.filter(d => d.group === 'AX_A' || d.group === 'AX_B' || d.group === 'General');
+    }
+
+    // 2. Sort Order: General -> AI -> AX_A -> AX_B
+    const groupOrder = { 'General': 0, 'AI': 1, 'AX_A': 2, 'AX_B': 3 };
+    displayDepts.sort((a,b) => {
+        const ga = groupOrder[a.group] || 99;
+        const gb = groupOrder[b.group] || 99;
+        return ga - gb;
+    });
+
+    displayDepts.forEach(dept => {
         const cell = document.createElement('div');
         cell.className = 'col-header';
         cell.innerHTML = `<div class="col-color-indicator" style="background:${dept.color}"></div> ${dept.name}`;
@@ -268,9 +333,17 @@ function renderTable() {
         cell.onclick = () => window.open(dept.url, '_blank');
         headerRow.appendChild(cell);
     });
+    // -- Grid Setup --
+    // We update the CSS variable for grid columns
+    tableContainer.style.setProperty('--col-count', displayDepts.length);
+
     tableContainer.appendChild(headerRow);
 
     // -- Body Rows (Semesters) --
+    // We need a slightly more complex render process for "God View" Sorting
+    // 1. Prepare Course Lists per Cell
+    const cellMap = new Map(); // "dept_idx,sem_g,sem_s" -> [courses]
+
     const semesters = [
         {g:1, s:1}, {g:1, s:2},
         {g:2, s:1}, {g:2, s:2},
@@ -278,6 +351,91 @@ function renderTable() {
         {g:4, s:1}, {g:4, s:2}
     ];
 
+    // Populate Cell Map first
+    displayDepts.forEach((dept, colIdx) => {
+        semesters.forEach(sem => {
+            const key = `${dept.id},${sem.g},${sem.s}`;
+            const courses = courseData.filter(c => {
+                if (c.dept !== dept.id) return false;
+                if (c.grade !== sem.g || c.semester !== sem.s) return false;
+                if (!state.showNew && c.suggested) return false;
+                return true;
+            });
+            cellMap.set(key, courses);
+        });
+    });
+
+    // 2. God View Sort (Heuristic: 3-Pass "Gravity")
+    // We want to pull connected courses closer to their neighbors.
+    // Pass 1: Downward (Propagate influence from Top)
+    // Pass 2: Upward (Propagate influence from Bottom)
+    // Pass 3: Final Downward Polish
+    
+    const applyGravitySort = (direction) => {
+        // direction: 1 for Top->Bottom, -1 for Bottom->Top
+        const start = direction === 1 ? 0 : semesters.length - 1;
+        const end = direction === 1 ? semesters.length : -1;
+        const step = direction;
+
+        displayDepts.forEach((dept) => {
+            for (let i = start; i !== end; i += step) {
+                const sem = semesters[i];
+                const currentKey = `${dept.id},${sem.g},${sem.s}`;
+                const courses = cellMap.get(currentKey);
+                if (!courses || courses.length < 2) continue;
+
+                // Neighbors
+                const prevSem = i > 0 ? semesters[i-1] : null;
+                const nextSem = i < semesters.length - 1 ? semesters[i+1] : null;
+                
+                const prevKey = prevSem ? `${dept.id},${prevSem.g},${prevSem.s}` : null;
+                const nextKey = nextSem ? `${dept.id},${nextSem.g},${nextSem.s}` : null;
+
+                // For "Gravity", we look at WHERE the connected course is in the neighbor cell.
+                // But simplified: just presence is enough to pull to edge.
+                
+                const prevCourses = prevKey ? cellMap.get(prevKey) : [];
+                const nextCourses = nextKey ? cellMap.get(nextKey) : [];
+                
+                // Get sets of IDs in neighbors
+                const prevSims = new Set(prevCourses.map(c => c.similar_id).filter(Boolean));
+                const nextSims = new Set(nextCourses.map(c => c.similar_id).filter(Boolean));
+
+                courses.sort((a, b) => {
+                    let scoreA = 0; 
+                    let scoreB = 0;
+
+                    // Base: Category Order (Weakened to allow Gravity override)
+                    // We want Gravity to break Category order if necessary.
+                    // Range: -100 to 100
+                    const orderScore = { "BSM": -50, "Major_Req": -20, "Major_Sel": 0, "Capstone": 50 }; 
+                    scoreA += orderScore[a.category] || 0;
+                    scoreB += orderScore[b.category] || 0;
+
+                    // Gravity Weights (Stronger)
+                    // Connected to UP -> Pull to Top (Decrease Score)
+                    if (a.similar_id && prevSims.has(a.similar_id)) scoreA -= 100;
+                    if (b.similar_id && prevSims.has(b.similar_id)) scoreB -= 100;
+
+                    // Connected to DOWN -> Pull to Bottom (Increase Score)
+                    if (a.similar_id && nextSims.has(a.similar_id)) scoreA += 100;
+                    if (b.similar_id && nextSims.has(b.similar_id)) scoreB += 100;
+                    
+                    // If connected to BOTH? cancelling out? 
+                    // No, -100 + 100 = 0. It stays in middle. Correct.
+                    
+                    return scoreA - scoreB;
+                });
+            }
+        });
+    };
+
+    // Execute Passes
+    applyGravitySort(1);  // Down
+    applyGravitySort(-1); // Up
+    applyGravitySort(1);  // Down Again
+
+    // 3. Render Rows
     semesters.forEach(sem => {
         const row = document.createElement('div');
         row.className = 'table-row';
@@ -289,25 +447,17 @@ function renderTable() {
         row.appendChild(label);
 
         // Dept Cells
-        departments.forEach(dept => {
+        displayDepts.forEach((dept, colIdx) => {
             const cell = document.createElement('div');
             cell.className = 'cell';
+            
+            // GRID COORDINATES
+            const rowIdx = (sem.g - 1) * 2 + (sem.s - 1); 
+            cell.dataset.row = rowIdx;
+            cell.dataset.col = colIdx;
 
-            // Filter courses
-            const courses = courseData.filter(c => {
-                if (c.dept !== dept.id) return false;
-                if (c.grade !== sem.g || c.semester !== sem.s) return false;
-                if (!state.showNew && c.suggested) return false;
-                return true;
-            });
-
-            // Sort: BSM -> Major_Req -> Major_Sel -> Capstone
-            const orderScore = { "BSM": 1, "Major_Req": 2, "Major_Sel": 3, "Capstone": 10 }; 
-            courses.sort((a,b) => {
-                const sa = orderScore[a.category] || 5;
-                const sb = orderScore[b.category] || 5;
-                return sa - sb;
-            });
+            const key = `${dept.id},${sem.g},${sem.s}`;
+            const courses = cellMap.get(key) || [];
 
             courses.forEach(course => {
                 const card = document.createElement('div');
@@ -340,6 +490,7 @@ function renderTable() {
                     badge.style.cursor = 'pointer';
                     badge.onclick = (e) => {
                         e.stopPropagation();
+                        // Toggle Filter Logic...
                         if (state.activeGroup === course.similar_id) {
                             state.activeGroup = null;
                         } else {
@@ -400,6 +551,175 @@ function renderTable() {
     });
 
     updateHighlights();
+    
+    // Defer SVG drawing to ensure layout is complete
+    requestAnimationFrame(() => {
+        drawSvgOverlay();
+    });
+    
+    // Also redraw on resize
+    window.removeEventListener('resize', drawSvgOverlay);
+    window.addEventListener('resize', drawSvgOverlay);
+}
+
+function drawSvgOverlay() {
+    // 1. Setup SVG Container
+    let svg = document.getElementById('roadmap-svg');
+    if (!svg) {
+        svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.id = 'roadmap-svg';
+        svg.style.position = 'absolute';
+        svg.style.top = '0';
+        svg.style.left = '0';
+        svg.style.width = '100%';
+        svg.style.height = '100%';
+        svg.style.pointerEvents = 'none'; // Click-through
+        svg.style.zIndex = '0'; // Behind everything? No, needs to be visible. 
+        // We will place it at z-index 0. 
+        // Table content (text) is z-index 1. Cell backgrounds are hidden logic.
+        
+        tableContainer.style.position = 'relative'; 
+        tableContainer.appendChild(svg);
+    } else {
+        // Clear paths
+        while (svg.firstChild) {
+            svg.removeChild(svg.firstChild);
+        }
+    }
+
+    // -- GOOEY FILTER DEFINITION --
+    // This creates the "Organic Blob" effect by blurring then thresholding alpha.
+    const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+    defs.innerHTML = `
+        <filter id="goo">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+            <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+        </filter>
+    `;
+    svg.appendChild(defs);
+    
+    // Ensure SVG size matches table scroll size
+    const mw = tableContainer.scrollWidth;
+    const mh = tableContainer.scrollHeight;
+    svg.setAttribute('width', mw);
+    svg.setAttribute('height', mh);
+
+    // 2. Clear Old Styles (Reset cells/cards)
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(c => {
+        c.style.background = '';
+        c.style.border = ''; 
+    });
+    const cards = document.querySelectorAll('.course-card');
+    cards.forEach(c => {
+        c.style.background = ''; 
+        c.style.borderColor = '';
+    });
+
+    // 3. Identify Groups
+    const groupMap = new Map(); // similar_id -> [cards]
+    cards.forEach(card => {
+        const sid = card.dataset.similar;
+        if (sid) {
+            if (!groupMap.has(sid)) groupMap.set(sid, []);
+            groupMap.get(sid).push(card);
+        }
+    });
+
+    // 4. Draw Layers
+    const TABLE_RECT = tableContainer.getBoundingClientRect();
+
+    groupMap.forEach((groupCards, sid) => {
+        const color = simColorMap.get(sid) || '#cbd5e1';
+        
+        // Group Container with Filter
+        // We draw in two passes:
+        // 1. A "Base" layer for the colors (with filter)
+        // 2. Optional text/interactions are already on top in DOM.
+        
+        const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        g.style.filter = "url(#goo)"; // Apply Gooey Filter
+        g.setAttribute("fill", hexToRgba(color, 0.4)); // More opaque for the blur/threshold to work well
+        // We will reduce opacity of the whole group if needed, or rely on the thresholded alpha.
+        // Actually, for "Layer" look, we might want flat colors.
+        
+        // Draw Connected Blobs
+        groupCards.forEach(card => {
+            const rect = card.getBoundingClientRect();
+            
+            const x = rect.left - TABLE_RECT.left + tableContainer.scrollLeft;
+            const y = rect.top - TABLE_RECT.top + tableContainer.scrollTop;
+            const w = rect.width;
+            const h = rect.height;
+            
+            // Draw a padded rect around the card
+            const PAD = 10;
+            const r = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            r.setAttribute("x", x - PAD);
+            r.setAttribute("y", y - PAD/2);
+            r.setAttribute("width", w + PAD*2);
+            r.setAttribute("height", h + PAD);
+            r.setAttribute("rx", "10"); // Rounded corners
+            r.setAttribute("fill", color);
+            g.appendChild(r);
+        });
+
+        // Draw connections to merge them
+        groupCards.forEach(cardA => {
+             const rA = parseInt(cardA.dataset.gridR);
+             const cA = parseInt(cardA.dataset.gridC);
+             const rectA = cardA.getBoundingClientRect();
+             const cxA = (rectA.left + rectA.right)/2 - TABLE_RECT.left + tableContainer.scrollLeft;
+             const cyA = (rectA.top + rectA.bottom)/2 - TABLE_RECT.top + tableContainer.scrollTop;
+
+             groupCards.forEach(cardB => {
+                 if (cardA === cardB) return;
+                 const rB = parseInt(cardB.dataset.gridR);
+                 const cB = parseInt(cardB.dataset.gridC);
+                 
+                 // Distance check
+                 const dR = Math.abs(rA - rB);
+                 const dC = Math.abs(cA - cB);
+                 
+                 // Standard Neighbor: (dR + dC === 1)
+                 // Gap Bridging: 
+                 // Allow vertical gap of 1 (dR <= 2) if in same column (dC === 0)
+                 // Allow slight diagonal gap? (dR <= 1, dC <= 1) -> Dist 2.
+                 
+                 let shouldConnect = false;
+                 
+                 if (dR + dC === 1) {
+                     shouldConnect = true; // Direct neighbor
+                 } else if (dC === 0 && dR <= 2) {
+                     shouldConnect = true; // Vertical Gap of 1 cell (e.g. Sem 1 -> Sem 3)
+                 }
+
+                 if (shouldConnect) { 
+                     const rectB = cardB.getBoundingClientRect();
+                     const cxB = (rectB.left + rectB.right)/2 - TABLE_RECT.left + tableContainer.scrollLeft;
+                     const cyB = (rectB.top + rectB.bottom)/2 - TABLE_RECT.top + tableContainer.scrollTop;
+                     
+                     const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                     line.setAttribute("x1", cxA);
+                     line.setAttribute("y1", cyA);
+                     line.setAttribute("x2", cxB);
+                     line.setAttribute("y2", cyB);
+                     // Very thick stroke to merge
+                     // Slightly thinner for long bridges to look elegant?
+                     // No, needs to match blob width to be "part of the layer"
+                     line.setAttribute("stroke-width", "50"); 
+                     line.setAttribute("stroke", color);
+                     g.appendChild(line);
+                 }
+             });
+        });
+        
+        // Set Opacity of the whole blobs
+        g.setAttribute("opacity", "0.25"); 
+        
+        svg.appendChild(g);
+    });
 }
 
 // 3. Logic & Highlights

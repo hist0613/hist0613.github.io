@@ -1,13 +1,26 @@
 const departments = [
-  { id: "Minerva", name: "미네르바(교양)", color: "#64748b", url: "https://minerva.hufs.ac.kr/" },
-  { id: "ICE", name: "정보통신공학과", color: "#3b82f6", url: "https://ice.hufs.ac.kr/ice/998/subview.do" }, 
-  { id: "CSE", name: "컴퓨터공학과", color: "#10b981", url: "https://computer.hufs.ac.kr/computer/10048/subview.do" },
-  { id: "LAI", name: "Language & AI", color: "#f59e0b", url: "https://langai.hufs.ac.kr/langai/10805/subview.do" }, 
-  { id: "SSAI", name: "Social Science & AI", color: "#ec4899", url: "https://ssai.hufs.ac.kr/ssai/10867/subview.do" }, 
-  { id: "FAI", name: "Finance & AI", color: "#8b5cf6", url: "https://aifinance.hufs.ac.kr/aifinance/m03_s01.do" }, 
-  { id: "AID", name: "AI 데이터융합", color: "#06b6d4", url: "https://aidata.hufs.ac.kr/aidata/16994/subview.do" }, 
-  { id: "ELLT", name: "ELLT학과", color: "#ef4444", url: "https://ellt.hufs.ac.kr/ellt/m02_s01.do" }, 
-  { id: "IME", name: "산업경영공학과", color: "#f97316", url: "https://ime.hufs.ac.kr/ime/2828/subview.do" }, 
+  // General (Minerva)
+  { id: "Minerva", name: "미네르바(교양)", group: "General", color: "#64748b", url: "https://minerva.hufs.ac.kr/" },
+
+  // AI Majors
+  { id: "ICE", name: "정보통신공학과", group: "AI", color: "#3b82f6", url: "https://ice.hufs.ac.kr/ice/998/subview.do" }, 
+  { id: "CSE", name: "컴퓨터공학과", group: "AI", color: "#10b981", url: "https://computer.hufs.ac.kr/computer/10048/subview.do" },
+  { id: "LAI", name: "Language & AI", group: "AI", color: "#f59e0b", url: "https://langai.hufs.ac.kr/langai/10805/subview.do" }, 
+  { id: "SSAI", name: "Social Science & AI", group: "AI", color: "#ec4899", url: "https://ssai.hufs.ac.kr/ssai/10867/subview.do" }, 
+  { id: "FAI", name: "Finance & AI", group: "AI", color: "#8b5cf6", url: "https://aifinance.hufs.ac.kr/aifinance/m03_s01.do" }, 
+  { id: "AID", name: "AI 데이터융합", group: "AI", color: "#06b6d4", url: "https://aidata.hufs.ac.kr/aidata/16994/subview.do" }, 
+
+  // AX Majors (Group A)
+  { id: "IME", name: "산업경영공학과", group: "AX_A", color: "#f97316", url: "https://ime.hufs.ac.kr/ime/2828/subview.do" },
+  { id: "SEM", name: "반도체공학과", group: "AX_A", color: "#475569", url: "https://semi.hufs.ac.kr/" },
+  { id: "BME", name: "바이오메디컬공학부", group: "AX_A", color: "#0891b2", url: "https://bme.hufs.ac.kr/" },
+  { id: "STAT", name: "통계학과", group: "AX_A", color: "#2563eb", url: "https://stat.hufs.ac.kr/" },
+
+  // AX Majors (Group B)
+  { id: "ELLT", name: "ELLT학과", group: "AX_B", color: "#ef4444", url: "https://ellt.hufs.ac.kr/ellt/m02_s01.do" },
+  { id: "GBT", name: "Global Business & Technology", group: "AX_B", color: "#ca8a04", url: "https://gbt.hufs.ac.kr/" },
+  { id: "MEDIA", name: "미디어커뮤니케이션학부", group: "AX_B", color: "#db2777", url: "https://commu.hufs.ac.kr/" },
+  { id: "DC", name: "디지털콘텐츠학부", group: "AX_B", color: "#9333ea", url: "https://dicon.hufs.ac.kr/" },
 ];
 
 const courseData = [
@@ -296,6 +309,213 @@ const courseData = [
   { dept: "IME", grade: 4, semester: 1, name: "캡스톤디자인", category: "Capstone", credit: 3, similar_id: "capstone_ime", layer: "L3", layer_tag: "app" },
   { dept: "IME", grade: 4, semester: 1, name: "기업정보시스템", category: "Major_Sel", credit: 3, similar_id: "erp", layer: "L2", layer_tag: "app" },
   { dept: "IME", grade: 4, semester: 2, name: "빅데이터애널리틱스", category: "Major_Sel", credit: 3, similar_id: "bigdata", layer: "L2", layer_tag: "app" },
+
+  // ===================================
+  // 10. AX Group A: SEM (Semiconductor)
+  // ===================================
+  // ===================================
+  // 10. AX Group A: SEM (Semiconductor)
+  // ===================================
+  { dept: "SEM", grade: 1, semester: 1, name: "미적분학1", category: "BSM", credit: 3, similar_id: "calc1", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 1, semester: 1, name: "일반물리1", category: "BSM", credit: 3, similar_id: "phys1", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 1, semester: 1, name: "컴퓨터프로그래밍", category: "Major_Req", credit: 3, similar_id: "intro_prog", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 1, semester: 1, name: "AI공학개론", category: "BSM", credit: 3, similar_id: "ai_intro", layer: "L0", layer_tag: "literacy" },
+  { dept: "SEM", grade: 1, semester: 2, name: "미적분학2", category: "BSM", credit: 3, similar_id: "calc2", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 1, semester: 2, name: "일반물리2", category: "BSM", credit: 3, similar_id: "phys2", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 1, semester: 2, name: "컴퓨터프로그래밍및실습", category: "Major_Req", credit: 3, similar_id: "prog_lab", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 1, semester: 2, name: "확률과통계", category: "BSM", credit: 3, similar_id: "prob_stat", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 2, semester: 1, name: "공업수학1", category: "BSM", credit: 3, similar_id: "eng_math1", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 2, semester: 1, name: "회로이론", category: "Major_Req", credit: 3, similar_id: "circuit", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 2, semester: 1, name: "전자기학", category: "Major_Req", credit: 3, similar_id: "electromagnetics", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 2, semester: 1, name: "반도체공학실험1", category: "Major_Req", credit: 3, layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 2, semester: 1, name: "디지털논리회로", category: "Major_Req", credit: 3, similar_id: "logic_circuits", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 2, semester: 1, name: "자료구조및알고리즘", category: "Major_Req", credit: 3, similar_id: "ds_algo", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 2, semester: 2, name: "공업수학2", category: "BSM", credit: 3, similar_id: "eng_math2", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 2, semester: 2, name: "반도체물리", category: "Major_Req", credit: 3, similar_id: "semi_phys", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 2, semester: 2, name: "반도체공학실험2", category: "Major_Req", credit: 3, layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 2, semester: 2, name: "HDL응용설계", category: "Major_Req", credit: 3, similar_id: "hdl", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 2, semester: 2, name: "컴퓨터구조", category: "Major_Req", credit: 3, similar_id: "arch", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 2, semester: 2, name: "신호및시스템", category: "Major_Req", credit: 3, similar_id: "sig_sys", layer: "L1", layer_tag: "core" },
+  { dept: "SEM", grade: 3, semester: 1, name: "반도체소자", category: "Major_Req", credit: 3, similar_id: "semi_device", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 3, semester: 1, name: "반도체회로1", category: "Major_Req", credit: 3, similar_id: "semi_circuit1", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 3, semester: 1, name: "디지털신호처리", category: "Major_Req", credit: 3, similar_id: "dsp", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 3, semester: 1, name: "HDL및디지털설계", category: "Major_Req", credit: 3, similar_id: "hdl_design", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 3, semester: 1, name: "마이크로프로세서", category: "Major_Req", credit: 3, similar_id: "microprocessor", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 3, semester: 2, name: "반도체회로2", category: "Major_Req", credit: 3, similar_id: "semi_circuit2", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 3, semester: 2, name: "반도체공정", category: "Major_Req", credit: 3, similar_id: "semi_process", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 3, semester: 2, name: "아날로그집적회로", category: "Major_Req", credit: 3, similar_id: "analog_ic", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 3, semester: 2, name: "임베디드시스템", category: "Major_Req", credit: 3, similar_id: "embedded", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 3, semester: 2, name: "확률및랜덤프로세스", category: "Major_Req", credit: 3, similar_id: "stochastic", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 4, semester: 1, name: "기계학습", category: "Major_Req", credit: 3, similar_id: "ml", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 4, semester: 1, name: "디지털집적회로", category: "Major_Req", credit: 3, similar_id: "digital_ic", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 4, semester: 1, name: "RF설계", category: "Major_Req", credit: 3, similar_id: "rf_design", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 4, semester: 1, name: "반도체재료", category: "Major_Req", credit: 3, similar_id: "semi_material", layer: "L2", layer_tag: "core" },
+  { dept: "SEM", grade: 4, semester: 1, name: "캡스톤디자인", category: "Capstone", credit: 3, similar_id: "capstone_sem", layer: "L3", layer_tag: "core" },
+  { dept: "SEM", grade: 4, semester: 2, name: "인공지능반도체", category: "Major_Sel", credit: 3, similar_id: "ai_semi", layer: "L3", layer_tag: "core" },
+  { dept: "SEM", grade: 4, semester: 2, name: "SoC설계", category: "Major_Sel", credit: 3, similar_id: "soc_design", layer: "L3", layer_tag: "core" },
+  { dept: "SEM", grade: 4, semester: 2, name: "통신공학", category: "Major_Req", credit: 3, similar_id: "comm_eng", layer: "L2", layer_tag: "core" },
+
+  // ===================================
+  // 11. AX Group A: BME (Biomedical)
+  // ===================================
+  // ===================================
+  // 11. AX Group A: BME (Biomedical)
+  // ===================================
+  { dept: "BME", grade: 1, semester: 1, name: "일반생물학1", category: "Major_Req", credit: 3, similar_id: "bio1", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 1, semester: 1, name: "컴퓨터개론및실습", category: "Major_Req", credit: 3, similar_id: "intro_cs_lab", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 1, semester: 1, name: "AI공학개론", category: "BSM", credit: 3, similar_id: "ai_intro", layer: "L0", layer_tag: "literacy" },
+  { dept: "BME", grade: 1, semester: 1, name: "일반화학", category: "BSM", credit: 3, similar_id: "chem", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 1, semester: 1, name: "기초미적분학I", category: "BSM", credit: 3, similar_id: "calc1", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 1, semester: 1, name: "일반물리I", category: "BSM", credit: 2, similar_id: "phys1", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 1, semester: 2, name: "일반생물학2", category: "Major_Req", credit: 3, similar_id: "bio2", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 1, semester: 2, name: "디지털공학", category: "Major_Req", credit: 3, similar_id: "digital_eng", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 1, semester: 2, name: "바이오메디컬공학개론", category: "Major_Req", credit: 3, similar_id: "bme_intro", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 1, semester: 2, name: "컴퓨터프로그래밍및실습", category: "BSM", credit: 3, similar_id: "prog_lab", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 1, semester: 2, name: "기초물리학II", category: "BSM", credit: 3, similar_id: "phys2", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 1, semester: 2, name: "기초미적분학II", category: "BSM", credit: 2, similar_id: "calc2", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 2, semester: 1, name: "미생물학", category: "Major_Req", credit: 3, similar_id: "microbio", layer: "L1", layer_tag: "app" },
+  { dept: "BME", grade: 2, semester: 1, name: "생체구조및생리학", category: "Major_Req", credit: 3, similar_id: "physiology", layer: "L1", layer_tag: "app" },
+  { dept: "BME", grade: 2, semester: 1, name: "객체지향프로그래밍및실습", category: "Major_Req", credit: 3, similar_id: "oop", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 2, semester: 1, name: "자료구조및실습", category: "Major_Req", credit: 3, similar_id: "ds", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 2, semester: 1, name: "바이오확률통계", category: "Major_Req", credit: 3, similar_id: "prob_stat", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 2, semester: 1, name: "의용전자및실습", category: "Major_Req", credit: 3, similar_id: "med_elec", layer: "L1", layer_tag: "app" },
+  { dept: "BME", grade: 2, semester: 1, name: "공업수학1", category: "BSM", credit: 3, similar_id: "eng_math1", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 2, semester: 2, name: "의용회로및실습", category: "Major_Req", credit: 3, similar_id: "med_circuit", layer: "L1", layer_tag: "app" },
+  { dept: "BME", grade: 2, semester: 2, name: "선형대수", category: "Major_Req", credit: 3, similar_id: "linear_alg", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 2, semester: 2, name: "의용기계공학", category: "Major_Req", credit: 3, similar_id: "med_mech", layer: "L1", layer_tag: "app" },
+  { dept: "BME", grade: 2, semester: 2, name: "의학유전학", category: "Major_Req", credit: 3, similar_id: "genetics", layer: "L1", layer_tag: "app" },
+  { dept: "BME", grade: 3, semester: 1, name: "생명정보학을위한데이터마이닝", category: "Major_Req", credit: 3, similar_id: "dm", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 3, semester: 1, name: "의생명정보학", category: "Major_Req", credit: 3, similar_id: "bioinfo", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 3, semester: 1, name: "BME신호및시스템", category: "Major_Req", credit: 3, similar_id: "sig_sys", layer: "L1", layer_tag: "core" },
+  { dept: "BME", grade: 3, semester: 1, name: "의료영상처리및실습", category: "Major_Req", credit: 3, similar_id: "med_img_proc", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 3, semester: 1, name: "생체신호계측기기설계및실습", category: "Major_Req", credit: 3, similar_id: "bio_signal_device", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 3, semester: 1, name: "생체전자기학", category: "Major_Req", credit: 3, similar_id: "bio_electromagnetics", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 3, semester: 1, name: "바이오메디컬인공지능", category: "Major_Req", credit: 3, similar_id: "bio_ai", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 3, semester: 2, name: "BME캡스톤기초", category: "Capstone", credit: 1, similar_id: "capstone_bme_pre", layer: "L3", layer_tag: "core" },
+  { dept: "BME", grade: 3, semester: 2, name: "의료영상물리학", category: "Major_Req", credit: 3, similar_id: "med_img_phys", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 3, semester: 2, name: "바이오메디컬공학최신경향과창의설계", category: "Major_Req", credit: 3, similar_id: "bme_trends", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 3, semester: 2, name: "화학정보학", category: "Major_Req", credit: 3, similar_id: "cheminfo", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 3, semester: 2, name: "의생명자연어처리", category: "Major_Req", credit: 3, similar_id: "nlp_bio", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 3, semester: 2, name: "의료초음파입문", category: "Major_Req", credit: 3, similar_id: "ultrasound", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 3, semester: 2, name: "의용반도체공정및실습", category: "Major_Req", credit: 3, similar_id: "bio_semi", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 3, semester: 2, name: "웨어러블/임플란터블디바이스특론", category: "Major_Req", credit: 3, similar_id: "wearable", layer: "L3", layer_tag: "app" },
+  { dept: "BME", grade: 4, semester: 1, name: "BME캡스톤디자인실습", category: "Capstone", credit: 3, similar_id: "capstone_bme", layer: "L3", layer_tag: "core" },
+  { dept: "BME", grade: 4, semester: 1, name: "데이터시각화", category: "Major_Req", credit: 3, similar_id: "viz", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 4, semester: 1, name: "신약개발", category: "Major_Req", credit: 3, similar_id: "drug_dev", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 4, semester: 1, name: "고급의료영상처리및실습", category: "Major_Req", credit: 3, similar_id: "adv_med_img", layer: "L3", layer_tag: "app" },
+  { dept: "BME", grade: 4, semester: 1, name: "자기공명영상이론", category: "Major_Req", credit: 3, similar_id: "mri", layer: "L3", layer_tag: "app" },
+  { dept: "BME", grade: 4, semester: 2, name: "의생명데이터분석및실습", category: "Major_Req", credit: 3, similar_id: "bio_data_analysis", layer: "L2", layer_tag: "app" },
+  { dept: "BME", grade: 4, semester: 2, name: "바이오메디컬공학특강", category: "Major_Req", credit: 2, similar_id: "bme_topics", layer: "L3", layer_tag: "app" },
+
+  // ===================================
+  // 12. AX Group A: STAT (Statistics)
+  // ===================================
+  // ===================================
+  // 12. AX Group A: STAT (Statistics)
+  // ===================================
+  { dept: "STAT", grade: 1, semester: 1, name: "확률과통계", category: "BSM", credit: 3, similar_id: "prob_stat", layer: "L1", layer_tag: "core" },
+  { dept: "STAT", grade: 1, semester: 1, name: "확률과통계연습", category: "BSM", credit: 1, similar_id: "prob_stat_lab", layer: "L1", layer_tag: "core" },
+  { dept: "STAT", grade: 1, semester: 2, name: "통계학의활용및실습", category: "Major_Req", credit: 2, similar_id: "stat_lab", layer: "L1", layer_tag: "app" },
+  { dept: "STAT", grade: 2, semester: 1, name: "의사결정론", category: "Major_Sel", credit: 3, similar_id: "decision_theory", layer: "L2", layer_tag: "app" },
+  { dept: "STAT", grade: 2, semester: 1, name: "통계소프트웨어", category: "Major_Sel", credit: 3, similar_id: "stat_sw", layer: "L1", layer_tag: "core" },
+  { dept: "STAT", grade: 2, semester: 1, name: "통계소프트웨어실습", category: "Major_Sel", credit: 1, similar_id: "stat_sw_lab", layer: "L1", layer_tag: "core" },
+  { dept: "STAT", grade: 2, semester: 1, name: "통계행렬론", category: "Major_Req", credit: 3, similar_id: "linear_alg", layer: "L1", layer_tag: "core" },
+  { dept: "STAT", grade: 2, semester: 1, name: "통계행렬론연습", category: "Major_Sel", credit: 1, similar_id: "linear_alg_lab", layer: "L1", layer_tag: "core" },
+  { dept: "STAT", grade: 2, semester: 2, name: "회귀분석", category: "Major_Req", credit: 3, similar_id: "regression", layer: "L2", layer_tag: "app" },
+  { dept: "STAT", grade: 2, semester: 2, name: "회귀분석연습", category: "Major_Sel", credit: 1, similar_id: "regression_lab", layer: "L2", layer_tag: "app" },
+  { dept: "STAT", grade: 2, semester: 2, name: "통계계산및실습", category: "Major_Sel", credit: 3, similar_id: "stat_comp", layer: "L2", layer_tag: "app" },
+  { dept: "STAT", grade: 2, semester: 2, name: "확률분포론", category: "Major_Req", credit: 3, similar_id: "prob_dist", layer: "L1", layer_tag: "core" },
+  { dept: "STAT", grade: 2, semester: 2, name: "확률분포론연습", category: "Major_Sel", credit: 1, similar_id: "prob_dist_lab", layer: "L1", layer_tag: "core" },
+  { dept: "STAT", grade: 2, semester: 2, name: "금융수학", category: "Major_Sel", credit: 3, similar_id: "fin_math", layer: "L2", layer_tag: "app" },
+  { dept: "STAT", grade: 3, semester: 1, name: "범주형자료분석및실습", category: "Major_Sel", credit: 3, similar_id: "categorical_analysis", layer: "L2", layer_tag: "app" },
+  { dept: "STAT", grade: 3, semester: 1, name: "생존분석및실습", category: "Major_Sel", credit: 3, similar_id: "survival", layer: "L2", layer_tag: "app" },
+  { dept: "STAT", grade: 3, semester: 1, name: "수리통계학", category: "Major_Req", credit: 3, similar_id: "math_stat", layer: "L2", layer_tag: "core" },
+  { dept: "STAT", grade: 3, semester: 1, name: "수리통계학연습", category: "Major_Sel", credit: 1, similar_id: "math_stat_lab", layer: "L2", layer_tag: "core" },
+  { dept: "STAT", grade: 3, semester: 1, name: "시계열분석및실습", category: "Major_Sel", credit: 3, similar_id: "tsa", layer: "L2", layer_tag: "app" },
+  { dept: "STAT", grade: 3, semester: 1, name: "실험계획법및실습", category: "Major_Sel", credit: 3, similar_id: "doe", layer: "L2", layer_tag: "app" },
+  { dept: "STAT", grade: 3, semester: 2, name: "다변량분석및실습", category: "Major_Sel", credit: 3, similar_id: "multivar", layer: "L2", layer_tag: "app" },
+  { dept: "STAT", grade: 3, semester: 2, name: "데이터마이닝및실습", category: "Major_Sel", credit: 3, similar_id: "dm", layer: "L2", layer_tag: "app" },
+  { dept: "STAT", grade: 3, semester: 2, name: "베이지안통계학", category: "Major_Sel", credit: 3, similar_id: "bayesian", layer: "L2", layer_tag: "core" },
+  { dept: "STAT", grade: 3, semester: 2, name: "표본조사론", category: "Major_Sel", credit: 3, similar_id: "survey", layer: "L2", layer_tag: "app" },
+  { dept: "STAT", grade: 4, semester: 1, name: "금융자료분석및실습", category: "Major_Sel", credit: 3, similar_id: "fin_data_analysis", layer: "L3", layer_tag: "app" },
+  { dept: "STAT", grade: 4, semester: 1, name: "데이터시각화", category: "Major_Sel", credit: 3, similar_id: "viz", layer: "L2", layer_tag: "app" },
+  { dept: "STAT", grade: 4, semester: 1, name: "통계세미나", category: "Major_Sel", credit: 1, similar_id: "sem", layer: "L3", layer_tag: "core" },
+  { dept: "STAT", grade: 4, semester: 1, name: "통계적기계학습및실습", category: "Major_Sel", credit: 3, similar_id: "ml", layer: "L2", layer_tag: "core" },
+  { dept: "STAT", grade: 4, semester: 2, name: "데이터사이언스세미나", category: "Major_Sel", credit: 3, similar_id: "ds_seminar", layer: "L3", layer_tag: "app" },
+  { dept: "STAT", grade: 4, semester: 2, name: "데이터어낼리틱스세미나", category: "Major_Sel", credit: 3, similar_id: "analytics_seminar", layer: "L3", layer_tag: "app" },
+  { dept: "STAT", grade: 4, semester: 2, name: "통계적방법론", category: "Major_Sel", credit: 3, similar_id: "stat_method", layer: "L3", layer_tag: "app" },
+
+  // ===================================
+  // 13. AX Group B: GBT (Global Business & Technology)
+  // ===================================
+  // ===================================
+  // 13. AX Group B: GBT (Global Business & Technology)
+  // ===================================
+  { dept: "GBT", grade: 1, semester: 1, name: "경영학원론", category: "Major_Req", credit: 3, similar_id: "mgmt_intro", layer: "L0", layer_tag: "literacy" },
+  { dept: "GBT", grade: 1, semester: 1, name: "경제학개론", category: "Major_Req", credit: 3, similar_id: "econ_intro", layer: "L0", layer_tag: "literacy" },
+  { dept: "GBT", grade: 1, semester: 1, name: "경영수학", category: "Major_Req", credit: 3, similar_id: "calc1", layer: "L1", layer_tag: "core" },
+  { dept: "GBT", grade: 1, semester: 2, name: "통계학", category: "Major_Req", credit: 3, similar_id: "prob_stat", layer: "L1", layer_tag: "core" },
+  { dept: "GBT", grade: 1, semester: 2, name: "컴퓨터프로그래밍", category: "Major_Req", credit: 3, similar_id: "intro_prog", layer: "L1", layer_tag: "core" },
+  { dept: "GBT", grade: 2, semester: 1, name: "회계원리", category: "Major_Req", credit: 3, similar_id: "accounting", layer: "L1", layer_tag: "app" },
+  { dept: "GBT", grade: 2, semester: 1, name: "마케팅관리", category: "Major_Req", credit: 3, similar_id: "marketing", layer: "L1", layer_tag: "app" },
+  { dept: "GBT", grade: 2, semester: 1, name: "자료구조", category: "Major_Sel", credit: 3, similar_id: "ds", layer: "L1", layer_tag: "core" },
+  { dept: "GBT", grade: 2, semester: 2, name: "재무관리", category: "Major_Req", credit: 3, similar_id: "finance_mgmt", layer: "L2", layer_tag: "app" },
+  { dept: "GBT", grade: 2, semester: 2, name: "객체지향프로그래밍", category: "Major_Sel", credit: 3, similar_id: "oop", layer: "L1", layer_tag: "core" },
+  { dept: "GBT", grade: 2, semester: 2, name: "데이터베이스", category: "Major_Sel", credit: 3, similar_id: "db", layer: "L2", layer_tag: "core" },
+  { dept: "GBT", grade: 2, semester: 2, name: "소비자행동론", category: "Major_Req", credit: 3, similar_id: "consumer_behavior", layer: "L2", layer_tag: "app" },
+  { dept: "GBT", grade: 3, semester: 1, name: "빅데이터분석", category: "Major_Sel", credit: 3, similar_id: "bigdata", layer: "L2", layer_tag: "core" },
+  { dept: "GBT", grade: 3, semester: 1, name: "모바일프로그래밍", category: "Major_Sel", credit: 3, similar_id: "mobile_prog", layer: "L2", layer_tag: "app" },
+  { dept: "GBT", grade: 3, semester: 1, name: "IT와경영전략", category: "Major_Sel", credit: 3, similar_id: "it_strategy", layer: "L2", layer_tag: "app" },
+  { dept: "GBT", grade: 3, semester: 1, name: "국제경영론", category: "Major_Req", credit: 3, similar_id: "intl_biz", layer: "L2", layer_tag: "app" },
+  { dept: "GBT", grade: 3, semester: 2, name: "비즈니스텍스트마이닝", category: "Major_Sel", credit: 3, similar_id: "text_mining", layer: "L2", layer_tag: "app" },
+  { dept: "GBT", grade: 3, semester: 2, name: "인공지능", category: "Major_Sel", credit: 3, similar_id: "ai_intro", layer: "L2", layer_tag: "core" },
+  { dept: "GBT", grade: 3, semester: 2, name: "소셜콘텐츠분석", category: "Major_Sel", credit: 3, similar_id: "social_analytics", layer: "L2", layer_tag: "app" },
+  { dept: "GBT", grade: 3, semester: 2, name: "운영관리", category: "Major_Req", credit: 3, similar_id: "ops_mgmt", layer: "L2", layer_tag: "app" },
+  { dept: "GBT", grade: 4, semester: 1, name: "캡스톤디자인", category: "Capstone", credit: 3, similar_id: "capstone_gbt", layer: "L3", layer_tag: "app" },
+  { dept: "GBT", grade: 4, semester: 1, name: "빅데이터기반의사결정", category: "Major_Sel", credit: 3, similar_id: "bigdata_decision", layer: "L3", layer_tag: "app" },
+  { dept: "GBT", grade: 4, semester: 1, name: "디지털마케팅실습", category: "Major_Sel", credit: 3, similar_id: "digital_marketing", layer: "L3", layer_tag: "app" },
+
+  // ===================================
+  // 14. AX Group B: MEDIA (Media Communication)
+  // ===================================
+  // ===================================
+  // 14. AX Group B: MEDIA (Media Communication)
+  // ===================================
+  { dept: "MEDIA", grade: 1, semester: 1, name: "미디어커뮤니케이션의이해", category: "Major_Req", credit: 3, similar_id: "media_intro", layer: "L0", layer_tag: "literacy" },
+  { dept: "MEDIA", grade: 1, semester: 2, name: "미디어커뮤니케이션연구방법론", category: "Major_Req", credit: 3, similar_id: "social_method", layer: "L1", layer_tag: "core" },
+  { dept: "MEDIA", grade: 2, semester: 1, name: "저널리즘의이해", category: "Major_Sel", credit: 3, similar_id: "journalism", layer: "L1", layer_tag: "app" },
+  { dept: "MEDIA", grade: 2, semester: 1, name: "글로벌커뮤니케이션", category: "Major_Sel", credit: 3, similar_id: "global_comm", layer: "L1", layer_tag: "app" },
+  { dept: "MEDIA", grade: 2, semester: 1, name: "광고의이해", category: "Major_Sel", credit: 3, similar_id: "ad_intro", layer: "L1", layer_tag: "app" },
+  { dept: "MEDIA", grade: 2, semester: 2, name: "PR의이해", category: "Major_Sel", credit: 3, similar_id: "pr_intro", layer: "L1", layer_tag: "app" },
+  { dept: "MEDIA", grade: 2, semester: 2, name: "방송의이해", category: "Major_Sel", credit: 3, similar_id: "broadcasting", layer: "L1", layer_tag: "app" },
+  { dept: "MEDIA", grade: 2, semester: 2, name: "뉴미디어테크놀로지", category: "Major_Req", credit: 3, similar_id: "new_media", layer: "L1", layer_tag: "app" },
+  { dept: "MEDIA", grade: 3, semester: 1, name: "언론정보통계분석1", category: "Major_Req", credit: 3, similar_id: "stat_analysis", layer: "L1", layer_tag: "core" },
+  { dept: "MEDIA", grade: 3, semester: 2, name: "언론정보윤리와법", category: "Major_Req", credit: 3, similar_id: "media_law", layer: "L2", layer_tag: "app" },
+  { dept: "MEDIA", grade: 3, semester: 2, name: "브랜드의이해", category: "Major_Req", credit: 3, similar_id: "brand", layer: "L2", layer_tag: "app" },
+  { dept: "MEDIA", grade: 3, semester: 2, name: "대중문화의이해", category: "Major_Req", credit: 3, similar_id: "culture_understanding", layer: "L2", layer_tag: "app" },
+
+  // ===================================
+  // 15. AX Group B: DC (Digital Contents)
+  // ===================================
+  // ===================================
+  // 15. AX Group B: DC (Digital Contents)
+  // ===================================
+  { dept: "DC", grade: 1, semester: 1, name: "디지털콘텐츠입문", category: "Major_Req", credit: 3, similar_id: "dc_intro", layer: "L0", layer_tag: "literacy" },
+  { dept: "DC", grade: 1, semester: 1, name: "디지털콘텐츠디자인사고", category: "Major_Req", credit: 3, similar_id: "design_thinking", layer: "L0", layer_tag: "literacy" },
+  { dept: "DC", grade: 1, semester: 1, name: "컴퓨팅사고", category: "BSM", credit: 3, similar_id: "comp_thinking", layer: "L0", layer_tag: "literacy" },
+  { dept: "DC", grade: 1, semester: 2, name: "AI와콘텐츠창작기초", category: "Major_Req", credit: 3, similar_id: "ai_content_basic", layer: "L1", layer_tag: "app" },
+  { dept: "DC", grade: 1, semester: 2, name: "기초프로그래밍", category: "Major_Req", credit: 3, similar_id: "intro_prog", layer: "L1", layer_tag: "core" },
+  { dept: "DC", grade: 1, semester: 2, name: "미디어프로그래밍", category: "Major_Req", credit: 3, similar_id: "media_prog", layer: "L1", layer_tag: "app" },
+  { dept: "DC", grade: 2, semester: 1, name: "파이썬프로그래밍", category: "Major_Req", credit: 3, similar_id: "python_prog", layer: "L1", layer_tag: "core" },
+  { dept: "DC", grade: 2, semester: 1, name: "비주얼콘텐츠트렌드", category: "Major_Req", credit: 3, similar_id: "visual_trend", layer: "L1", layer_tag: "app" },
+  { dept: "DC", grade: 2, semester: 2, name: "비주얼콘텐츠테크놀로지", category: "Major_Req", credit: 3, similar_id: "visual_tech", layer: "L1", layer_tag: "app" },
+  { dept: "DC", grade: 2, semester: 2, name: "게임스토리텔링", category: "Major_Sel", credit: 3, similar_id: "game_story", layer: "L2", layer_tag: "app" },
+  { dept: "DC", grade: 3, semester: 1, name: "AI이미지메이킹", category: "Major_Sel", credit: 3, similar_id: "ai_image", layer: "L2", layer_tag: "app" },
+  { dept: "DC", grade: 3, semester: 1, name: "데이터시각화", category: "Major_Sel", credit: 3, similar_id: "viz", layer: "L2", layer_tag: "app" },
+  { dept: "DC", grade: 3, semester: 2, name: "AI스토리창작", category: "Major_Sel", credit: 3, similar_id: "ai_story", layer: "L2", layer_tag: "app" },
+  { dept: "DC", grade: 3, semester: 2, name: "인터랙티브콘텐츠실습", category: "Major_Sel", credit: 3, similar_id: "interactive_content", layer: "L2", layer_tag: "app" },
+  { dept: "DC", grade: 4, semester: 1, name: "AI콘텐츠비즈니스", category: "Major_Sel", credit: 3, similar_id: "ai_biz", layer: "L3", layer_tag: "app" },
+  { dept: "DC", grade: 4, semester: 1, name: "디지털콘텐츠오픈마켓실습", category: "Capstone", credit: 3, similar_id: "capstone_dc", layer: "L3", layer_tag: "app" },
 
   // ===================================
   // 9. Graduate / New L4 Courses (Suggested)
