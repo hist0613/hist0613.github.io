@@ -73,68 +73,123 @@ function renderFilters() {
     }
 
     layerContainer.innerHTML = '';
-    
-    layerButtons.forEach(btnDef => {
-        const btn = document.createElement('div');
-        btn.className = 'filter-chip layer-chip';
-        // Add specific class for styling if needed
-        btn.classList.add(btnDef.cls); 
-        
-        // Visual styling for Core vs App?
-        // Let's just use text for now.
-        btn.innerHTML = `<span style="font-weight:700;">${btnDef.label}</span>`;
-        
-        btn.onclick = () => {
-            // Toggle Logic
-            const isActive = (state.activeLayer === btnDef.layer && state.activeLayerTag === btnDef.tag);
-            
-            if (isActive) {
-                state.activeLayer = null;
-                state.activeLayerTag = null;
-            } else {
-                state.activeLayer = btnDef.layer;
-                state.activeLayerTag = btnDef.tag;
-                
-                // Clear others
-                state.activeTrack = null;
-                state.activeMD = null;
-                state.activeGroup = null; 
-            }
-            updateFilterState();
-            updateHighlights();
-        };
-        layerContainer.appendChild(btn);
+
+    // Layer colors per level
+    const layerColors = { L0: '#94a3b8', L1: '#3b82f6', L2: '#8b5cf6', L3: '#f59e0b' };
+
+    // Group: L0 alone, then L1/L2/L3 each as a pair
+    const layerGroups = [
+        { label: null, items: [layerButtons[0]] },           // L0 alone
+        { label: 'L1', items: [layerButtons[1], layerButtons[2]] },
+        { label: 'L2', items: [layerButtons[3], layerButtons[4]] },
+        { label: 'L3', items: [layerButtons[5], layerButtons[6]] }
+    ];
+
+    layerGroups.forEach(group => {
+        if (group.items.length === 1) {
+            // Standalone (L0) — wrap in same structure as grouped to match height
+            const btnDef = group.items[0];
+            const groupWrap = document.createElement('div');
+            groupWrap.style.display = 'flex';
+            groupWrap.style.padding = '2px';
+            groupWrap.style.borderRadius = '22px';
+            groupWrap.style.background = '#f1f5f9';
+            groupWrap.style.border = `1.5px solid ${layerColors[btnDef.layer]}33`;
+            const btn = document.createElement('div');
+            btn.className = 'filter-chip layer-chip layer-filter-chip';
+            btn.classList.add(btnDef.cls);
+            btn.style.borderColor = layerColors[btnDef.layer];
+            btn.style.color = layerColors[btnDef.layer];
+            btn.innerHTML = `<span style="font-weight:700;">${btnDef.label}</span>`;
+            btn.onclick = () => {
+                const isActive = (state.activeLayer === btnDef.layer && state.activeLayerTag === btnDef.tag);
+                if (isActive) { state.activeLayer = null; state.activeLayerTag = null; }
+                else { state.activeLayer = btnDef.layer; state.activeLayerTag = btnDef.tag;
+                       state.activeTrack = null; state.activeMD = null; state.activeGroup = null; }
+                updateFilterState(); updateHighlights();
+            };
+            groupWrap.appendChild(btn);
+            layerContainer.appendChild(groupWrap);
+        } else {
+            // Grouped pill (L1, L2, L3)
+            const color = layerColors[group.label];
+            const groupWrap = document.createElement('div');
+            groupWrap.className = 'layer-filter-group';
+            groupWrap.style.display = 'flex';
+            groupWrap.style.gap = '2px';
+            groupWrap.style.padding = '2px';
+            groupWrap.style.borderRadius = '22px';
+            groupWrap.style.background = '#f1f5f9';
+            groupWrap.style.border = `1.5px solid ${color}33`;
+
+            group.items.forEach(btnDef => {
+                const btn = document.createElement('div');
+                btn.className = 'filter-chip layer-chip layer-filter-chip';
+                btn.classList.add(btnDef.cls);
+                btn.style.borderColor = color;
+                btn.style.color = color;
+                btn.innerHTML = `<span style="font-weight:700;">${btnDef.label}</span>`;
+                btn.onclick = () => {
+                    const isActive = (state.activeLayer === btnDef.layer && state.activeLayerTag === btnDef.tag);
+                    if (isActive) { state.activeLayer = null; state.activeLayerTag = null; }
+                    else { state.activeLayer = btnDef.layer; state.activeLayerTag = btnDef.tag;
+                           state.activeTrack = null; state.activeMD = null; state.activeGroup = null; }
+                    updateFilterState(); updateHighlights();
+                };
+                groupWrap.appendChild(btn);
+            });
+            layerContainer.appendChild(groupWrap);
+        }
     });
 
 
     // Tracks
-    // Tracks
+    // Tracks — grouped by department (2 tracks each)
     trackContainer.innerHTML = '';
-    // Single container for 6 major tracks
     trackContainer.style.flexDirection = 'row';
     trackContainer.style.alignItems = 'center';
+    trackContainer.style.flexWrap = 'wrap';
+    trackContainer.style.gap = '6px';
 
+    // Group tracks by dept
+    const deptGroups = {};
     tracks.forEach(track => {
-        const btn = document.createElement('div');
-        btn.className = 'filter-chip';
-        const tColor = track.color || '#3b82f6';
-        btn.style.borderColor = tColor;
-        btn.style.color = tColor;
-        // Add Track ID (T1..) badge inside
-        btn.innerHTML = `<span style="font-weight:800; margin-right:4px;">T${track.group_number}</span> ${track.title}`; 
-        btn.onclick = () => {
-            if (state.activeTrack === track.id) state.activeTrack = null;
-            else {
-                state.activeTrack = track.id;
-                state.activeMD = null; 
-                state.activeLayer = null; 
-                state.activeLayerTag = null;
-                state.activeGroup = null;
-            }
-            updateFilterState();
-            updateHighlights();
-        };
-        trackContainer.appendChild(btn);
+        if (!deptGroups[track.dept]) deptGroups[track.dept] = [];
+        deptGroups[track.dept].push(track);
+    });
+
+    Object.entries(deptGroups).forEach(([dept, deptTracks]) => {
+        const groupWrap = document.createElement('div');
+        groupWrap.className = 'track-filter-group';
+        groupWrap.style.display = 'flex';
+        groupWrap.style.gap = '3px';
+        groupWrap.style.padding = '2px';
+        groupWrap.style.borderRadius = '22px';
+        groupWrap.style.background = '#f1f5f9';
+        groupWrap.style.border = `1.5px solid ${deptTracks[0].color}22`;
+
+        deptTracks.forEach(track => {
+            const btn = document.createElement('div');
+            btn.className = 'filter-chip track-filter-chip';
+            const tColor = track.color || '#3b82f6';
+            btn.style.borderColor = tColor;
+            btn.style.color = tColor;
+            btn.innerHTML = `<span style="font-weight:800; margin-right:3px; font-size:0.7rem;">T${track.group_number}</span>${track.title}`;
+            btn.onclick = () => {
+                if (state.activeTrack === track.id) state.activeTrack = null;
+                else {
+                    state.activeTrack = track.id;
+                    state.activeMD = null;
+                    state.activeLayer = null;
+                    state.activeLayerTag = null;
+                    state.activeGroup = null;
+                }
+                updateFilterState();
+                updateHighlights();
+            };
+            groupWrap.appendChild(btn);
+        });
+        trackContainer.appendChild(groupWrap);
     });
 
     // Micro Degrees
@@ -211,7 +266,8 @@ function renderFilters() {
     const modes = [
         { id: 'all', label: 'Full View' },
         { id: 'ai', label: 'AI Majors' },
-        { id: 'ax', label: 'AX Majors' }
+        { id: 'ax', label: 'AX Majors' },
+        { id: 'tracks', label: '전공 트랙 체계' }
     ];
 
     modes.forEach(m => {
@@ -270,19 +326,22 @@ function updateFilterState() {
         });
     }
 
-    // Tracks
-    const trackChips = trackContainer.querySelectorAll('.filter-chip');
+    // Tracks — match by data order (12 chips)
+    const trackChips = trackContainer.querySelectorAll('.track-filter-chip');
     trackChips.forEach((chip, i) => {
         const track = tracks[i];
+        if (!track) return;
         const tColor = track.color || '#3b82f6';
         if (track.id === state.activeTrack) {
             chip.classList.add('active');
             chip.style.backgroundColor = tColor;
             chip.style.color = '#fff';
+            chip.style.borderColor = tColor;
         } else {
             chip.classList.remove('active');
-            chip.style.backgroundColor = '#fff';
+            chip.style.backgroundColor = 'transparent';
             chip.style.color = tColor;
+            chip.style.borderColor = tColor;
         }
     });
 
@@ -294,14 +353,211 @@ function updateFilterState() {
     });
 }
 
+// Helper: hex color to rgba string
+function hexToRgba(hex, alpha) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r},${g},${b},${alpha})`;
+}
+
+// Apply category-based style to a course chip element
+function applyCourseCatStyle(el, cat, trackColor) {
+    el.classList.add('course-chip', `cat-${cat}`);
+    if (cat === 'track') {
+        el.style.background = hexToRgba(trackColor, 0.12);
+        el.style.borderColor = hexToRgba(trackColor, 0.45);
+        el.style.color = trackColor;
+    }
+}
+
+// 2a. Render Track Overview
+function renderTrackOverview() {
+    tableContainer.innerHTML = '';
+    tableContainer.style.removeProperty('--col-count');
+    tableContainer.classList.add('track-overview-mode');
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'track-overview-wrapper';
+
+    // Header
+    const hdr = document.createElement('div');
+    hdr.className = 'track-overview-header';
+    hdr.innerHTML = `
+        <div class="track-overview-title">
+            <h2>AI 전공 트랙 체계 <span class="track-overview-badge">'26 제안서</span></h2>
+            <p>AI 기술 분야에 전문성을 갖춘 인재 양성 목적의 트랙별 특화교육 과정입니다.</p>
+        </div>
+        <div class="track-cat-legend">
+            <span class="legend-chip cat-bsm">기초/교양</span>
+            <span class="legend-chip cat-req">전공필수</span>
+            <span class="legend-chip cat-common">전공선택 공통</span>
+            <span class="legend-chip cat-track-demo">전공선택 트랙별</span>
+            <span class="legend-chip cat-cap">캡스톤/PBL</span>
+        </div>
+        <div class="track-overview-meta">
+            <span>📌 전공세부트랙 30학점 이상 이수 시 졸업증명서 또는 성적증명서에 기재</span>
+            <span>📌 2개 이상 트랙 이수 가능</span>
+        </div>
+    `;
+    wrapper.appendChild(hdr);
+
+    // Track number overview bar
+    const overviewBar = document.createElement('div');
+    overviewBar.className = 'track-number-bar';
+    departmentTracks.forEach(dept => {
+        const cell = document.createElement('div');
+        cell.className = 'track-number-cell';
+        cell.style.borderColor = dept.color;
+        cell.innerHTML = `
+            <div class="track-number-header" style="background:${dept.color}">
+                <span class="track-numbers">${dept.tracks.map(t => `T${t.number} ${t.name}`).join('<br>')}</span>
+            </div>
+            <div class="track-number-dept">${dept.deptName}</div>
+            <div class="track-number-ax">
+                <span class="ax-label">AX협력</span>
+                ${dept.axPartners.join(' · ')}
+            </div>
+        `;
+        cell.style.cursor = 'pointer';
+        cell.onclick = () => {
+            const target = document.getElementById(`track-dept-${dept.dept}`);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+        overviewBar.appendChild(cell);
+    });
+    wrapper.appendChild(overviewBar);
+
+    // Department sections
+    departmentTracks.forEach(deptData => {
+        const section = document.createElement('div');
+        section.className = 'track-dept-section';
+        section.id = `track-dept-${deptData.dept}`;
+
+        // Department header
+        const deptHdr = document.createElement('div');
+        deptHdr.className = 'track-dept-header';
+        deptHdr.innerHTML = `
+            <div class="track-dept-badge" style="background:${deptData.color}">AI 전공</div>
+            <h3 class="track-dept-name">${deptData.deptName}</h3>
+        `;
+        section.appendChild(deptHdr);
+
+        // AX Partners — shown ABOVE track cards
+        const axRow = document.createElement('div');
+        axRow.className = 'track-ax-row';
+        axRow.innerHTML = `
+            <span class="track-ax-label">AX 협력전공</span>
+            <div class="track-ax-partners">
+                ${deptData.axPartners.map(p => `<span class="track-ax-chip">${p}</span>`).join('')}
+            </div>
+        `;
+        section.appendChild(axRow);
+
+        // Build grade/semester lookup from courseData
+        const byDeptName = new Map();
+        const byNameOnly = new Map();
+        courseData.forEach(c => {
+            byDeptName.set(`${c.dept}:${c.name}`, { grade: c.grade, semester: c.semester });
+            if (!byNameOnly.has(c.name)) byNameOnly.set(c.name, { grade: c.grade, semester: c.semester });
+        });
+
+        // Track cards grid
+        const cardsRow = document.createElement('div');
+        cardsRow.className = 'track-cards-row';
+
+        deptData.tracks.forEach(track => {
+            const card = document.createElement('div');
+            card.className = 'track-card';
+            card.style.setProperty('--track-color', deptData.color);
+
+            // Card header
+            const cardHdr = document.createElement('div');
+            cardHdr.className = 'track-card-header';
+            cardHdr.style.background = deptData.color;
+            cardHdr.innerHTML = `
+                <span class="track-card-number">T${track.number}</span>
+                <span class="track-card-name">${track.name}</span>
+            `;
+            card.appendChild(cardHdr);
+
+            // Description
+            const desc = document.createElement('p');
+            desc.className = 'track-card-desc';
+            desc.textContent = track.description;
+            card.appendChild(desc);
+
+            // Build 4×2 semester grid
+            const semMap = {};
+            for (let g = 1; g <= 4; g++)
+                for (let s = 1; s <= 2; s++)
+                    semMap[`${g}-${s}`] = [];
+
+            track.courses.forEach(course => {
+                const info = byDeptName.get(`${deptData.dept}:${course.name}`) || byNameOnly.get(course.name);
+                const key = info ? `${info.grade}-${info.semester}` : '3-1';
+                semMap[key].push(course);
+            });
+
+            const grid = document.createElement('div');
+            grid.className = 'track-semester-grid';
+
+            // Column headers
+            const cornerEl = document.createElement('div');
+            grid.appendChild(cornerEl);
+            ['1학기', '2학기'].forEach(label => {
+                const h = document.createElement('div');
+                h.className = 'track-semester-col-header';
+                h.textContent = label;
+                grid.appendChild(h);
+            });
+
+            // Year rows
+            for (let g = 1; g <= 4; g++) {
+                const lbl = document.createElement('div');
+                lbl.className = 'track-grade-label';
+                lbl.textContent = `${g}학년`;
+                grid.appendChild(lbl);
+
+                for (let s = 1; s <= 2; s++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'track-semester-cell';
+                    semMap[`${g}-${s}`].forEach(course => {
+                        const chip = document.createElement('span');
+                        chip.textContent = course.name;
+                        applyCourseCatStyle(chip, course.cat, deptData.color);
+                        cell.appendChild(chip);
+                    });
+                    grid.appendChild(cell);
+                }
+            }
+            card.appendChild(grid);
+
+            cardsRow.appendChild(card);
+        });
+
+        section.appendChild(cardsRow);
+        wrapper.appendChild(section);
+    });
+
+    tableContainer.appendChild(wrapper);
+}
+
 // 2. Render Roadmap Table
 function renderTable() {
+    tableContainer.classList.remove('track-overview-mode');
     tableContainer.innerHTML = '';
+
+    // -- Track overview mode --
+    if (state.viewMode === 'tracks') {
+        renderTrackOverview();
+        return;
+    }
 
     // -- Header Row --
     const headerRow = document.createElement('div');
     headerRow.className = 'table-header';
-    
+
     const emptyCell = document.createElement('div');
     emptyCell.className = 'col-header semester-col';
     emptyCell.textContent = 'Sem';
@@ -309,7 +565,7 @@ function renderTable() {
 
     // Department Columns - Filtering & Sorting
     let displayDepts = departments;
-    
+
     // 1. Filter by View Mode
     if (state.viewMode === 'ai') {
         displayDepts = departments.filter(d => d.group === 'AI' || d.group === 'General');
