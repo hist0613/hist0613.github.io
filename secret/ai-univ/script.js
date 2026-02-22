@@ -409,7 +409,7 @@ function renderFacultyView() {
     hdr.innerHTML = `
         <div class="track-overview-title">
             <h2>참여 교수진 <span class="track-overview-badge">'26 제안서 기준</span></h2>
-            <p>AI융합대학 및 AX 협력학과 교수진 현황입니다. 정보통신공학과(ICE) 교원은 별도 업데이트 예정입니다.</p>
+            <p>AI융합대학 및 AX 협력학과 교수진 현황입니다. 정보통신공학과(ICE)는 일부 교원만 포함되어 있으며 순차적으로 업데이트될 예정입니다.</p>
         </div>
     `;
     wrapper.appendChild(hdr);

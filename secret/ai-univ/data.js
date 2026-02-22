@@ -997,10 +997,14 @@ const departmentTracks = [
 ];
 
 // Faculty Data (참여 교수진)
-// Source: 공식 제안서 참여교원 현황 / 각 학과 홈페이지
-// Included: 이름, 소속, 직위, 전공, 연구분야 키워드 (공개 정보)
-// Note: 정보통신공학과(ICE) 교원은 별도 업데이트 예정
+// Source: 공식 제안서 참여교원 현황 / 각 학과 홈페이지 (공개 정보)
 const facultyData = [
+  // ── 정보통신공학과 (ICE) ─────────────────────────────────────────
+  // Source: https://ice.hufs.ac.kr/ice/11456/subview.do
+  { name: "김세화", dept: "ICE", position: "교수", major: "임베디드 소프트웨어",  keywords: ["임베디드 SW 개발", "실시간 운영체제", "임베디드 미들웨어"] },
+  { name: "손경락", dept: "ICE", position: "교수", major: "무선통신·정보시스템",  keywords: ["무선통신", "분산컴퓨팅", "정보시스템"] },
+  { name: "전홍배", dept: "ICE", position: "교수", major: "6G·신호처리",          keywords: ["6G 무선통신", "신호처리"] },
+
   // ── Language & AI (LAI) ────────────────────────────────────────────
   { name: "장태업", dept: "LAI", position: "교수",   major: "언어학",         keywords: ["음성처리·음성공학", "기계번역", "음성 자동평가", "다국어 AI"],      role: "AI융합대학장" },
   { name: "이재홍", dept: "LAI", position: "조교수", major: "융합전자",        keywords: ["통계 머신러닝", "음성/오디오 AI"] },
