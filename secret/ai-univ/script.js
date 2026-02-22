@@ -18,13 +18,27 @@ const tableContainer = document.getElementById('roadmap-table');
 const resetBtn = document.getElementById('resetBtn');
 const modal = document.getElementById('courseModal');
 
+// Hash-based routing helpers
+const VALID_VIEWS = ['all', 'ai', 'ax', 'tracks'];
+function applyHashToState() {
+    const hash = window.location.hash.replace('#', '');
+    if (VALID_VIEWS.includes(hash)) state.viewMode = hash;
+}
+
 // Init
 function init() {
-    calculateSimilarityColors(); // Calculate ID numbering first
+    applyHashToState(); // Read URL hash before first render
+    calculateSimilarityColors();
     renderFilters();
-    renderTable(); // Standard Semester Table
+    renderTable();
     setupEvents();
 }
+
+window.addEventListener('hashchange', () => {
+    applyHashToState();
+    renderFilters();
+    renderTable();
+});
 
 // 1. Render Top Filters
 function renderFilters() {
@@ -75,7 +89,7 @@ function renderFilters() {
     layerContainer.innerHTML = '';
 
     // Layer colors per level
-    const layerColors = { L0: '#94a3b8', L1: '#3b82f6', L2: '#8b5cf6', L3: '#f59e0b' };
+    const layerColors = { L0: '#94a3b8', L1: '#64748b', L2: '#475569', L3: '#1e293b' };
 
     // Group: L0 alone, then L1/L2/L3 each as a pair
     const layerGroups = [
@@ -316,12 +330,20 @@ function updateFilterState() {
             { layer: 'L3', tag: 'core' }, { layer: 'L3', tag: 'app' }
         ];
         
+        const lColors = { L0: '#94a3b8', L1: '#64748b', L2: '#475569', L3: '#1e293b' };
         buttons.forEach((btn, i) => {
             const def = defs[i];
+            const lc = lColors[def.layer];
             if (def.layer === state.activeLayer && def.tag === state.activeLayerTag) {
                 btn.classList.add('active');
+                btn.style.backgroundColor = lc;
+                btn.style.borderColor = lc;
+                btn.style.color = '#fff';
             } else {
                 btn.classList.remove('active');
+                btn.style.backgroundColor = 'transparent';
+                btn.style.borderColor = lc;
+                btn.style.color = lc;
             }
         });
     }
