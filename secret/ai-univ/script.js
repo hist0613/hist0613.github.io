@@ -308,8 +308,9 @@ function renderFilters() {
 
         btn.onclick = () => {
             state.viewMode = m.id;
-            renderFilters(); // Re-render buttons
-            renderTable(); // Re-render table
+            history.pushState(null, '', '#' + m.id);
+            renderFilters();
+            renderTable();
         };
         viewGroup.appendChild(btn);
     });
