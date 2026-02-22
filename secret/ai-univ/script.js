@@ -19,7 +19,7 @@ const resetBtn = document.getElementById('resetBtn');
 const modal = document.getElementById('courseModal');
 
 // Hash-based routing helpers
-const VALID_VIEWS = ['all', 'ai', 'ax', 'tracks'];
+const VALID_VIEWS = ['all', 'ai', 'ax', 'tracks', 'faculty'];
 function applyHashToState() {
     const hash = window.location.hash.replace('#', '');
     if (VALID_VIEWS.includes(hash)) state.viewMode = hash;
@@ -281,7 +281,8 @@ function renderFilters() {
         { id: 'all', label: 'Full View' },
         { id: 'ai', label: 'AI Majors' },
         { id: 'ax', label: 'AX Majors' },
-        { id: 'tracks', label: '전공 트랙 체계' }
+        { id: 'tracks', label: '전공 트랙 체계' },
+        { id: 'faculty', label: '참여 교수진' }
     ];
 
     modes.forEach(m => {
@@ -392,6 +393,89 @@ function applyCourseCatStyle(el, cat, trackColor) {
         el.style.borderColor = hexToRgba(trackColor, 0.45);
         el.style.color = trackColor;
     }
+}
+
+// 2b. Render Faculty View
+function renderFacultyView() {
+    tableContainer.innerHTML = '';
+    tableContainer.classList.add('track-overview-mode');
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'faculty-wrapper';
+
+    // Header
+    const hdr = document.createElement('div');
+    hdr.className = 'faculty-header';
+    hdr.innerHTML = `
+        <div class="track-overview-title">
+            <h2>참여 교수진 <span class="track-overview-badge">'26 제안서 기준</span></h2>
+            <p>AI융합대학 및 AX 협력학과 교수진 현황입니다. 정보통신공학과(ICE) 교원은 별도 업데이트 예정입니다.</p>
+        </div>
+    `;
+    wrapper.appendChild(hdr);
+
+    // Group faculty by dept, in a specific order
+    // AI Majors follow tracks order (CSE→ICE→LAI→AID→FAI→SSAI), then AX partners
+    const deptOrder = ['CSE','ICE','LAI','AID','FAI','SSAI','ELLT','MEDIA','IME'];
+    const grouped = {};
+    deptOrder.forEach(d => grouped[d] = []);
+    facultyData.forEach(f => { if (grouped[f.dept]) grouped[f.dept].push(f); });
+
+    deptOrder.forEach(deptId => {
+        const members = grouped[deptId];
+        if (!members.length) return;
+
+        const dept = departments.find(d => d.id === deptId);
+        const deptColor = dept ? dept.color : '#64748b';
+        const deptName  = dept ? dept.name  : deptId;
+        const isAI = dept && dept.group === 'AI';
+
+        const section = document.createElement('div');
+        section.className = 'faculty-section';
+
+        const secHdr = document.createElement('div');
+        secHdr.className = 'faculty-section-header';
+        secHdr.innerHTML = `
+            <div class="faculty-dept-badge" style="background:${deptColor}">${isAI ? 'AI 전공' : 'AX 협력'}</div>
+            <h3 class="faculty-dept-name" style="color:${deptColor}">${deptName}</h3>
+            <span class="faculty-dept-count">${members.length}명</span>
+        `;
+        section.appendChild(secHdr);
+
+        const grid = document.createElement('div');
+        grid.className = 'faculty-grid';
+
+        members.forEach(f => {
+            const card = document.createElement('div');
+            card.className = 'faculty-card';
+            card.style.setProperty('--fc-color', deptColor);
+
+            const posColor = f.position === '교수' ? '#1e293b' : f.position === '부교수' ? '#334155' : '#475569';
+
+            card.innerHTML = `
+                <div class="faculty-card-top">
+                    <div class="faculty-avatar" style="background:${deptColor}22; color:${deptColor}; border:2px solid ${deptColor}44">
+                        ${f.name.charAt(0)}
+                    </div>
+                    <div class="faculty-card-info">
+                        <div class="faculty-name">${f.name}${f.role ? ` <span class="faculty-role-badge">${f.role}</span>` : ''}</div>
+                        <div class="faculty-pos" style="color:${posColor}">${f.position}</div>
+                        ${f.deptNote ? `<div class="faculty-dept-note">${f.deptNote}</div>` : ''}
+                    </div>
+                </div>
+                <div class="faculty-major"><span class="faculty-major-label">전공</span> ${f.major}</div>
+                <div class="faculty-keywords">
+                    ${f.keywords.map(k => `<span class="faculty-kw" style="background:${deptColor}12; color:${deptColor}; border-color:${deptColor}33">${k}</span>`).join('')}
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        section.appendChild(grid);
+        wrapper.appendChild(section);
+    });
+
+    tableContainer.appendChild(wrapper);
 }
 
 // 2a. Render Track Overview
@@ -574,6 +658,12 @@ function renderTable() {
     // -- Track overview mode --
     if (state.viewMode === 'tracks') {
         renderTrackOverview();
+        return;
+    }
+
+    // -- Faculty view --
+    if (state.viewMode === 'faculty') {
+        renderFacultyView();
         return;
     }
 

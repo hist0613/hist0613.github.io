@@ -996,9 +996,59 @@ const departmentTracks = [
   }
 ];
 
+// Faculty Data (참여 교수진)
+// Source: 공식 제안서 참여교원 현황 / 각 학과 홈페이지
+// Included: 이름, 소속, 직위, 전공, 연구분야 키워드 (공개 정보)
+// Note: 정보통신공학과(ICE) 교원은 별도 업데이트 예정
+const facultyData = [
+  // ── Language & AI (LAI) ────────────────────────────────────────────
+  { name: "장태업", dept: "LAI", position: "교수",   major: "언어학",         keywords: ["음성처리·음성공학", "기계번역", "음성 자동평가", "다국어 AI"],      role: "AI융합대학장" },
+  { name: "이재홍", dept: "LAI", position: "조교수", major: "융합전자",        keywords: ["통계 머신러닝", "음성/오디오 AI"] },
+  { name: "박준형", dept: "LAI", position: "조교수", major: "소프트웨어",      keywords: ["자연어처리(NLP)", "언어모델", "NLP 컨퍼런스 Area Chair"] },
+  { name: "김예찬", dept: "LAI", position: "조교수", major: "인공지능학",      keywords: ["자연어처리", "음성·언어 AI"] },
+  { name: "최승택", dept: "LAI", position: "조교수", major: "컴퓨터과학",      keywords: ["생성형 AI", "멀티모달 AI (Image·Text·Audio)"] },
+  { name: "김주애", dept: "LAI", position: "조교수", major: "컴퓨터공학",      keywords: ["자연어처리", "AI 교육"], deptNote: "LAI·ELLT 겸임" },
+
+  // ── Social Science & AI (SSAI) ─────────────────────────────────────
+  { name: "홍승혁", dept: "SSAI", position: "조교수", major: "바이오엔지니어링", keywords: ["Physical AI", "거대언어모델(LLM)"] },
+  { name: "이동현", dept: "SSAI", position: "부교수", major: "기술경영",         keywords: ["AI 기술정책", "환경 빅데이터", "기술경영"] },
+  { name: "차민철", dept: "SSAI", position: "조교수", major: "산업공학",         keywords: ["인간-AI 상호작용"], deptNote: "SSAI·미디어 겸임" },
+
+  // ── Finance & AI (FAI) ─────────────────────────────────────────────
+  { name: "공형우", dept: "FAI", position: "조교수", major: "산업및시스템공학", keywords: ["Finance 데이터 AI 응용"] },
+  { name: "안시현", dept: "FAI", position: "조교수", major: "산업공학",         keywords: ["AI기반 부동산 가격추정", "핀테크"] },
+
+  // ── AI 데이터융합학부 (AID) ────────────────────────────────────────
+  { name: "장혜진", dept: "AID", position: "조교수", major: "산업시스템공학",  keywords: ["데이터마이닝", "현대모비스 AI 자문"] },
+  { name: "최재걸", dept: "AID", position: "조교수", major: "지능정보융합",    keywords: ["검색엔진 AI", "자연어 검색"] },
+  { name: "장원제", dept: "AID", position: "조교수", major: "전기전자공학",    keywords: ["자율주행시스템", "AI"] },
+
+  // ── ELLT학과 (AX 협력) ─────────────────────────────────────────────
+  { name: "김지은",  dept: "ELLT", position: "교수",   major: "전산언어학",  keywords: ["전산언어학", "언어·AI", "언어정보처리"] },
+  { name: "권익수",  dept: "ELLT", position: "교수",   major: "언어학",      keywords: ["인지언어학", "AI 언어처리", "언어표준화"] },
+  { name: "조수경",  dept: "ELLT", position: "교수",   major: "언어습득론",  keywords: ["언어 습득", "영어교육·AI", "현대영어교육학회"] },
+
+  // ── 미디어커뮤니케이션학부 (AX 협력) ──────────────────────────────
+  { name: "이상욱", dept: "MEDIA", position: "조교수", major: "커뮤니케이션학", keywords: ["뉴미디어 기술", "과학 커뮤니케이션"] },
+
+  // ── 산업경영공학과 (AX 협력) ──────────────────────────────────────
+  { name: "Bernardo Nugroho Yahya", dept: "IME", position: "교수",   major: "산업공학",         keywords: ["데이터마이닝", "프로세스마이닝", "IoT 기반 자동화"] },
+  { name: "이충목",                 dept: "IME", position: "교수",   major: "산업시스템공학",   keywords: ["최적화(OR)", "스마트 제조"] },
+
+  // ── 컴퓨터공학부 (AX 협력) ────────────────────────────────────────
+  { name: "신찬수", dept: "CSE", position: "교수",   major: "전산학",           keywords: ["알고리즘", "프로그래밍 교육"] },
+  { name: "임승호", dept: "CSE", position: "교수",   major: "전기및전자공학",   keywords: ["임베디드 시스템", "온디바이스 AI"] },
+  { name: "김승욱", dept: "CSE", position: "조교수", major: "소프트웨어학",     keywords: ["컴퓨터그래픽스"] },
+  { name: "박천준", dept: "CSE", position: "조교수", major: "전기전자공학",     keywords: ["AI 경량화"] },
+  { name: "장익범", dept: "CSE", position: "조교수", major: "전기및컴퓨터공학", keywords: ["자율비행 AI 소프트웨어"] },
+  { name: "지수연", dept: "CSE", position: "조교수", major: "전기정보공학",     keywords: ["의료인공지능"] },
+  { name: "전병환", dept: "CSE", position: "조교수", major: "의과학",           keywords: ["의료 AI", "의료영상 분석", "딥러닝"] },
+];
+
 // Assign to window
 window.departments = departments;
 window.courseData = courseData;
 window.tracks = tracks;
 window.microDegrees = microDegrees;
 window.departmentTracks = departmentTracks;
+window.facultyData = facultyData;
