@@ -1000,25 +1000,25 @@ const departmentTracks = [
 // Source: 교수진 현황.xlsx (2026-01-AI중심대학) + 각 학과 홈페이지 (공개 정보)
 const facultyData = [
   // ── 정보통신공학과 (ICE) ─────────────────────────────────────────
+  { name: "김세화", dept: "ICE", position: "교수",   major: "전기컴퓨터공학",   keywords: ["임베디드 SW", "실시간 운영체제", "심층 강화학습"] },
+  { name: "손경락", dept: "ICE", position: "조교수", major: "전기및전자공학",   keywords: ["무선통신", "정보/부호이론"] },
   { name: "한희일", dept: "ICE", position: "교수",   major: "전기및컴퓨터공학", keywords: ["이미지 처리", "컴퓨터 비전", "멀티미디어"] },
   { name: "정성호", dept: "ICE", position: "교수",   major: "전기및컴퓨터공학", keywords: ["차세대 이동통신", "AI", "네트워크 보안"] },
   { name: "박상원", dept: "ICE", position: "교수",   major: "컴퓨터공학",       keywords: ["데이터베이스", "플래시메모리", "웹 서비스"] },
-  { name: "김세화", dept: "ICE", position: "교수",   major: "전기컴퓨터공학",   keywords: ["임베디드 SW", "실시간 운영체제", "심층 강화학습"] },
-  { name: "손경락", dept: "ICE", position: "조교수", major: "전기및전자공학",   keywords: ["무선통신", "정보/부호이론"] },
   { name: "전홍배", dept: "ICE", position: "교수",   major: "글로벌융합공학",   keywords: ["무선통신", "신호처리"] },
 
   // ── 컴퓨터공학부 (CSE) ────────────────────────────────────────────
+  { name: "김승욱", dept: "CSE", position: "조교수", major: "소프트웨어학",      keywords: ["컴퓨터그래픽스"] },
+  { name: "박천준", dept: "CSE", position: "조교수", major: "전기전자공학",      keywords: ["AI 경량화"] },
   { name: "신찬수", dept: "CSE", position: "교수",   major: "전산학",            keywords: ["알고리즘", "프로그래밍 교육"] },
   { name: "임승호", dept: "CSE", position: "교수",   major: "전기및전자공학",    keywords: ["임베디드 시스템", "온디바이스 AI"] },
+  { name: "장익범", dept: "CSE", position: "조교수", major: "전기및컴퓨터공학",  keywords: ["자율비행 AI 소프트웨어"] },
+  { name: "지수연", dept: "CSE", position: "조교수", major: "전기정보공학",      keywords: ["의료인공지능"] },
+  { name: "전병환", dept: "CSE", position: "조교수", major: "의과학",            keywords: ["의료 AI", "의료영상 분석", "딥러닝"] },
   { name: "이재혁", dept: "CSE", position: "교수",   major: "전기및전자공학",    keywords: ["로봇 제어시스템"] },
   { name: "윤일동", dept: "CSE", position: "교수",   major: "제어계측공학",      keywords: ["영상처리"] },
   { name: "정유진", dept: "CSE", position: "교수",   major: "컴퓨터공학",        keywords: ["알고리즘"] },
   { name: "최재영", dept: "CSE", position: "교수",   major: "전기및전자공학",    keywords: ["머신러닝"] },
-  { name: "김승욱", dept: "CSE", position: "조교수", major: "소프트웨어학",      keywords: ["컴퓨터그래픽스"] },
-  { name: "박천준", dept: "CSE", position: "조교수", major: "전기전자공학",      keywords: ["AI 경량화"] },
-  { name: "장익범", dept: "CSE", position: "조교수", major: "전기및컴퓨터공학",  keywords: ["자율비행 AI 소프트웨어"] },
-  { name: "지수연", dept: "CSE", position: "조교수", major: "전기정보공학",      keywords: ["의료인공지능"] },
-  { name: "전병환", dept: "CSE", position: "조교수", major: "의과학",            keywords: ["의료 AI", "의료영상 분석", "딥러닝"] },
   { name: "이준현", dept: "CSE", position: "조교수", major: "컴퓨터과학",        keywords: ["그래프 AI", "딥러닝"] },
   { name: "곽호진", dept: "CSE", position: "조교수", major: "",                  keywords: [] },
 
