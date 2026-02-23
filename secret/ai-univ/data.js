@@ -1029,6 +1029,7 @@ const facultyData = [
   { name: "김예찬", dept: "LAI", position: "조교수", major: "인공지능학",    keywords: ["자연어처리", "음성·언어 AI"] },
   { name: "최승택", dept: "LAI", position: "조교수", major: "컴퓨터과학",    keywords: ["생성형 AI", "멀티모달 AI"] },
   { name: "김주애", dept: "LAI", position: "조교수", major: "컴퓨터공학",    keywords: ["자연어처리", "AI 교육"], deptNote: "LAI·ELLT 겸임" },
+  { name: "류형곤", dept: "LAI", position: "조교수", major: "전기및전자공학", keywords: ["컴퓨터비전", "멀티모달"] },
 
   // ── AI 데이터융합학부 (AID) ────────────────────────────────────────
   { name: "장혜진", dept: "AID", position: "조교수", major: "산업시스템공학", keywords: ["데이터마이닝"] },
