@@ -19,7 +19,7 @@ const resetBtn = document.getElementById('resetBtn');
 const modal = document.getElementById('courseModal');
 
 // Hash-based routing helpers
-const VALID_VIEWS = ['all', 'ai', 'ax', 'tracks', 'faculty'];
+const VALID_VIEWS = ['all', 'ai', 'ax', 'tracks', 'faculty', 'pbl'];
 function applyHashToState() {
     const hash = window.location.hash.replace('#', '');
     if (VALID_VIEWS.includes(hash)) state.viewMode = hash;
@@ -282,6 +282,7 @@ function renderFilters() {
         { id: 'ai', label: 'AI Majors' },
         { id: 'ax', label: 'AX Majors' },
         { id: 'tracks', label: '전공 트랙 체계' },
+        { id: 'pbl', label: 'PBL 교과목' },
         { id: 'faculty', label: '참여 교수진' }
     ];
 
@@ -393,6 +394,80 @@ function applyCourseCatStyle(el, cat, trackColor) {
         el.style.borderColor = hexToRgba(trackColor, 0.45);
         el.style.color = trackColor;
     }
+}
+
+// 2c. Render PBL View
+function renderPBLView() {
+    tableContainer.innerHTML = '';
+    tableContainer.classList.add('track-overview-mode');
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'pbl-wrapper';
+
+    const hdr = document.createElement('div');
+    hdr.className = 'pbl-header';
+    hdr.innerHTML = `
+        <div class="track-overview-title">
+            <h2>PBL 교과목 <span class="track-overview-badge">'26 설계안</span></h2>
+            <p>12개 트랙별 기업멘토 참여 산학협력 PBL 교과목입니다. 이수구분: 트랙 필수 (L2~L3, 3학점) | 트랙당 협력기업 2개사.</p>
+        </div>
+    `;
+    wrapper.appendChild(hdr);
+
+    departmentTracks.forEach(deptData => {
+        const section = document.createElement('div');
+        section.className = 'pbl-dept-section';
+
+        const secHdr = document.createElement('div');
+        secHdr.className = 'faculty-section-header';
+        secHdr.innerHTML = `
+            <div class="faculty-dept-badge" style="background:${deptData.color}">AI 전공</div>
+            <h3 class="faculty-dept-name" style="color:${deptData.color}">${deptData.deptName}</h3>
+        `;
+        section.appendChild(secHdr);
+
+        const grid = document.createElement('div');
+        grid.className = 'pbl-cards-grid';
+
+        deptData.tracks.forEach(track => {
+            const pbl = pblData[track.number];
+            if (!pbl) return;
+
+            const card = document.createElement('div');
+            card.className = 'pbl-card';
+            card.style.setProperty('--pbl-color', deptData.color);
+
+            const companiesHtml = pbl.companies.map(c => {
+                const profile = companyProfiles[c] || '';
+                const isMarumAI = c === '마음AI';
+                return `<span class="pbl-card-company${isMarumAI ? ' pbl-company-highlight' : ''}" title="${profile}">
+                    ${c}${isMarumAI ? ' <span class="pbl-worv-badge">WoRV</span>' : ''}
+                </span>`;
+            }).join('<span class="pbl-x">×</span>');
+
+            card.innerHTML = `
+                <div class="pbl-card-header" style="background:${deptData.color}">
+                    <span class="pbl-track-num">T${track.number}</span>
+                    <span class="pbl-track-name">${track.name}</span>
+                </div>
+                <div class="pbl-card-body">
+                    <div class="pbl-course-name">${pbl.courseName}</div>
+                    <div class="pbl-companies">${companiesHtml}</div>
+                    <p class="pbl-objective">${pbl.objective}</p>
+                    <details class="pbl-details">
+                        <summary>교과목 내용 보기</summary>
+                        <p class="pbl-content">${pbl.content}</p>
+                    </details>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        section.appendChild(grid);
+        wrapper.appendChild(section);
+    });
+
+    tableContainer.appendChild(wrapper);
 }
 
 // 2b. Render Faculty View
@@ -638,6 +713,23 @@ function renderTrackOverview() {
             }
             card.appendChild(grid);
 
+            // PBL strip
+            const pbl = pblData[track.number];
+            if (pbl) {
+                const strip = document.createElement('div');
+                strip.className = 'track-pbl-strip';
+                strip.innerHTML = `
+                    <div class="pbl-strip-top">
+                        <span class="pbl-strip-label">PBL</span>
+                        <span class="pbl-strip-course">${pbl.courseName}</span>
+                    </div>
+                    <div class="pbl-strip-companies">
+                        ${pbl.companies.map(c => `<span class="pbl-company-chip" title="${companyProfiles[c] || ''}">${c}</span>`).join('<span class="pbl-x">×</span>')}
+                    </div>
+                `;
+                card.appendChild(strip);
+            }
+
             cardsRow.appendChild(card);
         });
 
@@ -662,6 +754,12 @@ function renderTable() {
     // -- Faculty view --
     if (state.viewMode === 'faculty') {
         renderFacultyView();
+        return;
+    }
+
+    // -- PBL view --
+    if (state.viewMode === 'pbl') {
+        renderPBLView();
         return;
     }
 
