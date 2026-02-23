@@ -463,10 +463,8 @@ function renderFacultyView() {
                         ${f.deptNote ? `<div class="faculty-dept-note">${f.deptNote}</div>` : ''}
                     </div>
                 </div>
-                <div class="faculty-major"><span class="faculty-major-label">전공</span> ${f.major}</div>
-                <div class="faculty-keywords">
-                    ${f.keywords.map(k => `<span class="faculty-kw" style="background:${deptColor}12; color:${deptColor}; border-color:${deptColor}33">${k}</span>`).join('')}
-                </div>
+                ${f.major ? `<div class="faculty-major"><span class="faculty-major-label">전공</span> ${f.major}</div>` : ''}
+                ${f.keywords && f.keywords.length ? `<div class="faculty-keywords">${f.keywords.map(k => `<span class="faculty-kw" style="background:${deptColor}12; color:${deptColor}; border-color:${deptColor}33">${k}</span>`).join('')}</div>` : ''}
             `;
             grid.appendChild(card);
         });
