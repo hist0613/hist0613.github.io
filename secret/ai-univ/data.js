@@ -1140,6 +1140,7 @@ const facultyData = [
   // ── Social Science & AI (SSAI) ─────────────────────────────────────
   { name: "홍승혁", dept: "SSAI", position: "조교수", major: "바이오엔지니어링", keywords: ["Physical AI", "거대언어모델(LLM)"] },
   { name: "이동현", dept: "SSAI", position: "부교수", major: "기술경영",          keywords: ["AI 기술정책", "환경 빅데이터", "기술경영"] },
+  { name: "안서영", dept: "SSAI", position: "조교수", major: "심리학",            keywords: ["뇌인지 기반 AI"], deptNote: "SSAI·미디어 겸임" },
   { name: "차민철", dept: "SSAI", position: "조교수", major: "산업공학",          keywords: ["인간-AI 상호작용"], deptNote: "SSAI·미디어 겸임" },
 
   // ── ELLT학과 (AX 협력) ─────────────────────────────────────────────
