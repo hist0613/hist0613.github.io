@@ -862,7 +862,7 @@ const departmentTracks = [
   },
   {
     dept: "LAI", deptName: "Language & AI", color: "#f59e0b",
-    axPartners: ["ELLT학과", "국가전략언어대학", "아시아언어문화대학", "통번역대학원"],
+    axPartners: ["ELLT학과", "국가전략언어대학", "아시아언어문화대학"],
     tracks: [
       {
         number: 5, name: "다언어 AI",
@@ -1107,24 +1107,25 @@ const facultyData = [
   { name: "박천준", dept: "CSE", position: "조교수", major: "전기전자공학",      keywords: ["AI 경량화"] },
   { name: "신찬수", dept: "CSE", position: "교수",   major: "전산학",            keywords: ["알고리즘", "프로그래밍 교육"] },
   { name: "임승호", dept: "CSE", position: "교수",   major: "전기및전자공학",    keywords: ["임베디드 시스템", "온디바이스 AI"] },
-  { name: "장익범", dept: "CSE", position: "조교수", major: "전기및컴퓨터공학",  keywords: ["자율비행 AI 소프트웨어"] },
+  { name: "장익범", dept: "CSE", position: "조교수", major: "전기및컴퓨터공학",  keywords: ["딥러닝", "의료영상분석", "생성형AI"] },
   { name: "지수연", dept: "CSE", position: "조교수", major: "전기정보공학",      keywords: ["의료인공지능"] },
-  { name: "전병환", dept: "CSE", position: "조교수", major: "의과학",            keywords: ["의료 AI", "의료영상 분석", "딥러닝"] },
+  { name: "전병환", dept: "CSE", position: "조교수", major: "의과학",            keywords: ["딥러닝", "의료 AI", "의료영상 분석"] },
   { name: "이재혁", dept: "CSE", position: "교수",   major: "전기및전자공학",    keywords: ["로봇 제어시스템"] },
   { name: "윤일동", dept: "CSE", position: "교수",   major: "제어계측공학",      keywords: ["영상처리"] },
   { name: "정유진", dept: "CSE", position: "교수",   major: "컴퓨터공학",        keywords: ["알고리즘"] },
   { name: "최재영", dept: "CSE", position: "교수",   major: "전기및전자공학",    keywords: ["머신러닝"] },
   { name: "이준현", dept: "CSE", position: "조교수", major: "컴퓨터과학",        keywords: ["그래프 AI", "딥러닝"] },
-  { name: "곽호진", dept: "CSE", position: "조교수", major: "",                  keywords: [] },
+  { name: "곽호진", dept: "CSE", position: "조교수", major: "",                  keywords: ["영상처리", "음향처리", "비전공자 SW교육"] },
 
   // ── Language & AI (LAI) ────────────────────────────────────────────
   { name: "장태엽", dept: "LAI", position: "교수",   major: "언어학",        keywords: ["음성처리·음성공학", "기계번역", "음성 자동평가", "다국어 AI"], role: "AI융합대학장" },
   { name: "이재홍", dept: "LAI", position: "조교수", major: "융합전자",      keywords: ["통계 머신러닝", "음성/오디오 AI"] },
   { name: "박준형", dept: "LAI", position: "조교수", major: "소프트웨어",    keywords: ["자연어처리(NLP)", "언어모델"] },
   { name: "김예찬", dept: "LAI", position: "조교수", major: "인공지능학",    keywords: ["자연어처리", "음성·언어 AI"] },
-  { name: "최승택", dept: "LAI", position: "조교수", major: "컴퓨터과학",    keywords: ["생성형 AI", "멀티모달 AI"] },
+  { name: "최승택", dept: "LAI", position: "조교수", major: "컴퓨터과학",    keywords: ["생성형 AI", "멀티모달 AI", "AI 평가"] },
   { name: "김주애", dept: "LAI", position: "조교수", major: "컴퓨터공학",    keywords: ["자연어처리", "AI 교육"], deptNote: "LAI·ELLT 겸임" },
   { name: "류형곤", dept: "LAI", position: "조교수", major: "전기및전자공학", keywords: ["컴퓨터비전", "멀티모달"] },
+  { name: "김지은", dept: "LAI", position: "교수",   major: "전산언어학",    keywords: ["전산언어학", "언어·AI", "언어정보처리"], deptNote: "LAI·ELLT 겸임" },
 
   // ── AI 데이터융합학부 (AID) ────────────────────────────────────────
   { name: "장혜진", dept: "AID", position: "조교수", major: "산업시스템공학", keywords: ["데이터마이닝"] },
@@ -1142,18 +1143,6 @@ const facultyData = [
   { name: "이동현", dept: "SSAI", position: "부교수", major: "기술경영",          keywords: ["AI 기술정책", "환경 빅데이터", "기술경영"] },
   { name: "안서영", dept: "SSAI", position: "조교수", major: "심리학",            keywords: ["뇌인지 기반 AI"], deptNote: "SSAI·미디어 겸임" },
   { name: "차민철", dept: "SSAI", position: "조교수", major: "산업공학",          keywords: ["인간-AI 상호작용"], deptNote: "SSAI·미디어 겸임" },
-
-  // ── ELLT학과 (AX 협력) ─────────────────────────────────────────────
-  { name: "김지은", dept: "ELLT", position: "교수", major: "전산언어학",  keywords: ["전산언어학", "언어·AI", "언어정보처리"] },
-  { name: "권익수", dept: "ELLT", position: "교수", major: "언어학",      keywords: ["인지언어학", "AI 언어처리", "언어표준화"] },
-  { name: "조수경", dept: "ELLT", position: "교수", major: "언어습득론",  keywords: ["언어 습득", "영어교육·AI"] },
-
-  // ── 미디어커뮤니케이션학부 (AX 협력) ──────────────────────────────
-  { name: "이상욱", dept: "MEDIA", position: "조교수", major: "커뮤니케이션학", keywords: ["뉴미디어 기술", "과학 커뮤니케이션"] },
-
-  // ── 산업경영공학과 (AX 협력) ──────────────────────────────────────
-  { name: "Bernardo Nugroho Yahya", dept: "IME", position: "교수", major: "산업공학",       keywords: ["데이터마이닝", "프로세스마이닝", "IoT 기반 자동화"] },
-  { name: "이충목",                 dept: "IME", position: "교수", major: "산업시스템공학", keywords: ["최적화(OR)", "스마트 제조"] },
 ];
 
 // Assign to window
