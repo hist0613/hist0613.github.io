@@ -428,8 +428,8 @@ function setupEvents() {
         state.activeGroup = null;
         state.activeLayer = null;
         state.activeLayerTag = null;
-        updateFilterState();
-        updateHighlights();
+        renderFilters();
+        renderTable();
     };
 
     document.querySelector('.close-btn').onclick = () => modal.classList.remove('visible');
