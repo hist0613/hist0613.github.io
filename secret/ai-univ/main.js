@@ -13,6 +13,7 @@ const state = {
     showNew: true, // Default: show suggested
     similarityMode: true, // Always on
     viewMode: 'all', // 'all', 'ai', 'ax', 'tracks', 'pbl', 'faculty'
+    filtersCollapsed: false,
 };
 
 // DOM Elements
@@ -68,12 +69,24 @@ function renderMainNav() {
 
     topItems.forEach(item => {
         const isActive = item.views.includes(state.viewMode);
+        const isCurriculum = item.views.includes('all');
 
         const navItem = document.createElement('div');
         navItem.className = 'nav-item' + (isActive ? ' active' : '');
-        navItem.textContent = item.label;
+
+        if (isCurriculum && isActive) {
+            navItem.textContent = state.filtersCollapsed ? '커리큘럼 ▼' : '커리큘럼 ▲';
+        } else {
+            navItem.textContent = item.label;
+        }
+
         navItem.onclick = () => {
-            if (!isActive) {
+            if (isActive && isCurriculum) {
+                state.filtersCollapsed = !state.filtersCollapsed;
+                applyFiltersCollapsed();
+                renderMainNav();
+            } else if (!isActive) {
+                state.filtersCollapsed = false;
                 state.viewMode = item.defaultView;
                 history.pushState(null, '', '#' + item.defaultView);
                 renderFilters();
@@ -84,6 +97,7 @@ function renderMainNav() {
     });
 
     nav.appendChild(left);
+    applyFiltersCollapsed();
 
     // ── Sub-nav row (below main-nav, only for curriculum views) ──
     const subNav = document.getElementById('main-sub-nav');
@@ -108,6 +122,11 @@ function renderMainNav() {
         });
     }
 
+}
+
+function applyFiltersCollapsed() {
+    const header = document.querySelector('.top-header');
+    header.classList.toggle('filters-collapsed', state.filtersCollapsed && isCurriculumView());
 }
 
 function renderFilters() {
@@ -231,10 +250,6 @@ function renderFilters() {
 
     // Tracks — always visible, grouped by dept, using dept track color
     trackContainer.innerHTML = '';
-    trackContainer.style.flexDirection = 'row';
-    trackContainer.style.alignItems = 'center';
-    trackContainer.style.flexWrap = 'wrap';
-    trackContainer.style.gap = '6px';
 
     const deptGroups = {};
     tracks.forEach(track => {
