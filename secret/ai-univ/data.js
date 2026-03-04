@@ -62,21 +62,21 @@ const tracks = [
     description: "로봇·컴퓨터비전·강화학습 기반 물리세계 AI 시스템 구축 전문가",
     required_similars: ["ai_intro", "ml", "dl", "rl", "cv", "robotics", "bigdata_model", "adv_dl", "linear_algebra", "calculus"],
     recommanded_grade: "AI데이터융합학", color: "#06b6d4" },
-  { id: "data_science", group_number: 8, dept: "AID", title: "데이터사이언스",
+  { id: "data_science", group_number: 8, dept: "AID", title: "데이터인텔리전스",
     description: "대규모 데이터 마이닝·분석·시각화 및 도메인 의사결정 지원 전문가",
     required_similars: ["ai_intro", "ml", "bigdata", "stat_model", "dm", "unstruct_dm", "tsa_dm", "net_mining", "bigdata_model", "viz", "linear_algebra", "prob_theory"],
     recommanded_grade: "AI데이터융합학", color: "#06b6d4" },
   // FAI
-  { id: "finance_ai", group_number: 9, dept: "FAI", title: "금융 AI",
+  { id: "finance_ai", group_number: 9, dept: "FAI", title: "핀테크 AI",
     description: "딥러닝·LLM 기반 금융 서비스·리스크관리·추천 모델 설계 전문가",
     required_similars: ["ai_intro", "ml", "dl", "nlp_intro", "advanced_llm", "adv_dl", "dm", "fin_ds", "prompt_eng", "linear_algebra"],
     recommanded_grade: "Finance & AI", color: "#8b5cf6" },
-  { id: "quant", group_number: 10, dept: "FAI", title: "Quant",
+  { id: "quant", group_number: 10, dept: "FAI", title: "퀀트트레이딩 AI",
     description: "수리금융·계량분석·포트폴리오 최적화 기반 정량적 투자 전문가",
     required_similars: ["ai_intro", "prob_stat", "regression", "tsa_fin", "investment", "or1", "adv_tsa_fin", "convex", "portfolio", "linear_algebra", "calculus", "prob_theory"],
     recommanded_grade: "Finance & AI", color: "#8b5cf6" },
   // SSAI
-  { id: "ai_public_policy", group_number: 11, dept: "SSAI", title: "AI 공공정책",
+  { id: "ai_public_policy", group_number: 11, dept: "SSAI", title: "AI 거버넌스",
     description: "AI 거버넌스·공공정책 설계 및 사회혁신 문제 해결 전문가",
     required_similars: ["ai_intro", "ai_ethics", "social_method", "social_ds", "policy_ai", "ai_gov"],
     recommanded_grade: "Social Science & AI", color: "#ec4899" },
@@ -285,7 +285,7 @@ const departmentTracks = [
         ]
       },
       {
-        number: 8, name: "데이터사이언스",
+        number: 8, name: "데이터인텔리전스",
         description: "대규모 데이터 마이닝·분석·시각화 및 도메인 의사결정 지원 전문가",
         courses: [
           { name: "인공지능수학", cat: "bsm" },     { name: "확률과통계", cat: "bsm" },
@@ -305,7 +305,7 @@ const departmentTracks = [
     axPartners: ["통계학과", "수학과", "Global Business & Technology"],
     tracks: [
       {
-        number: 9, name: "금융 AI",
+        number: 9, name: "핀테크 AI",
         description: "딥러닝·LLM 기반 금융 서비스·리스크관리·추천 모델 설계 전문가",
         courses: [
           { name: "인공지능수학", cat: "bsm" },     { name: "확률과통계", cat: "bsm" },
@@ -320,7 +320,7 @@ const departmentTracks = [
         ]
       },
       {
-        number: 10, name: "Quant",
+        number: 10, name: "퀀트트레이딩 AI",
         description: "수리금융·계량분석·포트폴리오 최적화 기반 정량적 투자 전문가",
         courses: [
           { name: "인공지능수학", cat: "bsm" },   { name: "확률과통계", cat: "bsm" },
@@ -341,7 +341,7 @@ const departmentTracks = [
     axPartners: ["행정학과", "미디어커뮤니케이션학부"],
     tracks: [
       {
-        number: 11, name: "AI 공공정책",
+        number: 11, name: "AI 거버넌스",
         description: "AI 거버넌스·공공정책 설계 및 사회혁신 문제 해결 전문가",
         courses: [
           { name: "인공지능수학", cat: "bsm" },              { name: "확률과통계", cat: "bsm" },
