@@ -35,7 +35,7 @@ const tracks = [
     description: "컴퓨터비전·NLP·생성AI를 결합한 멀티모달 AI 시스템 설계 전문가",
     required_similars: ["ai_intro", "prob_stat", "ds_intro", "ds", "ml", "dl", "cv", "nlp_intro", "lm_intro", "multimodal", "adv_dl", "linear_algebra", "discrete_math"],
     recommanded_grade: "컴퓨터공학", color: "#10b981" },
-  { id: "medical_ai", group_number: 2, dept: "CSE", title: "의료 AI",
+  { id: "medical_ai", group_number: 2, dept: "CSE", title: "메디컬 AI",
     description: "의료영상·유전체·임상 데이터 분석 및 AI 기반 진단·신약개발 전문가",
     required_similars: ["ai_intro", "prob_stat", "ds_intro", "ds", "ml", "dl", "cv", "dsp", "medical_data", "disease_pred", "linear_algebra", "calculus"],
     recommanded_grade: "컴퓨터공학", color: "#10b981" },
@@ -185,7 +185,7 @@ const departmentTracks = [
         ]
       },
       {
-        number: 2, name: "의료 AI",
+        number: 2, name: "메디컬 AI",
         description: "의료영상·유전체·임상 데이터 분석 및 AI 기반 진단·신약개발 전문가",
         courses: [
           { name: "확률과통계", cat: "bsm" },              { name: "공업수학1(or 기초미적분1)", cat: "bsm" },
