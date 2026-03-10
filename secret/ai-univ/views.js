@@ -14,7 +14,7 @@ function renderPBLView() {
     hdr.className = 'pbl-header';
     hdr.innerHTML = `
         <div class="track-overview-title">
-            <h2>PBL 교과목 <span class="track-overview-badge">'26 설계안</span></h2>
+            <h2>PBL 교과목 <span class="track-overview-badge">26년 기준</span></h2>
             <p>12개 트랙별 기업멘토 참여 산학협력 PBL 교과목입니다. 이수구분: 트랙 필수 (L2~L3, 3학점) | 트랙당 협력기업 2개사.</p>
         </div>
     `;
@@ -89,7 +89,7 @@ function renderFacultyView() {
     hdr.className = 'faculty-header';
     hdr.innerHTML = `
         <div class="track-overview-title">
-            <h2>참여 교수진 <span class="track-overview-badge">'26 제안서 기준</span></h2>
+            <h2>참여 교수진 <span class="track-overview-badge">26년 기준</span></h2>
             <p>AI융합대학 및 AX 협력학과 교수진 현황입니다. 정보통신공학과(ICE)는 일부 교원만 포함되어 있으며 순차적으로 업데이트될 예정입니다.</p>
         </div>
     `;
@@ -131,8 +131,6 @@ function renderFacultyView() {
             card.className = 'faculty-card';
             card.style.setProperty('--fc-color', deptColor);
 
-            const posColor = f.position === '교수' ? '#1e293b' : f.position === '부교수' ? '#334155' : '#475569';
-
             card.innerHTML = `
                 <div class="faculty-card-top">
                     <div class="faculty-avatar" style="background:${deptColor}22; color:${deptColor}; border:2px solid ${deptColor}44">
@@ -140,12 +138,11 @@ function renderFacultyView() {
                     </div>
                     <div class="faculty-card-info">
                         <div class="faculty-name">${f.name}${f.role ? ` <span class="faculty-role-badge">${f.role}</span>` : ''}</div>
-                        <div class="faculty-pos" style="color:${posColor}">${f.position}</div>
+                        <div class="faculty-pos" style="color:#1e293b">${f.position}</div>
                         ${f.deptNote ? `<div class="faculty-dept-note">${f.deptNote}</div>` : ''}
                     </div>
                 </div>
                 ${f.major ? `<div class="faculty-major"><span class="faculty-major-label">전공</span> ${f.major}</div>` : ''}
-                ${f.keywords && f.keywords.length ? `<div class="faculty-keywords">${f.keywords.map(k => `<span class="faculty-kw" style="background:${deptColor}12; color:${deptColor}; border-color:${deptColor}33">${k}</span>`).join('')}</div>` : ''}
             `;
             grid.appendChild(card);
         });
@@ -171,7 +168,7 @@ function renderTrackOverview() {
     hdr.className = 'track-overview-header';
     hdr.innerHTML = `
         <div class="track-overview-title">
-            <h2>AI 전공 트랙 체계 <span class="track-overview-badge">'26 제안서</span></h2>
+            <h2>AI 전공 트랙 체계 <span class="track-overview-badge">26년 기준</span></h2>
             <p>AI 기술 분야에 전문성을 갖춘 인재 양성 목적의 트랙별 특화교육 과정입니다.</p>
         </div>
         <div class="track-cat-legend">

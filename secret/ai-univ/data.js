@@ -470,53 +470,53 @@ const companyProfiles = {
 const facultyData = [
   // ── 정보통신공학과 (ICE) ─────────────────────────────────────────
   { name: "김세화", dept: "ICE", position: "교수",   major: "전기컴퓨터공학",   keywords: ["임베디드 SW", "실시간 운영체제", "심층 강화학습"] },
-  { name: "손경락", dept: "ICE", position: "조교수", major: "전기및전자공학",   keywords: ["무선통신", "정보/부호이론"] },
+  { name: "손경락", dept: "ICE", position: "교수", major: "전기및전자공학",   keywords: ["무선통신", "정보/부호이론"] },
   { name: "한희일", dept: "ICE", position: "교수",   major: "전기및컴퓨터공학", keywords: ["이미지 처리", "컴퓨터 비전", "멀티미디어"] },
   { name: "정성호", dept: "ICE", position: "교수",   major: "전기및컴퓨터공학", keywords: ["차세대 이동통신", "AI", "네트워크 보안"] },
   { name: "박상원", dept: "ICE", position: "교수",   major: "컴퓨터공학",       keywords: ["데이터베이스", "플래시메모리", "웹 서비스"] },
   { name: "전홍배", dept: "ICE", position: "교수",   major: "글로벌융합공학",   keywords: ["무선통신", "신호처리"] },
 
   // ── 컴퓨터공학부 (CSE) ────────────────────────────────────────────
-  { name: "김승욱", dept: "CSE", position: "조교수", major: "소프트웨어학",      keywords: ["컴퓨터그래픽스"] },
-  { name: "박천준", dept: "CSE", position: "조교수", major: "전기전자공학",      keywords: ["AI 경량화"] },
+  { name: "김승욱", dept: "CSE", position: "교수", major: "소프트웨어학",      keywords: ["컴퓨터그래픽스"] },
+  { name: "박천준", dept: "CSE", position: "교수", major: "전기전자공학",      keywords: ["AI 경량화"] },
   { name: "신찬수", dept: "CSE", position: "교수",   major: "전산학",            keywords: ["알고리즘", "프로그래밍 교육"] },
   { name: "임승호", dept: "CSE", position: "교수",   major: "전기및전자공학",    keywords: ["임베디드 시스템", "온디바이스 AI"] },
-  { name: "장익범", dept: "CSE", position: "조교수", major: "전기및컴퓨터공학",  keywords: ["딥러닝", "의료영상분석", "생성형AI"] },
-  { name: "지수연", dept: "CSE", position: "조교수", major: "전기정보공학",      keywords: ["의료인공지능"] },
-  { name: "전병환", dept: "CSE", position: "조교수", major: "의과학",            keywords: ["딥러닝", "의료 AI", "의료영상 분석"] },
+  { name: "장익범", dept: "CSE", position: "교수", major: "전기및컴퓨터공학",  keywords: ["딥러닝", "의료영상분석", "생성형AI"] },
+  { name: "지수연", dept: "CSE", position: "교수", major: "전기정보공학",      keywords: ["의료인공지능"] },
+  { name: "전병환", dept: "CSE", position: "교수", major: "의과학",            keywords: ["딥러닝", "의료 AI", "의료영상 분석"] },
   { name: "이재혁", dept: "CSE", position: "교수",   major: "전기및전자공학",    keywords: ["로봇 제어시스템"] },
   { name: "윤일동", dept: "CSE", position: "교수",   major: "제어계측공학",      keywords: ["영상처리"] },
   { name: "정유진", dept: "CSE", position: "교수",   major: "컴퓨터공학",        keywords: ["알고리즘"] },
   { name: "최재영", dept: "CSE", position: "교수",   major: "전기및전자공학",    keywords: ["머신러닝"] },
-  { name: "이준현", dept: "CSE", position: "조교수", major: "컴퓨터과학",        keywords: ["그래프 AI", "딥러닝"] },
-  { name: "곽호진", dept: "CSE", position: "조교수", major: "",                  keywords: ["영상처리", "음향처리", "비전공자 SW교육"] },
+  { name: "이준현", dept: "CSE", position: "교수", major: "컴퓨터과학",        keywords: ["그래프 AI", "딥러닝"] },
+  { name: "곽호진", dept: "CSE", position: "교수", major: "",                  keywords: ["영상처리", "음향처리", "비전공자 SW교육"] },
 
   // ── Language & AI (LAI) ────────────────────────────────────────────
   { name: "장태엽", dept: "LAI", position: "교수",   major: "언어학",        keywords: ["음성처리·음성공학", "기계번역", "음성 자동평가", "다국어 AI"], role: "AI융합대학장" },
-  { name: "이재홍", dept: "LAI", position: "조교수", major: "융합전자",      keywords: ["통계 머신러닝", "음성/오디오 AI"] },
-  { name: "박준형", dept: "LAI", position: "조교수", major: "소프트웨어",    keywords: ["자연어처리(NLP)", "언어모델"] },
-  { name: "김예찬", dept: "LAI", position: "조교수", major: "인공지능학",    keywords: ["자연어처리", "음성·언어 AI"] },
-  { name: "최승택", dept: "LAI", position: "조교수", major: "컴퓨터과학",    keywords: ["생성형 AI", "멀티모달 AI", "AI 평가"] },
-  { name: "김주애", dept: "LAI", position: "조교수", major: "컴퓨터공학",    keywords: ["자연어처리", "AI 교육"], deptNote: "LAI·ELLT 겸임" },
-  { name: "류형곤", dept: "LAI", position: "조교수", major: "전기및전자공학", keywords: ["컴퓨터비전", "멀티모달"] },
+  { name: "이재홍", dept: "LAI", position: "교수", major: "융합전자",      keywords: ["통계 머신러닝", "음성/오디오 AI"] },
+  { name: "박준형", dept: "LAI", position: "교수", major: "소프트웨어",    keywords: ["자연어처리(NLP)", "언어모델"] },
+  { name: "김예찬", dept: "LAI", position: "교수", major: "인공지능학",    keywords: ["자연어처리", "음성·언어 AI"] },
+  { name: "최승택", dept: "LAI", position: "교수", major: "컴퓨터과학",    keywords: ["생성형 AI", "멀티모달 AI", "AI 평가"] },
+  { name: "김주애", dept: "LAI", position: "교수", major: "컴퓨터공학",    keywords: ["자연어처리", "AI 교육"], deptNote: "LAI·ELLT 겸임" },
+  { name: "류형곤", dept: "LAI", position: "교수", major: "전기및전자공학", keywords: ["컴퓨터비전", "멀티모달"] },
   // { name: "김지은", dept: "LAI", position: "교수",   major: "전산언어학",    keywords: ["전산언어학", "언어·AI", "언어정보처리"], deptNote: "LAI·ELLT 겸임" },
 
   // ── AI 데이터융합학부 (AID) ────────────────────────────────────────
-  { name: "장혜진", dept: "AID", position: "조교수", major: "산업시스템공학", keywords: ["데이터마이닝"] },
-  { name: "최재걸", dept: "AID", position: "조교수", major: "지능정보융합",   keywords: ["검색엔진 AI", "자연어 검색"] },
-  { name: "장원제", dept: "AID", position: "조교수", major: "전기전자공학",   keywords: ["자율주행시스템", "AI"] },
-  { name: "박성민", dept: "AID", position: "조교수", major: "인공지능학",     keywords: ["추천시스템", "AI"] },
+  { name: "장혜진", dept: "AID", position: "교수", major: "산업시스템공학", keywords: ["데이터마이닝"] },
+  { name: "최재걸", dept: "AID", position: "교수", major: "지능정보융합",   keywords: ["검색엔진 AI", "자연어 검색"] },
+  { name: "장원제", dept: "AID", position: "교수", major: "전기전자공학",   keywords: ["자율주행시스템", "AI"] },
+  { name: "박성민", dept: "AID", position: "교수", major: "인공지능학",     keywords: ["추천시스템", "AI"] },
 
   // ── Finance & AI (FAI) ─────────────────────────────────────────────
-  { name: "공형우", dept: "FAI", position: "조교수", major: "산업및시스템공학", keywords: ["Finance 데이터 AI 응용"] },
-  { name: "안시현", dept: "FAI", position: "조교수", major: "산업공학",         keywords: ["AI기반 부동산 가격추정", "핀테크"] },
-  { name: "조소윤", dept: "FAI", position: "조교수", major: "수학",             keywords: ["XAI", "생성 모형 금융 활용"] },
+  { name: "공형우", dept: "FAI", position: "교수", major: "산업및시스템공학", keywords: ["Finance 데이터 AI 응용"] },
+  { name: "안시현", dept: "FAI", position: "교수", major: "산업공학",         keywords: ["AI기반 부동산 가격추정", "핀테크"] },
+  { name: "조소윤", dept: "FAI", position: "교수", major: "수학",             keywords: ["XAI", "생성 모형 금융 활용"] },
 
   // ── Social Science & AI (SSAI) ─────────────────────────────────────
-  { name: "홍승혁", dept: "SSAI", position: "조교수", major: "바이오엔지니어링", keywords: ["Physical AI", "거대언어모델(LLM)"] },
-  { name: "이동현", dept: "SSAI", position: "부교수", major: "기술경영",          keywords: ["AI 기술정책", "환경 빅데이터", "기술경영"] },
-  { name: "안서영", dept: "SSAI", position: "조교수", major: "심리학",            keywords: ["뇌인지 기반 AI"], deptNote: "SSAI·미디어 겸임" },
-  { name: "차민철", dept: "SSAI", position: "조교수", major: "산업공학",          keywords: ["인간-AI 상호작용"], deptNote: "SSAI·미디어 겸임" },
+  { name: "홍승혁", dept: "SSAI", position: "교수", major: "바이오엔지니어링", keywords: ["Physical AI", "거대언어모델(LLM)"] },
+  { name: "이동현", dept: "SSAI", position: "교수", major: "기술경영",          keywords: ["AI 기술정책", "환경 빅데이터", "기술경영"] },
+  { name: "안서영", dept: "SSAI", position: "교수", major: "심리학",            keywords: ["뇌인지 기반 AI"], deptNote: "SSAI·미디어 겸임" },
+  { name: "차민철", dept: "SSAI", position: "교수", major: "산업공학",          keywords: ["인간-AI 상호작용"], deptNote: "SSAI·미디어 겸임" },
 ];
 
 // Assign to window
