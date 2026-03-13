@@ -43,12 +43,9 @@ function renderPBLView() {
             card.className = 'pbl-card';
             card.style.setProperty('--pbl-color', deptData.color);
 
-            const companiesHtml = pbl.companies.map(c => {
+            const companiesHtml = pbl.companies.filter(c => c).map(c => {
                 const profile = companyProfiles[c] || '';
-                const isMarumAI = c === '마음AI';
-                return `<span class="pbl-card-company${isMarumAI ? ' pbl-company-highlight' : ''}" title="${profile}">
-                    ${c}${isMarumAI ? ' <span class="pbl-worv-badge">WoRV</span>' : ''}
-                </span>`;
+                return `<span class="pbl-card-company" title="${profile}">${c}</span>`;
             }).join('<span class="pbl-x">×</span>');
 
             card.innerHTML = `
@@ -327,7 +324,7 @@ function renderTrackOverview() {
                         <span class="pbl-strip-course">${pbl.courseName}</span>
                     </div>
                     <div class="pbl-strip-companies">
-                        ${pbl.companies.map(c => `<span class="pbl-company-chip" title="${companyProfiles[c] || ''}">${c}</span>`).join('<span class="pbl-x">×</span>')}
+                        ${pbl.companies.filter(c => c).map(c => `<span class="pbl-company-chip" title="${companyProfiles[c] || ''}">${c}</span>`).join('<span class="pbl-x">×</span>')}
                     </div>
                 `;
                 card.appendChild(strip);
