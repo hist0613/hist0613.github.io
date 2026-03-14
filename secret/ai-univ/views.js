@@ -128,6 +128,10 @@ function renderFacultyView() {
             card.className = 'faculty-card';
             card.style.setProperty('--fc-color', deptColor);
 
+            const keywordsHtml = (f.keywords && f.keywords.length)
+                ? `<div class="faculty-keywords">${f.keywords.map(k => `<span class="faculty-kw" style="border-color:${deptColor}44; color:${deptColor}; background:${deptColor}0d">${k}</span>`).join('')}</div>`
+                : '';
+
             card.innerHTML = `
                 <div class="faculty-card-top">
                     <div class="faculty-avatar" style="background:${deptColor}22; color:${deptColor}; border:2px solid ${deptColor}44">
@@ -140,6 +144,7 @@ function renderFacultyView() {
                     </div>
                 </div>
                 ${f.major ? `<div class="faculty-major"><span class="faculty-major-label">전공</span> ${f.major}</div>` : ''}
+                ${keywordsHtml}
             `;
             grid.appendChild(card);
         });

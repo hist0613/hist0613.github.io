@@ -8,7 +8,7 @@ const state = {
     activeTrack: null,
     activeMD: null, // MD index
     activeGroup: null, // similar_id
-    activeLayer: null, // 'L1', 'L2', 'L3', 'L4'
+    activeLayer: null, // 'L0', 'L1', 'L2', 'L3'
     activeLayerTag: null, // 'literacy', 'core', 'app' (Optional sub-filter)
     showNew: true, // Default: show suggested
     similarityMode: true, // Always on

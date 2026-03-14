@@ -34,56 +34,56 @@ const tracks = [
   { id: "multimodal_ai", group_number: 1, dept: "CSE", title: "멀티모달 AI",
     description: "컴퓨터비전·NLP·생성AI를 결합한 멀티모달 AI 시스템 설계 전문가",
     required_similars: ["ai_intro", "prob_stat", "ds_intro", "ds", "ml", "dl", "cv", "nlp_intro", "lm_intro", "multimodal", "adv_dl", "linear_algebra", "discrete_math"],
-    recommanded_grade: "컴퓨터공학", color: "#10b981" },
+    recommended_grade: "컴퓨터공학", color: "#10b981" },
   { id: "medical_ai", group_number: 2, dept: "CSE", title: "메디컬 AI",
     description: "의료영상·유전체·임상 데이터 분석 및 AI 기반 진단·신약개발 전문가",
     required_similars: ["ai_intro", "prob_stat", "ds_intro", "ds", "ml", "dl", "cv", "dsp", "medical_data", "disease_pred", "linear_algebra", "calculus"],
-    recommanded_grade: "컴퓨터공학", color: "#10b981" },
+    recommended_grade: "컴퓨터공학", color: "#10b981" },
   // ICE
   { id: "ondevice_ai", group_number: 3, dept: "ICE", title: "온디바이스 AI",
     description: "엣지·임베디드 환경에서 경량 AI 모델을 설계·배포하는 온디바이스 AI 전문가",
     required_similars: ["ai_intro", "ds", "algo", "os", "db", "iot", "embedded", "cloud", "arch", "linear_algebra", "discrete_math", "calculus"],
-    recommanded_grade: "정보통신공학", color: "#3b82f6" },
+    recommended_grade: "정보통신공학", color: "#3b82f6" },
   { id: "comm_network_ai", group_number: 4, dept: "ICE", title: "통신·네트워크 AI",
     description: "차세대 이동통신·네트워크에 AI를 적용하는 무선·통신 AI 전문가",
     required_similars: ["ai_intro", "sig_sys", "info_theory", "dsp", "data_comm", "network", "ml", "ai_algo", "linear_algebra", "calculus", "prob_theory"],
-    recommanded_grade: "정보통신공학", color: "#3b82f6" },
+    recommended_grade: "정보통신공학", color: "#3b82f6" },
   // LAI
   { id: "multilingual_ai", group_number: 5, dept: "LAI", title: "다언어 AI",
     description: "다국어 NLP·기계번역·정보검색 분야 언어 AI 전문가",
     required_similars: ["ai_intro", "nlp_intro", "lm_intro", "practical_nlp", "ir_recsys", "mt", "advanced_llm", "ai_math", "lai_intro", "linear_algebra"],
-    recommanded_grade: "Language & AI", color: "#f59e0b" },
+    recommended_grade: "Language & AI", color: "#f59e0b" },
   { id: "speech_ai", group_number: 6, dept: "LAI", title: "음성처리 AI",
     description: "음성인식·합성·자동통역 등 음성언어 AI 시스템 설계 전문가",
     required_similars: ["ai_intro", "speech_proc", "practical_speech", "adv_acoustic", "adv_ml", "asr_sys_design", "auto_interpre", "linear_algebra"],
-    recommanded_grade: "Language & AI", color: "#f59e0b" },
+    recommended_grade: "Language & AI", color: "#f59e0b" },
   // AID
   { id: "physical_ai", group_number: 7, dept: "AID", title: "피지컬 AI",
     description: "로봇·컴퓨터비전·강화학습 기반 물리세계 AI 시스템 구축 전문가",
     required_similars: ["ai_intro", "ml", "dl", "rl", "cv", "robotics", "bigdata_model", "adv_dl", "linear_algebra", "calculus"],
-    recommanded_grade: "AI데이터융합학", color: "#06b6d4" },
+    recommended_grade: "AI데이터융합학", color: "#06b6d4" },
   { id: "data_science", group_number: 8, dept: "AID", title: "데이터인텔리전스",
     description: "대규모 데이터 마이닝·분석·시각화 및 도메인 의사결정 지원 전문가",
     required_similars: ["ai_intro", "ml", "bigdata", "stat_model", "dm", "unstruct_dm", "tsa_dm", "net_mining", "bigdata_model", "viz", "linear_algebra", "prob_theory"],
-    recommanded_grade: "AI데이터융합학", color: "#06b6d4" },
+    recommended_grade: "AI데이터융합학", color: "#06b6d4" },
   // FAI
   { id: "finance_ai", group_number: 9, dept: "FAI", title: "핀테크 AI",
     description: "딥러닝·LLM 기반 금융 서비스·리스크관리·추천 모델 설계 전문가",
     required_similars: ["ai_intro", "ml", "dl", "nlp_intro", "advanced_llm", "adv_dl", "dm", "fin_ds", "prompt_eng", "linear_algebra"],
-    recommanded_grade: "Finance & AI", color: "#8b5cf6" },
+    recommended_grade: "Finance & AI", color: "#8b5cf6" },
   { id: "quant", group_number: 10, dept: "FAI", title: "퀀트트레이딩 AI",
     description: "수리금융·계량분석·포트폴리오 최적화 기반 정량적 투자 전문가",
     required_similars: ["ai_intro", "prob_stat", "regression", "tsa_fin", "investment", "or1", "adv_tsa_fin", "convex", "portfolio", "linear_algebra", "calculus", "prob_theory"],
-    recommanded_grade: "Finance & AI", color: "#8b5cf6" },
+    recommended_grade: "Finance & AI", color: "#8b5cf6" },
   // SSAI
   { id: "ai_public_policy", group_number: 11, dept: "SSAI", title: "AI 거버넌스",
     description: "AI 거버넌스·공공정책 설계 및 사회혁신 문제 해결 전문가",
     required_similars: ["ai_intro", "ai_ethics", "social_method", "social_ds", "policy_ai", "ai_gov"],
-    recommanded_grade: "Social Science & AI", color: "#ec4899" },
+    recommended_grade: "Social Science & AI", color: "#ec4899" },
   { id: "social_data_science", group_number: 12, dept: "SSAI", title: "소셜데이터사이언스",
     description: "소셜미디어·여론·사회현상 데이터 분석 및 비즈니스 인사이트 도출 전문가",
     required_similars: ["ai_intro", "ml", "social_method", "social_ds", "media_data_lab", "biz_data_lab", "dm", "sna", "ai_gov"],
-    recommanded_grade: "Social Science & AI", color: "#ec4899" }
+    recommended_grade: "Social Science & AI", color: "#ec4899" }
 ];
 
 // MD type 구분:
@@ -131,6 +131,227 @@ const microDegrees = [
     dept: "BME",
     courses: ["bio_data_analysis", "nlp_bio", "med_text_llm_lab", "dl"],
     desc: "의료 자연어처리 심화 역량 인증 — breadth MD (12학점)"
+  },
+
+  // ─── T3 온디바이스 AI 융합전공 (ICE × SEM) ──────────────────────────
+  {
+    id: "ondevice_sem_basics",
+    title: "임베디드AI 기초 MD",
+    type: "context_non_ai",
+    credits: 9,
+    fusion: "ondevice_ai",
+    dept: "SEM",
+    courses: ["ai_intro", "microprocessor", "embedded"],
+    desc: "임베디드·온디바이스 AI 입문 역량 인증 — 비전공자 context MD (9학점)"
+  },
+  {
+    id: "ondevice_soc_breadth",
+    title: "AI반도체·SoC 심화 MD",
+    type: "breadth",
+    credits: 12,
+    fusion: "ondevice_ai",
+    dept: "SEM",
+    courses: ["arch", "ai_semi", "soc_design", "hdl"],
+    desc: "AI 반도체·SoC 설계 심화 역량 인증 — breadth MD (12학점)"
+  },
+
+  // ─── T4 통신/네트워크 AI 융합전공 (ICE × EE) ──────────────────────────
+  {
+    id: "commnet_signal_basics",
+    title: "신호처리·통신기초 MD",
+    type: "context_non_ai",
+    credits: 9,
+    fusion: "comm_network_ai",
+    dept: "EE",
+    courses: ["ai_intro", "sig_sys", "data_comm"],
+    desc: "신호처리·통신 AI 입문 역량 인증 — 비전공자 context MD (9학점)"
+  },
+  {
+    id: "commnet_ai_breadth",
+    title: "AI통신시스템 심화 MD",
+    type: "breadth",
+    credits: 12,
+    fusion: "comm_network_ai",
+    dept: "EE",
+    courses: ["info_theory", "dsp", "network", "ml"],
+    desc: "AI 기반 통신시스템 심화 역량 인증 — breadth MD (12학점)"
+  },
+
+  // ─── T5 다언어 AI 융합전공 (LAI × ELLT) ──────────────────────────
+  {
+    id: "multilingual_ellt_basics",
+    title: "언어학·코퍼스 기초 MD",
+    type: "context_non_ai",
+    credits: 9,
+    fusion: "multilingual_ai",
+    dept: "ELLT",
+    courses: ["lai_intro", "ling_intro", "corpus"],
+    desc: "언어학·코퍼스 AI 입문 역량 인증 — 비전공자 context MD (9학점)"
+  },
+  {
+    id: "multilingual_nlp_breadth",
+    title: "다언어NLP 심화 MD",
+    type: "breadth",
+    credits: 12,
+    fusion: "multilingual_ai",
+    dept: "ELLT",
+    courses: ["nlp_intro", "practical_nlp", "ir_recsys", "mt"],
+    desc: "다언어 NLP 심화 역량 인증 — breadth MD (12학점)"
+  },
+
+  // ─── T6 음성처리 AI 융합전공 (LAI × ELLT) ──────────────────────────
+  {
+    id: "speech_ellt_basics",
+    title: "음성학·언어공학 기초 MD",
+    type: "context_non_ai",
+    credits: 9,
+    fusion: "speech_ai",
+    dept: "ELLT",
+    courses: ["lai_intro", "ling_intro", "practical_speech"],
+    desc: "음성학·언어공학 AI 입문 역량 인증 — 비전공자 context MD (9학점)"
+  },
+  {
+    id: "speech_processing_breadth",
+    title: "음성처리시스템 심화 MD",
+    type: "breadth",
+    credits: 12,
+    fusion: "speech_ai",
+    dept: "ELLT",
+    courses: ["corpus", "ml", "adv_acoustic", "asr_sys_design"],
+    desc: "음성처리 시스템 심화 역량 인증 — breadth MD (12학점)"
+  },
+
+  // ─── T7 피지컬 AI 융합전공 (AID × IME) ──────────────────────────
+  // Note: summary.md 원안은 EE 협력이나 EE 과목 미등재 → IME를 functional AX partner로 사용
+  {
+    id: "physical_ime_basics",
+    title: "시스템최적화 기초 MD",
+    type: "context_non_ai",
+    credits: 9,
+    fusion: "physical_ai",
+    dept: "IME",
+    courses: ["ai_intro", "prob_stat", "or1"],
+    desc: "시스템·최적화 AI 입문 역량 인증 — 비전공자 context MD (9학점)"
+  },
+  {
+    id: "physical_ai_breadth",
+    title: "피지컬AI 심화 MD",
+    type: "breadth",
+    credits: 12,
+    fusion: "physical_ai",
+    dept: "IME",
+    courses: ["rl", "cv", "dl", "bigdata_model"],
+    desc: "피지컬 AI 심화 역량 인증 — breadth MD (12학점)"
+  },
+
+  // ─── T8 데이터인텔리전스 융합전공 (AID × STAT) ──────────────────────────
+  {
+    id: "dataintel_stat_basics",
+    title: "통계학 기초 MD",
+    type: "context_non_ai",
+    credits: 9,
+    fusion: "data_science",
+    dept: "STAT",
+    courses: ["prob_stat", "regression", "math_stat"],
+    desc: "통계학 AI 입문 역량 인증 — 비전공자 context MD (9학점)"
+  },
+  {
+    id: "dataintel_breadth",
+    title: "통계데이터사이언스 심화 MD",
+    type: "breadth",
+    credits: 12,
+    fusion: "data_science",
+    dept: "STAT",
+    courses: ["dm", "stat_model", "tsa", "bigdata"],
+    desc: "통계 데이터사이언스 심화 역량 인증 — breadth MD (12학점)"
+  },
+
+  // ─── T9 핀테크 AI 융합전공 (FAI × GBT) ──────────────────────────
+  {
+    id: "fintech_gbt_basics",
+    title: "비즈니스AI 기초 MD",
+    type: "context_non_ai",
+    credits: 9,
+    fusion: "finance_ai",
+    dept: "GBT",
+    courses: ["econ_intro", "mgmt_intro", "intro_prog"],
+    desc: "비즈니스·IT AI 입문 역량 인증 — 비전공자 context MD (9학점)"
+  },
+  {
+    id: "fintech_ai_breadth",
+    title: "핀테크AI 심화 MD",
+    type: "breadth",
+    credits: 12,
+    fusion: "finance_ai",
+    dept: "GBT",
+    courses: ["bigdata", "text_mining", "dm", "fin_ds"],
+    desc: "핀테크 AI 심화 역량 인증 — breadth MD (12학점)"
+  },
+
+  // ─── T10 퀀트트레이딩 AI 융합전공 (FAI × MATH) ──────────────────────────
+  {
+    id: "quant_math_basics",
+    title: "수리기초 MD",
+    type: "context_non_ai",
+    credits: 9,
+    fusion: "quant",
+    dept: "MATH",
+    courses: ["calculus", "prob_stat", "discrete_math"],
+    desc: "수리·통계 AI 입문 역량 인증 — 비전공자 context MD (9학점)"
+  },
+  {
+    id: "quant_ai_breadth",
+    title: "수리금융AI 심화 MD",
+    type: "breadth",
+    credits: 12,
+    fusion: "quant",
+    dept: "MATH",
+    courses: ["adv_tsa_fin", "prob_theory", "convex", "portfolio"],
+    desc: "수리금융 AI 심화 역량 인증 — breadth MD (12학점)"
+  },
+
+  // ─── T11 AI 거버넌스 융합전공 (SSAI × MEDIA) ──────────────────────────
+  {
+    id: "aigov_media_basics",
+    title: "미디어·사회과학 기초 MD",
+    type: "context_non_ai",
+    credits: 9,
+    fusion: "ai_public_policy",
+    dept: "MEDIA",
+    courses: ["social_method", "media_intro", "new_media"],
+    desc: "미디어커뮤니케이션 AI 입문 역량 인증 — 비전공자 context MD (9학점)"
+  },
+  {
+    id: "aigov_policy_breadth",
+    title: "AI정책·거버넌스 심화 MD",
+    type: "breadth",
+    credits: 12,
+    fusion: "ai_public_policy",
+    dept: "MEDIA",
+    courses: ["ai_ethics", "social_ds", "policy_ai", "ai_gov"],
+    desc: "AI 정책·거버넌스 심화 역량 인증 — breadth MD (12학점)"
+  },
+
+  // ─── T12 소셜데이터사이언스 융합전공 (SSAI × MEDIA) ──────────────────────────
+  {
+    id: "social_ds_media_basics",
+    title: "미디어데이터 기초 MD",
+    type: "context_non_ai",
+    credits: 9,
+    fusion: "social_data_science",
+    dept: "MEDIA",
+    courses: ["social_method", "media_intro", "broadcasting"],
+    desc: "미디어 데이터사이언스 입문 역량 인증 — 비전공자 context MD (9학점)"
+  },
+  {
+    id: "social_ds_breadth",
+    title: "소셜데이터분석 심화 MD",
+    type: "breadth",
+    credits: 12,
+    fusion: "social_data_science",
+    dept: "MEDIA",
+    courses: ["sna", "dm", "ml", "viz"],
+    desc: "소셜 데이터사이언스 심화 역량 인증 — breadth MD (12학점)"
   }
 ];
 
@@ -152,6 +373,106 @@ const fusionMajors = [
       "medical_nlp_advanced"      // breadth MD 12학점 (택1)
     ],
     desc: "컴퓨터공학부(CSE) × 바이오메디컬공학부(BME) 의료 AI 융합이중전공"
+  },
+  {
+    id: "ondevice_ai",
+    title: "온디바이스 AI 융합전공",
+    credits: 42,
+    trackId: "ondevice_ai",
+    trackCredits: 30,
+    axPartnerDept: "SEM",
+    mds: ["ondevice_sem_basics", "ondevice_soc_breadth"],
+    desc: "정보통신공학과(ICE) × 반도체공학과(SEM) 온디바이스 AI 융합이중전공"
+  },
+  {
+    id: "comm_network_ai",
+    title: "통신·네트워크 AI 융합전공",
+    credits: 42,
+    trackId: "comm_network_ai",
+    trackCredits: 30,
+    axPartnerDept: "EE",
+    mds: ["commnet_signal_basics", "commnet_ai_breadth"],
+    desc: "정보통신공학과(ICE) × 전자공학과(EE) 통신·네트워크 AI 융합이중전공"
+  },
+  {
+    id: "multilingual_ai",
+    title: "다언어 AI 융합전공",
+    credits: 42,
+    trackId: "multilingual_ai",
+    trackCredits: 30,
+    axPartnerDept: "ELLT",
+    mds: ["multilingual_ellt_basics", "multilingual_nlp_breadth"],
+    desc: "Language & AI(LAI) × ELLT학과 다언어 AI 융합이중전공"
+  },
+  {
+    id: "speech_ai",
+    title: "음성처리 AI 융합전공",
+    credits: 42,
+    trackId: "speech_ai",
+    trackCredits: 30,
+    axPartnerDept: "ELLT",
+    mds: ["speech_ellt_basics", "speech_processing_breadth"],
+    desc: "Language & AI(LAI) × ELLT학과 음성처리 AI 융합이중전공"
+  },
+  {
+    id: "physical_ai",
+    title: "피지컬 AI 융합전공",
+    credits: 42,
+    trackId: "physical_ai",
+    trackCredits: 30,
+    axPartnerDept: "IME",
+    mds: ["physical_ime_basics", "physical_ai_breadth"],
+    desc: "AI데이터융합학부(AID) × 산업경영공학과(IME) 피지컬 AI 융합이중전공"
+  },
+  {
+    id: "data_science",
+    title: "데이터인텔리전스 융합전공",
+    credits: 42,
+    trackId: "data_science",
+    trackCredits: 30,
+    axPartnerDept: "STAT",
+    mds: ["dataintel_stat_basics", "dataintel_breadth"],
+    desc: "AI데이터융합학부(AID) × 통계학과(STAT) 데이터인텔리전스 AI 융합이중전공"
+  },
+  {
+    id: "finance_ai",
+    title: "핀테크 AI 융합전공",
+    credits: 42,
+    trackId: "finance_ai",
+    trackCredits: 30,
+    axPartnerDept: "GBT",
+    mds: ["fintech_gbt_basics", "fintech_ai_breadth"],
+    desc: "Finance & AI(FAI) × Global Business & Technology(GBT) 핀테크 AI 융합이중전공"
+  },
+  {
+    id: "quant",
+    title: "퀀트트레이딩 AI 융합전공",
+    credits: 42,
+    trackId: "quant",
+    trackCredits: 30,
+    axPartnerDept: "MATH",
+    mds: ["quant_math_basics", "quant_ai_breadth"],
+    desc: "Finance & AI(FAI) × 수학과(MATH) 퀀트트레이딩 AI 융합이중전공"
+  },
+  {
+    id: "ai_public_policy",
+    title: "AI 거버넌스 융합전공",
+    credits: 42,
+    trackId: "ai_public_policy",
+    trackCredits: 30,
+    axPartnerDept: "MEDIA",
+    mds: ["aigov_media_basics", "aigov_policy_breadth"],
+    desc: "Social Science & AI(SSAI) × 미디어커뮤니케이션학부(MEDIA) AI 거버넌스 융합이중전공"
+  },
+  {
+    id: "social_data_science",
+    title: "소셜데이터사이언스 융합전공",
+    credits: 42,
+    trackId: "social_data_science",
+    trackCredits: 30,
+    axPartnerDept: "MEDIA",
+    mds: ["social_ds_media_basics", "social_ds_breadth"],
+    desc: "Social Science & AI(SSAI) × 미디어커뮤니케이션학부(MEDIA) 소셜데이터사이언스 융합이중전공"
   }
 ];
 
@@ -381,7 +702,7 @@ const pblData = {
   },
   2: {
     courseName: "AI 기반 의료영상 분석 프로젝트",
-    companies: ["딥노이드", "Havard Medical School"],
+    companies: ["딥노이드", "Harvard Medical School"],
     objective: "의료영상 데이터에 딥러닝 기법을 적용하여 질환 탐지·분류·판독 보조 모델을 개발하고, 임상 적용 가능 수준의 프로토타입을 구현하여 의료 AI 전문가 역량을 확보한다.",
     content: "ViT+LLM 결합 흉부 X-ray 판독 기술을 벤치마크하여 의료영상 분류·탐지 모델을 구축한다. 팀별로 흉부 X-ray 이상 소견 탐지, CT 영상 분할 과제를 수행하며, 글로벌 임상 AI 기준 및 FDA AI 의료기기 승인 프로세스를 학습한다."
   },
@@ -452,7 +773,7 @@ const companyProfiles = {
   "메타에듀시스":             "메타버스·VR 기반 AI 교육 플랫폼 전문기업",
   "크래비스":                "산업용 머신비전 카메라·스마트팩토리 비전 시스템 전문기업",
   "딥노이드":                "의료영상 AI 진단 전문기업 (M4CXR)",
-  "Havard Medical School":  "글로벌 의료 AI 연구기관 — 임상 AI 기준·FDA 승인 프로세스 협력",
+  "Harvard Medical School":  "글로벌 의료 AI 연구기관 — 임상 AI 기준·FDA 승인 프로세스 협력",
   "노타AI":                  "AI 모델 경량화·최적화(양자화·프루닝·지식증류) 전문기업",
   "에어로로보틱스이노베이션":  "AI 드론·자율비행 플랫폼",
   "리서치랩":                "사이버보안·네트워크 AI 연구기관",
@@ -496,13 +817,13 @@ const facultyData = [
 
   // ── Language & AI (LAI) ────────────────────────────────────────────
   { name: "장태엽", dept: "LAI", position: "교수",   major: "언어학",        keywords: ["음성처리·음성공학", "기계번역", "음성 자동평가", "다국어 AI"], role: "AI융합대학장" },
+  { name: "박정식", dept: "LAI", position: "교수", major: "컴퓨터과학",    keywords: ["음성언어처리", "기계학습"] },
   { name: "이재홍", dept: "LAI", position: "교수", major: "융합전자",      keywords: ["통계 머신러닝", "음성/오디오 AI"] },
   { name: "박준형", dept: "LAI", position: "교수", major: "소프트웨어",    keywords: ["자연어처리(NLP)", "언어모델"] },
   { name: "김예찬", dept: "LAI", position: "교수", major: "인공지능학",    keywords: ["자연어처리", "음성·언어 AI"] },
   { name: "최승택", dept: "LAI", position: "교수", major: "컴퓨터과학",    keywords: ["생성형 AI", "멀티모달 AI", "AI 평가"] },
   { name: "김주애", dept: "LAI", position: "교수", major: "컴퓨터공학",    keywords: ["자연어처리", "AI 교육"], deptNote: "LAI·ELLT 겸임" },
   { name: "류형곤", dept: "LAI", position: "교수", major: "전기및전자공학", keywords: ["컴퓨터비전", "멀티모달"] },
-  { name: "박정식", dept: "LAI", position: "교수", major: "컴퓨터과학",    keywords: ["음성언어처리", "기계학습"] },
   // { name: "김지은", dept: "LAI", position: "교수",   major: "전산언어학",    keywords: ["전산언어학", "언어·AI", "언어정보처리"], deptNote: "LAI·ELLT 겸임" },
 
   // ── AI 데이터융합학부 (AID) ────────────────────────────────────────
