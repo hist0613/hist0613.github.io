@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IR Metrics Playground — HUFS-LAI-IRRS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root { --accent: #FF6B6B; --accent-dark: #C44D58; }
+
+    body { background: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #2c3e50; }
+
+    .header-bar {
+      background: linear-gradient(135deg, #FF6B6B 0%, #556270 100%);
+      color: white; padding: 22px 0; margin-bottom: 24px;
+    }
+    .header-bar h1 { font-size: 1.7rem; font-weight: 700; margin: 0; }
+    .header-bar p { margin: 4px 0 0; opacity: 0.85; font-size: 0.9rem; }
+
+    .card { border: none; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .card-header { background: white; border-bottom: 2px solid #f0f0f0; border-radius: 12px 12px 0 0 !important; }
+    .card-footer {
+      background: #fafafa; border-top: 1px solid #f0f0f0;
+      border-radius: 0 0 12px 12px !important; padding: 10px 16px;
+      font-size: 0.86rem; color: #444;
+    }
+    .card-footer strong { color: var(--accent); font-size: 1.05rem; }
+
+    /* ── Metric selector ── */
+    .metric-group-label {
+      font-size: 0.67rem; font-weight: 700; letter-spacing: 0.5px;
+      text-transform: uppercase; margin: 10px 0 6px; padding-left: 6px;
+      border-left: 3px solid var(--accent);
+    }
+    .metric-group-label.first { margin-top: 0; }
+
+    .metric-btn {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; padding: 9px 12px;
+      border: 1.5px solid #e9ecef; border-radius: 8px; background: white;
+      cursor: pointer; margin-bottom: 5px; transition: all 0.15s; text-align: left;
+    }
+    .metric-btn:hover { border-color: var(--accent); background: #fff5f5; }
+    .metric-btn.active { border-color: var(--accent); background: var(--accent); }
+    .metric-btn .m-name { font-size: 0.82rem; font-weight: 600; color: #444; }
+    .metric-btn.active .m-name { color: white; }
+    .metric-btn .m-val { font-size: 0.92rem; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+    .metric-btn.active .m-val { color: white; }
+
+    /* ── Metric table header ── */
+    .metric-header { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .metric-header strong { font-size: 1rem; }
+    .metric-header code { font-size: 0.82rem; background: #f0f0f0; padding: 2px 8px; border-radius: 4px; color: #444; }
+    .metric-header small { color: #999; font-size: 0.82rem; }
+
+    /* ── Rank table ── */
+    .rank-table { font-size: 0.92rem; width: 100%; margin: 0; border-collapse: collapse; }
+    .rank-table th {
+      font-size: 0.79rem; background: #f8f9fa; font-weight: 600;
+      padding: 7px 12px; white-space: nowrap; border-bottom: 2px solid #dee2e6;
+      position: sticky; top: 0; z-index: 1; text-align: center;
+    }
+    .rank-table td { padding: 6px 12px; vertical-align: middle; border-bottom: 1px solid #f3f3f3; white-space: nowrap; }
+    .rank-table th:first-child, .rank-table td:first-child { padding: 6px 8px; text-align: center; }
+    .rank-table tbody tr:hover td { background: #f7f8fa; }
+    .rank-table .row-dimmed td { opacity: 0.38; }
+    .td-doc { color: #bbb; font-size: 0.82rem; text-align: center; }
+    .rank-table .row-final td { background: #fffbf0 !important; border-top: 2px solid #f0c040 !important; border-bottom: 2px solid #f0c040 !important; }
+    .rank-table .k-div-row td {
+      background: #fff0f0 !important; color: var(--accent);
+      font-size: 0.7rem; font-weight: 700; text-align: center; padding: 4px;
+      border-top: 2px dashed #ffb3b3 !important; border-bottom: 2px dashed #ffb3b3 !important;
+    }
+
+    /* ── Rank badge ── */
+    .rank-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 25px; height: 25px; border-radius: 50%;
+      background: #e9ecef; font-weight: 600; font-size: 0.75rem; color: #666;
+      flex-shrink: 0; transition: all 0.2s;
+    }
+    .rank-num.is-rel { background: var(--accent); color: white; }
+
+    /* ── Rel buttons (inline in table) ── */
+    .rel-btns { display: flex; gap: 2px; }
+    .rel-btn {
+      width: 26px; height: 23px; border-radius: 4px;
+      border: 1.5px solid #dee2e6; background: white;
+      font-size: 0.73rem; font-weight: 700; cursor: pointer;
+      transition: all 0.1s; color: #999;
+    }
+    .rel-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .rel-btn.sel-0 { background: #f4f4f4; border-color: #ccc; color: #bbb; }
+    .rel-btn.sel-1 { background: #fff3cd; border-color: #f0ad00; color: #7a5800; }
+    .rel-btn.sel-2 { background: #d1ecf1; border-color: #17a2b8; color: #0c5460; }
+    .rel-btn.sel-3 { background: #d4edda; border-color: #28a745; color: #155724; }
+
+    /* ── Cell styles ── */
+    .cell-final { font-weight: 700; color: var(--accent); }
+    .cv-yes { display: inline-block; background: #d4edda; color: #155724; border-radius: 4px; padding: 1px 6px; font-weight: 700; font-size: 0.82rem; }
+    .cv-no  { color: #ccc; }
+    .cv-num { font-variant-numeric: tabular-nums; }
+    .cv-bold { font-weight: 700; }
+    .cv-mono { font-family: monospace; font-size: 0.82rem; }
+
+    /* ── Config ── */
+    .config-label { font-size: 0.78rem; font-weight: 600; color: #666; margin-bottom: 3px; }
+    .preset-btn {
+      font-size: 0.8rem; border-radius: 18px; padding: 4px 12px;
+      border: 1.5px solid #dee2e6; background: white;
+      cursor: pointer; transition: all 0.15s; color: #555; white-space: nowrap;
+    }
+    .preset-btn:hover { border-color: var(--accent); color: var(--accent); background: #fff5f5; }
+    .sync-label { font-size: 0.74rem; color: #aaa; margin-top: 3px; cursor: pointer; }
+    .sync-label:hover { color: var(--accent); }
+
+    .footer-bar { background: #2c3e50; color: #aaa; padding: 20px 0; margin-top: 36px; font-size: 0.83rem; text-align: center; }
+    .footer-bar a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<div class="header-bar">
+  <div class="container">
+    <h1><i class="fas fa-sliders-h me-2"></i>IR Metrics Playground</h1>
+    <p>정보검색및추천시스템 (HUFS Language &amp; AI) — 지표를 선택하고 랭킹을 바꿔보며 단계별 계산 과정을 확인하세요</p>
+  </div>
+</div>
+
+<div class="container" style="max-width:1000px;">
+
+  <!-- ── Config ── -->
+  <div class="card mb-3">
+    <div class="card-body py-2">
+      <div class="row align-items-end g-3">
+        <div class="col-auto">
+          <div class="config-label">문서 수: <strong id="nLabel">10</strong></div>
+          <input type="range" class="form-range" id="nDocs" min="5" max="15" value="10" style="width:110px;">
+        </div>
+        <div class="col-auto">
+          <div class="config-label">K = <strong id="kLabel">5</strong></div>
+          <input type="range" class="form-range" id="kSlider" min="1" max="10" value="5" style="width:110px;">
+        </div>
+        <div class="col-auto">
+          <div class="config-label">전체 관련 문서 수 <small class="text-muted">(corpus)</small></div>
+          <input type="number" class="form-control form-control-sm" id="totalRel" min="1" max="100" value="5" style="width:80px;">
+          <div class="sync-label" onclick="syncTotalRel()">↻ 현재 목록에서 자동 계산</div>
+        </div>
+        <div class="col">
+          <div class="config-label">프리셋</div>
+          <div class="d-flex flex-wrap gap-2">
+            <button class="preset-btn" onclick="applyPreset('perfect')">✨ 완벽한 랭킹</button>
+            <button class="preset-btn" onclick="applyPreset('worst')">💀 최악의 랭킹</button>
+            <button class="preset-btn" onclick="applyPreset('interleaved')">↔ 교차 배치</button>
+            <button class="preset-btn" onclick="applyPreset('topHeavy')">📈 상위 집중</button>
+            <button class="preset-btn" onclick="applyPreset('random')">🎲 랜덤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="row g-3">
+
+    <!-- LEFT: Metric selector -->
+    <div class="col-md-3">
+      <div class="card h-100">
+        <div class="card-header py-2">
+          <strong style="font-size:0.9rem;">지표 선택</strong>
+          <div style="font-size:0.71rem;color:#999;margin-top:2px;">버튼을 클릭하면 계산 과정 표시</div>
+          <div class="btn-group btn-group-sm mt-2" style="width:100%;">
+            <input type="radio" class="btn-check" name="relMode" id="modeBinary" checked>
+            <label class="btn btn-outline-secondary" for="modeBinary" style="flex:1;font-size:0.75rem;">Binary (0/1)</label>
+            <input type="radio" class="btn-check" name="relMode" id="modeGraded">
+            <label class="btn btn-outline-secondary" for="modeGraded" style="flex:1;font-size:0.75rem;">Graded (0~3)</label>
+          </div>
+        </div>
+        <div class="card-body p-2" id="metricButtons"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Rank-aligned table -->
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-header py-2" id="tableHeader"></div>
+        <div style="overflow-x:auto; border-radius: 0 0 12px 12px;">
+          <div id="rankTable"></div>
+        </div>
+        <div class="card-footer" id="metricSummary"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer-bar">
+  <p class="mb-1">정보검색및추천시스템 — 한국외국어대학교 Language &amp; AI 융합학부</p>
+  <p class="mb-0"><a href="index.html">← 강의 메인 페이지로</a></p>
+</div>
+
+<script>
+// ──────────────────────────────────────────────
+//  State
+// ──────────────────────────────────────────────
+let relevances = [];
+let N = 10, K = 5, totalRelevant = 5;
+let gradedMode = false;
+let activeMetric = 'prec';
+
+// ──────────────────────────────────────────────
+//  Metric configs
+// ──────────────────────────────────────────────
+const METRICS = [
+  { id: 'prec',  name: 'Precision@K', formula: 'TP(K) / K',            group: 'rankless',  desc: 'K개 결과 중 관련 문서 비율' },
+  { id: 'rec',   name: 'Recall@K',    formula: 'TP(K) / |Rel|',         group: 'rankless',  desc: '전체 관련 문서 중 K개 안에 포함된 비율' },
+  { id: 'f1',    name: 'F1@K',        formula: '2·P·R / (P+R)',         group: 'rankless',  desc: 'Precision@K와 Recall@K의 조화 평균' },
+  { id: 'ap',    name: 'AP',          formula: 'Σ P@k·rel(k) / |Rel|',  group: 'rankaware', desc: '관련 문서 위치마다 Precision@k 평균' },
+  { id: 'mrr',   name: 'MRR',         formula: '1 / rank(첫 관련)',       group: 'rankaware', desc: '첫 번째 관련 문서 순위의 역수' },
+  { id: 'dcg',   name: 'DCG@K',       formula: 'Σ rel_i / log₂(i+1)',   group: 'rankaware', desc: '순위 할인을 적용한 누적 이득' },
+  { id: 'ndcg',  name: 'NDCG@K',      formula: 'DCG@K / IDCG@K',            group: 'rankaware', desc: '이상적 순서 대비 정규화된 DCG' },
+];
+
+// ──────────────────────────────────────────────
+//  Metric functions
+// ──────────────────────────────────────────────
+const isRel = r => r > 0;
+const fmt3 = v => (typeof v === 'number' && isFinite(v)) ? v.toFixed(3) : '—';
+
+function precisionAtK(rels, k) { return rels.slice(0, k).filter(isRel).length / k; }
+function recallAtK(rels, k, tot) { return tot > 0 ? rels.slice(0, k).filter(isRel).length / tot : 0; }
+function f1(p, r) { return (p + r) > 0 ? 2 * p * r / (p + r) : 0; }
+function averagePrecision(rels, tot) {
+  if (tot <= 0) return 0;
+  let hits = 0, sum = 0;
+  for (let i = 0; i < rels.length; i++) { if (isRel(rels[i])) { hits++; sum += hits / (i + 1); } }
+  return sum / tot;
+}
+function mrrScore(rels) {
+  for (let i = 0; i < rels.length; i++) if (isRel(rels[i])) return 1 / (i + 1);
+  return 0;
+}
+function dcgAtK(rels, k) {
+  let g = 0;
+  for (let i = 0; i < Math.min(k, rels.length); i++) g += rels[i] / Math.log2(i + 2);
+  return g;
+}
+function idcgAtK(rels, k) { return dcgAtK([...rels].sort((a, b) => b - a), k); }
+function ndcgAtK(rels, k) { const id = idcgAtK(rels, k); return id > 0 ? dcgAtK(rels, k) / id : 0; }
+
+function computeAll(rels) {
+  const P = precisionAtK(rels, K), R = recallAtK(rels, K, totalRelevant);
+  return {
+    prec: P, rec: R, f1: f1(P, R),
+    ap: averagePrecision(rels, totalRelevant),
+    mrr: mrrScore(rels),
+    dcg: dcgAtK(rels, K),
+    ndcg: ndcgAtK(rels, K),
+  };
+}
+
+// ──────────────────────────────────────────────
+//  HTML helpers
+// ──────────────────────────────────────────────
+function makeRelButtons(i, rel) {
+  const levels = gradedMode ? [0,1,2,3] : [0,1];
+  const labels = gradedMode ? ['0','1','2','3'] : ['✗','✓'];
+  return levels.map((lv, li) => {
+    const sc = rel === lv ? ` sel-${lv}` : '';
+    return `<button class="rel-btn${sc}" onclick="setRel(${i},${lv})">${labels[li]}</button>`;
+  }).join('');
+}
+
+function rankBadge(i, rel) {
+  return `<span class="rank-num${isRel(rel)?' is-rel':''}">${i+1}</span>`;
+}
+
+// Each row: rank badge | doc label | rel buttons | ...extra cells
+function rowBase(i, rel) {
+  return `<td>${rankBadge(i, rel)}</td><td class="td-doc">D${i+1}</td><td><div class="rel-btns">${makeRelButtons(i, rel)}</div></td>`;
+}
+
+function kDivRow(span, note) {
+  return `<tr class="k-div-row"><td colspan="${span}">─── K = ${K} 기준선 ${note||''} ───</td></tr>`;
+}
+
+function wrapTable(headers, body) {
+  const ths = headers.map(h => `<th>${h}</th>`).join('');
+  return `<table class="rank-table"><thead><tr>${ths}</tr></thead><tbody>${body}</tbody></table>`;
+}
+
+function setRel(i, lv) { relevances[i] = lv; update(); }
+
+// ──────────────────────────────────────────────
+//  Metric selector (left panel)
+// ──────────────────────────────────────────────
+function renderMetricButtons(vals) {
+  let html = '', lastGroup = null;
+  METRICS.forEach(m => {
+    if (m.group !== lastGroup) {
+      const badge = m.group === 'rankless'
+        ? '<span style="background:#e2e8f0;color:#4a5568;font-size:0.64rem;padding:1px 7px;border-radius:8px;font-weight:700;letter-spacing:.3px;">RANK-LESS</span>'
+        : '<span style="background:#fed7d7;color:#c53030;font-size:0.64rem;padding:1px 7px;border-radius:8px;font-weight:700;letter-spacing:.3px;">RANK-AWARE</span>';
+      html += `<div class="metric-group-label${lastGroup===null?' first':''}">${badge}</div>`;
+      lastGroup = m.group;
+    }
+    const active = m.id === activeMetric;
+    const val = vals ? fmt3(vals[m.id]) : '—';
+    html += `<button class="metric-btn${active?' active':''}" onclick="selectMetric('${m.id}')">
+      <span class="m-name">${m.name}</span>
+      <span class="m-val">${val}</span>
+    </button>`;
+  });
+  document.getElementById('metricButtons').innerHTML = html;
+}
+
+function renderTableHeader() {
+  const m = METRICS.find(m => m.id === activeMetric);
+  document.getElementById('tableHeader').innerHTML =
+    `<div class="metric-header py-1">
+      <strong>${m.name}</strong>
+      <code>${m.formula}</code>
+      <small class="text-muted">${m.desc}</small>
+    </div>`;
+}
+
+// ──────────────────────────────────────────────
+//  Table renderers
+// ──────────────────────────────────────────────
+
+function renderPrecTable(rels) {
+  let tp = 0, rows = '';
+  for (let i = 0; i < N; i++) {
+    const rel = rels[i] ?? 0;
+    if (i === K) rows += kDivRow(5, '(이하 제외)');
+    const bk = i >= K;
+    if (!bk && isRel(rel)) tp++;
+    const rc = bk ? ' class="row-dimmed"' : (i === K-1 ? ' class="row-final"' : '');
+    rows += `<tr${rc}>${rowBase(i, rel)}
+      <td class="text-center cv-num">${!bk ? tp : ''}</td>
+      <td class="${i===K-1?'cell-final':'cv-num'}">${!bk ? (tp/(i+1)).toFixed(3) : ''}</td>
+    </tr>`;
+  }
+  const tp_k = rels.slice(0,K).filter(isRel).length;
+  document.getElementById('rankTable').innerHTML = wrapTable(['#','문서','관련성','TP(k)','P@k'], rows);
+  document.getElementById('metricSummary').innerHTML =
+    `Precision@${K} = TP(${K}) / K = <b>${tp_k}</b> / <b>${K}</b> = <strong>${(tp_k/K).toFixed(3)}</strong>`;
+}
+
+function renderRecTable(rels) {
+  let tp = 0, rows = '';
+  for (let i = 0; i < N; i++) {
+    const rel = rels[i] ?? 0;
+    if (i === K) rows += kDivRow(5, '(이하 제외)');
+    const bk = i >= K;
+    if (!bk && isRel(rel)) tp++;
+    const rc = bk ? ' class="row-dimmed"' : (i === K-1 ? ' class="row-final"' : '');
+    const rk = (!bk && totalRelevant > 0) ? (tp/totalRelevant).toFixed(3) : '';
+    rows += `<tr${rc}>${rowBase(i, rel)}
+      <td class="text-center cv-num">${!bk ? tp : ''}</td>
+      <td class="${i===K-1?'cell-final':'cv-num'}">${rk}</td>
+    </tr>`;
+  }
+  const tp_k = rels.slice(0,K).filter(isRel).length;
+  const R = totalRelevant > 0 ? (tp_k/totalRelevant).toFixed(3) : '—';
+  document.getElementById('rankTable').innerHTML = wrapTable(['#','문서','관련성','TP(k)','R@k'], rows);
+  document.getElementById('metricSummary').innerHTML =
+    `Recall@${K} = TP(${K}) / |Rel| = <b>${tp_k}</b> / <b>${totalRelevant}</b> = <strong>${R}</strong>`;
+}
+
+function renderF1Table(rels) {
+  let tp = 0, rows = '';
+  for (let i = 0; i < N; i++) {
+    const rel = rels[i] ?? 0;
+    if (i === K) rows += kDivRow(7, '(이하 제외)');
+    const bk = i >= K;
+    if (!bk && isRel(rel)) tp++;
+    const rc = bk ? ' class="row-dimmed"' : (i === K-1 ? ' class="row-final"' : '');
+    let pk='', rk='', fk='';
+    if (!bk) {
+      pk = (tp/(i+1)).toFixed(3);
+      rk = totalRelevant > 0 ? (tp/totalRelevant).toFixed(3) : '—';
+      const pv = tp/(i+1), rv = totalRelevant > 0 ? tp/totalRelevant : 0;
+      fk = (pv+rv) > 0 ? (2*pv*rv/(pv+rv)).toFixed(3) : '0.000';
+    }
+    rows += `<tr${rc}>${rowBase(i, rel)}
+      <td class="cv-num">${pk}</td>
+      <td class="cv-num">${rk}</td>
+      <td class="${i===K-1?'cell-final':'cv-num'}">${fk}</td>
+    </tr>`;
+  }
+  const P = precisionAtK(rels, K), R = recallAtK(rels, K, totalRelevant), F = f1(P, R);
+  document.getElementById('rankTable').innerHTML = wrapTable(['#','문서','관련성','P@k','R@k','F1@k'], rows);
+  document.getElementById('metricSummary').innerHTML =
+    `F1@${K} = 2 × P@${K} × R@${K} / (P@${K} + R@${K}) `+
+    `= 2 × <b>${P.toFixed(3)}</b> × <b>${R.toFixed(3)}</b> / (<b>${P.toFixed(3)}</b> + <b>${R.toFixed(3)}</b>) = <strong>${F.toFixed(3)}</strong>`;
+}
+
+function renderAPTable(rels) {
+  let hits = 0, runSum = 0, rows = '';
+  for (let i = 0; i < rels.length; i++) {
+    const rel = rels[i] ?? 0, r = isRel(rel);
+    if (i === K) rows += `<tr><td colspan="6" style="background:#f8f9fa;color:#aaa;font-size:0.69rem;text-align:center;padding:3px;border-bottom:1px solid #eee;">─── K = ${K} 기준선 (AP는 전체 리스트 사용) ───</td></tr>`;
+    let contrib = 0;
+    if (r) { hits++; contrib = hits/(i+1); runSum += contrib; }
+    rows += `<tr>${rowBase(i, rel)}
+      <td class="cv-num">${r ? `${hits}/${i+1} = ${(hits/(i+1)).toFixed(3)}` : '<span class="cv-no">—</span>'}</td>
+      <td class="cv-num">${r ? `<b>+${contrib.toFixed(3)}</b>` : '<span class="cv-no">0</span>'}</td>
+      <td class="cv-num">${runSum.toFixed(3)}</td>
+    </tr>`;
+  }
+  const ap = totalRelevant > 0 ? runSum/totalRelevant : 0;
+  document.getElementById('rankTable').innerHTML = wrapTable(['#','문서','관련성','P@k','기여','누적합'], rows);
+  document.getElementById('metricSummary').innerHTML =
+    `AP = 누적합 / |Rel| = <b>${runSum.toFixed(3)}</b> / <b>${totalRelevant}</b> = <strong>${ap.toFixed(3)}</strong>`;
+}
+
+function renderMRRTable(rels) {
+  const firstIdx = rels.findIndex(isRel);
+  let rows = '';
+  for (let i = 0; i < rels.length; i++) {
+    const rel = rels[i] ?? 0, r = isRel(rel);
+    const isFirst = i === firstIdx;
+    const rrCell = isFirst
+      ? `<span class="cv-yes">1/${i+1} = ${(1/(i+1)).toFixed(3)}</span>`
+      : '<span class="cv-no">—</span>';
+    rows += `<tr${isFirst?' class="row-final"':''}>${rowBase(i, rel)}
+      <td>${rrCell}</td>
+    </tr>`;
+  }
+  const mrr = mrrScore(rels);
+  document.getElementById('rankTable').innerHTML = wrapTable(['#','문서','관련성','RR (첫 번째만)'], rows);
+  document.getElementById('metricSummary').innerHTML = firstIdx >= 0
+    ? `첫 번째 관련 문서: <b>${firstIdx+1}위</b> → RR = 1/${firstIdx+1} = <strong>${mrr.toFixed(3)}</strong> &nbsp;<small class="text-muted">(MRR = 여러 쿼리의 RR 평균)</small>`
+    : `관련 문서 없음 → RR = <strong>0</strong> &nbsp;<small class="text-muted">(MRR = 여러 쿼리의 RR 평균)</small>`;
+}
+
+function renderDCGTable(rels) {
+  let cumDCG = 0, rows = '';
+  for (let i = 0; i < N; i++) {
+    const rel = rels[i] ?? 0;
+    if (i === K) rows += kDivRow(6, '(이하 제외)');
+    const bk = i >= K;
+    const disc = Math.log2(i+2), gain = rel/disc;
+    if (!bk) cumDCG += gain;
+    const rc = bk ? ' class="row-dimmed"' : (i===K-1?' class="row-final"':'');
+    rows += `<tr${rc}>${rowBase(i, rel)}
+      <td class="cv-mono text-center">${!bk ? (isRel(rel) ? `log₂(${i+2}) = ${disc.toFixed(3)}` : '<span class="cv-no">—</span>') : ''}</td>
+      <td class="cv-num text-center">${!bk ? (isRel(rel) ? `<b>${gain.toFixed(3)}</b>` : '<span class="cv-no">—</span>') : ''}</td>
+      <td class="${i===K-1?'cell-final':'cv-num'}">${!bk ? cumDCG.toFixed(3) : ''}</td>
+    </tr>`;
+  }
+  const dcg = dcgAtK(rels, K);
+  document.getElementById('rankTable').innerHTML = wrapTable(['#','문서','관련성','log₂(rank+1)','rel / log₂','누적 DCG'], rows);
+  document.getElementById('metricSummary').innerHTML =
+    `DCG@${K} = Σ rel_i / log₂(i+1) = <strong>${dcg.toFixed(3)}</strong>`;
+}
+
+function renderNDCGTable(rels) {
+  const sorted = [...rels].sort((a,b) => b-a);
+  let cumDCG = 0, cumIDCG = 0, rows = '';
+  for (let i = 0; i < N; i++) {
+    const rel = rels[i] ?? 0;
+    if (i === K) rows += kDivRow(8, '(이하 제외)');
+    const bk = i >= K;
+    const disc = Math.log2(i+2), gain = rel/disc, igain = (sorted[i]??0)/disc;
+    if (!bk) { cumDCG += gain; cumIDCG += igain; }
+    const rc = bk ? ' class="row-dimmed"' : (i===K-1?' class="row-final"':'');
+    rows += `<tr${rc}>${rowBase(i, rel)}
+      <td class="text-center" style="color:#888;">${!bk ? ((sorted[i]??0) || '<span class="cv-no">—</span>') : ''}</td>
+      <td class="cv-mono text-center">${!bk ? (isRel(rel) || (sorted[i]??0) > 0 ? disc.toFixed(3) : '<span class="cv-no">—</span>') : ''}</td>
+      <td class="cv-num text-center">${!bk ? (isRel(rel) ? `<b>${gain.toFixed(3)}</b>` : '<span class="cv-no">—</span>') : ''}</td>
+      <td class="cv-num text-center" style="color:#888;">${!bk ? ((sorted[i]??0) > 0 ? igain.toFixed(3) : '<span class="cv-no">—</span>') : ''}</td>
+      <td class="${i===K-1?'cell-final':'cv-num'}">${!bk ? cumDCG.toFixed(3) : ''}</td>
+      <td class="cv-num" style="color:#888;">${!bk ? cumIDCG.toFixed(3) : ''}</td>
+    </tr>`;
+  }
+  const dcg = dcgAtK(rels,K), idcg = idcgAtK(rels,K), nd = idcg>0 ? dcg/idcg : 0;
+  document.getElementById('rankTable').innerHTML = wrapTable(
+    ['#','문서','관련성','Ideal','log₂(k+1)','DCG 기여','IDCG 기여','누적 DCG','누적 IDCG'], rows);
+  document.getElementById('metricSummary').innerHTML =
+    `DCG@${K} = <b>${dcg.toFixed(3)}</b> &nbsp;|&nbsp; `+
+    `IDCG@${K} = <b>${idcg.toFixed(3)}</b> &nbsp;|&nbsp; `+
+    `NDCG@${K} = ${dcg.toFixed(3)} ÷ ${idcg.toFixed(3)} = <strong>${nd.toFixed(3)}</strong>`;
+}
+
+// ──────────────────────────────────────────────
+//  Render dispatch
+// ──────────────────────────────────────────────
+function renderTable() {
+  const rels = relevances.slice(0, N);
+  renderTableHeader();
+  switch(activeMetric) {
+    case 'prec':  renderPrecTable(rels);  break;
+    case 'rec':   renderRecTable(rels);   break;
+    case 'f1':    renderF1Table(rels);    break;
+    case 'ap':    renderAPTable(rels);    break;
+    case 'mrr':   renderMRRTable(rels);   break;
+    case 'dcg':   renderDCGTable(rels);   break;
+    case 'ndcg':  renderNDCGTable(rels);  break;
+  }
+}
+
+function selectMetric(id) { activeMetric = id; update(); }
+
+// ──────────────────────────────────────────────
+//  Main update
+// ──────────────────────────────────────────────
+function update() {
+  const rels = relevances.slice(0, N);
+  const vals = computeAll(rels);
+  renderMetricButtons(vals);
+  renderTable();
+}
+
+// ──────────────────────────────────────────────
+//  Presets
+// ──────────────────────────────────────────────
+function applyPreset(name) {
+  const relCount = Math.max(2, Math.round(N * 0.4));
+  const maxRel = gradedMode ? 3 : 1;
+  if (name === 'perfect') {
+    relevances = Array.from({length:N}, (_,i) =>
+      gradedMode ? (i<relCount ? Math.max(1, maxRel-i) : 0) : (i<relCount?1:0));
+    totalRelevant = relCount;
+  } else if (name === 'worst') {
+    relevances = Array.from({length:N}, (_,i) =>
+      gradedMode ? (i>=N-relCount ? Math.max(1, maxRel-(N-1-i)) : 0) : (i>=N-relCount?1:0));
+    totalRelevant = relCount;
+  } else if (name === 'interleaved') {
+    relevances = Array.from({length:N}, (_,i) => i%2===0?1:0);
+    totalRelevant = Math.ceil(N/2);
+  } else if (name === 'topHeavy') {
+    const pos = new Set();
+    while (pos.size < Math.min(relCount,K)) pos.add(Math.floor(Math.random()*K));
+    relevances = Array.from({length:N}, (_,i) =>
+      gradedMode ? (pos.has(i)?Math.floor(Math.random()*3)+1:0) : (pos.has(i)?1:0));
+    totalRelevant = relCount;
+  } else if (name === 'random') {
+    relevances = Array.from({length:N}, () =>
+      gradedMode ? Math.floor(Math.random()*4) : Math.round(Math.random()*0.6));
+    totalRelevant = Math.max(1, relevances.filter(isRel).length);
+  }
+  document.getElementById('totalRel').value = totalRelevant;
+  update();
+}
+
+function syncTotalRel() {
+  totalRelevant = Math.max(1, relevances.slice(0,N).filter(isRel).length);
+  document.getElementById('totalRel').value = totalRelevant;
+  update();
+}
+
+// ──────────────────────────────────────────────
+//  Event listeners
+// ──────────────────────────────────────────────
+document.getElementById('modeBinary').addEventListener('change', () => {
+  gradedMode = false; relevances = relevances.map(r => r>0?1:0); update();
+});
+document.getElementById('modeGraded').addEventListener('change', () => {
+  gradedMode = true; update();
+});
+document.getElementById('nDocs').addEventListener('input', e => {
+  N = parseInt(e.target.value);
+  document.getElementById('nLabel').textContent = N;
+  while (relevances.length < N) relevances.push(0);
+  K = Math.min(K, N);
+  document.getElementById('kSlider').max = N;
+  document.getElementById('kSlider').value = K;
+  document.getElementById('kLabel').textContent = K;
+  update();
+});
+document.getElementById('kSlider').addEventListener('input', e => {
+  K = parseInt(e.target.value);
+  document.getElementById('kLabel').textContent = K;
+  update();
+});
+document.getElementById('totalRel').addEventListener('input', e => {
+  totalRelevant = Math.max(1, parseInt(e.target.value) || 1);
+  update();
+});
+
+// ──────────────────────────────────────────────
+//  Init
+// ──────────────────────────────────────────────
+applyPreset('interleaved');
+</script>
+</body>
+</html>
