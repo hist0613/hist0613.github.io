@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MT Metrics Playground — HUFS-AITI</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root { --accent:#00b894; --accent-dark:#00936e; --accent-light:#e3fcf7; }
+    body { background:#f0f2f5; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; color:#2c3e50; }
+
+    .header-bar { background:linear-gradient(135deg,#00b894 0%,#00cec9 100%); color:white; padding:22px 0; margin-bottom:24px; }
+    .header-bar h1 { font-size:1.7rem; font-weight:700; margin:0; }
+    .header-bar p  { margin:4px 0 0; opacity:.85; font-size:.9rem; }
+
+    .card { border:none; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+    .card-header { background:white; border-bottom:2px solid #f0f0f0; border-radius:12px 12px 0 0 !important; }
+    .card-footer { background:#fafafa; border-top:1px solid #f0f0f0; border-radius:0 0 12px 12px !important; padding:10px 16px; font-size:.86rem; color:#444; }
+    .card-footer strong { color:var(--accent); font-size:1.05rem; }
+
+    /* ── Pair selector ── */
+    .pair-btn {
+      border:1.5px solid #dee2e6; border-radius:8px; background:white;
+      padding:8px 12px; cursor:pointer; transition:all .15s; text-align:left;
+      font-size:.78rem; min-width:0;
+    }
+    .pair-btn:hover { border-color:var(--accent); background:var(--accent-light); }
+    .pair-btn.active { border-color:var(--accent); background:var(--accent); color:white; }
+    .pair-btn .pb-num { font-size:.65rem; font-weight:700; opacity:.7; }
+    .pair-btn .pb-src { font-size:.76rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:160px; }
+
+    .src-ref-box { background:#f8f9fa; border-radius:8px; padding:10px 14px; font-size:.78rem; }
+    .src-ref-box .label { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:#aaa; margin-bottom:2px; }
+    .src-ref-box .text  { color:#333; }
+
+    /* ── Dataset table ── */
+    .dataset-table { font-size:.78rem; width:100%; margin:0; border-collapse:collapse; }
+    .dataset-table th { font-size:.71rem; background:#f8f9fa; font-weight:600; padding:7px 8px; white-space:nowrap; border-bottom:2px solid #dee2e6; }
+    .dataset-table td { padding:6px 8px; vertical-align:middle; border-bottom:1px solid #f3f3f3; }
+    .dataset-table tbody tr.data-row { cursor:pointer; }
+    .dataset-table tbody tr.data-row:hover td { background:#f0fdf9; }
+    .dataset-table tbody tr.data-row.selected td { background:#fffde7!important; border-top:2px solid #f0c040; border-bottom:2px solid #f0c040; }
+    .dataset-table tbody tr.corpus-row td { background:#f8f9fa; font-weight:700; border-top:3px solid #dee2e6; }
+
+    .hyp-cell { min-width:160px; padding:3px 6px; border:1.5px dashed #ced4da; border-radius:6px; background:white; cursor:text; outline:none; font-size:.78rem; color:#333; line-height:1.4; }
+    .hyp-cell:focus { border-color:var(--accent); box-shadow:0 0 0 2px rgba(0,184,148,.15); }
+
+    .score-cell { font-variant-numeric:tabular-nums; font-weight:600; text-align:right; white-space:nowrap; }
+    .score-good { color:#00b894; } .score-mid { color:#e67e22; } .score-bad { color:#e74c3c; }
+
+    .sent-badge { display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; background:#e9ecef; font-size:.68rem; font-weight:700; color:#666; }
+    .sent-badge.selected { background:var(--accent); color:white; }
+
+    .note-chip { font-size:.63rem; padding:1px 7px; border-radius:8px; background:var(--accent-light); color:#00796b; font-weight:600; white-space:nowrap; }
+    .note-chip.warn   { background:#fff3cd; color:#856404; }
+    .note-chip.danger { background:#ffe4e4; color:#c0392b; }
+
+    /* ── Metric selector ── */
+    .metric-group-label { font-size:.67rem; font-weight:700; letter-spacing:.5px; text-transform:uppercase; margin:10px 0 6px; padding-left:6px; border-left:3px solid var(--accent); }
+    .metric-group-label.first { margin-top:0; }
+    .metric-btn { display:flex; justify-content:space-between; align-items:center; width:100%; padding:9px 12px; border:1.5px solid #e9ecef; border-radius:8px; background:white; cursor:pointer; margin-bottom:5px; transition:all .15s; text-align:left; }
+    .metric-btn:hover { border-color:var(--accent); background:var(--accent-light); }
+    .metric-btn.active { border-color:var(--accent); background:var(--accent); }
+    .metric-btn .m-name  { font-size:.82rem; font-weight:600; color:#444; }
+    .metric-btn.active .m-name { color:white; }
+    .metric-btn .m-val   { font-size:.92rem; font-weight:700; color:var(--accent); font-variant-numeric:tabular-nums; }
+    .metric-btn.active .m-val  { color:white; }
+    .metric-btn .m-range { font-size:.63rem; color:#aaa; }
+    .metric-btn.active .m-range { color:rgba(255,255,255,.7); }
+
+    .metric-header { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+    .metric-header strong { font-size:.95rem; }
+    .metric-header code   { font-size:.77rem; background:#f0f0f0; padding:2px 8px; border-radius:4px; color:#444; }
+    .metric-header small  { color:#999; font-size:.77rem; }
+
+    /* ── Detail table ── */
+    .detail-table { font-size:.79rem; width:100%; margin:0; border-collapse:collapse; }
+    .detail-table th { font-size:.72rem; background:#f8f9fa; font-weight:600; padding:7px 8px; white-space:nowrap; border-bottom:2px solid #dee2e6; position:sticky; top:0; z-index:1; }
+    .detail-table td { padding:5px 8px; vertical-align:middle; border-bottom:1px solid #f3f3f3; }
+    .detail-table .row-final td { background:#fffbf0!important; border-top:2px solid #f0c040!important; border-bottom:2px solid #f0c040!important; }
+    .cell-final { font-weight:700; color:var(--accent); }
+    .cv-num { font-variant-numeric:tabular-nums; } .cv-mono { font-family:monospace; font-size:.75rem; } .cv-dim { color:#ccc; }
+    .cv-yes { display:inline-block; background:#d4edda; color:#155724; border-radius:4px; padding:1px 6px; font-weight:700; font-size:.74rem; }
+
+    .word-match  { background:#d4edda; border-radius:3px; padding:1px 4px; color:#155724; font-weight:600; }
+    .word-miss   { background:#f8d7da; border-radius:3px; padding:1px 4px; color:#721c24; }
+    .word-insert { background:#d1ecf1; border-radius:3px; padding:1px 4px; color:#0c5460; font-weight:600; }
+    .word-del    { background:#f8d7da; border-radius:3px; padding:1px 4px; color:#721c24; text-decoration:line-through; }
+    .word-sub    { background:#fff3cd; border-radius:3px; padding:1px 4px; color:#856404; }
+
+    /* ── Heatmap ── */
+    .heatmap-wrap { overflow-x:auto; }
+    .heatmap-table { border-collapse:collapse; font-size:.7rem; }
+    .heatmap-table th { padding:4px 7px; background:#f8f9fa; font-weight:600; font-size:.67rem; border:1px solid #dee2e6; white-space:nowrap; }
+    .heatmap-table td { width:52px; height:36px; text-align:center; vertical-align:middle; border:1px solid #dee2e6; font-variant-numeric:tabular-nums; font-size:.69rem; font-weight:600; cursor:default; }
+    .hm-max-row  { outline:2.5px solid #00b894; outline-offset:-2px; z-index:1; position:relative; }
+    .hm-max-col  { outline:2.5px solid #6c5ce7; outline-offset:-2px; z-index:1; position:relative; }
+    .hm-max-both { outline:2.5px solid #e17055; outline-offset:-2px; z-index:2; position:relative; }
+
+    /* ── LR bars ── */
+    .lr-bar-wrap  { display:flex; gap:8px; align-items:center; margin:6px 0; }
+    .lr-bar-label { font-size:.75rem; font-weight:600; width:95px; text-align:right; color:#555; flex-shrink:0; }
+    .lr-bar-track { flex:1; background:#e9ecef; border-radius:4px; height:22px; position:relative; overflow:hidden; }
+    .lr-bar-fill  { height:100%; border-radius:4px; transition:width .3s; min-width:2px; display:flex; align-items:center; }
+    .lr-bar-val   { font-size:.72rem; font-weight:700; color:white; padding-left:6px; white-space:nowrap; }
+
+    /* ── Comparison bars ── */
+    .bar-track { background:#e9ecef; border-radius:4px; height:17px; position:relative; overflow:hidden; flex:1; }
+    .bar-fill  { height:100%; border-radius:4px; transition:width .3s; display:flex; align-items:center; padding-left:5px; font-size:.67rem; font-weight:700; color:white; white-space:nowrap; }
+    .bar-bleu  { background:linear-gradient(90deg,#fd9644,#e55039); }
+    .bar-bert  { background:linear-gradient(90deg,#00b894,#00cec9); }
+    .bar-comet { background:linear-gradient(90deg,#6c5ce7,#a29bfe); }
+
+    /* ── COMET arch ── */
+    .comet-arch { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:10px 0; }
+    .comet-box  { border:1.5px solid #dee2e6; border-radius:8px; padding:6px 12px; font-size:.75rem; text-align:center; background:white; }
+    .comet-box.encoder { background:linear-gradient(135deg,#f0fdf9,#e3fcf7); border-color:#00b894; }
+    .comet-box.head    { background:linear-gradient(135deg,#faf5ff,#ede9fe); border-color:#6c5ce7; }
+    .comet-box.output  { background:linear-gradient(135deg,#fffbeb,#fef3c7); border-color:#f59e0b; }
+    .comet-arrow { color:#aaa; font-size:1.1rem; }
+    .bert-step { display:flex; align-items:flex-start; gap:10px; padding:8px 12px; border-radius:8px; background:#f8f9fa; margin-bottom:6px; }
+    .bert-step-num { width:22px; height:22px; border-radius:50%; flex-shrink:0; background:var(--accent); color:white; font-size:.72rem; font-weight:700; display:flex; align-items:center; justify-content:center; }
+    .bert-step-text { font-size:.78rem; color:#444; line-height:1.5; }
+    .bert-legend { display:flex; gap:14px; flex-wrap:wrap; margin:8px 0; font-size:.72rem; }
+    .bert-legend-item { display:flex; align-items:center; gap:5px; }
+    .bert-legend-box  { width:16px; height:16px; border-radius:3px; }
+
+    .info-tip { font-size:.75rem; color:#888; margin-top:6px; }
+    .info-tip i { color:var(--accent); }
+    .footer-bar { background:#2c3e50; color:#aaa; padding:20px 0; margin-top:36px; font-size:.83rem; text-align:center; }
+    .footer-bar a { color:var(--accent); text-decoration:none; }
+
+    /* ── LLM Prompt ── */
+    .llm-prompt-wrap { background:#1e1e2e; border-radius:10px; padding:14px 16px; font-family:'Fira Mono',Consolas,monospace; font-size:.73rem; line-height:1.75; color:#cdd6f4; margin-bottom:12px; position:relative; overflow:hidden; }
+    .llm-prompt-label { position:absolute; top:8px; right:12px; font-size:.62rem; background:#313244; color:#a6adc8; padding:2px 8px; border-radius:8px; font-family:sans-serif; letter-spacing:.3px; }
+    .prompt-sys  { color:#cba6f7; }
+    .prompt-user { color:#cba6f7; }
+    .prompt-src  { color:#a6e3a1; font-weight:700; }
+    .prompt-ref  { color:#89dceb; font-weight:700; }
+    .prompt-hyp  { color:#fab387; font-weight:700; }
+    .prompt-dim  { color:#585b70; font-style:italic; }
+    .llm-response-wrap { background:#f0fdf4; border:1.5px solid #86efac; border-radius:10px; padding:12px 14px; margin-bottom:12px; }
+    .llm-response-score { font-size:1.2rem; font-weight:700; color:#16a34a; }
+    .llm-score-stars { color:#f59e0b; font-size:.95rem; letter-spacing:2px; }
+    .bar-llm-ref  { background:linear-gradient(90deg,#0ea5e9,#6366f1); }
+    .bar-llm-free { background:linear-gradient(90deg,#ec4899,#8b5cf6); }
+
+    /* ── Tokenization block ── */
+    .tok-block { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:8px 12px; margin-bottom:12px; }
+    .tok-type-label { font-size:.67rem; font-weight:700; letter-spacing:.4px; color:#475569; margin-bottom:6px; display:flex; align-items:center; gap:5px; }
+    .tok-type-badge { font-size:.62rem; padding:1px 8px; border-radius:8px; font-weight:700; }
+    .tok-type-word { background:#dbeafe; color:#1e40af; }
+    .tok-type-char { background:#fef3c7; color:#92400e; }
+    .tok-type-sub  { background:#ede9fe; color:#5b21b6; }
+    .tok-type-bpe  { background:#fce7f3; color:#9d174d; }
+    .tok-type-len  { background:#d1fae5; color:#065f46; }
+    .tok-row { display:flex; align-items:center; flex-wrap:wrap; gap:3px; margin-bottom:3px; min-height:22px; }
+    .tok-row-label { font-size:.66rem; font-weight:700; color:#94a3b8; width:26px; flex-shrink:0; text-align:right; margin-right:3px; }
+    .tok-chip      { background:#dbeafe; color:#1e40af; border-radius:4px; padding:1px 6px; font-family:monospace; font-size:.69rem; white-space:nowrap; }
+    .tok-chip.char { background:#fef3c7; color:#92400e; padding:1px 4px; min-width:16px; text-align:center; }
+    .tok-chip.sub  { background:#ede9fe; color:#5b21b6; }
+    .tok-chip.bpe  { background:#fce7f3; color:#9d174d; }
+    .tok-more { font-size:.67rem; color:#94a3b8; padding-left:3px; }
+    .tok-note { font-size:.72rem; color:#64748b; margin-top:6px; border-top:1px solid #e2e8f0; padding-top:5px; line-height:1.5; }
+    .tok-note code { background:#f1f5f9; border-radius:3px; padding:1px 5px; font-size:.68rem; color:#475569; }
+  </style>
+</head>
+<body>
+
+<div class="header-bar">
+  <div class="container">
+    <h1><i class="fas fa-language me-2"></i>MT Metrics Playground</h1>
+    <p>통번역과 AI III (HUFS) — 예문 쌍을 선택하고, 번역 후보 5개를 비교하며 평가 지표의 계산 과정을 확인하세요</p>
+  </div>
+</div>
+
+<div class="container" style="max-width:1200px;">
+
+  <!-- ── Pair Selector ── -->
+  <div class="card mb-3">
+    <div class="card-header py-2">
+      <strong style="font-size:.9rem;">① 예문 쌍 선택</strong>
+      <span style="font-size:.71rem;color:#999;margin-left:8px;">각 예문 쌍마다 번역 후보 5개가 준비돼 있습니다</span>
+    </div>
+    <div class="card-body py-2 px-3">
+      <div class="d-flex gap-2 flex-wrap mb-3" id="pairButtons"></div>
+      <div class="row g-2" id="srcRefBox"></div>
+    </div>
+  </div>
+
+  <!-- ── Hypothesis Dataset ── -->
+  <div class="card mb-3">
+    <div class="card-header py-2">
+      <strong style="font-size:.9rem;">② 번역 후보 비교</strong>
+      <span style="font-size:.71rem;color:#999;margin-left:8px;">행 클릭 → 아래에 계산 과정 표시 &nbsp;·&nbsp; Hypothesis 셀 직접 편집 가능</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="dataset-table">
+        <thead>
+          <tr>
+            <th style="width:22px;">#</th>
+            <th>Hypothesis <span style="font-weight:400;color:#aaa;">(편집 가능)</span></th>
+            <th style="text-align:right;">BLEU↑</th>
+            <th style="text-align:right;">chrF↑</th>
+            <th style="text-align:right;">METEOR↑</th>
+            <th style="text-align:right;">TER↓</th>
+            <th style="text-align:right;">BERTScore↑</th>
+            <th style="text-align:right;">LLM-J(Ref)↑</th>
+            <th style="text-align:right;">COMETKiwi↑</th>
+            <th style="text-align:right;">LLM-J(Free)↑</th>
+            <th>특징</th>
+          </tr>
+        </thead>
+        <tbody id="datasetBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── Detail Panel ── -->
+  <div class="row g-3">
+    <div class="col-md-3">
+      <div class="card h-100">
+        <div class="card-header py-2">
+          <strong style="font-size:.9rem;">③ 지표 선택</strong>
+          <div style="font-size:.71rem;color:#999;margin-top:2px;">선택된 번역의 계산 과정</div>
+        </div>
+        <div class="card-body p-2" id="metricButtons"></div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-header py-2" id="detailHeader">
+          <div class="metric-header py-1"><small class="text-muted">← 왼쪽에서 지표를 선택하고, 위 표에서 번역을 클릭하세요</small></div>
+        </div>
+        <div style="overflow-x:auto;border-radius:0 0 12px 12px;min-height:140px;">
+          <div id="detailBody" style="padding:4px 0;"></div>
+        </div>
+        <div class="card-footer" id="detailSummary"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-bar">
+  <p class="mb-1">통번역과 AI III — 한국외국어대학교 통번역대학원</p>
+  <p class="mb-0"><a href="index.html">← 강의 메인 페이지로</a></p>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  DATASET  — 5 pairs × 5 hypotheses
+// ════════════════════════════════════════════════════════
+const DATASET = [
+  {
+    label: "의료 문장",
+    src: "The patient needs immediate surgery.",
+    ref: "The patient needs immediate surgery.",
+    hyps: [
+      { hyp: "The patient needs immediate surgery.",           note:"완벽한 번역",    noteClass:"" },
+      { hyp: "Surgery is immediately needed by the patient.",  note:"수동태 변환",    noteClass:"warn" },
+      { hyp: "The sick person requires urgent operation.",     note:"의역 (유의어)",  noteClass:"warn" },
+      { hyp: "The patient needs surgery.",                     note:"일부 누락",      noteClass:"warn" },
+      { hyp: "The doctor examined the patient carefully.",     note:"완전히 다른 번역", noteClass:"danger" },
+    ]
+  },
+  {
+    label: "기후 문장",
+    src: "Climate change threatens coastal cities worldwide.",
+    ref: "Climate change threatens coastal cities worldwide.",
+    hyps: [
+      { hyp: "Climate change threatens coastal cities worldwide.",           note:"완벽한 번역",    noteClass:"" },
+      { hyp: "Coastal cities worldwide are threatened by climate change.",   note:"수동태·어순 변환", noteClass:"warn" },
+      { hyp: "Global warming endangers seaside towns across the globe.",     note:"의역 (유의어)",  noteClass:"warn" },
+      { hyp: "Climate change threatens cities.",                             note:"일부 누락",      noteClass:"warn" },
+      { hyp: "The economy grew significantly last quarter.",                 note:"완전히 다른 번역", noteClass:"danger" },
+    ]
+  },
+  {
+    label: "미소 문장",
+    src: "She gave him a warm smile.",
+    ref: "She gave him a warm smile.",
+    hyps: [
+      { hyp: "She gave him a warm smile.",         note:"완벽한 번역",    noteClass:"" },
+      { hyp: "She flashed him a friendly grin.",   note:"의역 (유의어)",  noteClass:"warn" },
+      { hyp: "A warm smile was given to him by her.", note:"수동태 변환", noteClass:"warn" },
+      { hyp: "She smiled warmly at him.",           note:"단순화",        noteClass:"warn" },
+      { hyp: "He drove his car to the office.",    note:"완전히 다른 번역", noteClass:"danger" },
+    ]
+  },
+  {
+    label: "소프트웨어",
+    src: "The software update improves performance and fixes bugs.",
+    ref: "The software update improves performance and fixes bugs.",
+    hyps: [
+      { hyp: "The software update improves performance and fixes bugs.",             note:"완벽한 번역",    noteClass:"" },
+      { hyp: "Bugs are fixed and performance is improved by the software update.",   note:"수동태·어순 변환", noteClass:"warn" },
+      { hyp: "The program upgrade enhances efficiency and repairs errors.",           note:"의역 (유의어)",  noteClass:"warn" },
+      { hyp: "The update improves performance.",                                      note:"일부 누락",      noteClass:"warn" },
+      { hyp: "The children played happily in the park.",                              note:"완전히 다른 번역", noteClass:"danger" },
+    ]
+  },
+  {
+    label: "교통 문장",
+    src: "The train arrives at nine in the morning.",
+    ref: "The train arrives at nine in the morning.",
+    hyps: [
+      { hyp: "The train arrives at nine in the morning.",      note:"완벽한 번역",    noteClass:"" },
+      { hyp: "At nine in the morning, the train arrives.",     note:"어순 변환",      noteClass:"warn" },
+      { hyp: "The locomotive reaches the station at 9 AM.",    note:"의역 (유의어)",  noteClass:"warn" },
+      { hyp: "The train arrives at nine.",                     note:"일부 누락",      noteClass:"warn" },
+      { hyp: "She painted a beautiful landscape in the evening.", note:"완전히 다른 번역", noteClass:"danger" },
+    ]
+  }
+];
+
+// ════════════════════════════════════════════════════════
+//  LLM-AS-A-JUDGE  hardcoded scores (1–5 scale)
+//  rows = 5 pairs  /  cols = 5 hypotheses per pair
+//  ref  = judge sees Source + Reference + Hypothesis
+//  free = judge sees Source + Hypothesis only
+// ════════════════════════════════════════════════════════
+const LLM_JUDGE_REF = [
+  //  완벽  변환  의역  누락  다른
+  [ 10,   9,    7,   5,   1],  // 의료
+  [ 10,   9,    8,   5,   1],  // 기후
+  [ 10,   8,    9,   7,   1],  // 미소 — 의역(idx1)은 단어가 달라 8, 수동태(idx2)는 9
+  [ 10,   9,    8,   5,   1],  // 소프트웨어
+  [ 10,  10,    8,   5,   1],  // 교통 — 어순 변환은 완벽에 가까움
+];
+const LLM_JUDGE_FREE = [
+  //  완벽  변환  의역  누락  다른
+  [  9,   9,    8,   6,   2],  // 의료
+  [  9,   9,    8,   6,   1],  // 기후
+  [  9,   9,    8,   7,   1],  // 미소 — ref 없으면 의역(idx1)도 9, 단순화(idx3)도 무난
+  [  9,   9,    8,   6,   1],  // 소프트웨어
+  [  9,  10,    8,   6,   1],  // 교통 — 자연스러운 어순 변환은 오히려 10
+];
+
+function llmReasoning(note, rawScore, isRef) {
+  const s = rawScore;
+  if (note.includes('완벽'))
+    return isRef
+      ? `The hypothesis matches the reference exactly — words, structure, and meaning are perfectly aligned. Score: <strong>${s}</strong>/10`
+      : `The hypothesis faithfully conveys every piece of information from the source with natural fluency. Score: <strong>${s}</strong>/10`;
+  if (note.includes('수동태') || note.includes('어순'))
+    return isRef
+      ? `The hypothesis restructures the sentence (passive voice / reordering) but preserves all content. Minor structural deviation from the reference. Score: <strong>${s}</strong>/10`
+      : `The hypothesis uses a passive or reordered construction. Meaning is fully preserved, though the phrasing is slightly unnatural. Score: <strong>${s}</strong>/10`;
+  if (note.includes('의역') || note.includes('유의어'))
+    return isRef
+      ? `The hypothesis uses different vocabulary from the reference. The core meaning is similar, but word-level divergence is notable in a direct reference comparison. Score: <strong>${s}</strong>/10`
+      : `The hypothesis conveys the source meaning through synonymous expressions. Without a fixed reference, adequacy is high — the message comes through clearly. Score: <strong>${s}</strong>/10`;
+  if (note.includes('단순화'))
+    return isRef
+      ? `The hypothesis simplifies the original phrasing. Some nuance present in the reference is reduced, though the main idea survives. Score: <strong>${s}</strong>/10`
+      : `The hypothesis is a simplified rendering of the source. The main idea is present but some expressiveness is lost. Score: <strong>${s}</strong>/10`;
+  if (note.includes('누락'))
+    return isRef
+      ? `The hypothesis omits important content present in the reference. The translation is noticeably incomplete. Score: <strong>${s}</strong>/10`
+      : `The hypothesis omits key information from the source. A reader of the hypothesis alone would miss important details. Score: <strong>${s}</strong>/10`;
+  if (note.includes('다른'))
+    return isRef
+      ? `The hypothesis bears no meaningful resemblance to the reference. This appears to be an entirely incorrect translation. Score: <strong>${s}</strong>/10`
+      : `The hypothesis conveys a message completely unrelated to the source text. This is not a valid translation. Score: <strong>${s}</strong>/10`;
+  return `Score: <strong>${s}</strong>/10`;
+}
+
+let selectedPair = 0;
+let selectedHyp  = 0;
+let activeMetric = 'bleu';
+
+// ════════════════════════════════════════════════════════
+//  WORD SIMILARITY TABLE
+// ════════════════════════════════════════════════════════
+const WORD_SIM = {
+  // Morphological variants
+  'threatens threatened':0.92, 'arrives arrive':0.95, 'arrived arrives':0.93,
+  'is are':0.85, 'was were':0.85, 'has have':0.88,
+  'gave give':0.85, 'gave given':0.80, 'gives give':0.95,
+  'needed needs':0.95, 'needed need':0.92,
+  // Pair 1 – Medical
+  'sick patient':0.72, 'person patient':0.72, 'requires needs':0.88,
+  'urgent immediate':0.88, 'operation surgery':0.91, 'doctor surgeon':0.80,
+  'examined checked':0.82, 'carefully thoroughly':0.80,
+  // Pair 2 – Climate
+  'threatens endangers':0.83, 'worldwide globally':0.91, 'worldwide international':0.72,
+  'coastal seaside':0.80, 'cities towns':0.74, 'change shift':0.72,
+  'warming change':0.58, 'global worldwide':0.78, 'global climate':0.65,
+  'economy market':0.72, 'grew increased':0.82, 'significantly considerably':0.85,
+  // Pair 3 – Smile
+  'gave flashed':0.68, 'warm friendly':0.82, 'smile grin':0.89,
+  'smiled smile':0.95, 'warmly warm':0.92,
+  'drove drive':0.92, 'office workplace':0.80,
+  // Pair 4 – Software
+  'software program':0.78, 'bugs errors':0.85, 'bugs issues':0.75,
+  'fixes repairs':0.82, 'improves enhances':0.84, 'update upgrade':0.80,
+  'performance efficiency':0.78, 'security safety':0.72,
+  'children kids':0.91, 'played enjoyed':0.75, 'happily joyfully':0.85,
+  'park garden':0.75,
+  // Pair 5 – Transport
+  'train locomotive':0.87, 'arrives reaches':0.82,
+  'morning dawn':0.72, 'nine 9':0.98, 'am morning':0.75,
+  'station platform':0.79, 'landscape scenery':0.88,
+  'painted drew':0.82, 'beautiful lovely':0.86, 'evening afternoon':0.72,
+  // General synonyms
+  'big large':0.92, 'big huge':0.86, 'big great':0.74,
+  'small tiny':0.88, 'small little':0.90,
+  'happy joyful':0.87, 'happy glad':0.84,
+  'fast quick':0.91, 'fast rapid':0.87, 'fast speedy':0.88,
+  'slow sluggish':0.80,
+  'said told':0.79, 'said spoke':0.72,
+  'beautiful pretty':0.88, 'beautiful gorgeous':0.85,
+  'house home':0.90, 'car vehicle':0.84, 'car automobile':0.92,
+  'dog canine':0.86, 'dog hound':0.83,
+  'good great':0.82, 'good excellent':0.86,
+  'bad terrible':0.80, 'bad awful':0.83,
+  'start begin':0.91, 'end finish':0.88,
+  'show display':0.85, 'need require':0.88,
+  'make create':0.82, 'help assist':0.90,
+  'think believe':0.80, 'people individuals':0.88,
+  'city town':0.83, 'time period':0.80,
+  'world globe':0.87, 'world earth':0.84,
+  'problem issue':0.88, 'work job':0.82,
+  'use utilize':0.90, 'come arrive':0.79,
+};
+
+function wordSim(a, b) {
+  if (!a || !b) return 0;
+  if (a === b) return 1.0;
+  const k1 = a+' '+b, k2 = b+' '+a;
+  if (WORD_SIM[k1] != null) return WORD_SIM[k1];
+  if (WORD_SIM[k2] != null) return WORD_SIM[k2];
+  const lng = a.length >= b.length ? a : b, sht = a.length < b.length ? a : b;
+  if (sht.length >= 4 && lng.startsWith(sht)) return 0.78;
+  if (sht.length >= 4 && lng.endsWith(sht))   return 0.65;
+  let common = 0;
+  for (let i = 0; i < Math.min(a.length,b.length); i++) { if (a[i]===b[i]) common++; else break; }
+  if (common >= 5) return 0.50; if (common >= 4) return 0.34;
+  return 0.05;
+}
+
+// ════════════════════════════════════════════════════════
+//  TOKENIZE
+// ════════════════════════════════════════════════════════
+function tokenize(s) {
+  return s.toLowerCase().replace(/[.,!?;:'"()]/g,' ').trim().split(/\s+/).filter(Boolean);
+}
+
+// ════════════════════════════════════════════════════════
+//  METRIC FUNCTIONS
+// ════════════════════════════════════════════════════════
+function getNgramCounts(t,n){ const c={}; for(let i=0;i<=t.length-n;i++){const k=t.slice(i,i+n).join(' ');c[k]=(c[k]||0)+1;} return c; }
+
+function bleuSentence(hyp,ref) {
+  const hT=tokenize(hyp),rT=tokenize(ref);
+  if(!hT.length) return {score:0,pn:[0,0,0,0],bp:0,hLen:0,rLen:0,counts:[]};
+  const pn=[],counts=[];
+  for(let n=1;n<=4;n++){
+    const hC=getNgramCounts(hT,n),rC=getNgramCounts(rT,n);
+    let match=0,total=0; const ex=[];
+    for(const [ng,cnt] of Object.entries(hC)){const cl=Math.min(cnt,rC[ng]||0);match+=cl;total+=cnt;if(ex.length<3)ex.push({ng,cnt,cl});}
+    pn.push(total>0?match/total:0); counts.push({n,match,total,ex});
+  }
+  const bp=hT.length>=rT.length?1:Math.exp(1-rT.length/hT.length);
+  const ls=pn.reduce((s,p)=>s+(p>0?Math.log(p):-Infinity),0);
+  const score=bp*Math.exp(0.25*ls);
+  return {score:isFinite(score)?score:0,pn,bp,hLen:hT.length,rLen:rT.length,counts};
+}
+
+function corpusBleu(hyps, ref) {
+  const totM=[0,0,0,0],totT=[0,0,0,0]; let tH=0,tR=0;
+  const rT=tokenize(ref);
+  const rC4=Array.from({length:4},(_,i)=>getNgramCounts(rT,i+1));
+  for(const hyp of hyps){
+    const hT=tokenize(hyp); tH+=hT.length; tR+=rT.length;
+    for(let n=1;n<=4;n++){const hC=getNgramCounts(hT,n),rC=rC4[n-1];let m=0,t=0;for(const[ng,cnt]of Object.entries(hC)){m+=Math.min(cnt,rC[ng]||0);t+=cnt;}totM[n-1]+=m;totT[n-1]+=t;}
+  }
+  const bp=tH>=tR?1:Math.exp(1-tR/tH);
+  const pn=totT.map((t,i)=>t>0?totM[i]/t:0);
+  const ls=pn.reduce((s,p)=>s+(p>0?Math.log(p):-Infinity),0);
+  const sc=bp*Math.exp(0.25*ls); return isFinite(sc)?sc:0;
+}
+
+function getCharNgrams(s,n){const c=s.toLowerCase().replace(/\s+/g,'');const counts={};for(let i=0;i<=c.length-n;i++){const k=c.slice(i,i+n);counts[k]=(counts[k]||0)+1;}return counts;}
+function chrFScore(hyp,ref){
+  let sumF=0,cnt=0;const rows=[];
+  for(let n=1;n<=6;n++){
+    const hC=getCharNgrams(hyp,n),rC=getCharNgrams(ref,n);
+    let match=0;for(const[k,v]of Object.entries(hC))match+=Math.min(v,rC[k]||0);
+    const hT=Object.values(hC).reduce((a,b)=>a+b,0),rT=Object.values(rC).reduce((a,b)=>a+b,0);
+    const P=hT>0?match/hT:0,R=rT>0?match/rT:0,F=(P+R)>0?2*P*R/(P+R):0;
+    rows.push({n,P,R,F,match,hT,rT});if(hT>0||rT>0){sumF+=F;cnt++;}
+  }
+  return {score:cnt>0?sumF/cnt:0,rows};
+}
+
+function meteorScore(hyp,ref){
+  const hT=tokenize(hyp),rT=tokenize(ref);
+  if(!hT.length)return{score:0,P:0,R:0,F:0,penalty:0,chunks:0,matched:0,hToks:hT,rToks:rT,matchMap:{}};
+  const rUsed=new Array(rT.length).fill(false),matchMap={};
+  for(let hi=0;hi<hT.length;hi++)for(let ri=0;ri<rT.length;ri++)if(!rUsed[ri]&&hT[hi]===rT[ri]){matchMap[hi]=ri;rUsed[ri]=true;break;}
+  const matched=Object.keys(matchMap).length;
+  const P=hT.length>0?matched/hT.length:0,R=rT.length>0?matched/rT.length:0;
+  const F=(R+9*P)>0?10*P*R/(R+9*P):0;
+  let chunks=0;
+  if(matched>0){const idxs=Object.keys(matchMap).map(Number).sort((a,b)=>a-b);chunks=1;for(let i=1;i<idxs.length;i++)if(idxs[i]!==idxs[i-1]+1||matchMap[idxs[i]]!==matchMap[idxs[i-1]]+1)chunks++;}
+  const penalty=matched>0?0.5*Math.pow(chunks/matched,3):0;
+  return{score:Math.max(0,F*(1-penalty)),P,R,F,penalty,chunks,matched,hToks:hT,rToks:rT,matchMap};
+}
+
+function terScore(hyp,ref){
+  const hT=tokenize(hyp),rT=tokenize(ref);const m=hT.length,n=rT.length;
+  if(!n)return{score:0,edits:0,ops:[],hToks:hT,rToks:rT};
+  const dp=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=0;i<=m;i++)dp[i][0]=i;for(let j=0;j<=n;j++)dp[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++){if(hT[i-1]===rT[j-1])dp[i][j]=dp[i-1][j-1];else dp[i][j]=1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);}
+  const ops=[];let i=m,j=n;
+  while(i>0||j>0){if(i>0&&j>0&&hT[i-1]===rT[j-1]){ops.unshift({op:'match',hyp:hT[i-1],ref:rT[j-1]});i--;j--;}else if(i>0&&j>0&&dp[i][j]===dp[i-1][j-1]+1){ops.unshift({op:'sub',hyp:hT[i-1],ref:rT[j-1]});i--;j--;}else if(i>0&&dp[i][j]===dp[i-1][j]+1){ops.unshift({op:'del',hyp:hT[i-1],ref:''});i--;}else{ops.unshift({op:'ins',hyp:'',ref:rT[j-1]});j--;}}
+  return{score:dp[m][n]/n,edits:dp[m][n],ops,hToks:hT,rToks:rT};
+}
+
+function lengthRatio(hyp,ref){const h=tokenize(hyp).length,r=tokenize(ref).length;return{lr:r>0?h/r:0,hLen:h,rLen:r};}
+
+function bertScoreCompute(hyp,ref){
+  const hT=tokenize(hyp),rT=tokenize(ref);
+  if(!hT.length||!rT.length)return{score:0,P:0,R:0,hToks:hT,rToks:rT,matrix:[],hypArgmax:[],refArgmax:[],hypMaxSim:[],refMaxSim:[]};
+  const matrix=hT.map(h=>rT.map(r=>wordSim(h,r)));
+  const hypMaxSim=matrix.map(row=>Math.max(...row));
+  const refMaxSim=rT.map((_,j)=>Math.max(...matrix.map(row=>row[j])));
+  const P=hypMaxSim.reduce((a,b)=>a+b,0)/hT.length;
+  const R=refMaxSim.reduce((a,b)=>a+b,0)/rT.length;
+  const score=(P+R)>0?2*P*R/(P+R):0;
+  const hypArgmax=matrix.map(row=>row.indexOf(Math.max(...row)));
+  const refArgmax=rT.map((_,j)=>{let b=0,bv=-Infinity;matrix.forEach((row,i)=>{if(row[j]>bv){bv=row[j];b=i;}});return b;});
+  return{score,P,R,hToks:hT,rToks:rT,matrix,hypArgmax,refArgmax,hypMaxSim,refMaxSim};
+}
+
+// ── COMETKiwi simulation ──
+// Key insight: uses SOURCE + HYPOTHESIS only (reference-free)
+// Simulates: adequacy (src–hyp coverage) + fluency (hyp alone)
+function fluencyEstimate(hyp){
+  const t=tokenize(hyp);if(!t.length)return 0;
+  const uniqueRatio=new Set(t).size/t.length;
+  const lenScore=Math.min(1,0.4+t.length/16);
+  return Math.min(1,0.35+0.65*uniqueRatio*lenScore);
+}
+function cometKiwiScore(src,hyp){
+  const adq=bertScoreCompute(hyp,src).score;  // coverage of source meaning
+  const flu=fluencyEstimate(hyp);
+  return Math.min(1,Math.max(0,0.72*adq+0.28*flu));
+}
+function cometKiwiDetail(src,hyp){
+  const adq=bertScoreCompute(hyp,src);
+  const flu=fluencyEstimate(hyp);
+  return{adq:adq.score,flu,score:Math.min(1,0.72*adq.score+0.28*flu),bert:adq};
+}
+
+// ════════════════════════════════════════════════════════
+//  COMPUTE ALL
+// ════════════════════════════════════════════════════════
+function computeAll(hyp,ref,src,pi,hi){
+  return{
+    bleu:    bleuSentence(hyp,ref).score,
+    chrf:    chrFScore(hyp,ref).score,
+    meteor:  meteorScore(hyp,ref).score,
+    ter:     terScore(hyp,ref).score,
+    lr:      lengthRatio(hyp,ref).lr,
+    bert:    bertScoreCompute(hyp,ref).score,
+    comet:   cometKiwiScore(src,hyp),
+    llmref:  (pi!=null&&hi!=null) ? LLM_JUDGE_REF[pi][hi]/10  : 0,
+    llmfree: (pi!=null&&hi!=null) ? LLM_JUDGE_FREE[pi][hi]/10 : 0,
+  };
+}
+
+// ════════════════════════════════════════════════════════
+//  HELPERS
+// ════════════════════════════════════════════════════════
+// ── Tokenization block builder ──
+function buildTokenBlock(badgeClass, badgeText, typeDesc, rows, note) {
+  let html = `<div class="tok-block">
+    <div class="tok-type-label">
+      <span class="tok-type-badge ${badgeClass}">${badgeText}</span>
+      <span style="color:#64748b;">${esc(typeDesc)}</span>
+    </div>`;
+  rows.forEach(r => {
+    const max = r.max || 14;
+    const chips = r.tokens.slice(0, max)
+      .map(t => `<span class="tok-chip${r.cls?' '+r.cls:''}">${esc(t)}</span>`).join('');
+    const more = r.tokens.length > max
+      ? `<span class="tok-more">+${r.tokens.length - max}</span>` : '';
+    html += `<div class="tok-row"><span class="tok-row-label">${esc(r.label)}</span>${chips}${more}</div>`;
+  });
+  if (note) html += `<div class="tok-note"><i class="fas fa-info-circle me-1" style="color:#94a3b8;"></i>${note}</div>`;
+  html += `</div>`;
+  return html;
+}
+
+const fmt3=v=>(typeof v==='number'&&isFinite(v))?v.toFixed(3):'—';
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function scoreClass(v,m){
+  if(m==='ter'){if(v<=0.2)return'score-good';if(v<=0.6)return'score-mid';return'score-bad';}
+  if(m==='lr'){const d=Math.abs(1-v);if(d<=0.1)return'score-good';if(d<=0.3)return'score-mid';return'score-bad';}
+  if(v>=0.65)return'score-good';if(v>=0.3)return'score-mid';return'score-bad';
+}
+function simColor(v){
+  const a=Math.pow(Math.max(0,Math.min(1,v)),0.7);
+  return`rgb(${Math.round(240*(1-a))},${Math.round(242-a*(242-184))},${Math.round(245-a*(245-148))})`;
+}
+function simTextColor(v){return v>0.52?'white':'#444';}
+
+// ════════════════════════════════════════════════════════
+//  METRIC CONFIG
+// ════════════════════════════════════════════════════════
+const METRICS=[
+  {id:'bleu',   name:'BLEU',              group:'ref',  formula:'BP × exp(Σ wₙ log pₙ)',         range:'↑ 0~1', desc:'n-gram 정밀도 기반'},
+  {id:'chrf',   name:'chrF',              group:'ref',  formula:'2chrP·chrR/(chrP+chrR)',          range:'↑ 0~1', desc:'문자 n-gram F-score'},
+  {id:'meteor', name:'METEOR',            group:'ref',  formula:'F × (1 − penalty)',              range:'↑ 0~1', desc:'재현율 가중 F + 청크 패널티'},
+  {id:'ter',    name:'TER',               group:'ref',  formula:'edits / |ref|',                  range:'↓ 0~∞', desc:'단어 편집거리 비율'},
+  {id:'bert',   name:'BERTScore',         group:'ref',  formula:'2P·R/(P+R) on token embeddings', range:'↑ 0~1', desc:'토큰 임베딩 유사도 기반'},
+  {id:'llmref', name:'LLM-as-a-Judge (Ref)', group:'ref',  formula:'LLM(src, ref, hyp) → 1–10',  range:'↑ 0~1', desc:'LLM이 레퍼런스 비교로 채점 (시뮬레이션)'},
+  {id:'lr',     name:'Length Ratio',      group:'free', formula:'|hyp| / |ref|',                  range:'≈ 1.0', desc:'번역문 길이 비율 (QE 피처)'},
+  {id:'comet',  name:'COMETKiwi',         group:'free', formula:'0.72·Adequacy + 0.28·Fluency',   range:'↑ 0~1', desc:'소스 기반 신경망 QE (레퍼런스 불필요)'},
+  {id:'llmfree',name:'LLM-as-a-Judge (Free)', group:'free', formula:'LLM(src, hyp) → 1–10',      range:'↑ 0~1', desc:'LLM이 소스만으로 품질 추정 (시뮬레이션)'},
+];
+
+// ════════════════════════════════════════════════════════
+//  RENDER PAIR SELECTOR
+// ════════════════════════════════════════════════════════
+function renderPairSelector(){
+  const btns=DATASET.map((p,i)=>`
+    <button class="pair-btn${i===selectedPair?' active':''}" onclick="selectPair(${i})" style="flex:1;min-width:100px;">
+      <div class="pb-num">예문 ${i+1}</div>
+      <div class="pb-src">${esc(p.label)}</div>
+    </button>`).join('');
+  document.getElementById('pairButtons').innerHTML=btns;
+
+  const p=DATASET[selectedPair];
+  document.getElementById('srcRefBox').innerHTML=`
+    <div class="col-md-6">
+      <div class="src-ref-box">
+        <div class="label"><i class="fas fa-file-alt me-1"></i>Source</div>
+        <div class="text">${esc(p.src)}</div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="src-ref-box">
+        <div class="label"><i class="fas fa-check-circle me-1" style="color:var(--accent);"></i>Reference</div>
+        <div class="text">${esc(p.ref)}</div>
+      </div>
+    </div>`;
+}
+
+// ════════════════════════════════════════════════════════
+//  RENDER DATASET TABLE
+// ════════════════════════════════════════════════════════
+function renderDataset(){
+  const p=DATASET[selectedPair];
+  const vals=p.hyps.map((h,hi)=>computeAll(h.hyp,p.ref,p.src,selectedPair,hi));
+  const cBleu=corpusBleu(p.hyps.map(h=>h.hyp),p.ref);
+  const avg=key=>vals.reduce((s,v)=>s+v[key],0)/vals.length;
+
+  let html='';
+  p.hyps.forEach((h,i)=>{
+    const v=vals[i],sel=i===selectedHyp;
+    html+=`<tr class="data-row${sel?' selected':''}" onclick="selectHyp(${i})">
+      <td><span class="sent-badge${sel?' selected':''}">${i+1}</span></td>
+      <td><div class="hyp-cell" contenteditable="true" id="hyp-${i}"
+          onblur="updateHyp(${i},this.textContent)"
+          onclick="event.stopPropagation()">${esc(h.hyp)}</div></td>
+      <td class="score-cell ${scoreClass(v.bleu,'bleu')}">${fmt3(v.bleu)}</td>
+      <td class="score-cell ${scoreClass(v.chrf,'chrf')}">${fmt3(v.chrf)}</td>
+      <td class="score-cell ${scoreClass(v.meteor,'meteor')}">${fmt3(v.meteor)}</td>
+      <td class="score-cell ${scoreClass(v.ter,'ter')}">${fmt3(v.ter)}</td>
+      <td class="score-cell ${scoreClass(v.bert,'bert')}">${fmt3(v.bert)}</td>
+      <td class="score-cell ${scoreClass(v.llmref,'llmref')}">${fmt3(v.llmref)}</td>
+      <td class="score-cell ${scoreClass(v.comet,'comet')}">${fmt3(v.comet)}</td>
+      <td class="score-cell ${scoreClass(v.llmfree,'llmfree')}">${fmt3(v.llmfree)}</td>
+      <td><span class="note-chip${h.noteClass?' '+h.noteClass:''}">${h.note}</span></td>
+    </tr>`;
+  });
+  html+=`<tr class="corpus-row">
+    <td colspan="2" style="font-size:.73rem;color:#555;">코퍼스 전체 — BLEU: 누적 계산, 나머지: 평균</td>
+    <td class="score-cell ${scoreClass(cBleu,'bleu')}">${fmt3(cBleu)}</td>
+    <td class="score-cell ${scoreClass(avg('chrf'),'chrf')}">${fmt3(avg('chrf'))}</td>
+    <td class="score-cell ${scoreClass(avg('meteor'),'meteor')}">${fmt3(avg('meteor'))}</td>
+    <td class="score-cell ${scoreClass(avg('ter'),'ter')}">${fmt3(avg('ter'))}</td>
+    <td class="score-cell ${scoreClass(avg('bert'),'bert')}">${fmt3(avg('bert'))}</td>
+    <td class="score-cell ${scoreClass(avg('llmref'),'llmref')}">${fmt3(avg('llmref'))}</td>
+    <td class="score-cell ${scoreClass(avg('comet'),'comet')}">${fmt3(avg('comet'))}</td>
+    <td class="score-cell ${scoreClass(avg('llmfree'),'llmfree')}">${fmt3(avg('llmfree'))}</td>
+    <td></td>
+  </tr>`;
+  document.getElementById('datasetBody').innerHTML=html;
+}
+
+// ════════════════════════════════════════════════════════
+//  RENDER METRIC BUTTONS
+// ════════════════════════════════════════════════════════
+function renderMetricButtons(){
+  const p=DATASET[selectedPair],h=p.hyps[selectedHyp];
+  const v=computeAll(h.hyp,p.ref,p.src,selectedPair,selectedHyp);
+  let html='',lastGroup=null;
+  METRICS.forEach(m=>{
+    if(m.group!==lastGroup){
+      const badge=m.group==='ref'
+        ?'<span style="background:#e3fcf7;color:#00796b;font-size:.63rem;padding:1px 7px;border-radius:8px;font-weight:700;">REFERENCE-BASED</span>'
+        :'<span style="background:#ede9fe;color:#5b21b6;font-size:.63rem;padding:1px 7px;border-radius:8px;font-weight:700;">REFERENCE-FREE</span>';
+      html+=`<div class="metric-group-label${lastGroup===null?' first':''}">${badge}</div>`;
+      lastGroup=m.group;
+    }
+    const active=m.id===activeMetric;
+    html+=`<button class="metric-btn${active?' active':''}" onclick="selectMetric('${m.id}')">
+      <span class="m-name">${m.name}</span>
+      <span><span class="m-val">${fmt3(v[m.id])}</span><span class="m-range"> ${m.range}</span></span>
+    </button>`;
+  });
+  document.getElementById('metricButtons').innerHTML=html;
+}
+
+// ════════════════════════════════════════════════════════
+//  RENDER DETAIL
+// ════════════════════════════════════════════════════════
+function renderDetail(){
+  const p=DATASET[selectedPair],hd=p.hyps[selectedHyp];
+  const m=METRICS.find(x=>x.id===activeMetric);
+  document.getElementById('detailHeader').innerHTML=
+    `<div class="metric-header py-1"><strong>${m.name}</strong><code>${m.formula}</code><small class="text-muted">${m.desc}</small></div>`;
+  switch(activeMetric){
+    case 'bleu':   renderBleuDetail(hd.hyp,p.ref);   break;
+    case 'chrf':   renderChrfDetail(hd.hyp,p.ref);   break;
+    case 'meteor': renderMeteorDetail(hd.hyp,p.ref); break;
+    case 'ter':    renderTerDetail(hd.hyp,p.ref);    break;
+    case 'bert':    renderBertDetail(hd.hyp,p.ref,p);                        break;
+    case 'llmref':  renderLlmRefDetail(hd.hyp,p.ref,p.src,p);               break;
+    case 'lr':      renderLrDetail(hd.hyp,p.ref);                           break;
+    case 'comet':   renderCometDetail(hd.hyp,p.src,p);                      break;
+    case 'llmfree': renderLlmFreeDetail(hd.hyp,p.src,p);                    break;
+  }
+}
+
+// ── BLEU ──
+function renderBleuDetail(hyp,ref){
+  const r=bleuSentence(hyp,ref);
+  const tok=buildTokenBlock('tok-type-word','단어 단위','소문자 변환 → 구두점 제거 → 공백 분리',[
+    {label:'Hyp', tokens:tokenize(hyp)},
+    {label:'Ref', tokens:tokenize(ref)},
+  ]);
+  let rows='';
+  r.counts.forEach(({n,match,total,ex})=>{
+    const p=total>0?match/total:0;
+    const exS=ex.map(e=>`<span style="font-family:monospace;font-size:.7rem;background:#f8f9fa;padding:1px 5px;border-radius:3px;margin-right:2px;">${esc(e.ng)} (${e.cl}/${e.cnt})</span>`).join('');
+    rows+=`<tr><td class="text-center"><strong>${n}</strong></td><td>${exS||'<span class="cv-dim">—</span>'}</td>
+      <td class="cv-num text-center">${total}</td><td class="cv-num text-center">${match}</td>
+      <td class="${n===4?'cell-final':'cv-num'} text-center">${p>0?p.toFixed(4):'<span class="cv-dim">0</span>'}</td></tr>`;
+  });
+  rows+=`<tr class="row-final"><td colspan="4" style="text-align:right;padding-right:12px;font-size:.78rem;">Brevity Penalty = min(1, exp(1 − ${r.rLen}/${r.hLen})) =</td><td class="cell-final text-center">${r.bp.toFixed(4)}</td></tr>`;
+  document.getElementById('detailBody').innerHTML=`<div style="padding:10px 14px 0;">${tok}</div><table class="detail-table"><thead><tr><th class="text-center">n</th><th>n-gram 예시</th><th class="text-center">hyp 수</th><th class="text-center">clipped</th><th class="text-center">pₙ</th></tr></thead><tbody>${rows}</tbody></table>`;
+  document.getElementById('detailSummary').innerHTML=r.pn.every(p=>p>0)
+    ?`BLEU = ${r.bp.toFixed(4)} × exp(0.25 × Σ log pₙ) = <strong>${r.score.toFixed(4)}</strong>`
+    :`<span style="color:#e74c3c;">⚠ pₙ=0인 n 존재 → BLEU=0</span>`;
+}
+
+// ── chrF ──
+function renderChrfDetail(hyp,ref){
+  const r=chrFScore(hyp,ref);
+  const hypChars=hyp.toLowerCase().replace(/\s+/g,'').split('');
+  const refChars=ref.toLowerCase().replace(/\s+/g,'').split('');
+  const tok=buildTokenBlock('tok-type-char','문자 단위','소문자 변환 → 공백 제거 → 한 글자씩 (n-gram은 이 문자들로 구성)',[
+    {label:'Hyp', tokens:hypChars, max:22, cls:'char'},
+    {label:'Ref', tokens:refChars, max:22, cls:'char'},
+  ]);
+  let rows='';
+  r.rows.forEach(({n,P,R,F,match,hT,rT})=>{
+    rows+=`<tr${n===6?' class="row-final"':''}><td class="text-center"><strong>${n}</strong></td>
+      <td class="cv-num text-center">${match}/${hT}</td><td class="cv-num text-center">${match}/${rT}</td>
+      <td class="cv-num text-center">${P.toFixed(4)}</td><td class="cv-num text-center">${R.toFixed(4)}</td>
+      <td class="${n===6?'cell-final':'cv-num'} text-center">${F.toFixed(4)}</td></tr>`;
+  });
+  document.getElementById('detailBody').innerHTML=`<div style="padding:10px 14px 0;">${tok}</div><table class="detail-table"><thead><tr><th class="text-center">n</th><th class="text-center">hyp match/total</th><th class="text-center">ref match/total</th><th class="text-center">chrP</th><th class="text-center">chrR</th><th class="text-center">chrF</th></tr></thead><tbody>${rows}</tbody></table>`;
+  document.getElementById('detailSummary').innerHTML=`chrF = avg chrF (n=1..6) = <strong>${r.score.toFixed(4)}</strong>`;
+}
+
+// ── METEOR ──
+function renderMeteorDetail(hyp,ref){
+  const r=meteorScore(hyp,ref);
+  const tok=buildTokenBlock('tok-type-word','단어 단위','BLEU와 동일한 토크나이저 — 소문자 변환 → 구두점 제거 → 공백 분리',[
+    {label:'Hyp', tokens:tokenize(hyp)},
+    {label:'Ref', tokens:tokenize(ref)},
+  ]);
+  const hypH=r.hToks.map((w,i)=>r.matchMap[i]!=null?`<span class="word-match">${esc(w)}</span>`:`<span class="word-miss">${esc(w)}</span>`).join(' ');
+  const mR=new Set(Object.values(r.matchMap));
+  const refH=r.rToks.map((w,i)=>mR.has(i)?`<span class="word-match">${esc(w)}</span>`:`<span class="cv-dim">${esc(w)}</span>`).join(' ');
+  document.getElementById('detailBody').innerHTML=`<div style="padding:10px 14px;">${tok}
+    <div style="font-size:.77rem;font-weight:600;color:#555;margin-bottom:6px;">단어 매칭</div>
+    <div style="margin-bottom:4px;"><span style="font-size:.72rem;color:#888;display:inline-block;width:80px;">Hypothesis:</span>${hypH}</div>
+    <div style="margin-bottom:12px;"><span style="font-size:.72rem;color:#888;display:inline-block;width:80px;">Reference:</span>${refH}</div>
+    <table class="detail-table" style="max-width:480px;"><thead><tr><th>항목</th><th class="text-center">계산</th><th class="text-center">값</th></tr></thead><tbody>
+      <tr><td>매칭 단어</td><td class="text-center">—</td><td class="cv-num text-center"><strong>${r.matched}</strong></td></tr>
+      <tr><td>Precision (P)</td><td class="cv-mono text-center">${r.matched}/${r.hToks.length}</td><td class="cv-num text-center">${r.P.toFixed(4)}</td></tr>
+      <tr><td>Recall (R)</td><td class="cv-mono text-center">${r.matched}/${r.rToks.length}</td><td class="cv-num text-center">${r.R.toFixed(4)}</td></tr>
+      <tr><td>F (recall 10× 가중)</td><td class="cv-mono text-center">10PR/(R+9P)</td><td class="cv-num text-center">${r.F.toFixed(4)}</td></tr>
+      <tr><td>청크/매칭</td><td class="cv-num text-center">${r.chunks}/${r.matched}</td><td class="cv-num text-center">${r.matched>0?(r.chunks/r.matched).toFixed(4):'—'}</td></tr>
+      <tr class="row-final"><td>Penalty = 0.5×(c/m)³</td><td class="cv-mono text-center">0.5×${r.matched>0?(r.chunks/r.matched).toFixed(3):'0'}³</td><td class="cell-final text-center">${r.penalty.toFixed(4)}</td></tr>
+    </tbody></table></div>`;
+  document.getElementById('detailSummary').innerHTML=`METEOR = F×(1−penalty) = ${r.F.toFixed(4)}×(1−${r.penalty.toFixed(4)}) = <strong>${r.score.toFixed(4)}</strong>`;
+}
+
+// ── TER ──
+function renderTerDetail(hyp,ref){
+  const r=terScore(hyp,ref);
+  const tok=buildTokenBlock('tok-type-word','단어 단위','소문자 변환 → 구두점 제거 → 공백 분리 — 각 토큰이 편집 연산의 단위',[
+    {label:'Hyp', tokens:tokenize(hyp)},
+    {label:'Ref', tokens:tokenize(ref)},
+  ]);
+  const oC={match:'#6c757d',del:'#e74c3c',ins:'#17a2b8',sub:'#f39c12'};
+  const oL={match:'일치',del:'삭제',ins:'삽입',sub:'대체'};
+  let rows='';
+  r.ops.forEach(op=>{
+    rows+=`<tr><td><span style="background:${oC[op.op]};color:white;padding:1px 7px;border-radius:4px;font-size:.72rem;font-weight:700;">${oL[op.op]}</span></td>
+      <td class="cv-mono">${op.hyp?`<span class="${op.op==='del'?'word-del':op.op==='sub'?'word-sub':''}">${esc(op.hyp)}</span>`:'<span class="cv-dim">—</span>'}</td>
+      <td class="cv-mono">${op.ref?`<span class="${op.op==='ins'?'word-insert':op.op==='sub'?'word-match':''}">${esc(op.ref)}</span>`:'<span class="cv-dim">—</span>'}</td>
+      <td class="cv-num text-center">${op.op!=='match'?'1':'<span class="cv-dim">0</span>'}</td></tr>`;
+  });
+  document.getElementById('detailBody').innerHTML=`<div style="padding:10px 14px 0;">${tok}</div><table class="detail-table"><thead><tr><th>연산</th><th>Hypothesis 단어</th><th>Reference 단어</th><th class="text-center">비용</th></tr></thead><tbody>${rows}</tbody></table>`;
+  document.getElementById('detailSummary').innerHTML=`TER = ${r.edits}/${r.rToks.length} = <strong>${r.score.toFixed(4)}</strong> <small class="text-muted">(0=완벽)</small>`;
+}
+
+// ── BERTScore ──
+function buildHeatmap(bs, rowLabel, colLabel){
+  const hT=bs.hToks,rT=bs.rToks;
+  let h=`<table class="heatmap-table"><thead><tr>
+    <th style="background:white;border:none;text-align:right;font-size:.65rem;color:#aaa;">${rowLabel} ↓ / ${colLabel} →</th>`;
+  rT.forEach(w=>{h+=`<th>${esc(w)}</th>`;});
+  h+=`<th style="background:#e3fcf7;color:#00796b;font-weight:700;border-color:#99e6d8;white-space:nowrap;">P 기여</th></tr></thead><tbody>`;
+  bs.matrix.forEach((row,i)=>{
+    const mxIdx=bs.hypArgmax[i];
+    h+=`<tr><th style="text-align:right;">${esc(hT[i])}</th>`;
+    row.forEach((v,j)=>{
+      const isR=j===mxIdx,isC=bs.refArgmax[j]===i;
+      const cls=isR&&isC?'hm-max-both':isR?'hm-max-row':isC?'hm-max-col':'';
+      const disp=v>=0.09?v.toFixed(2):'·';
+      h+=`<td class="${cls}" style="background:${simColor(v)};color:${simTextColor(v)};" title="${esc(hT[i])} ↔ ${esc(rT[j])}: ${v.toFixed(3)}">${disp}</td>`;
+    });
+    h+=`<td style="background:#e3fcf7;color:#00796b;font-weight:700;font-size:.71rem;text-align:center;">${bs.hypMaxSim[i].toFixed(3)}</td></tr>`;
+  });
+  h+=`<tr><th style="text-align:right;color:#5b21b6;font-size:.72rem;">R 기여</th>`;
+  bs.refMaxSim.forEach(v=>{h+=`<td style="background:#ede9fe;color:#5b21b6;font-weight:700;font-size:.71rem;text-align:center;">${v.toFixed(3)}</td>`;});
+  h+=`<td style="background:#f8f9fa;border:none;"></td></tr></tbody></table>`;
+  return h;
+}
+
+function renderBertDetail(hyp,ref,pair){
+  const bs=bertScoreCompute(hyp,ref);
+  const tok=buildTokenBlock('tok-type-sub','서브워드 (WordPiece)','실제 BERT는 서브워드 단위로 분절 — 데모에서는 단어 단위로 근사',[
+    {label:'Hyp', tokens:tokenize(hyp), cls:'sub'},
+    {label:'Ref', tokens:tokenize(ref), cls:'sub'},
+  ],'실제 BERT·RoBERTa는 WordPiece 서브워드를 사용합니다. 예: <code>hospitalization</code> → <code>hospital</code><code>##ization</code>, <code>unbelievable</code> → <code>un</code><code>##believ</code><code>##able</code>');
+  let comp='';
+  pair.hyps.forEach((h,i)=>{
+    const bv=bleuSentence(h.hyp,ref).score,bsv=bertScoreCompute(h.hyp,ref).score;
+    const sel=i===selectedHyp;
+    comp+=`<div style="margin-bottom:7px;${sel?'font-weight:700;':'opacity:.65;'}">
+      <div style="font-size:.71rem;color:#555;margin-bottom:2px;">${i+1}. ${h.note}</div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span style="font-size:.65rem;width:60px;text-align:right;color:#888;">BLEU</span>
+        <div class="bar-track"><div class="bar-fill bar-bleu" style="width:${(bv*100).toFixed(1)}%">${bv>0.09?bv.toFixed(3):''}</div></div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;margin-top:2px;">
+        <span style="font-size:.65rem;width:60px;text-align:right;color:#888;">BERTScore</span>
+        <div class="bar-track"><div class="bar-fill bar-bert" style="width:${(bsv*100).toFixed(1)}%">${bsv>0.09?bsv.toFixed(3):''}</div></div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('detailBody').innerHTML=`<div style="padding:12px 16px;">${tok}
+    <div class="bert-step"><span class="bert-step-num">1</span><div class="bert-step-text">각 단어를 <strong>임베딩 벡터</strong>로 변환 (BERT 등)</div></div>
+    <div class="bert-step"><span class="bert-step-num">2</span><div class="bert-step-text">hypothesis × reference 모든 단어 쌍의 <strong>코사인 유사도</strong> 계산 → 히트맵</div></div>
+    <div class="bert-step"><span class="bert-step-num">3</span><div class="bert-step-text">
+      <strong>P</strong>: hyp 각 단어의 최대 유사도 평균 (초록 테두리)<br>
+      <strong>R</strong>: ref 각 단어의 최대 유사도 평균 (보라 테두리)
+    </div></div>
+    <div class="bert-legend mb-2">
+      <div class="bert-legend-item"><div class="bert-legend-box" style="outline:2.5px solid #00b894;background:white;"></div><span>초록: hyp 행 최대 → P</span></div>
+      <div class="bert-legend-item"><div class="bert-legend-box" style="outline:2.5px solid #6c5ce7;background:white;"></div><span>보라: ref 열 최대 → R</span></div>
+      <div class="bert-legend-item"><div class="bert-legend-box" style="outline:2.5px solid #e17055;background:white;"></div><span>주황: 두 조건 모두</span></div>
+      <div class="bert-legend-item">
+        <div style="display:flex;gap:2px;">${[0,0.5,1].map(v=>`<div style="width:13px;height:13px;background:${simColor(v)};border-radius:2px;border:1px solid #dee2e6;"></div>`).join('')}</div>
+        <span>유사도 낮음→높음</span>
+      </div>
+    </div>
+    <div class="heatmap-wrap mb-3">${buildHeatmap(bs,'hyp','ref')}</div>
+    <div style="font-size:.78rem;background:#f8f9fa;border-radius:8px;padding:10px 12px;margin-bottom:14px;">
+      <div><strong>P</strong> = (${bs.hypMaxSim.map(v=>v.toFixed(3)).join('+')})/${bs.hToks.length} = <strong style="color:#00b894;">${bs.P.toFixed(4)}</strong></div>
+      <div><strong>R</strong> = (${bs.refMaxSim.map(v=>v.toFixed(3)).join('+')})/${bs.rToks.length} = <strong style="color:#6c5ce7;">${bs.R.toFixed(4)}</strong></div>
+    </div>
+    <div style="font-size:.8rem;font-weight:600;margin-bottom:8px;">BLEU vs. BERTScore 비교</div>
+    ${comp}
+    <div class="info-tip"><i class="fas fa-lightbulb"></i> <strong>의역 예문에 주목:</strong> 단어가 달라 BLEU는 낮지만, 의미 유사 단어를 인식하는 BERTScore는 더 높습니다.</div>
+  </div>`;
+  document.getElementById('detailSummary').innerHTML=`BERTScore = 2×P×R/(P+R) = 2×${bs.P.toFixed(4)}×${bs.R.toFixed(4)}/(${bs.P.toFixed(4)}+${bs.R.toFixed(4)}) = <strong>${bs.score.toFixed(4)}</strong> <small class="text-muted">(※ 데모: 사전 정의 유사도 사용)</small>`;
+}
+
+// ── LR ──
+function renderLrDetail(hyp,ref){
+  const r=lengthRatio(hyp,ref);
+  const tok=buildTokenBlock('tok-type-len','단어 단위 (개수만 사용)','소문자 변환 → 구두점 제거 → 공백 분리 — 토큰 내용은 무시하고 수만 비교',[
+    {label:'Hyp', tokens:tokenize(hyp)},
+    {label:'Ref', tokens:tokenize(ref)},
+  ],'이 지표는 토큰 <strong>내용</strong>이 아닌 <strong>토큰 수(단어 수)</strong>만 비교합니다.');
+  const max=Math.max(r.hLen,r.rLen,1);
+  const hP=(r.hLen/max*100).toFixed(1),rP=(r.rLen/max*100).toFixed(1);
+  const lrI=Math.abs(1-r.lr)<=0.1?['score-good','적절한 길이']:Math.abs(1-r.lr)<=0.3?['score-mid',r.lr<1?'번역문이 짧음':'번역문이 긺']:['score-bad',r.lr<1?'너무 짧음':'너무 긺'];
+  const hC=Math.abs(1-r.lr)>0.3?'linear-gradient(90deg,#e74c3c,#e55039)':'linear-gradient(90deg,#fd9644,#f39c12)';
+  document.getElementById('detailBody').innerHTML=`<div style="padding:14px 16px;">${tok}
+    <div class="lr-bar-wrap"><span class="lr-bar-label">Reference (${r.rLen}단어)</span><div class="lr-bar-track"><div class="lr-bar-fill" style="width:${rP}%;background:linear-gradient(90deg,#00b894,#00cec9);"><span class="lr-bar-val">${r.rLen}</span></div></div></div>
+    <div class="lr-bar-wrap"><span class="lr-bar-label">Hypothesis (${r.hLen}단어)</span><div class="lr-bar-track"><div class="lr-bar-fill" style="width:${hP}%;background:${hC};"><span class="lr-bar-val">${r.hLen}</span></div></div></div>
+    <div style="margin-top:12px;background:#f8f9fa;padding:10px 12px;border-radius:8px;font-size:.8rem;">
+      <strong>LR = ${r.hLen}/${r.rLen} = <span class="${lrI[0]}">${r.lr.toFixed(4)}</span></strong> → <span class="${lrI[0]}">${lrI[1]}</span>
+      <div class="info-tip mt-2"><i class="fas fa-lightbulb"></i> Length Ratio는 QUEST 등 통계 기반 QE 시스템의 핵심 피처입니다. COMETKiwi 같은 신경망 QE는 LR 대신 XLM-R 임베딩으로 의미를 직접 비교합니다.</div>
+    </div></div>`;
+  document.getElementById('detailSummary').innerHTML=`Length Ratio = ${r.hLen}/${r.rLen} = <strong>${r.lr.toFixed(4)}</strong>`;
+}
+
+// ── COMETKiwi ──
+function renderCometDetail(hyp, src, pair){
+  const d=cometKiwiDetail(src,hyp);
+  const tok=buildTokenBlock('tok-type-sub','서브워드 (SentencePiece)','실제 XLM-R은 서브워드로 분절 — 데모에서는 단어 단위로 근사',[
+    {label:'Hyp', tokens:tokenize(hyp), cls:'sub'},
+    {label:'Src', tokens:tokenize(src), cls:'sub'},
+  ],'실제 XLM-R은 SentencePiece를 사용합니다 (▁ = 단어 앞 공백). 예: <code>hospitalization</code> → <code>▁hospital</code><code>ization</code>, <code>unbelievable</code> → <code>▁un</code><code>believ</code><code>able</code>');
+  const bs=d.bert;  // adequacy heatmap (src × hyp)
+
+  const toks_hyp=tokenize(hyp), toks_src=tokenize(src);
+  const fluParts={
+    uniqueRatio:(new Set(toks_hyp).size/Math.max(1,toks_hyp.length)),
+    lenScore:Math.min(1,0.4+toks_hyp.length/16)
+  };
+
+  // comparison across 5 hyps
+  let comp='';
+  pair.hyps.forEach((h,i)=>{
+    const bv=bleuSentence(h.hyp,pair.ref).score;
+    const bsv=bertScoreCompute(h.hyp,pair.ref).score;
+    const cv=cometKiwiScore(src,h.hyp);
+    const sel=i===selectedHyp;
+    comp+=`<div style="margin-bottom:8px;${sel?'font-weight:700;':'opacity:.6;'}">
+      <div style="font-size:.71rem;color:#555;margin-bottom:2px;">${i+1}. ${h.note}</div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span style="font-size:.65rem;width:65px;text-align:right;color:#888;">BLEU</span>
+        <div class="bar-track"><div class="bar-fill bar-bleu" style="width:${(bv*100).toFixed(1)}%">${bv>0.09?bv.toFixed(3):''}</div></div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;margin-top:2px;">
+        <span style="font-size:.65rem;width:65px;text-align:right;color:#888;">BERTScore</span>
+        <div class="bar-track"><div class="bar-fill bar-bert" style="width:${(bsv*100).toFixed(1)}%">${bsv>0.09?bsv.toFixed(3):''}</div></div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;margin-top:2px;">
+        <span style="font-size:.65rem;width:65px;text-align:right;color:#888;">COMETKiwi</span>
+        <div class="bar-track"><div class="bar-fill bar-comet" style="width:${(cv*100).toFixed(1)}%">${cv>0.09?cv.toFixed(3):''}</div></div>
+      </div>
+    </div>`;
+  });
+
+  document.getElementById('detailBody').innerHTML=`<div style="padding:12px 16px;">${tok}
+
+    <!-- Architecture -->
+    <div style="font-size:.8rem;font-weight:600;margin-bottom:8px;">COMETKiwi 아키텍처</div>
+    <div style="background:#faf5ff;border:1.5px solid #e9d5ff;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+      <div style="font-size:.77rem;color:#555;margin-bottom:10px;">
+        <i class="fas fa-star me-1" style="color:#6c5ce7;"></i>
+        <strong>핵심 차이점:</strong> BERTScore는 <em>hypothesis ↔ reference</em>를 비교하지만,
+        COMETKiwi는 <em>source ↔ hypothesis</em>를 비교합니다 — <strong>레퍼런스 없이</strong> 번역 품질을 예측합니다.
+      </div>
+      <div class="comet-arch">
+        <div>
+          <div style="font-size:.67rem;color:#aaa;text-align:center;margin-bottom:3px;">입력</div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div class="comet-box" style="font-size:.72rem;">
+              <div style="font-size:.63rem;color:#888;">Source</div>
+              <div style="color:#333;font-style:italic;">"${esc(src.length>28?src.slice(0,28)+'…':src)}"</div>
+            </div>
+            <div class="comet-box" style="font-size:.72rem;">
+              <div style="font-size:.63rem;color:#888;">Hypothesis</div>
+              <div style="color:#333;font-style:italic;">"${esc(hyp.length>28?hyp.slice(0,28)+'…':hyp)}"</div>
+            </div>
+          </div>
+        </div>
+        <div class="comet-arrow">→</div>
+        <div class="comet-box encoder" style="text-align:center;padding:10px 14px;">
+          <div style="font-size:.72rem;font-weight:700;">XLM-R</div>
+          <div style="font-size:.63rem;color:#00796b;">다국어 인코더</div>
+          <div style="font-size:.6rem;color:#aaa;margin-top:3px;">[CLS] 벡터 추출</div>
+        </div>
+        <div class="comet-arrow">→</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div class="comet-box head" style="text-align:center;padding:6px 10px;">
+            <div style="font-size:.7rem;font-weight:700;">Adequacy Head</div>
+            <div style="font-size:.63rem;color:#5b21b6;">src·hyp 내적 비교</div>
+            <div style="font-size:.72rem;font-weight:700;color:#6c5ce7;margin-top:3px;">${d.adq.toFixed(3)}</div>
+          </div>
+          <div class="comet-box head" style="text-align:center;padding:6px 10px;">
+            <div style="font-size:.7rem;font-weight:700;">Fluency Head</div>
+            <div style="font-size:.63rem;color:#5b21b6;">hyp 단독 평가</div>
+            <div style="font-size:.72rem;font-weight:700;color:#6c5ce7;margin-top:3px;">${d.flu.toFixed(3)}</div>
+          </div>
+        </div>
+        <div class="comet-arrow">→</div>
+        <div class="comet-box output" style="text-align:center;padding:10px 14px;">
+          <div style="font-size:.7rem;font-weight:700;">Regression</div>
+          <div style="font-size:.63rem;color:#92400e;">0.72·Adq + 0.28·Flu</div>
+          <div style="font-size:1rem;font-weight:700;color:#d97706;margin-top:4px;">${d.score.toFixed(3)}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Adequacy heatmap -->
+    <div style="font-size:.8rem;font-weight:600;margin-bottom:6px;">
+      Adequacy 히트맵 <span style="font-weight:400;color:#888;font-size:.73rem;">— hypothesis 단어가 source 의미를 얼마나 커버하는가</span>
+    </div>
+    <div class="bert-legend mb-2">
+      <div class="bert-legend-item"><div class="bert-legend-box" style="outline:2.5px solid #00b894;background:white;"></div><span>초록: hyp 행 최대 (Adequacy P)</span></div>
+      <div class="bert-legend-item"><div class="bert-legend-box" style="outline:2.5px solid #6c5ce7;background:white;"></div><span>보라: src 열 최대 (Adequacy R)</span></div>
+    </div>
+    <div class="heatmap-wrap mb-3">${buildHeatmap(bs,'hyp','src')}</div>
+
+    <!-- Fluency breakdown -->
+    <div style="font-size:.78rem;background:#faf5ff;border-radius:8px;padding:10px 12px;margin-bottom:14px;">
+      <div style="font-weight:600;margin-bottom:6px;color:#5b21b6;">Fluency 추정 (hypothesis 단독)</div>
+      <div>어휘 다양성 = 고유 단어 / 전체 단어 = ${new Set(toks_hyp).size} / ${toks_hyp.length} = <strong>${fluParts.uniqueRatio.toFixed(3)}</strong></div>
+      <div>길이 점수 = min(1, 0.4 + ${toks_hyp.length}/16) = <strong>${fluParts.lenScore.toFixed(3)}</strong></div>
+      <div>Fluency = 0.35 + 0.65 × ${fluParts.uniqueRatio.toFixed(3)} × ${fluParts.lenScore.toFixed(3)} = <strong>${d.flu.toFixed(4)}</strong></div>
+      <div class="info-tip mt-1"><i class="fas fa-info-circle"></i> 실제 COMETKiwi는 LM 기반 유창성 점수를 사용합니다. 이 시뮬레이션은 단순화 버전입니다.</div>
+    </div>
+
+    <!-- Comparison -->
+    <div style="font-size:.8rem;font-weight:600;margin-bottom:8px;">BLEU vs. BERTScore vs. COMETKiwi 비교</div>
+    ${comp}
+    <div class="info-tip"><i class="fas fa-lightbulb"></i>
+      <strong>의역 예문에 주목:</strong> BLEU는 낮지만 BERTScore와 COMETKiwi는 모두 의미를 인식하여 높은 점수를 줍니다.
+      COMETKiwi는 <em>레퍼런스 없이</em> 소스 의미 커버리지를 직접 측정하므로 실제 품질 추정에 유용합니다.
+    </div>
+  </div>`;
+
+  document.getElementById('detailSummary').innerHTML=
+    `COMETKiwi = 0.72 × Adequacy + 0.28 × Fluency = 0.72 × ${d.adq.toFixed(4)} + 0.28 × ${d.flu.toFixed(4)} = <strong>${d.score.toFixed(4)}</strong>
+    <small class="text-muted ms-2">(※ 데모: 실제 COMETKiwi는 XLM-R 신경망 필요)</small>`;
+}
+
+// ── LLM-as-a-Judge (Reference-based) ──
+function llmScoreBar(raw, max){
+  const pct=(raw/max*100).toFixed(0);
+  const color=raw>=8?'#16a34a':raw>=5?'#d97706':'#dc2626';
+  return `<div style="display:flex;align-items:center;gap:8px;">
+    <span class="llm-response-score" style="color:${color};">${raw}<span style="font-size:.75rem;font-weight:400;color:#888;"> / ${max}</span></span>
+    <div style="flex:1;max-width:120px;background:#e5e7eb;border-radius:4px;height:10px;overflow:hidden;">
+      <div style="width:${pct}%;height:100%;background:${color};border-radius:4px;transition:width .3s;"></div>
+    </div>
+  </div>`;
+}
+
+function renderLlmRefDetail(hyp, ref, src, pair) {
+  const pi=selectedPair, hi=selectedHyp;
+  const rawScore=LLM_JUDGE_REF[pi][hi];
+  const score=(rawScore/10);
+  const reasoning=llmReasoning(pair.hyps[hi].note, rawScore, true);
+  const tok=buildTokenBlock('tok-type-bpe','BPE (Byte Pair Encoding)','텍스트 전체를 그대로 입력 — LLM이 내부적으로 분절, 직접 비교 없음',[
+    {label:'Hyp', tokens:tokenize(hyp), cls:'bpe'},
+    {label:'Ref', tokens:tokenize(ref), cls:'bpe'},
+    {label:'Src', tokens:tokenize(src), cls:'bpe'},
+  ],'LLM은 세 텍스트를 <strong>프롬프트 그대로</strong> 입력받습니다. 내부적으로 BPE(예: GPT-4 cl100k_base)로 분절하지만, 토큰을 직접 비교하지 않고 <strong>문맥 전체의 의미</strong>를 이해한 뒤 점수를 부여합니다.');
+
+  let comp='';
+  pair.hyps.forEach((h,i)=>{
+    const bv=bleuSentence(h.hyp,ref).score;
+    const lv=LLM_JUDGE_REF[pi][i]/10;
+    const sel=i===selectedHyp;
+    comp+=`<div style="margin-bottom:7px;${sel?'':'opacity:.6;'}">
+      <div style="font-size:.71rem;color:#555;margin-bottom:2px;">${i+1}. ${h.note}</div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span style="font-size:.65rem;width:60px;text-align:right;color:#888;">BLEU</span>
+        <div class="bar-track"><div class="bar-fill bar-bleu" style="width:${(bv*100).toFixed(1)}%">${bv>0.09?bv.toFixed(3):''}</div></div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;margin-top:2px;">
+        <span style="font-size:.65rem;width:60px;text-align:right;color:#888;">LLM-J(Ref)</span>
+        <div class="bar-track"><div class="bar-fill bar-llm-ref" style="width:${(lv*100).toFixed(1)}%">${lv>0.09?(LLM_JUDGE_REF[pi][i]+'/10'):''}</div></div>
+      </div>
+    </div>`;
+  });
+
+  document.getElementById('detailBody').innerHTML=`<div style="padding:12px 16px;">${tok}
+
+    <div style="background:#eef2ff;border:1.5px solid #c7d2fe;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:.77rem;">
+      <i class="fas fa-robot me-1" style="color:#6366f1;"></i>
+      <strong>LLM-as-a-Judge (Reference-based)</strong> — LLM이 <span class="prompt-src" style="background:#f0fdf4;padding:1px 5px;border-radius:4px;">Source</span>,
+      <span class="prompt-ref" style="background:#ecfeff;padding:1px 5px;border-radius:4px;">Reference</span>,
+      <span class="prompt-hyp" style="background:#fff7ed;padding:1px 5px;border-radius:4px;">Hypothesis</span> 세 가지를 모두 보고 점수를 매깁니다.
+    </div>
+
+    <div style="font-size:.8rem;font-weight:600;margin-bottom:8px;">LLM에 전달되는 프롬프트</div>
+    <div class="llm-prompt-wrap">
+      <span class="llm-prompt-label">Prompt</span>
+      <div><span class="prompt-sys">system:</span> You are an expert translation evaluator.</div>
+      <div style="margin-top:6px;"><span class="prompt-user">user:</span></div>
+      <div style="margin-left:14px;">
+        <span class="prompt-src">Source      :</span> ${esc(src)}<br>
+        <span class="prompt-ref">Reference   :</span> ${esc(ref)}<br>
+        <span class="prompt-hyp">Hypothesis  :</span> ${esc(hyp)}<br>
+        <br>
+        Rate the hypothesis on a scale of <strong style="color:#f9e2af;">1–10</strong> (integer) by comparing it to the reference.<br>
+        <span class="prompt-dim">1=completely wrong &nbsp; 5=acceptable paraphrase &nbsp; 10=perfect</span><br>
+        Provide a brief justification and a final score.
+      </div>
+    </div>
+
+    <div style="font-size:.8rem;font-weight:600;margin-bottom:8px;">LLM 시뮬레이션 응답</div>
+    <div class="llm-response-wrap">
+      <div style="margin-bottom:8px;">${llmScoreBar(rawScore,10)} <span style="font-size:.72rem;color:#888;margin-left:6px;">(※ 시뮬레이션)</span></div>
+      <div style="font-size:.79rem;color:#374151;line-height:1.6;">${reasoning}</div>
+    </div>
+
+    <div style="font-size:.8rem;font-weight:600;margin-bottom:8px;">BLEU vs. LLM-as-a-Judge (Ref) 비교</div>
+    ${comp}
+    <div class="info-tip"><i class="fas fa-lightbulb"></i>
+      <strong>의역 예문에 주목 (미소 쌍):</strong> BLEU는 단어가 다르면 낮게 평가하지만,
+      LLM은 의미적 동등성을 이해하므로 더 유연한 점수를 줄 수 있습니다.
+    </div>
+  </div>`;
+
+  document.getElementById('detailSummary').innerHTML=
+    `LLM-as-a-Judge (Ref) = <strong>${rawScore}/10</strong> → 정규화: <strong>${score.toFixed(3)}</strong>
+    <small class="text-muted ms-2">(※ 실제 GPT-4 / Claude 평가 시뮬레이션)</small>`;
+}
+
+// ── LLM-as-a-Judge (Reference-free) ──
+function renderLlmFreeDetail(hyp, src, pair) {
+  const pi=selectedPair, hi=selectedHyp;
+  const rawScore=LLM_JUDGE_FREE[pi][hi];
+  const score=(rawScore/10);
+  const reasoning=llmReasoning(pair.hyps[hi].note, rawScore, false);
+  const tok=buildTokenBlock('tok-type-bpe','BPE (Byte Pair Encoding)','텍스트 전체를 그대로 입력 — LLM이 내부적으로 분절, 직접 비교 없음',[
+    {label:'Hyp', tokens:tokenize(hyp), cls:'bpe'},
+    {label:'Src', tokens:tokenize(src), cls:'bpe'},
+  ],'Reference 없이 Source와 Hypothesis만 입력합니다. LLM은 BPE로 분절하지만 토큰을 직접 비교하지 않고 <strong>의미 전체</strong>를 이해하여 판단합니다.');
+
+  let comp='';
+  pair.hyps.forEach((h,i)=>{
+    const ckv=cometKiwiScore(src,h.hyp);
+    const lv=LLM_JUDGE_FREE[pi][i]/10;
+    const sel=i===selectedHyp;
+    comp+=`<div style="margin-bottom:7px;${sel?'':'opacity:.6;'}">
+      <div style="font-size:.71rem;color:#555;margin-bottom:2px;">${i+1}. ${h.note}</div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span style="font-size:.65rem;width:70px;text-align:right;color:#888;">COMETKiwi</span>
+        <div class="bar-track"><div class="bar-fill bar-comet" style="width:${(ckv*100).toFixed(1)}%">${ckv>0.09?ckv.toFixed(3):''}</div></div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;margin-top:2px;">
+        <span style="font-size:.65rem;width:70px;text-align:right;color:#888;">LLM-J(Free)</span>
+        <div class="bar-track"><div class="bar-fill bar-llm-free" style="width:${(lv*100).toFixed(1)}%">${lv>0.09?(LLM_JUDGE_FREE[pi][i]+'/10'):''}</div></div>
+      </div>
+    </div>`;
+  });
+
+  document.getElementById('detailBody').innerHTML=`<div style="padding:12px 16px;">${tok}
+
+    <div style="background:#fdf4ff;border:1.5px solid #e9d5ff;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:.77rem;">
+      <i class="fas fa-robot me-1" style="color:#8b5cf6;"></i>
+      <strong>LLM-as-a-Judge (Reference-free)</strong> — Reference 없이 <span class="prompt-src" style="background:#f0fdf4;padding:1px 5px;border-radius:4px;">Source</span>와
+      <span class="prompt-hyp" style="background:#fff7ed;padding:1px 5px;border-radius:4px;">Hypothesis</span>만으로 번역 적절성을 판단합니다.
+      COMETKiwi와 같은 방향이지만, LLM은 신경망 수치 대신 <em>자연어 추론</em>을 사용합니다.
+    </div>
+
+    <div style="font-size:.8rem;font-weight:600;margin-bottom:8px;">LLM에 전달되는 프롬프트</div>
+    <div class="llm-prompt-wrap">
+      <span class="llm-prompt-label">Prompt</span>
+      <div><span class="prompt-sys">system:</span> You are an expert translation quality estimator. No reference is available.</div>
+      <div style="margin-top:6px;"><span class="prompt-user">user:</span></div>
+      <div style="margin-left:14px;">
+        <span class="prompt-src">Source      :</span> ${esc(src)}<br>
+        <span class="prompt-hyp">Hypothesis  :</span> ${esc(hyp)}<br>
+        <br>
+        Does the hypothesis accurately and fluently convey the source?<br>
+        Score <strong style="color:#f9e2af;">1–10</strong> (integer) and explain briefly.<br>
+        <span class="prompt-dim">1=completely wrong &nbsp; 5=mostly adequate &nbsp; 10=highly faithful</span>
+      </div>
+    </div>
+
+    <div style="font-size:.8rem;font-weight:600;margin-bottom:8px;">LLM 시뮬레이션 응답</div>
+    <div class="llm-response-wrap">
+      <div style="margin-bottom:8px;">${llmScoreBar(rawScore,10)} <span style="font-size:.72rem;color:#888;margin-left:6px;">(※ 시뮬레이션)</span></div>
+      <div style="font-size:.79rem;color:#374151;line-height:1.6;">${reasoning}</div>
+    </div>
+
+    <div style="font-size:.8rem;font-weight:600;margin-bottom:8px;">COMETKiwi vs. LLM-as-a-Judge (Free) 비교</div>
+    ${comp}
+    <div class="info-tip"><i class="fas fa-lightbulb"></i>
+      <strong>공통점:</strong> 둘 다 레퍼런스 없이 소스만으로 품질을 추정합니다.
+      COMETKiwi는 수치 벡터 유사도 기반, LLM은 자연어 이해 기반 — 방법은 달라도 같은 목표입니다.
+    </div>
+  </div>`;
+
+  document.getElementById('detailSummary').innerHTML=
+    `LLM-as-a-Judge (Free) = <strong>${rawScore}/10</strong> → 정규화: <strong>${score.toFixed(3)}</strong>
+    <small class="text-muted ms-2">(※ 실제 GPT-4 / Claude 평가 시뮬레이션)</small>`;
+}
+
+// ════════════════════════════════════════════════════════
+//  EVENTS
+// ════════════════════════════════════════════════════════
+function selectPair(i)    { selectedPair=i; selectedHyp=0; update(); }
+function selectHyp(i)     { selectedHyp=i; update(); }
+function selectMetric(id) { activeMetric=id; update(); }
+function updateHyp(i,txt) {
+  const c=txt.trim(); if(c) DATASET[selectedPair].hyps[i].hyp=c;
+  update();
+}
+
+// ════════════════════════════════════════════════════════
+//  MAIN UPDATE
+// ════════════════════════════════════════════════════════
+function update(){
+  renderPairSelector();
+  renderDataset();
+  renderMetricButtons();
+  renderDetail();
+}
+
+update();
+</script>
+</body>
+</html>
