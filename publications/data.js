@@ -8,6 +8,23 @@
 //   related                 — optional [{text, url}] for model/code links
 const PUBLICATIONS = [
   {
+    "id": "C26",
+    "type": "conference",
+    "title": "TextME: Bridging Unseen Modalities Through Text Descriptions",
+    "authors": [
+      {"name": "Soyeon Hong"},
+      {"name": "Jinchan Kim"},
+      {"name": "Jaegook You"},
+      {"name": "Seungtaek Choi", "self": true},
+      {"name": "Suha Kwak"},
+      {"name": "Hyunsouk Cho", "corresponding": true}
+    ],
+    "venue": "ICML",
+    "year": 2026,
+    "url": "https://arxiv.org/pdf/2602.03098",
+    "note": null
+  },
+  {
     "id": "C25",
     "type": "conference",
     "title": "Towards Fully-Automated Materials Discovery via Large-Scale Synthesis Dataset and Expert-Level LLM-as-a-Judge",
