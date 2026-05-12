@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>LaTeX Math Renderer - Teaching Tools</title>
+  <meta name="description" content="Render LaTeX math and copy it to the clipboard">
+
+  <script>
+    window.MathJax = {
+      startup: { typeset: false },
+      svg: { fontCache: 'none' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  <link href="../../../css/github-light.css" rel="stylesheet">
+  <link href="../../../css/style.css" rel="stylesheet">
+
+  <style>
+    .content,
+    .tool-panel {
+      box-sizing: border-box;
+    }
+
+    .tool-panel * {
+      box-sizing: border-box;
+      min-width: 0;
+    }
+
+    .tool-header p {
+      margin-bottom: 0;
+      color: #555;
+    }
+
+    .renderer-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .tool-panel {
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      padding: 16px;
+      background: #fff;
+      min-width: 0;
+      width: auto;
+      max-width: none;
+      margin: 0;
+    }
+
+    .tool-panel h3 {
+      font-size: 16px;
+      margin-bottom: 14px;
+    }
+
+    .tool-panel h3:after {
+      display: none;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    textarea,
+    input,
+    select {
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 100%;
+      display: block;
+      border: 1px solid #d1d5db;
+      border-radius: 5px;
+      font: 14px/1.45 Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, monospace;
+      color: #222;
+      background: #fff;
+    }
+
+    textarea {
+      min-height: 190px;
+      padding: 12px;
+      resize: vertical;
+    }
+
+    input,
+    select {
+      padding: 8px 10px;
+    }
+
+    .control-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    button {
+      border: 1px solid #2563eb;
+      border-radius: 5px;
+      background: #2563eb;
+      color: #fff;
+      cursor: pointer;
+      font: 700 13px/1.2 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      padding: 9px 12px;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    button.secondary {
+      background: #fff;
+      color: #2563eb;
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.68;
+    }
+
+    button:hover:not(:disabled) {
+      background: #1d4ed8;
+      border-color: #1d4ed8;
+      color: #fff;
+    }
+
+    .preview-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 250px;
+      padding: 22px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 6px;
+      background: #fbfdff;
+      overflow: auto;
+    }
+
+    .preview-box mjx-container {
+      margin: 0;
+      font-size: 130%;
+    }
+
+    mjx-assistive-mml {
+      border: 0 !important;
+      clip: rect(1px, 1px, 1px, 1px) !important;
+      display: none !important;
+      height: 1px !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      padding: 0 !important;
+      position: absolute !important;
+      width: 1px !important;
+    }
+
+    .status {
+      min-height: 20px;
+      margin-top: 12px;
+      color: #555;
+    }
+
+    .status.error {
+      color: #b85450;
+      font-weight: 700;
+    }
+
+    .examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .examples button {
+      border-color: #d1d5db;
+      background: #f8fafc;
+      color: #333;
+      font-weight: 400;
+    }
+
+    .examples button:hover:not(:disabled) {
+      border-color: #2563eb;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    @media print, screen and (max-width: 720px) {
+      .renderer-grid {
+        display: block;
+      }
+
+      .tool-panel {
+        margin-bottom: 16px;
+      }
+
+      .control-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media only screen and (max-width: 480px) {
+      body {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .content {
+        max-width: none;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="nav-links">
+      <a href="../../../index.html" class="nav-link">About</a>
+      <a href="../../../publications/" class="nav-link">Publications</a>
+      <a href="../../" class="nav-link active">Teaching</a>
+    </div>
+  </nav>
+
+  <div class="content">
+    <div class="tool-header">
+      <div>
+        <h1>LaTeX Math Renderer</h1>
+        <p>Render LaTeX equations and copy the result directly to the clipboard.</p>
+      </div>
+    </div>
+
+    <div class="renderer-grid">
+      <section class="tool-panel">
+        <h3>Input</h3>
+        <label for="latex-input">LaTeX</label>
+        <textarea id="latex-input" spellcheck="false">\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}</textarea>
+
+        <div class="control-row">
+          <div>
+            <label for="display-mode">Mode</label>
+            <select id="display-mode">
+              <option value="display" selected>Display</option>
+              <option value="inline">Inline</option>
+            </select>
+          </div>
+          <div>
+            <label for="scale-input">PNG scale</label>
+            <input id="scale-input" type="number" min="1" max="6" step="1" value="3">
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button id="copy-png">Copy PNG</button>
+          <button id="copy-tex" class="secondary">Copy LaTeX</button>
+        </div>
+
+        <div class="examples" aria-label="Examples">
+          <button type="button" data-example="E = mc^2">E = mc^2</button>
+          <button type="button" data-example="\frac{\partial \mathcal{L}}{\partial \theta} = 0">Partial derivative</button>
+          <button type="button" data-example="\operatorname{softmax}(z_i)=\frac{e^{z_i}}{\sum_j e^{z_j}}">Softmax</button>
+        </div>
+      </section>
+
+      <section class="tool-panel">
+        <h3>Preview</h3>
+        <div id="preview" class="preview-box" aria-live="polite"></div>
+        <p id="status" class="status">Ready.</p>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('latex-input');
+    const mode = document.getElementById('display-mode');
+    const scaleInput = document.getElementById('scale-input');
+    const preview = document.getElementById('preview');
+    const statusLine = document.getElementById('status');
+    const copyPngButton = document.getElementById('copy-png');
+    const copyTexButton = document.getElementById('copy-tex');
+    let renderTimer = null;
+    let lastSvg = null;
+
+    function setStatus(message, isError = false) {
+      statusLine.textContent = message;
+      statusLine.classList.toggle('error', isError);
+    }
+
+    function waitForMathJax() {
+      if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
+        return MathJax.startup.promise;
+      }
+      return new Promise((resolve) => setTimeout(resolve, 50)).then(waitForMathJax);
+    }
+
+    async function renderMath() {
+      const tex = input.value.trim();
+      if (!tex) {
+        preview.textContent = 'Enter LaTeX to render.';
+        lastSvg = null;
+        setStatus('Ready.');
+        return;
+      }
+
+      try {
+        await waitForMathJax();
+        const node = await MathJax.tex2svgPromise(tex, {
+          display: mode.value === 'display'
+        });
+        preview.replaceChildren(node);
+        lastSvg = preview.querySelector('svg');
+        setStatus('Rendered.');
+      } catch (error) {
+        lastSvg = null;
+        preview.textContent = 'Could not render this expression.';
+        setStatus(error.message || 'Render failed.', true);
+      }
+    }
+
+    function scheduleRender() {
+      window.clearTimeout(renderTimer);
+      renderTimer = window.setTimeout(renderMath, 180);
+    }
+
+    function serializeTightSvg() {
+      if (!lastSvg) {
+        throw new Error('Render an equation first.');
+      }
+
+      const clone = lastSvg.cloneNode(true);
+      const rect = lastSvg.getBoundingClientRect();
+      const bbox = lastSvg.getBBox();
+      const viewBox = lastSvg.getAttribute('viewBox').split(/\s+/).map(Number);
+      const viewBoxWidth = viewBox[2] || bbox.width;
+      const viewBoxHeight = viewBox[3] || bbox.height;
+      const width = Math.max(1, bbox.width * rect.width / viewBoxWidth);
+      const height = Math.max(1, bbox.height * rect.height / viewBoxHeight);
+
+      clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+      clone.setAttribute('viewBox', `${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`);
+      clone.setAttribute('width', `${Math.ceil(width)}px`);
+      clone.setAttribute('height', `${Math.ceil(height)}px`);
+      return new XMLSerializer().serializeToString(clone);
+    }
+
+    async function writeText(text) {
+      await navigator.clipboard.writeText(text);
+    }
+
+    async function svgToPngBlob(svgText, scale) {
+      const blob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+
+      try {
+        const image = new Image();
+        const loaded = new Promise((resolve, reject) => {
+          image.onload = resolve;
+          image.onerror = reject;
+        });
+        image.src = url;
+        await loaded;
+
+        const width = Math.ceil(image.width * scale);
+        const height = Math.ceil(image.height * scale);
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+
+        const context = canvas.getContext('2d');
+        context.clearRect(0, 0, width, height);
+        context.drawImage(image, 0, 0, image.width * scale, image.height * scale);
+
+        return await new Promise((resolve, reject) => {
+          canvas.toBlob((pngBlob) => {
+            if (pngBlob) {
+              resolve(pngBlob);
+            } else {
+              reject(new Error('Could not create PNG.'));
+            }
+          }, 'image/png');
+        });
+      } finally {
+        URL.revokeObjectURL(url);
+      }
+    }
+
+    async function copyPng() {
+      copyPngButton.disabled = true;
+      try {
+        const svgText = serializeTightSvg();
+        const scale = Math.max(1, Math.min(6, Number(scaleInput.value) || 3));
+        const pngBlob = await svgToPngBlob(svgText, scale);
+
+        if (!window.ClipboardItem) {
+          throw new Error('This browser does not support copying images.');
+        }
+
+        await navigator.clipboard.write([
+          new ClipboardItem({ 'image/png': pngBlob })
+        ]);
+        setStatus('Transparent PNG copied to clipboard.');
+      } catch (error) {
+        setStatus(error.message || 'Copy failed.', true);
+      } finally {
+        copyPngButton.disabled = false;
+      }
+    }
+
+    async function copyTex() {
+      try {
+        await writeText(input.value);
+        setStatus('LaTeX copied to clipboard.');
+      } catch (error) {
+        setStatus(error.message || 'Copy failed.', true);
+      }
+    }
+
+    input.addEventListener('input', scheduleRender);
+    mode.addEventListener('change', renderMath);
+    copyPngButton.addEventListener('click', copyPng);
+    copyTexButton.addEventListener('click', copyTex);
+
+    document.querySelectorAll('[data-example]').forEach((button) => {
+      button.addEventListener('click', () => {
+        input.value = button.dataset.example;
+        renderMath();
+        input.focus();
+      });
+    });
+
+    renderMath();
+  </script>
+</body>
+
+</html>
