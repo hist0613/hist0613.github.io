@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LLM 평가와 IRT</title>
+  <meta name="blog:title" content="LLM 평가와 IRT">
+  <meta name="blog:date" content="2026-05-20">
+  <meta name="blog:summary" content="정확도 한 숫자를 넘어서려는 시도로, Item Response Theory(IRT)를 LLM 평가에 적용하는 연구들을 다섯 관점으로 정리했다.">
+  <meta name="blog:tags" content="">
+  <meta name="blog:image" content="">
+  <meta name="blog:lang" content="ko">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/blog.css" rel="stylesheet">
+</head>
+
+<body class="blog-body">
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Seungtaek Choi</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">About</a>
+        <a href="/publications/" class="nav-link">Publications</a>
+        <a href="/teaching/" class="nav-link">Teaching</a>
+        <a href="/blog/" class="nav-link active">Blog</a>
+      </div>
+    </div>
+  </nav>
+
+  <article class="content blog-post">
+    <div class="post-topbar">
+      <a class="post-back" href="/blog/ko/">← 글 목록</a>
+    </div>
+
+    <header class="post-header">
+      <h1>LLM 평가와 IRT</h1>
+      <p class="post-meta">
+        <time>2026-05-20</time>
+        <button type="button" class="copy-link" data-copied="복사됨!"><svg class="icon-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="copy-label">링크 복사</span></button>
+      </p>
+    </header>
+
+    <p>
+      LLM을 평가한다고 하면 보통 "벤치마크 정확도 몇 %"라는 한 숫자로 끝난다.
+      그런데 그 숫자가 정확히 무엇을 재는지는 잘 따지지 않는다. 문항 100개가 다
+      같은 가중치인가. 쉬운 문항과 변별력 있는 문항을 똑같이 한 문제로 세는 게
+      맞나. 같은 모델을 다시 평가하면 같은 값이 나오나. 심리측정/교육측정 —
+      시험으로 사람을 평가하는 걸 연구하는 분야 — 에서는 이 질문들을 거의 한 세기
+      동안 다뤄 왔고, 그 중심 도구가 Item Response Theory(IRT, 문항반응이론)다.
+    </p>
+
+    <p>
+      우리에게 익숙한 예가 하나 있다. 대학수학능력시험의 표준점수다. 같은 원점수를
+      받아도 그해 시험이 어려웠는지, 같은 과목을 친 다른 응시자들이 어땠는지에
+      따라 표준점수가 달라진다. 원점수라는 숫자 하나만으로는 실력을 말할 수 없다는
+      발상이다. IRT는 여기서 한 걸음 더 들어간다 — 응시자에게는 겉으로 드러나지
+      않는 latent 능력 θ가 있고, 각 문항에는 변별력(능력 차이를 얼마나 잘
+      가르는가)과 난이도가 있다고 본다. 어떤 응답이 맞고 틀리는지를 이 θ와 문항
+      파라미터의 함수로 모델링한다. 정확도가 "몇 개 맞았나"라면, IRT는 "어떤
+      문항을, 그 문항이 얼마나 정보가 있는 문항인가"까지 함께 본다. 이 글에서는
+      θ를 일단 응시자(모델)당 하나의 스칼라로 다룬다 — 다차원으로 펼치는 갈래는
+      뒤에서 따로 본다.
+    </p>
+
+    <p>
+      최근 이 IRT를 LLM 평가에 가져오는 연구가 부쩍 늘었다 — NLP 쪽에 IRT
+      튜토리얼<a id="cite-1" href="#ref-1">[1]</a>이 따로 생기고, "AI 평가도 사람
+      시험 보듯 해야 한다"는 포지션 논문<a id="cite-2" href="#ref-2">[2]</a>이 나올
+      정도다. 어찌저찌 연구하면서 살다 보니 내 최근 관심사도 마침 이 쪽이라, 이번 기회에 한번
+      정리해봤다.
+    </p>
+
+    <h2>1. 문항(question 혹은 item)을 검증하는 방향</h2>
+
+    <p>
+      가장 오래된 갈래는 벤치마크의 문항 자체를 IRT로 들여다보는 것이다.
+      <a id="cite-3" href="#ref-3">[3]</a>에서는 2016년에 NLP 평가에 IRT를 처음
+      들여오며, "모든 평가 문항이 같은 난이도·변별력을 갖는다"는 암묵적 가정에
+      의문을 던졌다. 이후 <a id="cite-4" href="#ref-4">[4]</a>에서는 IRT로
+      리더보드를 다시 설계해, 정답 레이블 자체가 잘못된 문항, 너무 쉽거나 어려워서
+      변별력이 없는 문항, 모델이 추론이 아닌 표면적 단서(annotation artifact)로
+      맞히는 문항 같은 것들을 찾아내는 법을 보였다. 최근으로 오면
+      <a id="cite-5" href="#ref-5">[5]</a>에서는 11개 벤치마크 4만여 문항을 IRT로
+      분석해 포화와 오염을 진단하고 더 작고 깨끗한 벤치마크를 구성했다. 공통된
+      발상은 — 점수를 매기기 전에 자(벤치마크) 자체가 제대로 된 자인지 먼저 본다는
+      것이다.
+    </p>
+
+    <h2>2. 평가의 효율성을 위한 방향</h2>
+
+    <p>
+      두 번째 갈래는 효율이다. 같은 동기에서 두 색으로 갈라진다 — 한 번 보정해 두고
+      정적으로 부분집합을 고르는 길과, 응답마다 다음 문항을 동적으로 고르는
+      적응형 테스트(adaptive testing) 길이다. 공통의 도구는 IRT의
+      문항정보함수(item information function) — 어떤 문항이 특정 능력대를 가장 잘
+      변별하는지 계산한다. 이걸 쓰면 정보가 많은 문항만 골라 평가를 줄일 수 있다.
+    </p>
+
+    <p>
+      정적 축소의 직설적인 예가 tinyBenchmarks<a id="cite-6" href="#ref-6">[6]</a>다.
+      MMLU 1만 4천 문항을 IRT로 한 번 보정해 두고 정보가 많은 100문항만 골라
+      놓으면, 그 100문항만으로 모델 정확도를 거의 그대로 추정할 수 있다.
+    </p>
+
+    <p>
+      적응형 쪽으로 가면 ATLAS<a id="cite-7" href="#ref-7">[7]</a>가 직설적인 예다 —
+      매 문항 뒤에 모델의 능력 추정을 갱신하면서 가장 정보가 많은 다음 문항을 뽑는다.
+      사람 시험의 computerized adaptive testing과 같은 구조다. 다만 어느 쪽이든
+      IRT가 작동하려면 calibration이 먼저 끝나 있어야 한다. 이름은 측정학에서
+      그대로 가져왔다 — 저울·온도계의 눈금을 알려진 기준에 맞춰 매기는 그
+      calibration이다. 다수 모델·다수 문항의 응답 행렬을 모아 문항 파라미터(변별력·
+      난이도)를 추정해 두는 과정이고, 모델이 새로 나올 때마다 다시 채워야 하니 그
+      자체가 비용이다.
+      <a id="cite-8" href="#ref-8">[8]</a>에서는 여기에 두 개를 더 얹는다 — 문항
+      내용만 보고 난이도를 예측하는 모델을 학습해 calibration 비용을 amortize한다
+      (한 번 학습해두면 새 문항·새 모델에 대해선 응답을 다시 수집하지 않고도
+      난이도를 추정할 수 있다는 의미다). 그 예측기를 다시 신규 문항 생성에까지
+      연결한다. 22개 벤치마크·172개 모델 규모의 결과다.
+    </p>
+
+    <div class="figure-row">
+      <figure style="flex-grow: 1.13">
+        <img src="../assets/tinybenchmarks-figure1.png" alt="tinyBenchmarks Figure 1 — MMLU 1만 4천 문항 vs. IRT++ 100문항 추정 비교">
+        <figcaption>MMLU 1만 4천 문항으로 잰 정확도(가로)와, IRT로 고른 100문항만으로 추정한 정확도(세로)가 모델 수십 종에 걸쳐 거의 대각선에 붙는다 — Spearman 0.92, 오차 0.019 (tinyBenchmarks<a href="#ref-6">[6]</a> Figure 1).</figcaption>
+      </figure>
+      <figure style="flex-grow: 1.85">
+        <img src="../assets/truong-figure1.png" alt="Truong et al. Figure 1 — IRT 기반 amortized 평가 파이프라인 도식">
+        <figcaption>응답 행렬 Y를 응시자 능력 θ와 문항 난이도 z로 분해하고(IRT), 문항 내용으로 z를 회귀하는 difficulty predictor를 학습한 뒤, 그 위에 조건부 question generator까지 얹는다. 새 데이터셋·새 모델에서 calibration을 매번 다시 할 필요가 없어진다 (<a href="#ref-8">[8]</a> Figure 1).</figcaption>
+      </figure>
+    </div>
+
+    <h2>3. 모델의 능력을 더 잘 표현하기 위한 방향</h2>
+
+    <p>
+      세 번째는 정확도라는 한 숫자 대신 모델의 능력을 더 풍부하게 표현하려는
+      갈래다. JE-IRT<a id="cite-9" href="#ref-9">[9]</a>는 모델과 문항을 같은 기하
+      공간에 임베딩해, 방향은 어떤 종류의 능력인지를, 크기는 난이도를 나타내도록
+      나눠 본다. <a id="cite-10" href="#ref-10">[10]</a>에서는 IRT로 모델의 능력을
+      압축된 벡터로 표현해 모델 라우팅이나 벤치마크 성능 예측에 쓴다. 비슷하게
+      IRT-Router<a id="cite-11" href="#ref-11">[11]</a>는 쿼리 난이도와 모델
+      능력을 IRT로 모델링해 비용 대비 성능이 좋은 모델로 질의를 보낸다. 평가가
+      "줄 세우기"를 넘어 "이 모델이 어떤 문제를 어느 수준으로 푸는가"를 기술하는
+      쪽으로 가는 것이다.
+    </p>
+
+    <h2>4. 평가자(judge) 자체를 진단하는 방향</h2>
+
+    <p>
+      앞의 세 갈래는 모두 LLM을 <em>응시자</em>로 놓고 문항·벤치마크·능력을
+      분석한다. 그런데 LLM이 거꾸로 <em>채점자</em>로 쓰이는 일이 흔해지면서, 그
+      채점자가 믿을 만한 도구인지를 IRT로 진단하는 갈래가 생겼다. 사실 이 글을
+      쓰게 만든 ICML 2026 논문<a id="cite-12" href="#ref-12">[12]</a>이 여기
+      있다. LLM-as-a-Judge를 측정 도구로 놓고, 프롬프트의 사소한 변이(오타·줄바꿈·
+      패러프레이즈)를 IRT 문항으로 형식화해, 그 도구가 흔들리지 않는지(내적
+      일관성)와 사람과 맞는지(human alignment)를 2단계로 진단한다. 핵심 논리는 —
+      도구로서 흔들리는 judge라면 사람과 맞는지 따질 가치도 없다는 것. 그래서
+      consistency를 alignment의 전제로 둔다.
+    </p>
+
+    <p>
+      비슷한 시기에 <a id="cite-13" href="#ref-13">[13]</a>에서는 LLM을 단답형
+      채점자로 놓고 IRT로 채점 능력과 응답 난이도를 함께 추정했다. judge가 흔해진
+      만큼, judge를 재는 자가 따로 필요해진 셈이다.
+    </p>
+
+    <h2>5. LLM으로 학생을 시뮬레이션하는 방향</h2>
+
+    <p>
+      마지막은 결이 조금 다르다. IRT로 문항을 보정하려면 원래 사람 응답 데이터가
+      많이 필요한데, 새 LLM이 매일 나오는 환경에서 매번 사람을 모집해 응답 행렬을
+      쌓는 건 비현실적이다. 그래서 사람 대신 모델을 응시자 대리로 세우는 갈래다 —
+      가능성이 열린다면 앞의 네 갈래 모두에 영향이 간다. 어느 갈래든 calibration이
+      선결 조건이고, 그 비용이 풀리면 새 벤치마크·새 모델에 IRT를 들이미는 일이
+      비로소 일상이 되기 때문이다. 이미 2019년에 <a id="cite-14" href="#ref-14">[14]</a>에서는 신경망
+      앙상블의 인공 응답으로 사람 없이 IRT 파라미터를 학습할 수 있음을 보였고,
+      최근에는 LLM이 그 자리를 대신한다. <a id="cite-15" href="#ref-15">[15]</a>에서는
+      LLM 여러 종에게 교육 평가 문항을 풀게 해 문항 난이도를 보정하고,
+      <a id="cite-16" href="#ref-16">[16]</a>에서는 LLM에게 특정 학년 학생을 연기하게
+      해 실제 시험 난이도와 꽤 높은 상관을 얻기도 한다. 여기서 LLM은 평가 대상도
+      평가자도 아니고, 사람 응시자의 시뮬레이터다.
+    </p>
+
+    <h2>개인적인 생각</h2>
+
+    <p>
+      이렇게 늘어놓고 보면, IRT는 LLM 평가에서 하나의 도구가 아니라 다섯 갈래쯤으로
+      갈라져 쓰이고 있다. 흥미로운 건 앞의 네 갈래가 결국 같은 불만에서 출발한다는
+      점이다 — "정확도 한 숫자로는 부족하다." 문항이 다 같지 않고(1), 다 풀 필요는
+      없으며(2), 한 가지 잣대로 비교해서는 안 되며(3), 채점자도 잴 대상이다(4).
+      다섯 번째는 결이 조금 다르다 — 사람 응답 데이터의 비용 문제를 LLM 응시자로
+      우회하려는 시도다.
+    </p>
+
+    <p>
+      최근 학생들이랑 함께 보고 있는 것도 LLM-as-a-Judge에 대한 검증이다.
+      position bias, self-enhancement bias, verbosity bias 등 LLM-as-a-Judge의
+      신뢰도를 낮추는 다양한 이슈들이 이미 따로따로 알려져 있지만<a id="cite-17" href="#ref-17">[17]</a><a id="cite-18" href="#ref-18">[18]</a><a id="cite-19" href="#ref-19">[19]</a>,
+      개별 bias마다 패치를 붙이는 식으로는 끝이 없다. 박사 때 faithful
+      explanation 쪽을 들여다봤던 게 이어진 건지, judge에 대한 의심도 그쯤에서
+      시작된 것 같다. judge가 측정 도구로서 얼마나 흔들리는지를 한꺼번에 진단할 수
+      있어야 그 위에서 "사람과 맞는가" 같은 다음 질문이 의미를 갖는다 — 4번 갈래는
+      그 순서를 IRT로 형식화한 셈이고, 우리도 비슷한 동기에서 어디까지 갈 수 있을지
+      한동안 더 들여다볼 것 같다.
+    </p>
+
+    <h2>참고문헌</h2>
+
+    <ul class="references">
+      <li id="ref-1"><a class="ref-num" href="#cite-1">[1]</a><span class="ref-cite">Lalor, Rodriguez, Sedoc, Hernández-Orallo. Item Response Theory for Natural Language Processing (Tutorial). EACL 2024. <a href="https://aclanthology.org/2024.eacl-tutorials.2/">ACL Anthology</a></span></li>
+      <li id="ref-2"><a class="ref-num" href="#cite-2">[2]</a><span class="ref-cite">Zhuang et al. Position: AI Evaluation Should Learn from How We Test Humans. ICML 2025. <a href="https://arxiv.org/abs/2306.10512">arXiv:2306.10512</a></span></li>
+      <li id="ref-3"><a class="ref-num" href="#cite-3">[3]</a><span class="ref-cite">Lalor, Wu, Yu. Building an Evaluation Scale using Item Response Theory. EMNLP 2016. <a href="https://arxiv.org/abs/1605.08889">arXiv:1605.08889</a></span></li>
+      <li id="ref-4"><a class="ref-num" href="#cite-4">[4]</a><span class="ref-cite">Rodriguez et al. Evaluation Examples are not Equally Informative: How should that change NLP Leaderboards? ACL 2021. <a href="https://aclanthology.org/2021.acl-long.346/">ACL Anthology</a></span></li>
+      <li id="ref-5"><a class="ref-num" href="#cite-5">[5]</a><span class="ref-cite">Zhou et al. Lost in Benchmarks? Rethinking LLM Benchmarking with Item Response Theory. AAAI 2026. <a href="https://arxiv.org/abs/2505.15055">arXiv:2505.15055</a></span></li>
+      <li id="ref-6"><a class="ref-num" href="#cite-6">[6]</a><span class="ref-cite">Polo et al. tinyBenchmarks: evaluating LLMs with fewer examples. ICML 2024. <a href="https://arxiv.org/abs/2402.14992">arXiv:2402.14992</a></span></li>
+      <li id="ref-7"><a class="ref-num" href="#cite-7">[7]</a><span class="ref-cite">Li et al. Adaptive Testing for LLM Evaluation: A Psychometric Alternative to Static Benchmarks (ATLAS). 2025. <a href="https://arxiv.org/abs/2511.04689">arXiv:2511.04689</a></span></li>
+      <li id="ref-8"><a class="ref-num" href="#cite-8">[8]</a><span class="ref-cite">Truong et al. Reliable and Efficient Amortized Model-based Evaluation. 2025. <a href="https://arxiv.org/abs/2503.13335">arXiv:2503.13335</a></span></li>
+      <li id="ref-9"><a class="ref-num" href="#cite-9">[9]</a><span class="ref-cite">Yao et al. JE-IRT: A Geometric Lens on LLM Abilities through Joint Embedding Item Response Theory. 2025. <a href="https://arxiv.org/abs/2509.22888">arXiv:2509.22888</a></span></li>
+      <li id="ref-10"><a class="ref-num" href="#cite-10">[10]</a><span class="ref-cite">Chen et al. Learning Compact Representations of LLM Abilities via Item Response Theory. 2025. <a href="https://arxiv.org/abs/2510.00844">arXiv:2510.00844</a></span></li>
+      <li id="ref-11"><a class="ref-num" href="#cite-11">[11]</a><span class="ref-cite">Song et al. IRT-Router: Effective and Interpretable Multi-LLM Routing via Item Response Theory. ACL 2025. <a href="https://arxiv.org/abs/2506.01048">arXiv:2506.01048</a></span></li>
+      <li id="ref-12"><a class="ref-num" href="#cite-12">[12]</a><span class="ref-cite">Choi et al. Diagnosing the Reliability of LLM-as-a-Judge via Item Response Theory. ICML 2026. <a href="https://arxiv.org/abs/2602.00521">arXiv:2602.00521</a></span></li>
+      <li id="ref-13"><a class="ref-num" href="#cite-13">[13]</a><span class="ref-cite">Cong et al. Estimating LLM Grading Ability and Response Difficulty in Automatic Short Answer Grading via Item Response Theory. BEA 2026. <a href="https://arxiv.org/abs/2605.00238">arXiv:2605.00238</a></span></li>
+      <li id="ref-14"><a class="ref-num" href="#cite-14">[14]</a><span class="ref-cite">Lalor, Wu, Yu. Learning Latent Parameters without Human Response Patterns: Item Response Theory with Artificial Crowds. EMNLP 2019. <a href="https://arxiv.org/abs/1908.11421">arXiv:1908.11421</a></span></li>
+      <li id="ref-15"><a class="ref-num" href="#cite-15">[15]</a><span class="ref-cite">Liu, Bhandari, Pardos. Leveraging LLM-Respondents for Item Evaluation: a Psychometric Analysis. 2024. <a href="https://arxiv.org/abs/2407.10899">arXiv:2407.10899</a></span></li>
+      <li id="ref-16"><a class="ref-num" href="#cite-16">[16]</a><span class="ref-cite">Acquaye et al. Take Out Your Calculators: Estimating Real Difficulty with LLM Student Simulations. 2026. <a href="https://arxiv.org/abs/2601.09953">arXiv:2601.09953</a></span></li>
+      <li id="ref-17"><a class="ref-num" href="#cite-17">[17]</a><span class="ref-cite">Zheng et al. Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena. NeurIPS 2023. <a href="https://arxiv.org/abs/2306.05685">arXiv:2306.05685</a></span></li>
+      <li id="ref-18"><a class="ref-num" href="#cite-18">[18]</a><span class="ref-cite">Wang et al. Large Language Models are not Fair Evaluators. 2023. <a href="https://arxiv.org/abs/2305.17926">arXiv:2305.17926</a></span></li>
+      <li id="ref-19"><a class="ref-num" href="#cite-19">[19]</a><span class="ref-cite">Stureborg et al. Large Language Models are Inconsistent and Biased Evaluators. 2024. <a href="https://arxiv.org/abs/2405.01724">arXiv:2405.01724</a></span></li>
+    </ul>
+
+    <footer class="post-footer">
+      <p class="post-colophon">Seungtaek Choi · 2026-05-20</p>
+    </footer>
+  </article>
+
+  <script>
+    document.querySelectorAll('.copy-link').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        navigator.clipboard.writeText(location.href).then(function () {
+          var label = btn.querySelector('.copy-label');
+          var original = label.textContent;
+          label.textContent = btn.dataset.copied;
+          setTimeout(function () { label.textContent = original; }, 1500);
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
