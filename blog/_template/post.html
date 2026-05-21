@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{TITLE}}</title>
+  <meta name="blog:title" content="{{TITLE}}">
+  <meta name="blog:date" content="{{DATE}}">
+  <meta name="blog:summary" content="">
+  <meta name="blog:tags" content="">
+  <meta name="blog:image" content="">
+  <meta name="blog:lang" content="{{LANG}}">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/blog.css" rel="stylesheet">
+</head>
+
+<body class="blog-body">
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Seungtaek Choi</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">About</a>
+        <a href="/publications/" class="nav-link">Publications</a>
+        <a href="/teaching/" class="nav-link">Teaching</a>
+        <a href="/blog/" class="nav-link active">Blog</a>
+      </div>
+    </div>
+  </nav>
+
+  <article class="content blog-post">
+    <div class="post-topbar">
+      <a class="post-back" href="/blog/{{LANG}}/">{{BACK_LABEL}}</a>
+    </div>
+
+    <header class="post-header">
+      <h1>{{TITLE}}</h1>
+      <p class="post-meta">
+        <time>{{DATE}}</time>
+        <button type="button" class="copy-link" data-copied="{{COPIED_LABEL}}"><svg class="icon-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="copy-label">{{COPY_LABEL}}</span></button>
+        <span class="post-lang-switch"><a href="../ko/" class="lang-opt{{KO_ACTIVE}}"><img class="flag" src="/css/icons/flag-kr.svg" alt="">한국어</a><span class="lang-sep">|</span><a href="../en/" class="lang-opt{{EN_ACTIVE}}"><img class="flag" src="/css/icons/flag-us.svg" alt="">English</a></span>
+      </p>
+    </header>
+
+    <!-- 본문을 여기에 자유 형식으로 작성합니다 -->
+
+    <footer class="post-footer">
+      <p class="post-colophon">Seungtaek Choi · {{DATE}}</p>
+    </footer>
+  </article>
+
+  <script>
+    document.querySelectorAll('.copy-link').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        navigator.clipboard.writeText(location.href).then(function () {
+          var label = btn.querySelector('.copy-label');
+          var original = label.textContent;
+          label.textContent = btn.dataset.copied;
+          setTimeout(function () { label.textContent = original; }, 1500);
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

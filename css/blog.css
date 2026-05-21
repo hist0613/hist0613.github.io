@@ -1,0 +1,331 @@
+/* blog.css — 블로그 목록·본문 전용 스타일. style.css 위에 로드된다.
+   한글 가독성을 위해 Pretendard, 다른 탭과 동일한 .content 카드 + 미니멀 본문. */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+
+/* 블로그 본문·목록 공통 — Pretendard, 적정 굵기. 카드(.content)는 다른 탭과 공유. */
+.blog-post,
+.blog-list {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
+  font-weight: 400;
+  color: #222;
+}
+
+/* style.css의 전역 header/footer 셀렉터(float·position:fixed)를 무력화한다. */
+.blog-post .post-header,
+.blog-post .post-footer {
+  position: static;
+  float: none;
+  width: auto;
+}
+
+/* 언어 전환 — 목록·본문 공통 (국기 + 한국어 | English, 현재 언어 활성) */
+.post-lang-switch {
+  font-size: 13px;
+  white-space: nowrap;
+}
+.post-lang-switch .lang-opt {
+  color: #9a9a9a;
+}
+.post-lang-switch .lang-active {
+  color: #222;
+  font-weight: 700;
+}
+.post-lang-switch .lang-sep {
+  margin: 0 7px;
+  color: #dcdcdc;
+}
+.post-lang-switch a:hover {
+  color: #035384;
+}
+.post-lang-switch .flag {
+  width: 18px;
+  height: 13.5px;
+  margin-right: 5px;
+  vertical-align: -2px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.10);
+}
+
+/* ===== 목록 페이지 ===== */
+.blog-list-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #ececec;
+  padding-bottom: 14px;
+  margin-bottom: 4px;
+}
+.blog-list-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.post-list-item {
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+  padding: 22px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.post-list-item:last-child {
+  border-bottom: none;
+  padding-bottom: 2px;
+}
+.post-entry {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.post-list-item .post-meta {
+  margin: 0 0 6px;
+  font-size: 12px;
+  color: #999;
+  letter-spacing: 0.02em;
+}
+.post-list-item .post-meta time {
+  margin-right: 2px;
+}
+.post-tag::before {
+  content: "·\00a0";
+  margin: 0 3px;
+  color: #c8c8c8;
+}
+.post-tag {
+  color: #1378b2;
+}
+.post-list-item h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.post-list-item h2 a {
+  color: #035384;
+}
+.post-list-item h2 a:hover {
+  text-decoration: underline;
+}
+.post-summary {
+  margin: 0;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* 측면 썸네일 — 왼쪽 */
+.post-thumb-link {
+  order: -1;
+  flex: 0 0 auto;
+  display: block;
+  line-height: 0;
+}
+.post-thumb {
+  width: 150px;
+  height: 104px;
+  object-fit: cover;
+  border: 1px solid #e8e8e8;
+  border-radius: 3px;
+  display: block;
+}
+
+/* ===== 본문 페이지 ===== */
+
+/* 상단 바 — 글 목록으로 + 언어 전환 */
+.blog-post .post-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.blog-post .post-back {
+  font-size: 13px;
+  color: #777;
+}
+.blog-post .post-back:hover {
+  color: #035384;
+}
+
+.blog-post .post-header {
+  border-bottom: 1px solid #ececec;
+  padding-bottom: 14px;
+  margin-bottom: 26px;
+}
+.blog-post .post-header h1 {
+  margin: 0 0 10px;
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.blog-post .post-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 13px;
+  color: #999;
+}
+.blog-post .post-meta .post-lang-switch {
+  margin-left: auto;
+}
+
+/* 주소 복사 — 아이콘 + 텍스트 버튼 */
+.copy-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: #777;
+  cursor: pointer;
+}
+.copy-link:hover {
+  color: #035384;
+}
+.copy-link .icon-link {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+/* 본문 타이포그래피 */
+.blog-post > p {
+  font-size: 15px;
+  line-height: 1.78;
+  margin: 0 0 18px;
+}
+.blog-post > h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 32px 0 12px;
+}
+.blog-post > h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 26px 0 10px;
+}
+.blog-post h3::after {
+  display: none;
+}
+.blog-post > ul,
+.blog-post > ol {
+  font-size: 15px;
+  line-height: 1.78;
+  margin: 0 0 18px;
+  padding-left: 22px;
+}
+.blog-post > ul li,
+.blog-post > ol li {
+  margin-bottom: 5px;
+}
+.blog-post > blockquote {
+  border-left: 3px solid #035384;
+  margin: 0 0 18px;
+  padding: 2px 0 2px 16px;
+  color: #555;
+  font-style: normal;
+}
+.blog-post a {
+  color: #1378b2;
+}
+.blog-post a:hover {
+  text-decoration: underline;
+}
+
+/* 본문 인용 [N] + 하단 참고문헌 목록 */
+.blog-post ul.references {
+  list-style: none;
+  padding-left: 0;
+  font-size: 13.5px;
+  color: #555;
+}
+.blog-post ul.references li {
+  display: flex;
+  gap: 0.5em;
+  margin-bottom: 7px;
+}
+.blog-post ul.references li:target {
+  background: #fff6da;
+}
+.blog-post ul.references .ref-num {
+  flex: 0 0 auto;
+  color: #888;
+}
+.blog-post ul.references .ref-num:hover {
+  color: #035384;
+}
+.blog-post a[id^="cite-"]:target {
+  background: #fff6da;
+}
+
+/* 본문 그림 — 기본은 본문 폭보다 좁게(가독성). .figure-wide는 본문 폭까지 허용. */
+.blog-post {
+  counter-reset: figure;
+}
+.blog-post figure {
+  counter-increment: figure;
+  margin: 26px auto;
+  max-width: 520px;
+  text-align: center;
+}
+.blog-post figure.figure-wide {
+  max-width: 100%;
+}
+/* 두 그림 나란히 — 각 figure는 절반씩, 상단 정렬 */
+.blog-post .figure-row {
+  counter-reset: none;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin: 26px 0;
+}
+.blog-post .figure-row figure {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+}
+.blog-post figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ececec;
+  border-radius: 3px;
+}
+.blog-post figcaption::before {
+  content: "그림 " counter(figure) ". ";
+  color: #555;
+  font-weight: 600;
+}
+.blog-post figcaption {
+  margin-top: 9px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #888;
+}
+
+/* 본문 마무리 — 구분선 + 콜로폰 */
+.blog-post .post-footer {
+  margin-top: 44px;
+  padding-top: 20px;
+  border-top: 1px solid #ececec;
+}
+.blog-post .post-colophon {
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  color: #aaa;
+}
+
+@media only screen and (max-width: 600px) {
+  .post-list-item {
+    gap: 14px;
+  }
+  .post-thumb {
+    width: 104px;
+    height: 74px;
+  }
+}
