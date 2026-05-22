@@ -307,6 +307,27 @@
   color: #888;
 }
 
+/* 코드 — 블록(pre)과 인라인(code) */
+.blog-post pre {
+  background: #f6f8fa;
+  border: 1px solid #eaecef;
+  border-radius: 6px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 0 18px;
+}
+.blog-post code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.blog-post :not(pre) > code {
+  background: #f0f0f0;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
 /* 본문 마무리 — 구분선 + 콜로폰 */
 .blog-post .post-footer {
   margin-top: 44px;
