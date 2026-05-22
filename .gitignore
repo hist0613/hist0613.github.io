@@ -1,2 +1,6 @@
 .DS_Store
-assets/
+/assets/
+__pycache__/
+*.pyc
+.claude/
+docs/
