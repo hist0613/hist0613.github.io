@@ -130,6 +130,19 @@
       </figure>
     </div>
 
+    <p>
+      이 효율화가 IRT만의 것은 아니다. anchor points<a id="cite-20" href="#ref-20">[20]</a>는
+      모델들이 confidence를 비슷하게 매기는 문항을 클러스터로 묶고, 그 대표 문항 몇
+      개만으로 전체 정답률을 추정한다 — 문항 파라미터를 추정하는 calibration 단계
+      없이 새 모델에 바로 쓴다 (실제로 tinyBenchmarks가 anchor points의 한계를 짚으며
+      IRT로 넘어간 후속이다). <a id="cite-21" href="#ref-21">[21]</a>에서는 IRT 대신
+      벤치마크 설계 자체(문항 수·시나리오 수·모델 수)를 변수로 두고, 어느 설계를
+      바꿨을 때 모델 순위가 얼마나 흔들리는지로 효율화의 trade-off를 직접 잰다. 같은
+      목표를 다른 도구로 노리는 셈이다 — IRT 계열은 calibration 비용을 치르는 대신
+      문항 하나하나를 해석할 수 있고, 비IRT 계열은 그 비용 없이 바로 쓰이되 해석
+      가능성은 포기한다.
+    </p>
+
     <h2>3. 모델의 능력을 더 잘 표현하기 위한 방향</h2>
 
     <p>
@@ -178,7 +191,9 @@
       LLM 여러 종에게 교육 평가 문항을 풀게 해 문항 난이도를 보정하고,
       <a id="cite-16" href="#ref-16">[16]</a>에서는 LLM에게 특정 학년 학생을 연기하게
       해 실제 시험 난이도와 꽤 높은 상관을 얻기도 한다. 여기서 LLM은 평가 대상도
-      평가자도 아니고, 사람 응시자의 시뮬레이터다.
+      평가자도 아니고, 사람 응시자의 시뮬레이터다. 다만 LLM의 응답 분포가 실제
+      응시자 집단을 얼마나 충실히 대신하는지는 — 그 자체가 아직 검증 중인
+      질문이다<a id="cite-22" href="#ref-22">[22]</a>.
     </p>
 
     <h2>개인적인 생각</h2>
@@ -226,6 +241,9 @@
       <li id="ref-17"><a class="ref-num" href="#cite-17">[17]</a><span class="ref-cite">Zheng et al. Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena. NeurIPS 2023. <a href="https://arxiv.org/abs/2306.05685">arXiv:2306.05685</a></span></li>
       <li id="ref-18"><a class="ref-num" href="#cite-18">[18]</a><span class="ref-cite">Wang et al. Large Language Models are not Fair Evaluators. 2023. <a href="https://arxiv.org/abs/2305.17926">arXiv:2305.17926</a></span></li>
       <li id="ref-19"><a class="ref-num" href="#cite-19">[19]</a><span class="ref-cite">Stureborg et al. Large Language Models are Inconsistent and Biased Evaluators. 2024. <a href="https://arxiv.org/abs/2405.01724">arXiv:2405.01724</a></span></li>
+      <li id="ref-20"><a class="ref-num" href="#cite-20">[20]</a><span class="ref-cite">Vivek et al. Anchor Points: Benchmarking Models with Much Fewer Examples. EACL 2024. <a href="https://arxiv.org/abs/2309.08638">arXiv:2309.08638</a></span></li>
+      <li id="ref-21"><a class="ref-num" href="#cite-21">[21]</a><span class="ref-cite">Perlitz et al. Efficient Benchmarking (of Language Models). NAACL 2024. <a href="https://arxiv.org/abs/2308.11696">arXiv:2308.11696</a></span></li>
+      <li id="ref-22"><a class="ref-num" href="#cite-22">[22]</a><span class="ref-cite">Hullman et al. This Human Study Did Not Involve Human Subjects: Validating LLM Simulations as Behavioral Evidence. 2026. <a href="https://arxiv.org/abs/2602.15785">arXiv:2602.15785</a></span></li>
     </ul>
 
     <footer class="post-footer">
