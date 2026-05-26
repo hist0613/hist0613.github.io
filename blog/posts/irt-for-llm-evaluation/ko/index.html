@@ -77,6 +77,11 @@
       함께 본다.
     </p>
 
+    <figure style="max-width: 560px">
+      <img src="../assets/irt-icc-example.png" alt="IRT 문항특성곡선(ICC) 예시 — 난이도와 변별력이 다른 네 문항의 P(θ) 곡선">
+      <figcaption>2PL IRT 모델의 문항특성곡선(Item Characteristic Curve) 예시. 가로축 θ는 능력 수준, 세로축 P(θ)는 정답 확률이다. 난이도 b는 정답 확률이 50%인 능력 수준(곡선의 위치), 변별력 a는 곡선의 가파름 정도다. 실선 문항은 변별력이 높아 능력 차이를 날카롭게 가르고, 점선 문항은 낮아 능력이 달라도 정답 확률 차이가 크지 않다.</figcaption>
+    </figure>
+
     <p>
       최근 이 IRT를 LLM 평가에 가져오는 연구가 부쩍 늘었다. NLP 쪽에 IRT
       튜토리얼<a id="cite-1" href="#ref-1">[1]</a>이 따로 생기고, "AI 평가도 사람
@@ -110,9 +115,15 @@
       <a id="cite-26" href="#ref-26">[26]</a>이 6개 벤치마크 수만 문항을 IRT로 분석해
       포화·오염을 진단하고 더 작고 깨끗한 벤치마크를 구성했다.
       <a href="#ref-26">[26]</a>은 그 과정에서 여섯 벤치마크가 재는 능력의 약 80%가
-      사실 하나의 공통 인자로 수렴한다는 것까지 드러냈다. 공통된 발상은 점수를
+      사실 하나의 공통 인자로 수렴한다는 것까지 드러냈다. 이름도, 형태도, 주제도 다른
+      벤치마크들이 결국 비슷한 능력 축을 재고 있다는 뜻이다. 공통된 발상은 점수를
       매기기 전에 자(벤치마크) 자체가 제대로 된 자인지 먼저 본다는 것이다.
     </p>
+
+    <figure style="max-width: 760px">
+      <img src="../assets/mmlu-redux-figure3.png" alt="MMLU-Redux Figure 3 — 도메인별 오류 유형 분포">
+      <figcaption>MMLU 30개 도메인의 오류 유형별 분포 (MMLU-Redux<a href="#ref-24">[24]</a> Figure 3). Context·Erroneousness·Wrong groundtruth 등 오류 유형을 색깔로 구분했다. 가장 왼쪽 Virology는 오류율이 57%에 달한다.</figcaption>
+    </figure>
 
     <h2>2. 평가의 효율성을 위한 방향</h2>
 
@@ -232,7 +243,7 @@
       채점자가 믿을 만한 도구인지를 묻는 갈래가 생겼다. judge가 흔들린다는 건 이미
       여러 번 실증됐다. 같은 응답 쌍을 프롬프트만 살짝 바꿔도 판정이 뒤집히고
       <a id="cite-19b" href="#ref-19">[19]</a>, 동일 입력을 여러 번 채점시킨 내적
-      일관성(intra-rater reliability)마저 사람 평가자들 사이보다 낮다는 보고
+      일관성(intra-rater reliability)이 사람 평가자들 사이의 합의보다도 낮다는 보고
       <a id="cite-33" href="#ref-33">[33]</a>까지 있다. 그렇다면 개별 bias를 하나씩
       잡기보다 측정 도구로서 judge가 얼마나 흔들리는지를 한꺼번에 재야 한다. ICML
       2026 논문<a id="cite-12" href="#ref-12">[12]</a>은 LLM-as-a-Judge를 측정 도구로
@@ -242,6 +253,16 @@
       진단한다. 도구로서 흔들리는 judge라면 사람과 맞는지 따질 가치도 없다. 그래서
       consistency를 alignment의 전제로 둔다.
     </p>
+
+    <figure style="max-width: 720px">
+      <img src="../assets/table1-consistency.png" alt="[12] Table 1 — 여러 judge 모델의 내적 일관성(consistency) 측정 결과">
+      <figcaption>judge 모델별 내적 일관성 측정 결과 ([12] Table 1). D = 변별력, ρ = marginal reliability(1에 가까울수록 안정적). 음영 셀(CV ≥ 0.25)은 같은 내용을 조금 다르게 표현했을 때 점수가 크게 바뀌는 경우다.</figcaption>
+    </figure>
+
+    <figure style="max-width: 720px">
+      <img src="../assets/table3-alignment.png" alt="[12] Table 3 — judge의 human alignment 결과">
+      <figcaption>내적 일관성이 충분한 judge에 대한 human alignment 결과 ([12] Table 3). DT = 변별력, Dy = judge와 사람 판정 사이의 거리. 흔들리는 도구라면 사람과 맞는지 따질 가치가 없으므로, consistency 확인이 선행된다.</figcaption>
+    </figure>
 
     <p>
       비슷한 시기에 <a id="cite-13" href="#ref-13">[13]</a>에서는 LLM을 단답형
@@ -269,6 +290,14 @@
       <a id="cite-35" href="#ref-35">[35]</a>는 DPO로 시뮬레이션 학생의 응답 분포를
       IRT 모델에 직접 정렬해, 보정 데이터가 없는 문항의 난이도를 기존 방식보다 정확히
       추정한다. 여기서 LLM은 평가 대상도 평가자도 아니고, 사람 응시자의 시뮬레이터다.
+    </p>
+
+    <figure style="max-width: 480px">
+      <img src="../assets/smart-figure2.png" alt="SMART Figure 2 — DPO 선호도 쌍 생성 방법">
+      <figcaption>SMART<a href="#ref-35">[35]</a> Figure 2. 같은 문항을 능력 수준이 다른 두 시뮬레이션 학생에게 주고, IRT 우도가 높은 응답을 선호 응답으로 학습하는 DPO 선호도 쌍 생성 방법이다.</figcaption>
+    </figure>
+
+    <p>
       다만 LLM의 응답 분포가 실제 응시자 집단을 얼마나 충실히 대신하는지는 아직 검증
       중인 질문이다<a id="cite-22" href="#ref-22">[22]</a>. 20개 넘는 모델을 견준
       분석에서 모델을 키워도 사람과의 정렬이 나아지지 않는다는 결과
