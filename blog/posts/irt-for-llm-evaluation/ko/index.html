@@ -113,7 +113,8 @@
       0%에서 57%까지 벌어졌고, 오류를 바로잡자 모델 순위가 뒤집혔다.
       <a id="cite-25" href="#ref-25">[25]</a>에서는 한 발 더 들어가, 문항 표면의
       구체적 결함 유형(부정 표현, 허수 오답 등)이 IRT 난이도·변별력 파라미터를 실제로
-      어떻게 왜곡하는지까지 연결했다. 더 큰 규모로는
+      어떻게 왜곡하는지까지 연결했다. 텍스트만으로 문항의 IRT 파라미터를
+      자동 예측하려는 시도<a id="cite-44" href="#ref-44">[44]</a>도 2022년에 나왔다. 더 큰 규모로는
       <a id="cite-5" href="#ref-5">[5]</a>이 11개 벤치마크 4만여 문항을,
       <a id="cite-26" href="#ref-26">[26]</a>이 6개 벤치마크 수만 문항을 IRT로 분석해
       포화·오염을 진단하고 더 작고 깨끗한 벤치마크를 구성했다.
@@ -253,7 +254,8 @@
       여러 번 실증됐다. 같은 응답 쌍을 프롬프트만 살짝 바꿔도 판정이 뒤집히고
       <a id="cite-19b" href="#ref-19">[19]</a>, 동일 입력을 여러 번 채점시킨 내적
       일관성(intra-rater reliability)이 사람 평가자들 사이의 합의보다도 낮다는 보고
-      <a id="cite-33" href="#ref-33">[33]</a>까지 있다. 개별 bias를 하나씩
+      <a id="cite-33" href="#ref-33">[33]</a>까지 있다. 20개 NLP 과제에서 LLM judge와 전문가·비전문가 인간을 체계적으로 비교한
+      <a id="cite-46" href="#ref-46">[46]</a>은 과제 유형에 따라 judge의 신뢰도가 크게 달라진다는 것을 실증했다. 개별 bias를 하나씩
       잡기보다 측정 도구로서 judge가 얼마나 흔들리는지를 한꺼번에 재야 한다. ICML
       2026 논문<a id="cite-12" href="#ref-12">[12]</a>은 LLM-as-a-Judge를 측정 도구로
       놓고, 같은 내용의 프롬프트에 일부러 오타를 넣거나, 줄바꿈을 바꾸거나, 문장을
@@ -289,8 +291,9 @@
       쌓는 건 비현실적이다. 그래서 LLM을 응시자 대리로 쓰는 갈래다. 이
       갈래가 성립한다면 앞의 네 갈래 모두에 영향이 간다. 어느 갈래든 calibration이
       선결 조건이고, 그 비용이 풀리면 새 벤치마크·새 모델에도 IRT를 적용하는 일이
-      일상이 되기 때문이다. 이미 2019년에 <a id="cite-14" href="#ref-14">[14]</a>에서는 신경망
-      앙상블의 인공 응답만으로 IRT 파라미터를 학습할 수 있음을 보였고,
+      일상이 되기 때문이다. 2018년 <a id="cite-43" href="#ref-43">[43]</a>에서는 DNN이 IRT로 측정한
+      문항 난이도 순서대로 학습한다는 것을 실증했고, 이듬해 <a id="cite-14" href="#ref-14">[14]</a>에서는 신경망
+      앙상블의 인공 응답만으로 IRT 파라미터를 학습할 수 있음을 보였다.
       최근에는 LLM이 그 자리를 대신한다. LLM에게 수준별 학생 역할을 부여해
       문항에 응답시키는 방식이 2024년에 독립적으로 여럿 나왔다<a id="cite-39" href="#ref-39">[39]</a><a id="cite-40" href="#ref-40">[40]</a>.
       <a id="cite-15" href="#ref-15">[15]</a>에서는
@@ -309,7 +312,9 @@
 
     <p>
       다만 LLM의 응답 분포가 실제 응시자 집단을 얼마나 충실히 대신하는지는 아직 검증
-      중인 질문이다<a id="cite-22" href="#ref-22">[22]</a>. 20개 넘는 모델을 견준
+      중인 질문이다<a id="cite-22" href="#ref-22">[22]</a>. <a id="cite-45" href="#ref-45">[45]</a>에서는 인간 응답과 LM 응답 사이의
+      문항기능차이(DIF)를 IRT로 분석해 psychometric alignment라는 지표를 제안했다. 흥미롭게도
+      대형 LM보다 소형 LM이 인간 분포에 더 가까운 경우가 많았다. 20개 넘는 모델을 견준
       분석에서 모델을 키워도 사람과의 정렬이 나아지지 않는다는 결과
       <a id="cite-36" href="#ref-36">[36]</a>가 그 한 예다.
     </p>
@@ -386,6 +391,10 @@
       <li id="ref-40"><a class="ref-num" href="#cite-40">[40]</a><span class="ref-cite">Benedetto et al. Using LLMs to Simulate Students' Responses to Exam Questions. EMNLP 2024 Findings. <a href="https://aclanthology.org/2024.findings-emnlp.663/">ACL Anthology</a></span></li>
       <li id="ref-41"><a class="ref-num" href="#cite-41">[41]</a><span class="ref-cite">Martínez-Plumed et al. Making sense of item response theory in machine learning. ECAI 2016. <a href="https://dl.acm.org/doi/abs/10.3233/978-1-61499-672-9-1140">ACM DL</a></span></li>
       <li id="ref-42"><a class="ref-num" href="#cite-42">[42]</a><span class="ref-cite">Sedoc, Ungar. Item Response Theory for Efficient Human Evaluation of Chatbots. EMNLP Eval4NLP 2020. <a href="https://aclanthology.org/2020.eval4nlp-1.3/">ACL Anthology</a></span></li>
+      <li id="ref-43"><a class="ref-num" href="#cite-43">[43]</a><span class="ref-cite">Lalor, Wu, Munkhdalai, Yu. Understanding Deep Learning Performance through an Examination of Test Set Difficulty. EMNLP 2018. <a href="https://aclanthology.org/D18-1500/">ACL Anthology</a></span></li>
+      <li id="ref-44"><a class="ref-num" href="#cite-44">[44]</a><span class="ref-cite">Byrd, Srivastava. Predicting Difficulty and Discrimination of Natural Language Questions. ACL 2022. <a href="https://aclanthology.org/2022.acl-short.15/">ACL Anthology</a></span></li>
+      <li id="ref-45"><a class="ref-num" href="#cite-45">[45]</a><span class="ref-cite">He-Yueya et al. Psychometric Alignment: Capturing Human Knowledge Distributions via Language Models. 2024. <a href="https://arxiv.org/abs/2407.15645">arXiv:2407.15645</a></span></li>
+      <li id="ref-46"><a class="ref-num" href="#cite-46">[46]</a><span class="ref-cite">Bavaresco et al. LLMs instead of Human Judges? Towards an In-Context LLM-as-a-Judge. ACL 2025. <a href="https://arxiv.org/abs/2406.18403">arXiv:2406.18403</a></span></li>
     </ul>
 
     <footer class="post-footer">
