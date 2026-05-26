@@ -97,11 +97,13 @@
       <a id="cite-3" href="#ref-3">[3]</a>에서는 2016년에 NLP 평가에 IRT를 처음
       들여오며, "모든 평가 문항이 같은 난이도·변별력을 갖는다"는 암묵적 가정에
       의문을 던졌다. 비슷한 시기에 <a id="cite-23" href="#ref-23">[23]</a>은 ML 분류기
-      전반에서 문항 단위로 난이도·변별력을 분석했다. 이후
-      <a id="cite-4" href="#ref-4">[4]</a>에서는 IRT로 리더보드를 다시 설계해, 정답
-      레이블 자체가 잘못된 문항, 너무 쉽거나 어려워서 변별력이 없는 문항, 모델이
-      추론이 아닌 표면적 단서(annotation artifact)로 맞히는 문항 같은 것들을 찾아내는
-      법을 보였다.
+      전반에서 문항 단위로 난이도·변별력을 분석했다. NLP로 좁혀 29개 데이터셋·18개
+      사전학습 모델로 같은 분석을 확장한 <a id="cite-37" href="#ref-37">[37]</a>에서는,
+      SNLI·MNLI 같은 유명 벤치마크가 이미 당시 최신 모델들을 제대로 변별하지 못한다는
+      결과가 2021년에 나왔다. 같은 해 <a id="cite-4" href="#ref-4">[4]</a>에서는
+      IRT로 리더보드를 다시 설계해, 정답 레이블 자체가 잘못된 문항, 너무 쉽거나
+      어려워서 변별력이 없는 문항, 모델이 추론이 아닌 표면적 단서(annotation artifact)로
+      맞히는 문항 같은 것들을 찾아내는 법을 보였다.
     </p>
 
     <p>
@@ -230,9 +232,13 @@
       한편 "단일 스칼라로는 부족하다"는 출발점은 다차원 IRT로도 다룰 수 있다.
       <a id="cite-31" href="#ref-31">[31]</a>은 400개 넘는 모델을 다차원 IRT로 분석해
       성능 분산의 대부분이 3~8개의 해석 가능한 능력 차원으로 설명된다는 것을 보였다.
+      IRT를 쓰지 않아도 같은 방향의 결론이 나온다.
+      <a id="cite-38" href="#ref-38">[38]</a>에서는 29개 LLM을 27개 인지 과제에 걸쳐
+      베이즈 요인분석으로 분석해, 능력 분산의 대부분이 추론·이해·언어 모델링 세 요인으로
+      설명된다고 보고했다.
       <a id="cite-32" href="#ref-32">[32]</a>는 수학 영역을 35개 세부 능력으로 분해해
-      모델별 강·약점 프로파일을 그렸다. θ가 스칼라 하나가 아니라 여러 능력 차원의
-      벡터가 되는 방향이다.
+      모델별 강·약점 프로파일을 그렸다. 어느 방법이든 θ가 스칼라 하나가 아니라 여러
+      능력 차원의 벡터가 되는 방향이다.
     </p>
 
     <h2>4. 평가자(judge) 자체를 진단하는 방향</h2>
@@ -283,7 +289,9 @@
       선결 조건이고, 그 비용이 풀리면 새 벤치마크·새 모델에도 IRT를 적용하는 일이
       일상이 되기 때문이다. 이미 2019년에 <a id="cite-14" href="#ref-14">[14]</a>에서는 신경망
       앙상블의 인공 응답으로 사람 없이 IRT 파라미터를 학습할 수 있음을 보였고,
-      최근에는 LLM이 그 자리를 대신한다. <a id="cite-15" href="#ref-15">[15]</a>에서는
+      최근에는 LLM이 그 자리를 대신한다. LLM에게 수준별 학생 역할을 부여해
+      문항에 응답시키는 방식이 2024년에 독립적으로 여럿 나왔다<a id="cite-39" href="#ref-39">[39]</a><a id="cite-40" href="#ref-40">[40]</a>.
+      <a id="cite-15" href="#ref-15">[15]</a>에서는
       LLM 여러 종에게 교육 평가 문항을 풀게 해 문항 난이도를 보정하고,
       <a id="cite-16" href="#ref-16">[16]</a>에서는 LLM에게 특정 학년 학생을 연기하게
       해 실제 시험 난이도와 높은 상관을 얻는다. 한 걸음 더 나아가 SMART
@@ -367,6 +375,10 @@
       <li id="ref-34"><a class="ref-num" href="#cite-34">[34]</a><span class="ref-cite">Noisy but Valid: Robust Statistical Evaluation of LLMs with Imperfect Judges. ICLR 2026. <a href="https://arxiv.org/abs/2601.20913">arXiv:2601.20913</a></span></li>
       <li id="ref-35"><a class="ref-num" href="#cite-35">[35]</a><span class="ref-cite">Scarlatos et al. SMART: Simulated Students Aligned with Item Response Theory for Question Difficulty Prediction. EMNLP 2025. <a href="https://arxiv.org/abs/2507.05129">arXiv:2507.05129</a></span></li>
       <li id="ref-36"><a class="ref-num" href="#cite-36">[36]</a><span class="ref-cite">Li et al. Can LLMs Estimate Student Struggles? Human-AI Difficulty Alignment with Proficiency Simulation. 2025. <a href="https://arxiv.org/abs/2512.18880">arXiv:2512.18880</a></span></li>
+      <li id="ref-37"><a class="ref-num" href="#cite-37">[37]</a><span class="ref-cite">Vania et al. Comparing Test Sets with Item Response Theory. ACL 2021. <a href="https://arxiv.org/abs/2106.00840">arXiv:2106.00840</a></span></li>
+      <li id="ref-38"><a class="ref-num" href="#cite-38">[38]</a><span class="ref-cite">Burnell et al. Revealing the Structure of Language Model Capabilities. 2023. <a href="https://arxiv.org/abs/2306.10062">arXiv:2306.10062</a></span></li>
+      <li id="ref-39"><a class="ref-num" href="#cite-39">[39]</a><span class="ref-cite">Lu, Wang. Generative Students: Using LLM-Simulated Student Profiles to Support Question Item Evaluation. L@S 2024. <a href="https://arxiv.org/abs/2405.11591">arXiv:2405.11591</a></span></li>
+      <li id="ref-40"><a class="ref-num" href="#cite-40">[40]</a><span class="ref-cite">Benedetto et al. Using LLMs to Simulate Students' Responses to Exam Questions. EMNLP 2024 Findings. <a href="https://aclanthology.org/2024.findings-emnlp.663/">ACL Anthology</a></span></li>
     </ul>
 
     <footer class="post-footer">
