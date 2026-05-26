@@ -107,6 +107,11 @@
       것들을 찾아내는 법을 보였다.
     </p>
 
+    <figure style="max-width: 760px">
+      <img src="../assets/vania2021-figure1-2.png" alt="Vania et al. 2021 Figure 1-2 — 29개 NLP 데이터셋 LEH 점수 분포와 ICC 예시">
+      <figcaption>29개 NLP 데이터셋에서 측정한 LEH(Locally Estimated Headroom) 점수 분포(Vania et al.<a href="#ref-37">[37]</a> Figure 1-2). 세로축은 문항의 LEH 점수(높을수록 최강 모델도 틀리는 변별력 있는 문항)다. Quora·HellaSwag·MC-TACO는 현재 최강 모델을 변별하는 문항이 많은 반면, SNLI·MNLI는 거의 모든 문항이 0에 수렴해 포화 상태임을 보여준다.</figcaption>
+    </figure>
+
     <p>
       이 진단이 실제로 무엇을 잡아내는지는 MMLU를 전문가들이 손으로 재검수한
       <a id="cite-24" href="#ref-24">[24]</a>이 잘 보여준다. 도메인에 따라 문항 오류율이
@@ -245,6 +250,11 @@
       능력 차원의 벡터로 표현된다.
     </p>
 
+    <figure style="max-width: 760px">
+      <img src="../assets/growing-pains-figure1.png" alt="Growing Pains Figure 1 — 고정 파라미터 보정 파이프라인">
+      <figcaption>고정 파라미터 보정(fixed parameter calibration) 파이프라인(Growing Pains<a href="#ref-31">[31]</a> Figure 1). (1) 초기 모델 집합으로 문항 파라미터를 calibrate하고, (2) 새 모델이 추가될 때마다 anchor 문항의 파라미터를 고정한 채 새 응시자(모델)만 추정하며, (3) 적은 문항으로도 효율적으로 평가한다. 벤치마크가 누적돼도 전체를 새로 calibrate할 필요가 없어진다.</figcaption>
+    </figure>
+
     <h2>4. 평가자(judge) 자체를 진단하는 방향</h2>
 
     <p>
@@ -317,6 +327,11 @@
       대형 LM보다 소형 LM이 인간 분포에 더 가깝다는 보고가 많다. 20개 넘는 모델을 견준
       <a id="cite-36" href="#ref-36">[36]</a>이 그 한 예다.
     </p>
+
+    <figure style="max-width: 700px">
+      <img src="../assets/heyueya2024-figure3.png" alt="He-Yueya et al. 2024 Figure 3 — 인간 집단과 LM 합성 집단의 응답 정확도 분포 비교">
+      <figcaption>인간 집단(위)과 LM 합성 집단(아래)의 응답 정확도 분포 비교(He-Yueya et al.<a href="#ref-45">[45]</a> Figure 3). 전체 정확도 수준이 비슷해도 문항별 반응 패턴이 다르다. 이 차이가 DIF(문항기능차이)로 포착되며, psychometric alignment가 낮음을 의미한다.</figcaption>
+    </figure>
 
     <h2>개인적인 생각</h2>
 
