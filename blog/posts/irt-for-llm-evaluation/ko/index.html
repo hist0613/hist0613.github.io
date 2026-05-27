@@ -228,6 +228,9 @@
       80개 LLM으로 USMLE 연계 벤치마크를 도메인별 IRT 프로파일링한 사례<a id="cite-80" href="#ref-80">[80]</a>에서는,
       전체 정확도로는 높은 순위임에도 특정 도메인에서는 하위 모델에 역전당하는 패턴이
       확인됐다.
+      다차원 IRT와 적응형 문항 선택을 결합해 65개 모델 · 10만여 문항(WILD)에서
+      16개 문항만으로 MAE 7% 미만을 달성하며 평가 토큰 비용의 85%를 절감한 연구
+      <a id="cite-114" href="#ref-114">[114]</a>도 나왔다.
       다만 어느 쪽이든 IRT가 작동하려면
       calibration이 먼저 끝나 있어야 한다. 이름은 측정학에서 그대로 가져왔다.
       저울·온도계의 눈금을 알려진 기준에 맞춰 매기듯, 다수 모델·다수 문항의 응답
@@ -452,6 +455,9 @@
       IRT 문항특성곡선(ICC) 형태를 직접 생성하게 하는 시도<a id="cite-89" href="#ref-89">[89]</a>도
       나왔다. 실제 응시자 데이터 없이 IRT 파라미터를 추정하는 방향이다.
       여기서 LLM은 평가 대상도 평가자도 아니고, 사람 응시자의 시뮬레이터다.
+      LLM을 문항 생성자로 쓸 때도 IRT 검증이 필요하다. 베이즈 IRT로 ChatGPT 생성 문항과
+      전문가 검증 원본을 비교하면, 표면적 유사성에도 불구하고 차원 구조와 잠재 특성 범위별
+      문항정보량이 달라진다는 것이 밝혀졌다<a id="cite-115" href="#ref-115">[115]</a>.
     </p>
 
     <figure style="max-width: 480px">
@@ -640,6 +646,8 @@
       <li id="ref-111"><a class="ref-num" href="#cite-111">[111]</a><span class="ref-cite">Cui, Sachan. Investigating the Zone of Proximal Development of Language Models for In-Context Learning. NAACL 2025 Findings. <a href="https://arxiv.org/abs/2502.06990">arXiv:2502.06990</a></span></li>
       <li id="ref-112"><a class="ref-num" href="#cite-112">[112]</a><span class="ref-cite">Wang, Jiang, Hernandez-Orallo et al. Evaluating General-Purpose AI with Psychometrics. 2023. <a href="https://arxiv.org/abs/2310.16379">arXiv:2310.16379</a></span></li>
       <li id="ref-113"><a class="ref-num" href="#cite-113">[113]</a><span class="ref-cite">Xie, Ma, Wang et al. AIPsychoBench: Understanding the Psychometric Differences between LLMs and Humans. CogSci 2025. <a href="https://arxiv.org/abs/2509.16530">arXiv:2509.16530</a></span></li>
+      <li id="ref-114"><a class="ref-num" href="#cite-114">[114]</a><span class="ref-cite">Krumdick, Wiemerslage, Ebner, Lovering, Tanner. Cost-Efficient Estimation of General Abilities Across Benchmarks. 2026. <a href="https://arxiv.org/abs/2604.01418">arXiv:2604.01418</a></span></li>
+      <li id="ref-115"><a class="ref-num" href="#cite-115">[115]</a><span class="ref-cite">Angelelli, Oliva, Arima, Ciavolino. Human- vs. AI-generated tests: dimensionality and information accuracy in latent trait evaluation. Statistics 2025. <a href="https://arxiv.org/abs/2510.24739">arXiv:2510.24739</a></span></li>
     </ul>
 
     <footer class="post-footer">
