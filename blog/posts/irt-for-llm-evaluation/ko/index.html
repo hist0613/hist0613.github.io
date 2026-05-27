@@ -120,7 +120,9 @@
       구체적 결함 유형(부정 표현, 허수 오답 등)이 IRT 난이도·변별력 파라미터를 실제로
       어떻게 왜곡하는지까지 연결했다. 텍스트만으로 문항의 IRT 파라미터를
       자동 예측하려는 시도는 2020년 <a id="cite-47" href="#ref-47">[47]</a>에서 시작됐고,
-      <a id="cite-44" href="#ref-44">[44]</a>에서 자연어 문항 전반으로 이어졌다. 더 큰 규모로는
+      <a id="cite-44" href="#ref-44">[44]</a>에서 자연어 문항 전반으로 이어졌다.
+      코드 생성 벤치마크(HumanEval+, ClassEval)에서도 IRT로 과제 난이도와 변별력을
+      분석해 구조적 취약점을 찾아낸 작업<a id="cite-64" href="#ref-64">[64]</a>이 나왔다. 더 큰 규모로는
       <a id="cite-5" href="#ref-5">[5]</a>이 11개 벤치마크 4만여 문항을,
       <a id="cite-26" href="#ref-26">[26]</a>이 6개 벤치마크 수만 문항을 IRT로 분석해
       포화·오염을 진단하고 더 작고 깨끗한 벤치마크를 구성했다.
@@ -176,7 +178,9 @@
       분리해 보이면서, MMLU를 50배까지 압축했다. 기계학습 평가 쪽에서도 독립적으로
       같은 발상이 나왔다. Active Testing<a id="cite-50" href="#ref-50">[50]</a>은 베이즈 실험
       설계로 테스트 예제를 능동적으로 선택해 평가 비용을 줄인다. ML 능동 학습과 CAT가
-      "가장 정보가 많은 다음 예제를 고른다"는 원리에서 수렴한다. 다만 어느 쪽이든 IRT가 작동하려면
+      "가장 정보가 많은 다음 예제를 고른다"는 원리에서 수렴한다. 에이전트 벤치마크에서도
+      IRT에서 착안해 응답률 30-70%대 중간 난이도 과제만 골라 평가하면 44-70%의 과제를
+      줄이면서 순위 안정성을 유지할 수 있다<a id="cite-66" href="#ref-66">[66]</a>. 다만 어느 쪽이든 IRT가 작동하려면
       calibration이 먼저 끝나 있어야 한다. 이름은 측정학에서 그대로 가져왔다.
       저울·온도계의 눈금을 알려진 기준에 맞춰 매기듯, 다수 모델·다수 문항의 응답
       행렬을 모아 문항 파라미터(변별력·난이도)를 추정해 두는 과정이다. 모델이 새로
@@ -275,6 +279,9 @@
       인지 진단 모형(CDM)은 능력을 이산 속성 벡터로 나타낸다.
       <a id="cite-59" href="#ref-59">[59]</a>에서는 CDM을 LLM 평가에 적용해 텍스트 임베딩으로
       Q-행렬(문항-속성 관계)을 자동 구성하고, LLM의 세부 능력 프로파일을 추출했다.
+      에이전트 평가에서는 한 발 더 나아가, 에이전트 능력을 LLM 능력과 scaffold 능력으로
+      분리하고 과제 특성(이슈 내용·코드·테스트)까지 모델에 반영하는 IRT 기반 예측
+      프레임워크<a id="cite-65" href="#ref-65">[65]</a>도 나왔다.
     </p>
 
     <figure style="max-width: 760px">
@@ -464,6 +471,9 @@
       <li id="ref-61"><a class="ref-num" href="#cite-61">[61]</a><span class="ref-cite">Fang, Oberski, Nguyen. PATCH! Psychometrics-Assisted Benchmarking of LLMs against Human Populations. ACL 2025 (GEM2 Workshop). <a href="https://arxiv.org/abs/2404.01799">arXiv:2404.01799</a></span></li>
       <li id="ref-62"><a class="ref-num" href="#cite-62">[62]</a><span class="ref-cite">Park, Park, Won, Kim. Large Language Models are Students at Various Levels: Zero-shot Question Difficulty Estimation. EMNLP 2024 Findings. <a href="https://aclanthology.org/2024.findings-emnlp.477/">ACL Anthology</a></span></li>
       <li id="ref-63"><a class="ref-num" href="#cite-63">[63]</a><span class="ref-cite">Zhu, Hua, Miao, Zhao. Benchmark Health Index: A Systematic Framework for Benchmarking the Benchmarks of LLMs. 2026. <a href="https://arxiv.org/abs/2602.11674">arXiv:2602.11674</a></span></li>
+      <li id="ref-64"><a class="ref-num" href="#cite-64">[64]</a><span class="ref-cite">Tambon, Nikanjam, Zid, Khomh, Antoniol. TaskEval: Assessing Difficulty of Code Generation Tasks for Large Language Models. TOSEM 2025. <a href="https://arxiv.org/abs/2407.21227">arXiv:2407.21227</a></span></li>
+      <li id="ref-65"><a class="ref-num" href="#cite-65">[65]</a><span class="ref-cite">Ge, Kryvosheieva, Fried, Girit, Hariharan. Agent psychometrics: Task-level performance prediction in agentic coding benchmarks. 2026. <a href="https://arxiv.org/abs/2604.00594">arXiv:2604.00594</a></span></li>
+      <li id="ref-66"><a class="ref-num" href="#cite-66">[66]</a><span class="ref-cite">Ndzomga. Efficient Benchmarking of AI Agents. 2026. <a href="https://arxiv.org/abs/2603.23749">arXiv:2603.23749</a></span></li>
     </ul>
 
     <footer class="post-footer">
