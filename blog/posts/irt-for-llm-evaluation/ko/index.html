@@ -100,7 +100,9 @@
       <a id="cite-41" href="#ref-41">[41]</a>에서는 분류기를 평가할 때 모든 테스트
       인스턴스를 동등하게 취급하는 관행에 IRT로 의문을 제기했다. 두 계열은 이후
       수렴해 <a id="cite-23" href="#ref-23">[23]</a>에서 AI 전반을 아우르는 분석 틀로
-      정리됐다. <a id="cite-37" href="#ref-37">[37]</a>은 NLP로 좁혀 29개 데이터셋·18개 사전학습 모델로 분석을 확장해, SNLI·MNLI 같은 유명 벤치마크가
+      정리됐다. 같은 흐름에서 <a id="cite-112" href="#ref-112">[112]</a>에서도 과제 기반
+      벤치마크의 한계를 지적하며 구성 개념(construct) 중심의 심리측정 평가로 전환을 주장했다.
+      <a id="cite-37" href="#ref-37">[37]</a>은 NLP로 좁혀 29개 데이터셋·18개 사전학습 모델로 분석을 확장해, SNLI·MNLI 같은 유명 벤치마크가
       이미 당시 최신 모델들을 제대로 변별하지 못한다는 것을 2021년에 밝혔다.
       같은 해 <a id="cite-4" href="#ref-4">[4]</a>에서는 IRT로 리더보드를 다시
       설계해, 정답 레이블 자체가 잘못된 문항, 너무 쉽거나 어려워서 변별력이 없는
@@ -364,6 +366,9 @@
       실제 인간 과제 완료 시간에 연결하면 R² = 0.81의 예측력이 나온다는 보고
       <a id="cite-98" href="#ref-98">[98]</a>도, θ가 추상적 수치 이상의 실용적 함의를 가질 수
       있음을 보여준다.
+      IRT 스케일에서 한 걸음 더 나아가, <a id="cite-109" href="#ref-109">[109]</a>에서는
+      18개 루브릭 기반 일반 척도(general scale)로 과제 특성을 기술해 15개 LLM을 63개 과제에서
+      포화 없이 분석하고 분포 외 성능 예측까지 가능함을 보였다.
     </p>
 
     <figure style="max-width: 760px">
@@ -409,6 +414,9 @@
       <a id="cite-34" href="#ref-34">[34]</a>도 나온다. judge의 판정 오류율을
       소규모 사람 검수로 추정한 뒤, 그 불확실성을 통계 모형에 반영하는 방식이다.
       어떤 길이든 judge를 맹목적으로 신뢰하지 않고, 그 신뢰도부터 진단하는 것이 공통된 방향이다.
+      judge 진단과는 별도로, AI 평가에 쓰이는 사람 레이블 자체의 평가자 편향을 교정하는
+      시도<a id="cite-110" href="#ref-110">[110]</a>도 나왔다. 다국면 라쉬 모형(MFRM)으로
+      평가자의 심각도·중앙화 편향을 추정해 레이블을 교정하면 훈련·평가 데이터 품질이 올라간다는 접근이다.
     </p>
 
     <h2>5. LLM으로 학생을 시뮬레이션하는 방향</h2>
@@ -424,6 +432,9 @@
       앙상블의 인공 응답만으로 IRT 파라미터를 학습할 수 있음을 보였다.
       2020년에는 더 나아가, 학습 중 모델 능력을 IRT로 동적으로 추정해
       커리큘럼 데이터 선택을 자동화하는 방법<a id="cite-60" href="#ref-60">[60]</a>도 나왔다.
+      <a id="cite-111" href="#ref-111">[111]</a>에서는 비고츠키의 근접발달영역(ZPD) 개념을
+      LLM에 적용해, IRT로 어떤 문항이 인컨텍스트 학습에 효과적인지 파악하고 추론 비용을
+      줄이면서 파인튜닝 커리큘럼도 설계할 수 있음을 보였다.
       최근에는 LLM이 그 자리를 대신한다. LLM에게 수준별 학생 역할을 부여해
       문항에 응답시키는 방식이 2024년에 독립적으로 여럿 나왔다<a id="cite-39" href="#ref-39">[39]</a><a id="cite-40" href="#ref-40">[40]</a>.
       <a id="cite-62" href="#ref-62">[62]</a>에서는 수준별 학생을 연기하는 LLM의 응답이
@@ -458,6 +469,8 @@
       실증<a id="cite-90" href="#ref-90">[90]</a>도 있다.
       반대로 사람 집단과 LLM을 심리측정 틀 안에서 직접 비교해, LLM이 해당 학년 수준의
       인간 집단을 통계적으로 얼마나 재현하는지 측정하는 시도<a id="cite-61" href="#ref-61">[61]</a>도 있다.
+      LLM 전용 심리측정 벤치마크를 구성해 112개 하위 범주·7개 언어에서 LLM과 인간의
+      응답 분포 차이를 체계적으로 측정한 연구<a id="cite-113" href="#ref-113">[113]</a>도 CogSci 2025에서 발표됐다.
       <a id="cite-45" href="#ref-45">[45]</a>에서는 인간 응답과 LM 응답 사이의
       문항기능차이(DIF)를 IRT로 분석해 psychometric alignment라는 지표를 제안했다. 흥미롭게도
       대형 LM보다 소형 LM이 인간 분포에 더 가깝다는 보고가 많다. 20개 넘는 모델을 견준
@@ -622,6 +635,11 @@
       <li id="ref-106"><a class="ref-num" href="#cite-106">[106]</a><span class="ref-cite">Jain, Hollander, He et al. Exploring the Potential of Large Language Models for Estimating the Reading Comprehension Question Difficulty. 2025. <a href="https://arxiv.org/abs/2502.17785">arXiv:2502.17785</a></span></li>
       <li id="ref-107"><a class="ref-num" href="#cite-107">[107]</a><span class="ref-cite">Wallin, Huang. Latent Impact and Differential Item Functioning Analysis for Asymmetric IRT Models. 2026. <a href="https://arxiv.org/abs/2605.05684">arXiv:2605.05684</a></span></li>
       <li id="ref-108"><a class="ref-num" href="#cite-108">[108]</a><span class="ref-cite">Yost et al. Measure what Matters: Psychometric Evaluation of AI with Situational Judgment Tests. 2025. <a href="https://arxiv.org/abs/2510.22170">arXiv:2510.22170</a></span></li>
+      <li id="ref-109"><a class="ref-num" href="#cite-109">[109]</a><span class="ref-cite">Zhou, Pacchiardi, Martínez-Plumed et al. General Scales Unlock AI Evaluation with Explanatory and Predictive Power. 2025. <a href="https://arxiv.org/abs/2503.06378">arXiv:2503.06378</a></span></li>
+      <li id="ref-110"><a class="ref-num" href="#cite-110">[110]</a><span class="ref-cite">Casabianca, Beiting-Parrish. Correcting Human Labels for Rater Effects in AI Evaluation: An Item Response Theory Approach. LAK 2026. <a href="https://arxiv.org/abs/2602.22585">arXiv:2602.22585</a></span></li>
+      <li id="ref-111"><a class="ref-num" href="#cite-111">[111]</a><span class="ref-cite">Cui, Sachan. Investigating the Zone of Proximal Development of Language Models for In-Context Learning. NAACL 2025 Findings. <a href="https://arxiv.org/abs/2502.06990">arXiv:2502.06990</a></span></li>
+      <li id="ref-112"><a class="ref-num" href="#cite-112">[112]</a><span class="ref-cite">Wang, Jiang, Hernandez-Orallo et al. Evaluating General-Purpose AI with Psychometrics. 2023. <a href="https://arxiv.org/abs/2310.16379">arXiv:2310.16379</a></span></li>
+      <li id="ref-113"><a class="ref-num" href="#cite-113">[113]</a><span class="ref-cite">Xie, Ma, Wang et al. AIPsychoBench: Understanding the Psychometric Differences between LLMs and Humans. CogSci 2025. <a href="https://arxiv.org/abs/2509.16530">arXiv:2509.16530</a></span></li>
     </ul>
 
     <footer class="post-footer">
