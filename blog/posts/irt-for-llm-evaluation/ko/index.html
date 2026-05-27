@@ -124,7 +124,11 @@
       <a id="cite-44" href="#ref-44">[44]</a>에서 자연어 문항 전반으로 이어졌다.
       교육 수학 문항 25만 건을 대상으로 학생 응답 시뮬레이션을 경유해 난이도를 예측한
       사례<a id="cite-71" href="#ref-71">[71]</a>에서는 실제 IRT 파라미터와 r ≈ 0.78을
-      달성했다. 코드 생성 벤치마크(HumanEval+, ClassEval)에서도 IRT로 과제 난이도와 변별력을
+      달성했다. 텍스트 기반 난이도 예측 연구 37편을 정리한 서베이<a id="cite-75" href="#ref-75">[75]</a>에서는
+      최신 트랜스포머 모델이 수동 특성 설계 없이 r = 0.87까지 달성한다고 정리한다. 반면
+      LLM이 직접 난이도를 예측하게 하면 IRT 파라미터와 중간 정도의 순위 상관에 그치며
+      체계적으로 과소평가하는 경향이 있다는 보고<a id="cite-74" href="#ref-74">[74]</a>도 있다.
+      코드 생성 벤치마크(HumanEval+, ClassEval)에서도 IRT로 과제 난이도와 변별력을
       분석해 구조적 취약점을 찾아낸 작업<a id="cite-64" href="#ref-64">[64]</a>이 나왔다. 더 큰 규모로는
       <a id="cite-5" href="#ref-5">[5]</a>이 11개 벤치마크 4만여 문항을,
       <a id="cite-26" href="#ref-26">[26]</a>이 6개 벤치마크 수만 문항을 IRT로 분석해
@@ -498,6 +502,8 @@
       <li id="ref-71"><a class="ref-num" href="#cite-71">[71]</a><span class="ref-cite">Hoyl. Synthetic Student Responses: LLM-Extracted Features for IRT Difficulty Parameter Estimation. 2026. <a href="https://arxiv.org/abs/2602.00034">arXiv:2602.00034</a></span></li>
       <li id="ref-72"><a class="ref-num" href="#cite-72">[72]</a><span class="ref-cite">Qian et al. Benchmark2: Systematic Evaluation of LLM Benchmarks. 2026. <a href="https://arxiv.org/abs/2601.03986">arXiv:2601.03986</a></span></li>
       <li id="ref-73"><a class="ref-num" href="#cite-73">[73]</a><span class="ref-cite">Liao, Zhang, Wu, Fang. LEGO-IRT: Toward a Unified Framework for Data-Efficient Evaluation of Large Language Models. 2025. <a href="https://arxiv.org/abs/2510.04051">arXiv:2510.04051</a></span></li>
+      <li id="ref-74"><a class="ref-num" href="#cite-74">[74]</a><span class="ref-cite">Brant, Kühn, Pang. Estimating Exam Item Difficulty with LLMs: A Benchmark on Brazil's ENEM Corpus. 2026. <a href="https://arxiv.org/abs/2602.06631">arXiv:2602.06631</a></span></li>
+      <li id="ref-75"><a class="ref-num" href="#cite-75">[75]</a><span class="ref-cite">Peters, Zhang, Jiao, Li, Zhou, Lissitz. Text-Based Approaches to Item Difficulty Modeling in Large-Scale Assessments: A Systematic Review. 2025. <a href="https://arxiv.org/abs/2509.23486">arXiv:2509.23486</a></span></li>
     </ul>
 
     <footer class="post-footer">
