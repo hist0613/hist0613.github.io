@@ -131,11 +131,15 @@
       최신 트랜스포머 모델이 수동 특성 설계 없이 r = 0.87까지 달성한다고 정리한다. 반면
       LLM이 직접 난이도를 예측하게 하면 IRT 파라미터와 중간 정도의 순위 상관에 그치며
       체계적으로 과소평가하는 경향이 있다는 보고<a id="cite-74" href="#ref-74">[74]</a>도 있다.
+      추론 과정을 생성하게 하거나 다수 샘플을 집계해 LLM의 MCQ 난이도 예측을 강화하는
+      방법<a id="cite-99" href="#ref-99">[99]</a>도 AIED 2025에 발표됐다.
       코드 생성 벤치마크(HumanEval+, ClassEval)에서도 IRT로 과제 난이도와 변별력을
       분석해 구조적 취약점을 찾아낸 작업<a id="cite-64" href="#ref-64">[64]</a>이 나왔다.
       수학·프로그래밍·추론 등 6개 도메인에 IRT와 Glicko-2를 함께 적용해 통일된 난이도 점수를
       부여하고 LLM의 난이도별 일반화를 프로파일링하는 Easy2Hard-Bench<a id="cite-88" href="#ref-88">[88]</a>도
-      같은 방향에 있다. 더 큰 규모로는
+      같은 방향에 있다. 중국 대학수학능력시험(GAOKAO)에서 LLM의 고득점이 실제 강한 역량을
+      반영하는지 심리측정 분석으로 검증한 연구<a id="cite-94" href="#ref-94">[94]</a>도 나왔다.
+      더 큰 규모로는
       <a id="cite-5" href="#ref-5">[5]</a>이 11개 벤치마크 4만여 문항을,
       <a id="cite-26" href="#ref-26">[26]</a>이 6개 벤치마크 수만 문항을 IRT로 분석해
       포화·오염을 진단하고 더 작고 깨끗한 벤치마크를 구성했다.
@@ -150,6 +154,9 @@
       한편 IRT 바깥에서도, 변별력과 포화 여유(anti-saturation
       headroom)를 독립 지표로 명시화해 벤치마크 건강도를 수치로 재는 프레임워크<a id="cite-63" href="#ref-63">[63]</a>도
       나왔다. 이름은 달라도 IRT의 변별력 파라미터(a)와 LEH 개념을 사실상 같은 목적으로 쓴다.
+      60개 벤치마크를 가로지르는 대규모 분석<a id="cite-100" href="#ref-100">[100]</a>에서는 절반 가까이가
+      이미 포화 상태이며, 전문가가 큐레이션한 벤치마크가 크라우드소싱 방식보다 포화에 더
+      강하다는 결과가 나왔다.
     </p>
 
     <figure style="max-width: 760px">
@@ -333,6 +340,16 @@
       에이전트 평가에서는 한 발 더 나아가, 에이전트 능력을 LLM 능력과 scaffold 능력으로
       분리하고 과제 특성(이슈 내용·코드·테스트)까지 모델에 반영하는 IRT 기반 예측
       프레임워크<a id="cite-65" href="#ref-65">[65]</a>도 나왔다.
+      이 모든 분석은 행동 행렬을 외부에서 쌓아 추정하는 방식이다. 반대로 LLM 표현 공간에
+      문제 난이도가 이미 선형적으로 인코딩돼 있다는 사실도 밝혀졌다. 60개 모델에 선형 프로브를
+      적용한 실험<a id="cite-95" href="#ref-95">[95]</a>에서 인간이 레이블한 난이도가 ρ ≈ 0.88로
+      추출됐고, 강화학습 훈련이 이 신호를 강화했다. 특정 어텐션 헤드가 쉬운 문제와 어려운
+      문제에 반대 방향으로 활성화되는 구조<a id="cite-96" href="#ref-96">[96]</a>도 발견됐다. 다국어
+      모델에서는 이 표현이 얕은 레이어에서 언어 중립적으로, 깊은 레이어에서 언어별로 분리됨이
+      확인됐다<a id="cite-97" href="#ref-97">[97]</a>. 벤치마크 성능에서 IRT로 추출한 잠재 난이도를
+      실제 인간 과제 완료 시간에 연결하면 R² = 0.81의 예측력이 나온다는 보고
+      <a id="cite-98" href="#ref-98">[98]</a>도, θ가 추상적 수치 이상의 실용적 함의를 가질 수
+      있음을 보여준다.
     </p>
 
     <figure style="max-width: 760px">
@@ -434,6 +451,9 @@
       DIF는 인간-기계 비교 너머로도 확장된다. LLM의 정치적·이념적 편향 여부도 IRT로
       분석할 수 있는데, <a id="cite-67" href="#ref-67">[67]</a>은 겉으로 드러나는 이념 편향의
       대부분이 실제 신념 차이가 아닌 alignment에 의한 응답 회피임을 DIF로 구분해 보였다.
+      IRT 인물 적합도(person-fit) 통계는 그 너머로도 확장된다. LLM 응답이 인간 응답과 패턴상
+      얼마나 다른지를 적합도 지표로 포착해, 다지선다형 평가에서 AI 부정행위를 탐지하는
+      방법<a id="cite-93" href="#ref-93">[93]</a>이 LAK 2025에서 발표됐다.
       심리측정 설문지를 LLM에게 풀게 할 때도 편향이 잡힌다. LLM이 성격 검사에 응답할 때
       사회적으로 선호되는 답을 편향되게 고르는 사회적 바람직성(SDR)이 IRT로 포착되며,
       강제선택형(forced-choice) 형식이 이 편향을 의미 있게 줄인다는 보고<a id="cite-77" href="#ref-77">[77]</a>도
@@ -569,6 +589,14 @@
       <li id="ref-90"><a class="ref-num" href="#cite-90">[90]</a><span class="ref-cite">Säuberli, Frassinelli, Plank. Do LLMs Give Psychometrically Plausible Responses in Educational Assessments? BEA Workshop at ACL 2025. <a href="https://arxiv.org/abs/2506.09796">arXiv:2506.09796</a></span></li>
       <li id="ref-91"><a class="ref-num" href="#cite-91">[91]</a><span class="ref-cite">Guinet, Omidvar-Tehrani, Deoras, Callot. Automated Evaluation of Retrieval-Augmented Language Models with Task-Specific Exam Generation. ICML 2024. <a href="https://arxiv.org/abs/2405.13622">arXiv:2405.13622</a></span></li>
       <li id="ref-92"><a class="ref-num" href="#cite-92">[92]</a><span class="ref-cite">Maeda, Lu. Finding Words Associated with DIF: Predicting Differential Item Functioning using LLMs and Explainable AI. 2025. <a href="https://arxiv.org/abs/2502.07017">arXiv:2502.07017</a></span></li>
+      <li id="ref-93"><a class="ref-num" href="#cite-93">[93]</a><span class="ref-cite">Strugatski, Alexandron. Applying IRT to Distinguish Between Human and Generative AI Responses to Multiple-Choice Assessments. LAK 2025. <a href="https://arxiv.org/abs/2412.02713">arXiv:2412.02713</a></span></li>
+      <li id="ref-94"><a class="ref-num" href="#cite-94">[94]</a><span class="ref-cite">GAOKAO-Eval: Does High Scores Truly Reflect Strong Capabilities in LLMs? 2024. <a href="https://arxiv.org/abs/2412.10056">arXiv:2412.10056</a></span></li>
+      <li id="ref-95"><a class="ref-num" href="#cite-95">[95]</a><span class="ref-cite">Lugoloobi, Russell. LLMs Encode How Difficult Problems Are. 2025. <a href="https://arxiv.org/abs/2510.18147">arXiv:2510.18147</a></span></li>
+      <li id="ref-96"><a class="ref-num" href="#cite-96">[96]</a><span class="ref-cite">Lee, Yin, Leong et al. Probing the Difficulty Perception Mechanism of Large Language Models. 2025. <a href="https://arxiv.org/abs/2510.05969">arXiv:2510.05969</a></span></li>
+      <li id="ref-97"><a class="ref-num" href="#cite-97">[97]</a><span class="ref-cite">Civelli, Bernardelle, Brunello. A Shared Geometry of Difficulty in Multilingual Language Models. 2026. <a href="https://arxiv.org/abs/2601.12731">arXiv:2601.12731</a></span></li>
+      <li id="ref-98"><a class="ref-num" href="#cite-98">[98]</a><span class="ref-cite">Liu, Gala et al. BRIDGE: Predicting Human Task Completion Time From Model Performance. 2026. <a href="https://arxiv.org/abs/2602.07267">arXiv:2602.07267</a></span></li>
+      <li id="ref-99"><a class="ref-num" href="#cite-99">[99]</a><span class="ref-cite">Reasoning and Sampling-Augmented MCQ Difficulty Prediction via LLMs. AIED 2025. <a href="https://arxiv.org/abs/2503.08551">arXiv:2503.08551</a></span></li>
+      <li id="ref-100"><a class="ref-num" href="#cite-100">[100]</a><span class="ref-cite">Akhtar, Reuel, Soni et al. When AI Benchmarks Plateau: A Systematic Study of Benchmark Saturation. 2026. <a href="https://arxiv.org/abs/2602.16763">arXiv:2602.16763</a></span></li>
     </ul>
 
     <footer class="post-footer">
