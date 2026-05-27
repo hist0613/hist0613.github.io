@@ -276,7 +276,9 @@
       모델들이 confidence를 비슷하게 매기는 문항을 클러스터로 묶고, 그 대표 문항 몇
       개만으로 전체 정답률을 추정한다. 문항 파라미터를 추정하는 calibration 없이 새
       모델에 바로 쓴다 (실제로 tinyBenchmarks가 anchor points의 한계를 짚으며 IRT로
-      넘어간 후속이다). <a id="cite-21" href="#ref-21">[21]</a>에서는 IRT 대신 벤치마크
+      넘어간 후속이다). Scales++<a id="cite-121" href="#ref-121">[121]</a>는 문항의 인지적
+      요구를 16개 차원으로 임베딩해 대표 부분집합을 고르는 방식으로, Open LLM Leaderboard에서
+      전체의 0.5%만 써도 MAE 2.9%를 달성하며 선택 비용을 18× 이상 줄인다. <a id="cite-21" href="#ref-21">[21]</a>에서는 IRT 대신 벤치마크
       설계 자체(문항 수·시나리오 수·모델 수)를 변수로 두고, 어느 설계를 바꿨을 때 모델
       순위가 얼마나 흔들리는지로 효율화의 trade-off를 직접 잰다. 같은 팀의 후속
       연구인 BenchBench<a id="cite-58" href="#ref-58">[58]</a>는 벤치마크 간 순위 상관을
@@ -522,6 +524,7 @@
       18개 LLM을 교육 평가 문항에서 CTT·IRT로 검증한 결과 LLM이 인간 응시자보다 지나치게
       자신감 있는 응답 분포를 보이며 zero-shot 방식으로 시험 파일럿에 쓰기엔 적합하지 않다는
       실증<a id="cite-90" href="#ref-90">[90]</a>도 있다.
+      이 문제를 "역량 역설(competence paradox)"로 개념화한 연구<a id="cite-120" href="#ref-120">[120]</a>는, 광범위하게 유능한 LLM이 일부만 아는 학습자를 흉내 낼 때 비현실적인 오류 패턴이 나타남을 지적하며, 인식론적 상태 명세(ESS) 기반 제약 생성이 필요하다고 주장했다.
       반대로 사람 집단과 LLM을 심리측정 틀 안에서 직접 비교해, LLM이 해당 학년 수준의
       인간 집단을 통계적으로 얼마나 재현하는지 측정하는 시도<a id="cite-61" href="#ref-61">[61]</a>도 있다.
       LLM 전용 심리측정 벤치마크를 구성해 112개 하위 범주·7개 언어에서 LLM과 인간의
@@ -701,6 +704,8 @@
       <li id="ref-117"><a class="ref-num" href="#cite-117">[117]</a><span class="ref-cite">Feng et al. GENCAT: Generative Computerized Adaptive Testing. 2026. <a href="https://arxiv.org/abs/2602.20020">arXiv:2602.20020</a></span></li>
       <li id="ref-118"><a class="ref-num" href="#cite-118">[118]</a><span class="ref-cite">Lugoloobi et al. LLMs Encode Their Failures: Predicting Success from Pre-Generation Activations. ICLR 2026 LIT Workshop. <a href="https://arxiv.org/abs/2602.09924">arXiv:2602.09924</a></span></li>
       <li id="ref-119"><a class="ref-num" href="#cite-119">[119]</a><span class="ref-cite">Federiakin. Improving LLM Leaderboards with Psychometrical Methodology. 2025. <a href="https://arxiv.org/abs/2501.17200">arXiv:2501.17200</a></span></li>
+      <li id="ref-120"><a class="ref-num" href="#cite-120">[120]</a><span class="ref-cite">Yuan, Xiao, Li et al. Towards Valid Student Simulation with Large Language Models. 2026. <a href="https://arxiv.org/abs/2601.05473">arXiv:2601.05473</a></span></li>
+      <li id="ref-121"><a class="ref-num" href="#cite-121">[121]</a><span class="ref-cite">Bean, Seedat, Chen, Schwarz. Scales++: Compute Efficient Evaluation Subset Selection with Cognitive Scales Embeddings. 2025. <a href="https://arxiv.org/abs/2510.26384">arXiv:2510.26384</a></span></li>
     </ul>
 
     <footer class="post-footer">
