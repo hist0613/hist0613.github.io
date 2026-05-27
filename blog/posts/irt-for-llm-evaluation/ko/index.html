@@ -157,7 +157,9 @@
       현재 모델이 틀리는 예제를 사람이 직접 제출해 계속 어려운 문항을 공급하는
       플랫폼이다. IRT 정제가 "있는 풀을 깨끗이 고르는" 방식이라면, Dynabench는
       "애초에 변별력 있는 문항을 동적으로 모으는" 방식으로, 같은 문제(벤치마크 포화)를
-      다른 쪽에서 접근한다.
+      다른 쪽에서 접근한다. 이 문항 분석 시각은 RAG 시스템 평가로도 이어진다.
+      <a id="cite-78" href="#ref-78">[78]</a>에서는 895개 합성 Q&A에 IRT를 적용해
+      각 문항의 난이도·변별력을 추정하고 데이터셋의 질적 다양성을 수치화했다.
     </p>
 
     <h2>2. 평가의 효율성을 위한 방향</h2>
@@ -372,7 +374,10 @@
       해 실제 시험 난이도와 높은 상관을 얻는다. 한 걸음 더 나아가 SMART
       <a id="cite-35" href="#ref-35">[35]</a>는 DPO로 시뮬레이션 학생의 응답 분포를
       IRT 모델에 직접 정렬해, 보정 데이터가 없는 문항의 난이도를 기존 방식보다 정확히
-      추정한다. 여기서 LLM은 평가 대상도 평가자도 아니고, 사람 응시자의 시뮬레이터다.
+      추정한다. <a id="cite-79" href="#ref-79">[79]</a>에서는 35개 LLM의 수학
+      문제 응답을 시뮬레이션해 IRT 난이도 랭킹을 산출하고, 이를 강화학습 보상으로 삼아
+      문제를 여러 난이도 버전으로 자동 재작성했다. LLM-as-simulator가 벤치마크 생성에까지
+      이어지는 방향이다. 여기서 LLM은 평가 대상도 평가자도 아니고, 사람 응시자의 시뮬레이터다.
     </p>
 
     <figure style="max-width: 480px">
@@ -512,6 +517,8 @@
       <li id="ref-75"><a class="ref-num" href="#cite-75">[75]</a><span class="ref-cite">Peters, Zhang, Jiao, Li, Zhou, Lissitz. Text-Based Approaches to Item Difficulty Modeling in Large-Scale Assessments: A Systematic Review. 2025. <a href="https://arxiv.org/abs/2509.23486">arXiv:2509.23486</a></span></li>
       <li id="ref-76"><a class="ref-num" href="#cite-76">[76]</a><span class="ref-cite">Zhang, Chen. A Benchmark and Pair-Level 4PL-IRT Framework for Reliable Evaluation of LLM Reasoning. ICLR 2026. <a href="https://openreview.net/forum?id=84UIXhqZ0f">OpenReview</a></span></li>
       <li id="ref-77"><a class="ref-num" href="#cite-77">[77]</a><span class="ref-cite">Okada, Furukawa, Bunji. Quantifying and Mitigating Socially Desirable Responding in LLMs: A Desirability-Matched Graded Forced-Choice Psychometric Study. 2026. <a href="https://arxiv.org/abs/2602.17262">arXiv:2602.17262</a></span></li>
+      <li id="ref-78"><a class="ref-num" href="#cite-78">[78]</a><span class="ref-cite">Carmel et al. LiveRAG: A diverse Q&A dataset with varying difficulty level for RAG evaluation. 2025. <a href="https://arxiv.org/abs/2511.14531">arXiv:2511.14531</a></span></li>
+      <li id="ref-79"><a class="ref-num" href="#cite-79">[79]</a><span class="ref-cite">Li et al. RIDE: Difficulty Evolving Perturbation with Item Response Theory for LLM Reasoning. 2025. <a href="https://arxiv.org/abs/2511.04120">arXiv:2511.04120</a></span></li>
     </ul>
 
     <footer class="post-footer">
