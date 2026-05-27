@@ -130,7 +130,9 @@
       매기기 전에 자(벤치마크) 자체부터 검증한다는 것이다. 이 시각은 비전-언어 모델 평가로도
       이어진다. <a id="cite-56" href="#ref-56">[56]</a>에서는 IRT를 이미지·텍스트·크로스모달 세
       차원으로 확장한 M3IRT를 제안해, 단일 모달리티만으로 풀리는 쉬운 문항과 진짜 멀티모달
-      추론이 필요한 문항을 구분했다.
+      추론이 필요한 문항을 구분했다. 한편 IRT 바깥에서도, 변별력과 포화 여유(anti-saturation
+      headroom)를 독립 지표로 명시화해 벤치마크 건강도를 수치로 재는 프레임워크<a id="cite-63" href="#ref-63">[63]</a>도
+      나왔다. 이름은 달라도 IRT의 변별력 파라미터(a)와 LEH 개념을 사실상 같은 목적으로 쓴다.
     </p>
 
     <figure style="max-width: 760px">
@@ -335,6 +337,8 @@
       커리큘럼 데이터 선택을 자동화하는 방법<a id="cite-60" href="#ref-60">[60]</a>도 나왔다.
       최근에는 LLM이 그 자리를 대신한다. LLM에게 수준별 학생 역할을 부여해
       문항에 응답시키는 방식이 2024년에 독립적으로 여럿 나왔다<a id="cite-39" href="#ref-39">[39]</a><a id="cite-40" href="#ref-40">[40]</a>.
+      <a id="cite-62" href="#ref-62">[62]</a>에서는 수준별 학생을 연기하는 LLM의 응답이
+      IRT 난이도 곡선과 높은 상관을 보임을 확인했다.
       <a id="cite-15" href="#ref-15">[15]</a>에서는
       LLM 여러 종에게 교육 평가 문항을 풀게 해 문항 난이도를 보정하고,
       <a id="cite-16" href="#ref-16">[16]</a>에서는 LLM에게 특정 학년 학생을 연기하게
@@ -458,6 +462,8 @@
       <li id="ref-59"><a class="ref-num" href="#cite-59">[59]</a><span class="ref-cite">Liu, Xu, Gu. Scalable Text-Embedding-informed Cognitive Diagnosis of Large Language Models. 2026. <a href="https://arxiv.org/abs/2603.14676">arXiv:2603.14676</a></span></li>
       <li id="ref-60"><a class="ref-num" href="#cite-60">[60]</a><span class="ref-cite">Lalor, Yu. Dynamic Data Selection for Curriculum Learning via Ability Estimation. EMNLP Findings 2020. <a href="https://arxiv.org/abs/2011.00080">arXiv:2011.00080</a></span></li>
       <li id="ref-61"><a class="ref-num" href="#cite-61">[61]</a><span class="ref-cite">Fang, Oberski, Nguyen. PATCH! Psychometrics-Assisted Benchmarking of LLMs against Human Populations. ACL 2025 (GEM2 Workshop). <a href="https://arxiv.org/abs/2404.01799">arXiv:2404.01799</a></span></li>
+      <li id="ref-62"><a class="ref-num" href="#cite-62">[62]</a><span class="ref-cite">Park, Park, Won, Kim. Large Language Models are Students at Various Levels: Zero-shot Question Difficulty Estimation. EMNLP 2024 Findings. <a href="https://aclanthology.org/2024.findings-emnlp.477/">ACL Anthology</a></span></li>
+      <li id="ref-63"><a class="ref-num" href="#cite-63">[63]</a><span class="ref-cite">Zhu, Hua, Miao, Zhao. Benchmark Health Index: A Systematic Framework for Benchmarking the Benchmarks of LLMs. 2026. <a href="https://arxiv.org/abs/2602.11674">arXiv:2602.11674</a></span></li>
     </ul>
 
     <footer class="post-footer">
