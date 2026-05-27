@@ -192,8 +192,13 @@
       "가장 정보가 많은 다음 예제를 고른다"는 원리에서 수렴한다. 에이전트 벤치마크에서도
       IRT에서 착안해 응답률 30-70%대 중간 난이도 과제만 골라 평가하면 44-70%의 과제를
       줄이면서 순위 안정성을 유지할 수 있다<a id="cite-66" href="#ref-66">[66]</a>.
+      IRT 없이도 강화학습 기반 선택 정책으로 평가 예제를 능동적으로 고르면서 나머지 성능을
+      예측하는 접근<a id="cite-83" href="#ref-83">[83]</a>도 같은 효율 목표를 달성한다.
       의료 LLM 평가에 적용한 사례<a id="cite-69" href="#ref-69">[69]</a>도 있다. 38개 LLM을 대상으로
       전체 문항의 1.3%만 써도 전체 뱅크 추정치와 r = 0.988의 상관을 달성했다.
+      수식 정리 증명(theorem proving) 벤치마크 miniF2F에 IRT를 적용해 문항별 난이도·변별력을
+      주석 처리하고 적응형 선택으로 전체의 23%만 사용해도 동등한 변별력이 가능함을 보인
+      연구<a id="cite-82" href="#ref-82">[82]</a>도 나왔다.
       80개 LLM으로 USMLE 연계 벤치마크를 도메인별 IRT 프로파일링한 사례<a id="cite-80" href="#ref-80">[80]</a>에서는,
       전체 정확도로는 높은 순위임에도 특정 도메인에서는 하위 모델에 역전당하는 패턴이
       확인됐다.
@@ -242,6 +247,10 @@
       표준화해, 새 벤치마크가 기존 것과 얼마나 일치하는지 비교하는 절차를 체계화했다.
       <a id="cite-72" href="#ref-72">[72]</a>에서는 15개 벤치마크를 교차 순위 일관성·변별력·
       능력 정렬 이탈이라는 세 지표로 체계적으로 비교해, 벤치마크 간 품질 격차를 수치화했다.
+      IRT와 구조적으로 유사하지만 심리측정 모형 없이 난이도를 추정하는 접근도 있다.
+      <a id="cite-81" href="#ref-81">[81]</a>에서는 모델이 문항을 맞히면 역량 점수가 오르고
+      틀리면 그 문항의 난이도 점수가 올라가는 양방향 전파를 30개 LLM·35,550개 문항에
+      적용해, IRT 기준선보다 높은 인간 판정 일치율(90%)을 달성했다.
       IRT 계열은 calibration 비용을 치르는 대신 문항 하나하나를 해석할 수 있고,
       비IRT 계열은 그 비용 없이 바로 쓰이되 해석 가능성은 포기한다. 같은 목표를 다른
       도구로 겨냥하는 구도다.
@@ -252,7 +261,12 @@
       비교한 <a id="cite-28" href="#ref-28">[28]</a>은 이 한계를 수치로 보였다.
       calibration에 쓰인 모델 집합보다 능력이 높은 새 모델에서는 IRT든 비IRT든 추정이
       급격히 무너지고, 단순 무작위 추출보다 나을 게 없는 경우도 많다. 더 강한 모델이
-      나올 때마다 calibration 대상을 다시 꾸려야 한다는 뜻이다. 한계는 또 있다. 지금
+      나올 때마다 calibration 대상을 다시 꾸려야 한다는 뜻이다.
+      적응형 벤치마킹에서 발생하는 또 다른 편향도 있다. 모델 탐색이나 프롬프트 최적화에 같은
+      문항을 쓰고 평가도 그 문항으로 하면 선택 편향으로 점수가 부풀어 오르는 '승자의 저주
+      (winner's curse)'가 생기며, 이를 문항 수준의 부트스트랩으로 보정하는 프로토콜
+      <a id="cite-84" href="#ref-84">[84]</a>이 제안됐다.
+      한계는 또 있다. 지금
       까지의 방법은 대체로 정답/오답 이진 응답을 전제하는데, ROUGE나 LLM-as-a-Judge
       점수 같은 연속 점수로 적응형 테스트를 넓히려는 시도<a id="cite-29" href="#ref-29">[29]</a>도
       나오고 있다. 한편, 이 효율화 발상이 LLM 시대에 처음 나온 것은 아니다. 사람이
@@ -304,6 +318,10 @@
       인지 진단 모형(CDM)은 능력을 이산 속성 벡터로 나타낸다.
       <a id="cite-59" href="#ref-59">[59]</a>에서는 CDM을 LLM 평가에 적용해 텍스트 임베딩으로
       Q-행렬(문항-속성 관계)을 자동 구성하고, LLM의 세부 능력 프로파일을 추출했다.
+      CDM은 응답 데이터가 희소할 때 추정이 불안정해지는 문제가 있는데, LLM의 사전 지식을
+      CDM 초기화에 활용해 이 희소성 문제를 완화하는 접근<a id="cite-85" href="#ref-85">[85]</a>도 제안됐다.
+      LLM 임베딩을 역할별로 미세조정해 CDM의 행동 공간과 의미 공간을 정렬하는 방식<a id="cite-87" href="#ref-87">[87]</a>도
+      같은 방향에서 나왔다.
       에이전트 평가에서는 한 발 더 나아가, 에이전트 능력을 LLM 능력과 scaffold 능력으로
       분리하고 과제 특성(이슈 내용·코드·테스트)까지 모델에 반영하는 IRT 기반 예측
       프레임워크<a id="cite-65" href="#ref-65">[65]</a>도 나왔다.
@@ -405,7 +423,9 @@
       심리측정 설문지를 LLM에게 풀게 할 때도 편향이 잡힌다. LLM이 성격 검사에 응답할 때
       사회적으로 선호되는 답을 편향되게 고르는 사회적 바람직성(SDR)이 IRT로 포착되며,
       강제선택형(forced-choice) 형식이 이 편향을 의미 있게 줄인다는 보고<a id="cite-77" href="#ref-77">[77]</a>도
-      있다.
+      있다. 다중 에이전트 토론에서도 심리측정적 분석이 시도됐다. LLM이 토론 중 입장을 바꾸는
+      정도·집단 수렴·편향 증폭을 프로파일화하면 페르소나와 진행자 역할이 결과에 미치는
+      영향을 수치화할 수 있다는 것을 보인 연구<a id="cite-86" href="#ref-86">[86]</a>가 그 예다.
     </p>
 
     <figure style="max-width: 700px">
@@ -523,6 +543,13 @@
       <li id="ref-78"><a class="ref-num" href="#cite-78">[78]</a><span class="ref-cite">Carmel et al. LiveRAG: A diverse Q&A dataset with varying difficulty level for RAG evaluation. 2025. <a href="https://arxiv.org/abs/2511.14531">arXiv:2511.14531</a></span></li>
       <li id="ref-79"><a class="ref-num" href="#cite-79">[79]</a><span class="ref-cite">Li et al. RIDE: Difficulty Evolving Perturbation with Item Response Theory for LLM Reasoning. 2025. <a href="https://arxiv.org/abs/2511.04120">arXiv:2511.04120</a></span></li>
       <li id="ref-80"><a class="ref-num" href="#cite-80">[80]</a><span class="ref-cite">Luo, Wu, Frisch, He. Beyond Overall Accuracy: A Psychometric Deep Dive into the Topic-Specific Medical Capabilities of 80 Large Language Models. 2025. <a href="https://arxiv.org/abs/2509.24186">arXiv:2509.24186</a></span></li>
+      <li id="ref-81"><a class="ref-num" href="#cite-81">[81]</a><span class="ref-cite">Zhang et al. RankLLM: Weighted Ranking of LLMs by Quantifying Question Difficulty. ICLR 2026. <a href="https://arxiv.org/abs/2602.12424">arXiv:2602.12424</a></span></li>
+      <li id="ref-82"><a class="ref-num" href="#cite-82">[82]</a><span class="ref-cite">Zhang, Zhao, Long et al. Psychometric-Based Evaluation for Theorem Proving with Large Language Models. 2025. <a href="https://arxiv.org/abs/2502.00855">arXiv:2502.00855</a></span></li>
+      <li id="ref-83"><a class="ref-num" href="#cite-83">[83]</a><span class="ref-cite">Li, Ma, Ballesteros et al. Active Evaluation Acquisition for Efficient LLM Benchmarking. ICML 2025. <a href="https://arxiv.org/abs/2410.05952">arXiv:2410.05952</a></span></li>
+      <li id="ref-84"><a class="ref-num" href="#cite-84">[84]</a><span class="ref-cite">Xu, Zhang, Sun et al. Towards Reliable LLM Evaluation: Correcting the Winner's Curse in Adaptive Benchmarking. 2026. <a href="https://arxiv.org/abs/2605.05973">arXiv:2605.05973</a></span></li>
+      <li id="ref-85"><a class="ref-num" href="#cite-85">[85]</a><span class="ref-cite">Dong, Chen, Wu. Knowledge is Power: Harnessing Large Language Models for Enhanced Cognitive Diagnosis. 2025. <a href="https://arxiv.org/abs/2502.05556">arXiv:2502.05556</a></span></li>
+      <li id="ref-86"><a class="ref-num" href="#cite-86">[86]</a><span class="ref-cite">Reza. The Social Laboratory: A Psychometric Framework for Multi-Agent LLM Evaluation. 2025. <a href="https://arxiv.org/abs/2510.01295">arXiv:2510.01295</a></span></li>
+      <li id="ref-87"><a class="ref-num" href="#cite-87">[87]</a><span class="ref-cite">Liu, Zhou, Wu et al. Embedding Enhancement via Fine-Tuned Language Models for Learner-Item Cognitive Modeling. WWW 2026. <a href="https://arxiv.org/abs/2604.04088">arXiv:2604.04088</a></span></li>
     </ul>
 
     <footer class="post-footer">
