@@ -85,8 +85,9 @@
       최근 이 IRT를 LLM 평가에 가져오는 연구가 부쩍 늘었다. NLP 쪽에 IRT
       튜토리얼<a id="cite-1" href="#ref-1">[1]</a>이 따로 생기고, "AI 평가도 사람
       시험 보듯 해야 한다"는 포지션 논문<a id="cite-2" href="#ref-2">[2]</a>이 나올
-      정도다. 연구하다 보니 내 최근 관심사도 마침 이 쪽이라, 이번 기회에
-      정리해두었다.
+      정도다. 이 흐름을 체계적으로 정리한 서베이<a id="cite-70" href="#ref-70">[70]</a>도
+      이미 400편을 넘는 문헌을 다룬다. 연구하다 보니 내 최근 관심사도 마침 이 쪽이라,
+      이번 기회에 정리해두었다.
     </p>
 
     <h2>1. 문항(question 혹은 item)을 검증하는 방향</h2>
@@ -180,13 +181,19 @@
       설계로 테스트 예제를 능동적으로 선택해 평가 비용을 줄인다. ML 능동 학습과 CAT가
       "가장 정보가 많은 다음 예제를 고른다"는 원리에서 수렴한다. 에이전트 벤치마크에서도
       IRT에서 착안해 응답률 30-70%대 중간 난이도 과제만 골라 평가하면 44-70%의 과제를
-      줄이면서 순위 안정성을 유지할 수 있다<a id="cite-66" href="#ref-66">[66]</a>. 다만 어느 쪽이든 IRT가 작동하려면
+      줄이면서 순위 안정성을 유지할 수 있다<a id="cite-66" href="#ref-66">[66]</a>.
+      의료 LLM 평가에 적용한 사례<a id="cite-69" href="#ref-69">[69]</a>도 있다. 38개 LLM을 대상으로
+      전체 문항의 1.3%만 써도 전체 뱅크 추정치와 r = 0.988의 상관을 달성했다.
+      다만 어느 쪽이든 IRT가 작동하려면
       calibration이 먼저 끝나 있어야 한다. 이름은 측정학에서 그대로 가져왔다.
       저울·온도계의 눈금을 알려진 기준에 맞춰 매기듯, 다수 모델·다수 문항의 응답
       행렬을 모아 문항 파라미터(변별력·난이도)를 추정해 두는 과정이다. 모델이 새로
       나올 때마다 응답을 새로 수집해 재추정해야 하니 그 자체가 비용이다.
       이 추정 문제를 변분 베이즈(variational Bayes)로 속도와 표현력을 함께 높이려는
-      시도<a id="cite-48" href="#ref-48">[48]</a>도 있다.
+      시도<a id="cite-48" href="#ref-48">[48]</a>도 있다. IRT는 본래 이진 응답(맞/틀)을
+      전제하지만, 응답 정확도와 Chain-of-Thought 길이를 함께 모델링한 확장<a id="cite-68" href="#ref-68">[68]</a>도
+      제안됐다. 추론 능력이 강할수록 CoT가 길어지는 음의 상관 구조가 여러 벤치마크에서
+      일관되게 관찰됐다.
       <a id="cite-8" href="#ref-8">[8]</a>에서는 여기에 두 가지를 더 얹는다. 문항
       내용만 보고 난이도를 예측하는 모델을 학습해 calibration 비용을 amortize한다.
       한 번 학습해두면 새 문항·새 모델에 대해선 응답을 다시 수집하지 않고도 난이도를
@@ -478,6 +485,9 @@
       <li id="ref-65"><a class="ref-num" href="#cite-65">[65]</a><span class="ref-cite">Ge, Kryvosheieva, Fried, Girit, Hariharan. Agent psychometrics: Task-level performance prediction in agentic coding benchmarks. 2026. <a href="https://arxiv.org/abs/2604.00594">arXiv:2604.00594</a></span></li>
       <li id="ref-66"><a class="ref-num" href="#cite-66">[66]</a><span class="ref-cite">Ndzomga. Efficient Benchmarking of AI Agents. 2026. <a href="https://arxiv.org/abs/2603.23749">arXiv:2603.23749</a></span></li>
       <li id="ref-67"><a class="ref-num" href="#cite-67">[67]</a><span class="ref-cite">Wachter, Radloff, Smolej, Kinder-Kurlanda. Are LLMs (Really) Ideological? An IRT-based Analysis. 2025. <a href="https://arxiv.org/abs/2503.13149">arXiv:2503.13149</a></span></li>
+      <li id="ref-68"><a class="ref-num" href="#cite-68">[68]</a><span class="ref-cite">Xu, Liu, Wang, Gu. Latency-Response Theory Model: Evaluating Large Language Models via Response Accuracy and Chain-of-Thought Length. 2025. <a href="https://arxiv.org/abs/2512.07019">arXiv:2512.07019</a></span></li>
+      <li id="ref-69"><a class="ref-num" href="#cite-69">[69]</a><span class="ref-cite">Zheng, Jiang, Liu, Feng. Leveraging Computerized Adaptive Testing for Cost-effective Evaluation of Large Language Models in Medical Benchmarking. 2026. <a href="https://arxiv.org/abs/2603.23506">arXiv:2603.23506</a></span></li>
+      <li id="ref-70"><a class="ref-num" href="#cite-70">[70]</a><span class="ref-cite">Ye, Jin, Xie, Zhang, Song. Large Language Model Psychometrics: A Systematic Review of Evaluation, Validation, and Enhancement. 2025. <a href="https://arxiv.org/abs/2505.08245">arXiv:2505.08245</a></span></li>
     </ul>
 
     <footer class="post-footer">
