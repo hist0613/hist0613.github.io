@@ -133,6 +133,13 @@
       체계적으로 과소평가하는 경향이 있다는 보고<a id="cite-74" href="#ref-74">[74]</a>도 있다.
       추론 과정을 생성하게 하거나 다수 샘플을 집계해 LLM의 MCQ 난이도 예측을 강화하는
       방법<a id="cite-99" href="#ref-99">[99]</a>도 AIED 2025에 발표됐다.
+      LLM을 전문가 난이도 평가자로 직접 활용하면 수학 문항에서 실제 난이도와 중-강 상관을
+      달성한다는 보고<a id="cite-101" href="#ref-101">[101]</a>도 있다. LLM이 추출한 인지·언어
+      특성을 트리 기반 모델에 입력하면 r = 0.87의 예측력이 나온다는 결과<a id="cite-102" href="#ref-102">[102]</a>도
+      나왔다. 응시자 후보 답안의 그럴듯함(plausibility) 점수 엔트로피로 난이도를 추정하는
+      Q-Daps<a id="cite-103" href="#ref-103">[103]</a>는 ACL 2026에서 발표됐다. 독해 문항에서도
+      GPT-4o가 미묘한 함정 표현과 필요 추론을 탐지해 난이도를 자동화하는 가능성이 확인됐다
+      <a id="cite-106" href="#ref-106">[106]</a>.
       코드 생성 벤치마크(HumanEval+, ClassEval)에서도 IRT로 과제 난이도와 변별력을
       분석해 구조적 취약점을 찾아낸 작업<a id="cite-64" href="#ref-64">[64]</a>이 나왔다.
       수학·프로그래밍·추론 등 6개 도메인에 IRT와 Glicko-2를 함께 적용해 통일된 난이도 점수를
@@ -149,7 +156,9 @@
       매기기 전에 자(벤치마크) 자체부터 검증한다는 것이다. 이 시각은 비전-언어 모델 평가로도
       이어진다. <a id="cite-56" href="#ref-56">[56]</a>에서는 IRT를 이미지·텍스트·크로스모달 세
       차원으로 확장한 M3IRT를 제안해, 단일 모달리티만으로 풀리는 쉬운 문항과 진짜 멀티모달
-      추론이 필요한 문항을 구분했다. 추론 벤치마크에서도 4PL-IRT를 쌍(pair) 단위로
+      추론이 필요한 문항을 구분했다. 데이터 시각화 리터러시 문항에서도 VLM(비전+텍스트)이
+      텍스트 단독보다 낮은 오차로 난이도를 예측한다는 보고<a id="cite-105" href="#ref-105">[105]</a>가
+      나왔다. 추론 벤치마크에서도 4PL-IRT를 쌍(pair) 단위로
       적용해 기존 정확도·F1보다 더 안정적인 추론 능력 추정을 제공하려는 시도<a id="cite-76" href="#ref-76">[76]</a>도 나왔다.
       한편 IRT 바깥에서도, 변별력과 포화 여유(anti-saturation
       headroom)를 독립 지표로 명시화해 벤치마크 건강도를 수치로 재는 프레임워크<a id="cite-63" href="#ref-63">[63]</a>도
@@ -328,7 +337,10 @@
       베이즈 요인분석으로 분석해, 능력 분산의 대부분이 추론·이해·언어 모델링 세 요인으로
       설명된다고 보고했다.
       <a id="cite-32" href="#ref-32">[32]</a>는 수학 영역을 35개 세부 능력으로 분해해
-      모델별 강·약점 프로파일을 그렸다. 어느 방법이든 θ는 스칼라 하나가 아니라 여러
+      모델별 강·약점 프로파일을 그렸다. 상황 판단 검사(SJT)와 MIRT를 결합해 페르소나 조건화된
+      LLM 행동이 안정적 잠재 특성을 형성하며 외부 벤치마크 성능을 예측한다는 분석
+      <a id="cite-108" href="#ref-108">[108]</a>도 나왔다.
+      어느 방법이든 θ는 스칼라 하나가 아니라 여러
       능력 차원의 벡터로 표현된다. IRT가 연속 잠재 변수로 능력을 표현한다면, 교육 심리학의
       인지 진단 모형(CDM)은 능력을 이산 속성 벡터로 나타낸다.
       <a id="cite-59" href="#ref-59">[59]</a>에서는 CDM을 LLM 평가에 적용해 텍스트 임베딩으로
@@ -346,7 +358,9 @@
       추출됐고, 강화학습 훈련이 이 신호를 강화했다. 특정 어텐션 헤드가 쉬운 문제와 어려운
       문제에 반대 방향으로 활성화되는 구조<a id="cite-96" href="#ref-96">[96]</a>도 발견됐다. 다국어
       모델에서는 이 표현이 얕은 레이어에서 언어 중립적으로, 깊은 레이어에서 언어별로 분리됨이
-      확인됐다<a id="cite-97" href="#ref-97">[97]</a>. 벤치마크 성능에서 IRT로 추출한 잠재 난이도를
+      확인됐다<a id="cite-97" href="#ref-97">[97]</a>. 출력 토큰 생성 없이 초기 은닉 상태의
+      마르코프 체인 가치 함수로 난이도를 추정하는 접근<a id="cite-104" href="#ref-104">[104]</a>도
+      제안됐다. 벤치마크 성능에서 IRT로 추출한 잠재 난이도를
       실제 인간 과제 완료 시간에 연결하면 R² = 0.81의 예측력이 나온다는 보고
       <a id="cite-98" href="#ref-98">[98]</a>도, θ가 추상적 수치 이상의 실용적 함의를 가질 수
       있음을 보여준다.
@@ -454,6 +468,9 @@
       IRT 인물 적합도(person-fit) 통계는 그 너머로도 확장된다. LLM 응답이 인간 응답과 패턴상
       얼마나 다른지를 적합도 지표로 포착해, 다지선다형 평가에서 AI 부정행위를 탐지하는
       방법<a id="cite-93" href="#ref-93">[93]</a>이 LAK 2025에서 발표됐다.
+      비대칭 IRT 모델에서 DIF를 탐지하는 방법론<a id="cite-107" href="#ref-107">[107]</a>도 제안됐다.
+      실제 응답 과정은 비대칭인 경우가 많아 표준 IRT의 대칭 링크 함수 가정을 완화하면,
+      집단 레이블 없이도 더 정확한 편향 탐지가 가능하다.
       심리측정 설문지를 LLM에게 풀게 할 때도 편향이 잡힌다. LLM이 성격 검사에 응답할 때
       사회적으로 선호되는 답을 편향되게 고르는 사회적 바람직성(SDR)이 IRT로 포착되며,
       강제선택형(forced-choice) 형식이 이 편향을 의미 있게 줄인다는 보고<a id="cite-77" href="#ref-77">[77]</a>도
@@ -597,6 +614,14 @@
       <li id="ref-98"><a class="ref-num" href="#cite-98">[98]</a><span class="ref-cite">Liu, Gala et al. BRIDGE: Predicting Human Task Completion Time From Model Performance. 2026. <a href="https://arxiv.org/abs/2602.07267">arXiv:2602.07267</a></span></li>
       <li id="ref-99"><a class="ref-num" href="#cite-99">[99]</a><span class="ref-cite">Reasoning and Sampling-Augmented MCQ Difficulty Prediction via LLMs. AIED 2025. <a href="https://arxiv.org/abs/2503.08551">arXiv:2503.08551</a></span></li>
       <li id="ref-100"><a class="ref-num" href="#cite-100">[100]</a><span class="ref-cite">Akhtar, Reuel, Soni et al. When AI Benchmarks Plateau: A Systematic Study of Benchmark Saturation. 2026. <a href="https://arxiv.org/abs/2602.16763">arXiv:2602.16763</a></span></li>
+      <li id="ref-101"><a class="ref-num" href="#cite-101">[101]</a><span class="ref-cite">Kolesnikova, Fedyanin, Hofman, Brinkhuis, Bolsinova. Estimating Item Difficulty with Large Language Models as Experts. 2026. <a href="https://arxiv.org/abs/2605.18562">arXiv:2605.18562</a></span></li>
+      <li id="ref-102"><a class="ref-num" href="#cite-102">[102]</a><span class="ref-cite">Razavi, Powers. Estimating Item Difficulty Using Large Language Models and Tree-Based Machine Learning Algorithms. 2025. <a href="https://arxiv.org/abs/2504.08804">arXiv:2504.08804</a></span></li>
+      <li id="ref-103"><a class="ref-num" href="#cite-103">[103]</a><span class="ref-cite">Mozafari, Piryani, Jatowt. Question Difficulty Estimation for Large Language Models via Answer Plausibility Scoring. ACL 2026. <a href="https://arxiv.org/abs/2605.12398">arXiv:2605.12398</a></span></li>
+      <li id="ref-104"><a class="ref-num" href="#cite-104">[104]</a><span class="ref-cite">Zhu, Liu, Lin et al. The LLM Already Knows: Estimating LLM-Perceived Question Difficulty via Hidden Representations. 2025. <a href="https://arxiv.org/abs/2509.12886">arXiv:2509.12886</a></span></li>
+      <li id="ref-105"><a class="ref-num" href="#cite-105">[105]</a><span class="ref-cite">Khan. Using Vision + Language Models to Predict Item Difficulty. 2026. <a href="https://arxiv.org/abs/2603.04670">arXiv:2603.04670</a></span></li>
+      <li id="ref-106"><a class="ref-num" href="#cite-106">[106]</a><span class="ref-cite">Jain, Hollander, He et al. Exploring the Potential of Large Language Models for Estimating the Reading Comprehension Question Difficulty. 2025. <a href="https://arxiv.org/abs/2502.17785">arXiv:2502.17785</a></span></li>
+      <li id="ref-107"><a class="ref-num" href="#cite-107">[107]</a><span class="ref-cite">Wallin, Huang. Latent Impact and Differential Item Functioning Analysis for Asymmetric IRT Models. 2026. <a href="https://arxiv.org/abs/2605.05684">arXiv:2605.05684</a></span></li>
+      <li id="ref-108"><a class="ref-num" href="#cite-108">[108]</a><span class="ref-cite">Yost et al. Measure what Matters: Psychometric Evaluation of AI with Situational Judgment Tests. 2025. <a href="https://arxiv.org/abs/2510.22170">arXiv:2510.22170</a></span></li>
     </ul>
 
     <footer class="post-footer">
