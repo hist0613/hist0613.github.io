@@ -122,7 +122,9 @@
       어떻게 왜곡하는지까지 연결했다. 텍스트만으로 문항의 IRT 파라미터를
       자동 예측하려는 시도는 2020년 <a id="cite-47" href="#ref-47">[47]</a>에서 시작됐고,
       <a id="cite-44" href="#ref-44">[44]</a>에서 자연어 문항 전반으로 이어졌다.
-      코드 생성 벤치마크(HumanEval+, ClassEval)에서도 IRT로 과제 난이도와 변별력을
+      교육 수학 문항 25만 건을 대상으로 학생 응답 시뮬레이션을 경유해 난이도를 예측한
+      사례<a id="cite-71" href="#ref-71">[71]</a>에서는 실제 IRT 파라미터와 r ≈ 0.78을
+      달성했다. 코드 생성 벤치마크(HumanEval+, ClassEval)에서도 IRT로 과제 난이도와 변별력을
       분석해 구조적 취약점을 찾아낸 작업<a id="cite-64" href="#ref-64">[64]</a>이 나왔다. 더 큰 규모로는
       <a id="cite-5" href="#ref-5">[5]</a>이 11개 벤치마크 4만여 문항을,
       <a id="cite-26" href="#ref-26">[26]</a>이 6개 벤치마크 수만 문항을 IRT로 분석해
@@ -224,6 +226,8 @@
       순위가 얼마나 흔들리는지로 효율화의 trade-off를 직접 잰다. 같은 팀의 후속
       연구인 BenchBench<a id="cite-58" href="#ref-58">[58]</a>는 벤치마크 간 순위 상관을
       표준화해, 새 벤치마크가 기존 것과 얼마나 일치하는지 비교하는 절차를 체계화했다.
+      <a id="cite-72" href="#ref-72">[72]</a>에서는 15개 벤치마크를 교차 순위 일관성·변별력·
+      능력 정렬 이탈이라는 세 지표로 체계적으로 비교해, 벤치마크 간 품질 격차를 수치화했다.
       IRT 계열은 calibration 비용을 치르는 대신 문항 하나하나를 해석할 수 있고,
       비IRT 계열은 그 비용 없이 바로 쓰이되 해석 가능성은 포기한다. 같은 목표를 다른
       도구로 겨냥하는 구도다.
@@ -488,6 +492,8 @@
       <li id="ref-68"><a class="ref-num" href="#cite-68">[68]</a><span class="ref-cite">Xu, Liu, Wang, Gu. Latency-Response Theory Model: Evaluating Large Language Models via Response Accuracy and Chain-of-Thought Length. 2025. <a href="https://arxiv.org/abs/2512.07019">arXiv:2512.07019</a></span></li>
       <li id="ref-69"><a class="ref-num" href="#cite-69">[69]</a><span class="ref-cite">Zheng, Jiang, Liu, Feng. Leveraging Computerized Adaptive Testing for Cost-effective Evaluation of Large Language Models in Medical Benchmarking. 2026. <a href="https://arxiv.org/abs/2603.23506">arXiv:2603.23506</a></span></li>
       <li id="ref-70"><a class="ref-num" href="#cite-70">[70]</a><span class="ref-cite">Ye, Jin, Xie, Zhang, Song. Large Language Model Psychometrics: A Systematic Review of Evaluation, Validation, and Enhancement. 2025. <a href="https://arxiv.org/abs/2505.08245">arXiv:2505.08245</a></span></li>
+      <li id="ref-71"><a class="ref-num" href="#cite-71">[71]</a><span class="ref-cite">Hoyl. Synthetic Student Responses: LLM-Extracted Features for IRT Difficulty Parameter Estimation. 2026. <a href="https://arxiv.org/abs/2602.00034">arXiv:2602.00034</a></span></li>
+      <li id="ref-72"><a class="ref-num" href="#cite-72">[72]</a><span class="ref-cite">Qian et al. Benchmark2: Systematic Evaluation of LLM Benchmarks. 2026. <a href="https://arxiv.org/abs/2601.03986">arXiv:2601.03986</a></span></li>
     </ul>
 
     <footer class="post-footer">
