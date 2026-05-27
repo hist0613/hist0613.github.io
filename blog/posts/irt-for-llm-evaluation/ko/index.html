@@ -331,6 +331,8 @@
       일상이 되기 때문이다. 2018년 <a id="cite-43" href="#ref-43">[43]</a>에서는 DNN이 IRT로 측정한
       문항 난이도 순서대로 학습한다는 것을 실증했고, 이듬해 <a id="cite-14" href="#ref-14">[14]</a>에서는 신경망
       앙상블의 인공 응답만으로 IRT 파라미터를 학습할 수 있음을 보였다.
+      2020년에는 더 나아가, 학습 중 모델 능력을 IRT로 동적으로 추정해
+      커리큘럼 데이터 선택을 자동화하는 방법<a id="cite-60" href="#ref-60">[60]</a>도 나왔다.
       최근에는 LLM이 그 자리를 대신한다. LLM에게 수준별 학생 역할을 부여해
       문항에 응답시키는 방식이 2024년에 독립적으로 여럿 나왔다<a id="cite-39" href="#ref-39">[39]</a><a id="cite-40" href="#ref-40">[40]</a>.
       <a id="cite-15" href="#ref-15">[15]</a>에서는
@@ -351,7 +353,10 @@
       다만 LLM의 응답 분포가 실제 응시자 집단을 얼마나 충실히 대신하는지는 아직 검증
       중인 질문이다<a id="cite-22" href="#ref-22">[22]</a>. 심리측정 문항이 학습 데이터에
       포함됐을 때 LLM이 특정 응답 패턴을 기억하거나 목표 점수에 맞게 조정할 수 있다는
-      오염 문제<a id="cite-55" href="#ref-55">[55]</a>까지 더하면 검증의 난도는 더 높아진다. <a id="cite-45" href="#ref-45">[45]</a>에서는 인간 응답과 LM 응답 사이의
+      오염 문제<a id="cite-55" href="#ref-55">[55]</a>까지 더하면 검증의 난도는 더 높아진다.
+      반대로 사람 집단과 LLM을 심리측정 틀 안에서 직접 비교해, LLM이 해당 학년 수준의
+      인간 집단을 통계적으로 얼마나 재현하는지 측정하는 시도<a id="cite-61" href="#ref-61">[61]</a>도 있다.
+      <a id="cite-45" href="#ref-45">[45]</a>에서는 인간 응답과 LM 응답 사이의
       문항기능차이(DIF)를 IRT로 분석해 psychometric alignment라는 지표를 제안했다. 흥미롭게도
       대형 LM보다 소형 LM이 인간 분포에 더 가깝다는 보고가 많다. 20개 넘는 모델을 견준
       <a id="cite-36" href="#ref-36">[36]</a>이 그 한 예다.
@@ -451,6 +456,8 @@
       <li id="ref-57"><a class="ref-num" href="#cite-57">[57]</a><span class="ref-cite">Qu, Heng, Zeng, Liu. An Interpretable and Scalable Framework for Evaluating Large Language Models. 2026. <a href="https://arxiv.org/abs/2605.07046">arXiv:2605.07046</a></span></li>
       <li id="ref-58"><a class="ref-num" href="#cite-58">[58]</a><span class="ref-cite">Perlitz et al. Do These LLM Benchmarks Agree? Fixing Benchmark Evaluation with BenchBench. 2024. <a href="https://arxiv.org/abs/2407.13696">arXiv:2407.13696</a></span></li>
       <li id="ref-59"><a class="ref-num" href="#cite-59">[59]</a><span class="ref-cite">Liu, Xu, Gu. Scalable Text-Embedding-informed Cognitive Diagnosis of Large Language Models. 2026. <a href="https://arxiv.org/abs/2603.14676">arXiv:2603.14676</a></span></li>
+      <li id="ref-60"><a class="ref-num" href="#cite-60">[60]</a><span class="ref-cite">Lalor, Yu. Dynamic Data Selection for Curriculum Learning via Ability Estimation. EMNLP Findings 2020. <a href="https://arxiv.org/abs/2011.00080">arXiv:2011.00080</a></span></li>
+      <li id="ref-61"><a class="ref-num" href="#cite-61">[61]</a><span class="ref-cite">Fang, Oberski, Nguyen. PATCH! Psychometrics-Assisted Benchmarking of LLMs against Human Populations. ACL 2025 (GEM2 Workshop). <a href="https://arxiv.org/abs/2404.01799">arXiv:2404.01799</a></span></li>
     </ul>
 
     <footer class="post-footer">
