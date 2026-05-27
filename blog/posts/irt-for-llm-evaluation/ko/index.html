@@ -54,7 +54,7 @@
       많이 맞힌 모델과 어려운 문항을 골라 맞힌 모델이 똑같은 점수를 받을 수 있다. 즉,
       두 모델의 점수가 같다고 성능이 같은 것은 아니다 (물론 어려운 문제를 맞히는
       모델이 쉬운 문제도 맞힐 확률이 높지만, 꼭 그렇지는 않다). 게다가 같은 모델을 같은
-      벤치마크로 다시 평가해도, 프롬프트를 조금만 바꾸면 점수가 꽤 바뀌기도 한다.
+      벤치마크로 다시 평가해도, 프롬프트를 조금만 바꾸면 점수가 꽤 바뀌기도 한다<a id="cite-54" href="#ref-54">[54]</a>.
       오르는 경우도 있지만, 따로 최적화하지 않으면 대개 떨어진다. 이런 디테일한 차이는
       보통 정확도로는 잘 드러나지 않는다.
     </p>
@@ -127,7 +127,10 @@
       <a href="#ref-26">[26]</a>은 그 과정에서 여섯 벤치마크가 재는 능력의 약 80%가
       사실 하나의 공통 인자로 수렴한다는 것까지 드러냈다. 이름도, 형태도, 주제도 다른
       벤치마크들이 결국 비슷한 능력 축을 재고 있다는 뜻이다. 공통된 발상은 점수를
-      매기기 전에 자(벤치마크) 자체부터 검증한다는 것이다.
+      매기기 전에 자(벤치마크) 자체부터 검증한다는 것이다. 이 시각은 비전-언어 모델 평가로도
+      이어진다. <a id="cite-56" href="#ref-56">[56]</a>에서는 IRT를 이미지·텍스트·크로스모달 세
+      차원으로 확장한 M3IRT를 제안해, 단일 모달리티만으로 풀리는 쉬운 문항과 진짜 멀티모달
+      추론이 필요한 문항을 구분했다.
     </p>
 
     <figure style="max-width: 760px">
@@ -182,7 +185,9 @@
       내용만 보고 난이도를 예측하는 모델을 학습해 calibration 비용을 amortize한다.
       한 번 학습해두면 새 문항·새 모델에 대해선 응답을 다시 수집하지 않고도 난이도를
       추정할 수 있다는 의미다. 그 예측기를 다시 신규 문항 생성에까지 연결한다. 22개
-      벤치마크·172개 모델 규모의 결과다.
+      벤치마크·172개 모델 규모의 결과다. 추정 자체의 계산 비용을 줄이는 시도도 이어진다.
+      <a id="cite-57" href="#ref-57">[57]</a>에서는 IRT 추정을 연속 행렬 분해 하위 문제로
+      재공식화해 기존 대비 수십 배 속도를 달성하면서 추정 정확도는 유지했다.
     </p>
 
     <div class="figure-row">
@@ -339,7 +344,9 @@
 
     <p>
       다만 LLM의 응답 분포가 실제 응시자 집단을 얼마나 충실히 대신하는지는 아직 검증
-      중인 질문이다<a id="cite-22" href="#ref-22">[22]</a>. <a id="cite-45" href="#ref-45">[45]</a>에서는 인간 응답과 LM 응답 사이의
+      중인 질문이다<a id="cite-22" href="#ref-22">[22]</a>. 심리측정 문항이 학습 데이터에
+      포함됐을 때 LLM이 특정 응답 패턴을 기억하거나 목표 점수에 맞게 조정할 수 있다는
+      오염 문제<a id="cite-55" href="#ref-55">[55]</a>까지 더하면 검증의 난도는 더 높아진다. <a id="cite-45" href="#ref-45">[45]</a>에서는 인간 응답과 LM 응답 사이의
       문항기능차이(DIF)를 IRT로 분석해 psychometric alignment라는 지표를 제안했다. 흥미롭게도
       대형 LM보다 소형 LM이 인간 분포에 더 가깝다는 보고가 많다. 20개 넘는 모델을 견준
       <a id="cite-36" href="#ref-36">[36]</a>이 그 한 예다.
@@ -433,6 +440,10 @@
       <li id="ref-51"><a class="ref-num" href="#cite-51">[51]</a><span class="ref-cite">Gu et al. A Survey on LLM-as-a-Judge. 2024. <a href="https://arxiv.org/abs/2411.15594">arXiv:2411.15594</a></span></li>
       <li id="ref-52"><a class="ref-num" href="#cite-52">[52]</a><span class="ref-cite">Gururangan, Swayamdipta, Levy, Schwartz, Bowman, Smith. Annotation Artifacts in Natural Language Inference Data. NAACL 2018. <a href="https://aclanthology.org/N18-2017/">ACL Anthology</a></span></li>
       <li id="ref-53"><a class="ref-num" href="#cite-53">[53]</a><span class="ref-cite">Hendrycks, Burns, Basart, Zou, Mazeika, Song, Steinhardt. Measuring Massive Multitask Language Understanding. ICLR 2021. <a href="https://arxiv.org/abs/2009.03300">arXiv:2009.03300</a></span></li>
+      <li id="ref-54"><a class="ref-num" href="#cite-54">[54]</a><span class="ref-cite">Alzahrani et al. When Benchmarks are Targets: Revealing the Sensitivity of Large Language Model Leaderboards. 2024. <a href="https://arxiv.org/abs/2402.01781">arXiv:2402.01781</a></span></li>
+      <li id="ref-55"><a class="ref-num" href="#cite-55">[55]</a><span class="ref-cite">Han, Song, Lee, Jo. Quantifying Data Contamination in Psychometric Evaluations of LLMs. EACL 2026 Findings. <a href="https://arxiv.org/abs/2510.07175">arXiv:2510.07175</a></span></li>
+      <li id="ref-56"><a class="ref-num" href="#cite-56">[56]</a><span class="ref-cite">Uebayashi et al. Evaluating Cross-Modal Reasoning Ability and Problem Characteristics with Multimodal Item Response Theory (M3IRT). ICLR 2026. <a href="https://arxiv.org/abs/2603.02663">arXiv:2603.02663</a></span></li>
+      <li id="ref-57"><a class="ref-num" href="#cite-57">[57]</a><span class="ref-cite">Qu, Heng, Zeng, Liu. An Interpretable and Scalable Framework for Evaluating Large Language Models. 2026. <a href="https://arxiv.org/abs/2605.07046">arXiv:2605.07046</a></span></li>
     </ul>
 
     <footer class="post-footer">
