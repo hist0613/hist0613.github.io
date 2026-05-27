@@ -305,10 +305,16 @@
       한계는 또 있다. 지금
       까지의 방법은 대체로 정답/오답 이진 응답을 전제하는데, ROUGE나 LLM-as-a-Judge
       점수 같은 연속 점수로 적응형 테스트를 넓히려는 시도<a id="cite-29" href="#ref-29">[29]</a>도
-      나오고 있다. 한편, 이 효율화 발상이 LLM 시대에 처음 나온 것은 아니다. 사람이
+      나오고 있다. 개방형 응답으로도 CAT를 확장하는 시도<a id="cite-117" href="#ref-117">[117]</a>도 나왔다. 생성형 IRT(GIRT) 모델로 LLM 응답에서 지식 수준을 추정하고 미관측 문항에 대한 응답을 예측해, 이진 정오 채점 없이도 적응형 문항 선택이 가능하다.
+      한편, 이 효율화 발상이 LLM 시대에 처음 나온 것은 아니다. 사람이
       직접 판정해야 하는 챗봇 응답 평가에도 IRT를 적용해 어노테이션 비용을 줄이는
       시도<a id="cite-42" href="#ref-42">[42]</a>가 이미 2020년에 있었다.
     </p>
+
+    <figure style="max-width: 760px">
+      <img src="../assets/gencat-figure1.jpg" alt="GENCAT Figure 1 — 생성형 IRT를 이용한 개방형 CAT 파이프라인">
+      <figcaption>GENCAT의 생성형 IRT(GIRT) 파이프라인 ([117] Figure 1). LLM이 개방형 응답을 생성하면 GIRT 모델이 지식 수준을 추정하고, 그 추정치를 토대로 다음에 낼 문항을 선택한다. 이진 정오 채점 없이 텍스트 응답 자체로 능력을 모델링해 CAT를 개방형 평가로 확장한다.</figcaption>
+    </figure>
 
     <h2>3. 모델의 능력을 더 잘 표현하기 위한 방향</h2>
 
@@ -367,7 +373,7 @@
       이 모든 분석은 행동 행렬을 외부에서 쌓아 추정하는 방식이다. 반대로 LLM 표현 공간에
       문제 난이도가 이미 선형적으로 인코딩돼 있다는 사실도 밝혀졌다. 60개 모델에 선형 프로브를
       적용한 실험<a id="cite-95" href="#ref-95">[95]</a>에서 인간이 레이블한 난이도가 ρ ≈ 0.88로
-      추출됐고, 강화학습 훈련이 이 신호를 강화했다. 특정 어텐션 헤드가 쉬운 문제와 어려운
+      추출됐고, 강화학습 훈련이 이 신호를 강화했다. 생성 전 은닉 상태(pre-generation activations)만으로 성공 여부를 예측하는 선형 프로브를 훈련한 결과<a id="cite-118" href="#ref-118">[118]</a>, 인간 IRT 난이도를 ρ = 0.83–0.87로 재현하고 모델별 난이도 신호(ρ = 0.40–0.64)도 분리했다. 이 프로브 기반 라우팅으로 추론 비용을 70% 절감하면서 단일 최강 모델을 초과하는 성능을 달성한다. 특정 어텐션 헤드가 쉬운 문제와 어려운
       문제에 반대 방향으로 활성화되는 구조<a id="cite-96" href="#ref-96">[96]</a>도 발견됐다. 다국어
       모델에서는 이 표현이 얕은 레이어에서 언어 중립적으로, 깊은 레이어에서 언어별로 분리됨이
       확인됐다<a id="cite-97" href="#ref-97">[97]</a>. 출력 토큰 생성 없이 초기 은닉 상태의
@@ -380,6 +386,11 @@
       18개 루브릭 기반 일반 척도(general scale)로 과제 특성을 기술해 15개 LLM을 63개 과제에서
       포화 없이 분석하고 분포 외 성능 예측까지 가능함을 보였다.
     </p>
+
+    <figure style="max-width: 760px">
+      <img src="../assets/encode-failures-figure2.png" alt="LLMs Encode Their Failures Figure — 인간 IRT 난이도와 모델별 난이도의 분리">
+      <figcaption>생성 전 은닉 상태의 선형 프로브로 추출한 인간 IRT 난이도(가로)와 모델별 난이도 신호(세로)의 분포 ([118]). 두 신호가 부분적으로 분리되며, 모델은 인간 난이도와 구별되는 모델 고유의 난이도 감각을 내부적으로 인코딩한다.</figcaption>
+    </figure>
 
     <figure style="max-width: 760px">
       <img src="../assets/general-scales-figure1.png" alt="General Scales Figure 1 — 일반 척도 평가 방법론 개요">
@@ -685,6 +696,8 @@
       <li id="ref-114"><a class="ref-num" href="#cite-114">[114]</a><span class="ref-cite">Krumdick, Wiemerslage, Ebner, Lovering, Tanner. Cost-Efficient Estimation of General Abilities Across Benchmarks. 2026. <a href="https://arxiv.org/abs/2604.01418">arXiv:2604.01418</a></span></li>
       <li id="ref-115"><a class="ref-num" href="#cite-115">[115]</a><span class="ref-cite">Angelelli, Oliva, Arima, Ciavolino. Human- vs. AI-generated tests: dimensionality and information accuracy in latent trait evaluation. Statistics 2025. <a href="https://arxiv.org/abs/2510.24739">arXiv:2510.24739</a></span></li>
       <li id="ref-116"><a class="ref-num" href="#cite-116">[116]</a><span class="ref-cite">Isley, Gilbert, Kassos et al. Assessing the Quality of AI-Generated Exams: A Large-Scale Field Study. 2025. <a href="https://arxiv.org/abs/2508.08314">arXiv:2508.08314</a></span></li>
+      <li id="ref-117"><a class="ref-num" href="#cite-117">[117]</a><span class="ref-cite">Feng et al. GENCAT: Generative Computerized Adaptive Testing. 2026. <a href="https://arxiv.org/abs/2602.20020">arXiv:2602.20020</a></span></li>
+      <li id="ref-118"><a class="ref-num" href="#cite-118">[118]</a><span class="ref-cite">Lugoloobi et al. LLMs Encode Their Failures: Predicting Success from Pre-Generation Activations. ICLR 2026 LIT Workshop. <a href="https://arxiv.org/abs/2602.09924">arXiv:2602.09924</a></span></li>
     </ul>
 
     <footer class="post-footer">
