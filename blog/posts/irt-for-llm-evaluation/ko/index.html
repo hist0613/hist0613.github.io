@@ -119,7 +119,8 @@
       <a id="cite-25" href="#ref-25">[25]</a>에서는 한 발 더 들어가, 문항 표면의
       구체적 결함 유형(부정 표현, 허수 오답 등)이 IRT 난이도·변별력 파라미터를 실제로
       어떻게 왜곡하는지까지 연결했다. 텍스트만으로 문항의 IRT 파라미터를
-      자동 예측하려는 시도<a id="cite-44" href="#ref-44">[44]</a>도 2022년에 나왔다. 더 큰 규모로는
+      자동 예측하려는 시도는 2020년 <a id="cite-47" href="#ref-47">[47]</a>에서 시작됐고,
+      <a id="cite-44" href="#ref-44">[44]</a>에서 자연어 문항 전반으로 이어졌다. 더 큰 규모로는
       <a id="cite-5" href="#ref-5">[5]</a>이 11개 벤치마크 4만여 문항을,
       <a id="cite-26" href="#ref-26">[26]</a>이 6개 벤치마크 수만 문항을 IRT로 분석해
       포화·오염을 진단하고 더 작고 깨끗한 벤치마크를 구성했다.
@@ -133,6 +134,15 @@
       <img src="../assets/mmlu-redux-figure3.png" alt="MMLU-Redux Figure 3 — 도메인별 오류 유형 분포">
       <figcaption>MMLU 30개 도메인의 오류 유형별 분포 (MMLU-Redux<a href="#ref-24">[24]</a> Figure 3). 가장 왼쪽 Virology는 문항의 57%가 오류로 판정됐다. 색깔은 오류 유형(Context 오류, 오답 설정 오류, 정답 없음 등)을 구분한다.</figcaption>
     </figure>
+
+    <p>
+      IRT가 기존 벤치마크 풀에서 정보 있는 문항을 찾아내는 방향이라면, 처음부터
+      동적으로 데이터를 쌓는 방법도 있다. Dynabench<a id="cite-49" href="#ref-49">[49]</a>는
+      현재 모델이 틀리는 예제를 사람이 직접 제출해 계속 어려운 문항을 공급하는
+      플랫폼이다. IRT 정제가 "있는 풀을 깨끗이 고르는" 방식이라면, Dynabench는
+      "애초에 변별력 있는 문항을 동적으로 모으는" 방식으로, 같은 문제(벤치마크 포화)를
+      다른 쪽에서 접근한다.
+    </p>
 
     <h2>2. 평가의 효율성을 위한 방향</h2>
 
@@ -158,11 +168,16 @@
       computerized adaptive testing과 같은 구조다. 거의 같은 시기에 나온 Fluid
       Benchmarking<a id="cite-27" href="#ref-27">[27]</a>도 같은 CAT 구조를 택했다. IRT
       능력 추정이 타당도(validity)를 높이고, 동적 문항 선택이 분산을 낮춘다는 두 효과를
-      분리해 보이면서, MMLU를 50배까지 압축했다. 다만 어느 쪽이든 IRT가 작동하려면
+      분리해 보이면서, MMLU를 50배까지 압축했다. 기계학습 평가 쪽에서도 독립적으로
+      같은 발상이 나왔다. Active Testing<a id="cite-50" href="#ref-50">[50]</a>은 베이즈 실험
+      설계로 테스트 예제를 능동적으로 선택해 평가 비용을 줄인다. ML 능동 학습과 CAT가
+      "가장 정보가 많은 다음 예제를 고른다"는 원리에서 수렴한다. 다만 어느 쪽이든 IRT가 작동하려면
       calibration이 먼저 끝나 있어야 한다. 이름은 측정학에서 그대로 가져왔다.
       저울·온도계의 눈금을 알려진 기준에 맞춰 매기듯, 다수 모델·다수 문항의 응답
       행렬을 모아 문항 파라미터(변별력·난이도)를 추정해 두는 과정이다. 모델이 새로
       나올 때마다 응답을 새로 수집해 재추정해야 하니 그 자체가 비용이다.
+      이 추정 문제를 변분 베이즈(variational Bayes)로 속도와 표현력을 함께 높이려는
+      시도<a id="cite-48" href="#ref-48">[48]</a>도 있다.
       <a id="cite-8" href="#ref-8">[8]</a>에서는 여기에 두 가지를 더 얹는다. 문항
       내용만 보고 난이도를 예측하는 모델을 학습해 calibration 비용을 amortize한다.
       한 번 학습해두면 새 문항·새 모델에 대해선 응답을 다시 수집하지 않고도 난이도를
@@ -265,7 +280,9 @@
       <a id="cite-19b" href="#ref-19">[19]</a>, 동일 입력을 여러 번 채점시킨 내적
       일관성(intra-rater reliability)이 사람 평가자들 사이의 합의보다도 낮다는 보고
       <a id="cite-33" href="#ref-33">[33]</a>까지 있다. 20개 NLP 과제에서 LLM judge와 전문가·비전문가 인간을 체계적으로 비교한
-      <a id="cite-46" href="#ref-46">[46]</a>은 과제 유형에 따라 judge 신뢰도가 크게 달라짐을 실증했다. 개별 bias를 하나씩
+      <a id="cite-46" href="#ref-46">[46]</a>은 과제 유형에 따라 judge 신뢰도가 크게 달라짐을 실증했다.
+      judge의 편향·일관성·적응 전략을 종합 정리한 서베이<a id="cite-51" href="#ref-51">[51]</a>도 이 맥락을 뒷받침한다.
+      개별 bias를 하나씩
       잡기보다 측정 도구로서 judge가 얼마나 흔들리는지를 한꺼번에 재야 한다. ICML
       2026 논문<a id="cite-12" href="#ref-12">[12]</a>은 LLM-as-a-Judge를 측정 도구로
       놓고, 같은 내용의 프롬프트에 일부러 오타를 넣거나, 줄바꿈을 바꾸거나, 문장을
@@ -409,6 +426,11 @@
       <li id="ref-44"><a class="ref-num" href="#cite-44">[44]</a><span class="ref-cite">Byrd, Srivastava. Predicting Difficulty and Discrimination of Natural Language Questions. ACL 2022. <a href="https://aclanthology.org/2022.acl-short.15/">ACL Anthology</a></span></li>
       <li id="ref-45"><a class="ref-num" href="#cite-45">[45]</a><span class="ref-cite">He-Yueya et al. Psychometric Alignment: Capturing Human Knowledge Distributions via Language Models. 2024. <a href="https://arxiv.org/abs/2407.15645">arXiv:2407.15645</a></span></li>
       <li id="ref-46"><a class="ref-num" href="#cite-46">[46]</a><span class="ref-cite">Bavaresco et al. LLMs instead of Human Judges? Towards an In-Context LLM-as-a-Judge. ACL 2025. <a href="https://arxiv.org/abs/2406.18403">arXiv:2406.18403</a></span></li>
+      <li id="ref-47"><a class="ref-num" href="#cite-47">[47]</a><span class="ref-cite">Benedetto, Cappelli, Turrin, Cremonesi. R2DE: a NLP approach to estimating IRT parameters of newly generated questions. LAK 2020. <a href="https://arxiv.org/abs/2001.07569">arXiv:2001.07569</a></span></li>
+      <li id="ref-48"><a class="ref-num" href="#cite-48">[48]</a><span class="ref-cite">Wu, Davis, Finn, Goodman, Piech. Variational Item Response Theory: Fast, Accurate, and Expressive. EDM 2020. <a href="https://arxiv.org/abs/2002.00276">arXiv:2002.00276</a></span></li>
+      <li id="ref-49"><a class="ref-num" href="#cite-49">[49]</a><span class="ref-cite">Kiela et al. Dynabench: Rethinking Benchmarking in NLP. NAACL 2021. <a href="https://arxiv.org/abs/2104.14337">arXiv:2104.14337</a></span></li>
+      <li id="ref-50"><a class="ref-num" href="#cite-50">[50]</a><span class="ref-cite">Kossen, Farquhar, Gal, Rainforth. Active Testing: Sample-Efficient Model Evaluation. ICML 2021. <a href="https://arxiv.org/abs/2103.05331">arXiv:2103.05331</a></span></li>
+      <li id="ref-51"><a class="ref-num" href="#cite-51">[51]</a><span class="ref-cite">Gu et al. A Survey on LLM-as-a-Judge. 2024. <a href="https://arxiv.org/abs/2411.15594">arXiv:2411.15594</a></span></li>
     </ul>
 
     <footer class="post-footer">
