@@ -208,10 +208,12 @@
       모델에 바로 쓴다 (실제로 tinyBenchmarks가 anchor points의 한계를 짚으며 IRT로
       넘어간 후속이다). <a id="cite-21" href="#ref-21">[21]</a>에서는 IRT 대신 벤치마크
       설계 자체(문항 수·시나리오 수·모델 수)를 변수로 두고, 어느 설계를 바꿨을 때 모델
-      순위가 얼마나 흔들리는지로 효율화의 trade-off를 직접 잰다. IRT 계열은
-      calibration 비용을 치르는 대신 문항 하나하나를 해석할 수 있고, 비IRT 계열은 그
-      비용 없이 바로 쓰이되 해석 가능성은 포기한다. 같은 목표를 다른 도구로 겨냥하는
-      구도다.
+      순위가 얼마나 흔들리는지로 효율화의 trade-off를 직접 잰다. 같은 팀의 후속
+      연구인 BenchBench<a id="cite-58" href="#ref-58">[58]</a>는 벤치마크 간 순위 상관을
+      표준화해, 새 벤치마크가 기존 것과 얼마나 일치하는지 비교하는 절차를 체계화했다.
+      IRT 계열은 calibration 비용을 치르는 대신 문항 하나하나를 해석할 수 있고,
+      비IRT 계열은 그 비용 없이 바로 쓰이되 해석 가능성은 포기한다. 같은 목표를 다른
+      도구로 겨냥하는 구도다.
     </p>
 
     <p>
@@ -267,7 +269,10 @@
       설명된다고 보고했다.
       <a id="cite-32" href="#ref-32">[32]</a>는 수학 영역을 35개 세부 능력으로 분해해
       모델별 강·약점 프로파일을 그렸다. 어느 방법이든 θ는 스칼라 하나가 아니라 여러
-      능력 차원의 벡터로 표현된다.
+      능력 차원의 벡터로 표현된다. IRT가 연속 잠재 변수로 능력을 표현한다면, 교육 심리학의
+      인지 진단 모형(CDM)은 능력을 이산 속성 벡터로 나타낸다.
+      <a id="cite-59" href="#ref-59">[59]</a>에서는 CDM을 LLM 평가에 적용해 텍스트 임베딩으로
+      Q-행렬(문항-속성 관계)을 자동 구성하고, LLM의 세부 능력 프로파일을 추출했다.
     </p>
 
     <figure style="max-width: 760px">
@@ -444,6 +449,8 @@
       <li id="ref-55"><a class="ref-num" href="#cite-55">[55]</a><span class="ref-cite">Han, Song, Lee, Jo. Quantifying Data Contamination in Psychometric Evaluations of LLMs. EACL 2026 Findings. <a href="https://arxiv.org/abs/2510.07175">arXiv:2510.07175</a></span></li>
       <li id="ref-56"><a class="ref-num" href="#cite-56">[56]</a><span class="ref-cite">Uebayashi et al. Evaluating Cross-Modal Reasoning Ability and Problem Characteristics with Multimodal Item Response Theory (M3IRT). ICLR 2026. <a href="https://arxiv.org/abs/2603.02663">arXiv:2603.02663</a></span></li>
       <li id="ref-57"><a class="ref-num" href="#cite-57">[57]</a><span class="ref-cite">Qu, Heng, Zeng, Liu. An Interpretable and Scalable Framework for Evaluating Large Language Models. 2026. <a href="https://arxiv.org/abs/2605.07046">arXiv:2605.07046</a></span></li>
+      <li id="ref-58"><a class="ref-num" href="#cite-58">[58]</a><span class="ref-cite">Perlitz et al. Do These LLM Benchmarks Agree? Fixing Benchmark Evaluation with BenchBench. 2024. <a href="https://arxiv.org/abs/2407.13696">arXiv:2407.13696</a></span></li>
+      <li id="ref-59"><a class="ref-num" href="#cite-59">[59]</a><span class="ref-cite">Liu, Xu, Gu. Scalable Text-Embedding-informed Cognitive Diagnosis of Large Language Models. 2026. <a href="https://arxiv.org/abs/2603.14676">arXiv:2603.14676</a></span></li>
     </ul>
 
     <footer class="post-footer">
