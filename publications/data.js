@@ -8,6 +8,22 @@
 //   related                 — optional [{text, url}] for model/code links
 const PUBLICATIONS = [
   {
+    "id": "A3",
+    "type": "arxiv",
+    "title": "Overthinking Loops in Agents: A Structural Risk via MCP Tools",
+    "authors": [
+      {"name": "Yohan Lee"},
+      {"name": "Jisoo Jang"},
+      {"name": "Seoyeon Choi"},
+      {"name": "Sangyeop Kim"},
+      {"name": "Seungtaek Choi", "self": true, "corresponding": true}
+    ],
+    "venue": "arXiv",
+    "year": 2026,
+    "url": "https://arxiv.org/pdf/2602.14798",
+    "note": null
+  },
+  {
     "id": "C26",
     "type": "conference",
     "title": "TextME: Bridging Unseen Modalities Through Text Descriptions",
@@ -15,8 +31,8 @@ const PUBLICATIONS = [
       {"name": "Soyeon Hong"},
       {"name": "Jinchan Kim"},
       {"name": "Jaegook You"},
-      {"name": "Seungtaek Choi", "self": true},
-      {"name": "Suha Kwak"},
+      {"name": "Seungtaek Choi", "self": true, "corresponding": true},
+      {"name": "Suha Kwak", "corresponding": true},
       {"name": "Hyunsouk Cho", "corresponding": true}
     ],
     "venue": "ICML",
