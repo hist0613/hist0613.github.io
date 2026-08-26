@@ -190,7 +190,10 @@ header ul a {
   height:40px;
 }
 
-strong {
+/* `b`는 브라우저 기본값이 상대값(bolder)이라 body의 300 기준으로 400까지만 올라가고,
+   Lato는 300/700만 로드되므로 400이 300으로 대체돼 굵기가 전혀 변하지 않는다.
+   따라서 strong과 동일하게 절대값 700을 명시한다. */
+b, strong {
   color:#222;
   font-weight:700;
 }
