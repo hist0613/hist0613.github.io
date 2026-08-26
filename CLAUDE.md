@@ -82,6 +82,17 @@ python3 -m http.server 8000      # → http://localhost:8000/blog/
 - 본문 `[N]` ↔ 참고문헌 `[N]`이 양방향으로 점프한다. `:target`이면 하이라이트.
 - 스타일은 `blog.css`에 있음 (`.references`, `.ref-num` 등).
 
+## News 항목 규칙 (index.html)
+
+- 항목은 **지우지 않고** 최신 것을 위에 쌓는다.
+- 예외: **소속 이동**(`I joined ...`) 항목은 가장 최근 하나만 남기고,
+  이전 소속은 News에서 빼고 `Experience` 섹션으로 이관한다.
+- 형식은 `<li><b>MMM YYYY</b>: 문장.</li>` — bold는 날짜에만 쓴다.
+- 연구과제 선정:
+  `Our lab has been awarded the <사업명(국문 병기)> grant from the <기관>,
+  for research on <연구 주제> (시작&ndash;종료 연도).`
+  금액·과제번호는 적지 않는다 (학계 관례).
+
 ## 디자인 (style.css — 전 페이지 공유)
 
 - 흰 배경. `.content` 카드 = 흰색 + 1px 테두리(`#e6e6e6`) + 파란 상단 막대
