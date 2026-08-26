@@ -103,6 +103,9 @@ python3 -m http.server 8000      # → http://localhost:8000/blog/
   (3px `#035384`) + 둥근 모서리(8px).
 - nav는 `.nav-inner`(좌측 `Seungtaek Choi` 브랜드 + 우측 `.nav-links`).
   모든 페이지(About/Publications/Teaching/Blog) 동일.
+- 강조는 `<b>`=400, `<strong>`=700으로 굵기가 다르다. body가 300이라 400만으로
+  충분히 구분되고, Lato에는 semibold가 없어 700은 곧장 Bold로 튄다. News·Awards처럼
+  본문 흐름 안의 강조는 `<b>`를 쓴다.
 - 블로그 본문은 `blog.css` — Pretendard 폰트, 미니멀 타이포그래피.
 
 ## 주의

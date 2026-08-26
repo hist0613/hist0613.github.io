@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
+@import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,400,700);
 
 body {
 	padding: 0;
@@ -190,10 +190,16 @@ header ul a {
   height:40px;
 }
 
-/* `b`는 브라우저 기본값이 상대값(bolder)이라 body의 300 기준으로 400까지만 올라가고,
-   Lato는 300/700만 로드되므로 400이 300으로 대체돼 굵기가 전혀 변하지 않는다.
-   따라서 strong과 동일하게 절대값 700을 명시한다. */
-b, strong {
+/* `b`는 브라우저 기본값이 상대값(bolder)이라 body의 300 기준으로 400까지만 올라가는데,
+   Lato 400을 로드하지 않으면 300으로 대체돼 굵기가 전혀 변하지 않는다. 절대값으로 명시한다.
+   Lato에는 semibold(500/600)가 없어 700은 곧장 Bold로 튀므로, body 300 대비 400이면 충분하다.
+   중요도 강조인 strong은 기존대로 700을 유지한다. */
+b {
+  color:#222;
+  font-weight:400;
+}
+
+strong {
   color:#222;
   font-weight:700;
 }
