@@ -87,11 +87,14 @@ python3 -m http.server 8000      # → http://localhost:8000/blog/
 - 항목은 **지우지 않고** 최신 것을 위에 쌓는다.
 - 예외: **소속 이동**(`I joined ...`) 항목은 가장 최근 하나만 남기고,
   이전 소속은 News에서 빼고 `Experience` 섹션으로 이관한다.
-- 형식은 `<li><b>MMM YYYY</b>: 문장.</li>` — bold는 날짜에만 쓴다.
+- 형식은 `<li><b>MMM YYYY</b>: 문장.</li>`. 날짜뿐 아니라 **그 소식의 핵심**
+  (사업명·연구 주제·논문 제목)도 `<b>`로 강조한다 — Talks 섹션과 같은 관례.
+  단 학회명·기관명처럼 `<a>` 링크가 걸리는 것은 링크로 이미 구분되므로 bold를 겹치지 않는다.
 - 연구과제 선정:
-  `Our lab has been awarded the <사업명(국문 병기)> grant from the <기관>,
-  for research on <연구 주제> (시작&ndash;종료 연도).`
+  `Our lab has been awarded the <b>사업명(국문 병기)</b> grant from the <a>기관</a>,
+  for research on <b>연구 주제</b> (시작&ndash;종료 연도).`
   금액·과제번호는 적지 않는다 (학계 관례).
+- preprint: `A new preprint, <b>"제목"</b>, is available on <a>arXiv</a>.`
 
 ## 디자인 (style.css — 전 페이지 공유)
 
