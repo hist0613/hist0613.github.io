@@ -47,6 +47,7 @@
 
     .resource-link { display:inline-block; margin:3px; padding:6px 12px; background:#0F9B8E; color:white; border-radius:15px; text-decoration:none; font-size:0.85rem; transition:all 0.3s; }
     .resource-link:hover { background:#0B7A70; color:white; text-decoration:none; transform:translateY(-1px); }
+    .resource-link.disabled { background:#cbd5e0; color:#a0aec0; cursor:not-allowed; pointer-events:none; }
 
     .evaluation-section { background:white; border-radius:10px; box-shadow:0 4px 6px rgba(0,0,0,0.1); padding:30px; margin:30px 0; }
     .evaluation-percentage { background:#0F9B8E; color:white; padding:4px 8px; border-radius:3px; font-weight:500; font-size:0.85rem; }
@@ -108,7 +109,7 @@
             <li><strong>강의 시간:</strong> 목요일 4, 5, 6교시</li>
             <li><strong>학점:</strong> 3학점 (전공, 3학년)</li>
             <li><strong>학수번호:</strong> M03123101</li>
-            <li><strong>수강권장 사전지식:</strong> Python 프로그래밍, Git 기본 사용 경험</li>
+            <li><strong>수강권장 사전지식:</strong> Python 프로그래밍</li>
           </ul>
         </div>
         <div class="col-md-6">
@@ -145,7 +146,6 @@
           <h5><i class="fas fa-envelope text-primary"></i> 연락</h5>
           <ul class="list-unstyled">
             <li><strong>연구실:</strong> 교수회관 435호</li>
-            <li><strong>Office Hour:</strong> 금요일 15&ndash;18시 (사전 예약)</li>
             <li><strong>이메일:</strong> seungtaek.choi@hufs.ac.kr</li>
           </ul>
         </div>
@@ -171,8 +171,8 @@
             <span class="phase-label phase-intro">오리엔테이션</span>
           </td>
           <td>오리엔테이션</td>
-          <td>과목 안내와 평가 방식</td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td>Course Overview</td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
         <tr>
           <td>
@@ -181,8 +181,8 @@
             <span class="phase-label phase-oss">OSS·협업</span>
           </td>
           <td>Git &amp; GitHub</td>
-          <td>버전 관리와 협업 워크플로</td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td>Version Control, Collaboration Workflow</td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
         <tr>
           <td>
@@ -191,8 +191,8 @@
             <span class="phase-label phase-ai">AI-native</span>
           </td>
           <td>코드 리뷰</td>
-          <td>왜 리뷰하나, 어떻게 보나</td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td>Review Practices</td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
         <tr>
           <td>
@@ -201,8 +201,8 @@
             <span class="phase-label phase-ai">AI-native</span>
           </td>
           <td>AI 코딩 에이전트 <span class="phase-label" style="background:#0F9B8E; color:#fff; margin-left:4px;"><i class="fas fa-video"></i> 영상 강의</span></td>
-          <td>LLM 원리부터 에이전트 통제까지<br><small class="text-muted">추석 연휴 &mdash; 휴강이 아니라 영상으로 진행하며 출석이 잡힙니다.</small></td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td>LLM Basics, Coding Agents<br><small class="text-muted">추석 연휴 &mdash; 휴강이 아니라 영상으로 진행하며 출석이 잡힙니다.</small></td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
         <tr>
           <td>
@@ -211,8 +211,8 @@
             <span class="phase-label phase-ai">AI-native</span>
           </td>
           <td>에이전트에게 맡기고 도구로 굳히기</td>
-          <td>컨텍스트·명세·검증, MCP와 멀티에이전트</td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td>Context Engineering, MCP, Multi-Agent</td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
         <tr>
           <td>
@@ -222,7 +222,7 @@
           </td>
           <td>[발표 1] AI 세팅 + 공동 repo 기여</td>
           <td>개인 발표</td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
         <tr>
           <td>
@@ -231,8 +231,8 @@
             <span class="phase-label phase-oss">OSS·협업</span>
           </td>
           <td>OSS 생태계·거버넌스</td>
-          <td>생태계·라이선스·거버넌스</td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td>Licensing, Governance</td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
         <tr>
           <td>
@@ -241,8 +241,8 @@
             <span class="phase-label phase-oss">OSS·협업</span>
           </td>
           <td>AI × OSS: 기여의 시대</td>
-          <td>기여의 규모와 신뢰</td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td>Open Source Contributions</td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
         <tr>
           <td>
@@ -251,8 +251,8 @@
             <span class="phase-label phase-swe">SWE 규율</span>
           </td>
           <td>소프트웨어 설계 = 코드 읽기 + ADR</td>
-          <td>코드 읽기와 설계 기록</td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td>Code Reading, ADR</td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
         <tr>
           <td>
@@ -262,7 +262,7 @@
           </td>
           <td>[발표 2] OSS 분석</td>
           <td>개인 발표</td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
         <tr>
           <td>
@@ -271,8 +271,8 @@
             <span class="phase-label phase-swe">SWE 규율</span>
           </td>
           <td>AI 코드리뷰·리팩토링 + CI/CD</td>
-          <td>AI 코드 리뷰와 자동화</td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td>AI Code Review, Refactoring, CI/CD</td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
         <tr>
           <td>
@@ -281,8 +281,8 @@
             <span class="phase-label phase-swe">SWE 규율</span>
           </td>
           <td>서비스·배포·운영</td>
-          <td>배포와 운영</td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td>Deployment, Operations</td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
         <tr>
           <td>
@@ -291,8 +291,8 @@
             <span class="phase-label phase-swe">SWE 규율</span>
           </td>
           <td>AI 테스팅 &amp; 보안</td>
-          <td>테스트 전략과 보안</td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td>Testing, Security</td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
         <tr>
           <td>
@@ -301,8 +301,8 @@
             <span class="phase-label phase-econ">경제·전망</span>
           </td>
           <td>AI·개발자 경제학 + SWE 미래</td>
-          <td>비용·노동시장·전망</td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td>AI Economics, Future of SWE</td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
         <tr class="table-light">
           <td>
@@ -311,7 +311,7 @@
             <span class="phase-label">보강주간</span>
           </td>
           <td class="text-muted">수업 없음</td>
-          <td class="text-muted">보강 대상이 없어 이 주에는 수업하지 않습니다.</td>
+          <td class="text-muted">&mdash;</td>
           <td><span class="text-muted">—</span></td>
         </tr>
         <tr>
@@ -322,7 +322,7 @@
           </td>
           <td>[발표 3] 팀 프로젝트 발표</td>
           <td>개인 발표</td>
-          <td><span class="text-muted">준비 중</span></td>
+          <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
       </tbody>
       </table>
