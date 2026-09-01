@@ -46,7 +46,7 @@ python3 tests/test_build.py      # 테스트 (코드 수정 시 실행)
 루트 절대경로를 쓰므로 `file://`로 열면 깨진다. 저장소 루트에서:
 
 ```bash
-python3 -m http.server 8001      # → http://localhost:8001/blog/  (8000은 lecture-agent 전용)
+python3 -m http.server 8001      # -> http://localhost:8001/blog/
 ```
 
 ## 글 작성 규칙 (말투)
