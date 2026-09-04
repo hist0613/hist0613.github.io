@@ -17,7 +17,7 @@ const PUBLICATIONS = [
       {"name": "Haewon Cho"},
       {"name": "Seungtaek Choi", "self": true, "corresponding": true}
     ],
-    "venue": "WMT @ EMNLP",
+    "venue": "WMT26 @ EMNLP",
     "year": 2026,
     "url": null,
     "note": null
