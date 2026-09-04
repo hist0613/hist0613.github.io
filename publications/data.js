@@ -1,12 +1,27 @@
 // Publications data — add new entries at the top of the array.
 // Fields:
 //   id, type (conference|journal|workshop|arxiv), title, authors, venue, year, url
+//   url                     — null if no PDF yet (accepted but not published); PDF link is omitted
 //   authors[].self          — underlined (you)
 //   authors[].equal         — * equal contribution
 //   authors[].corresponding — † corresponding author
 //   note                    — optional plain-text note shown in parentheses
 //   related                 — optional [{text, url}] for model/code links
 const PUBLICATIONS = [
+  {
+    "id": "W2",
+    "type": "workshop",
+    "title": "HUFS-DILAB at WMT 2026 Automated Translation Quality Evaluation Task 1: Language-Pair Prompt Routing for Error Span Annotation",
+    "authors": [
+      {"name": "Jisoo Jang"},
+      {"name": "Haewon Cho"},
+      {"name": "Seungtaek Choi", "self": true, "corresponding": true}
+    ],
+    "venue": "WMT",
+    "year": 2026,
+    "url": null,
+    "note": null
+  },
   {
     "id": "A3",
     "type": "arxiv",

@@ -156,7 +156,7 @@ const TYPE_ORDER  = ['conference', 'journal', 'workshop', 'arxiv'];
     function renderPub(pub) {
       return `<li class="pub-item ${pub.type}">
         <span class="pub-badge badge-${pub.type}">${pub.id}</span>
-        <b>${pub.title}</b> [<a href="${pub.url}">PDF</a>]<br />
+        <b>${pub.title}</b>${pub.url ? ` [<a href="${pub.url}">PDF</a>]` : ''}<br />
         ${pub.authors.map(renderAuthor).join(', ')}<br />
         ${renderVenueLine(pub)}
       </li>`;
