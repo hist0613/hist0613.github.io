@@ -19,7 +19,7 @@ const PUBLICATIONS = [
     ],
     "venue": "WMT26 @ EMNLP",
     "year": 2026,
-    "url": null,
+    "url": "https://www2.statmt.org/wmt26/pdf/2026.wmt-1.99.pdf",
     "note": null
   },
   {
