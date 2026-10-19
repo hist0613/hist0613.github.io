@@ -6,6 +6,7 @@
 //   authors[].equal         — * equal contribution
 //   authors[].corresponding — † corresponding author
 //   note                    — optional plain-text note shown in parentheses
+//   poster                  — optional poster PDF path, shown as [Poster] next to [PDF]
 //   related                 — optional [{text, url}] for model/code links
 const PUBLICATIONS = [
   {
@@ -20,6 +21,7 @@ const PUBLICATIONS = [
     "venue": "WMT26 @ EMNLP",
     "year": 2026,
     "url": "https://www2.statmt.org/wmt26/pdf/2026.wmt-1.99.pdf",
+    "poster": "/publications/posters/wmt26-task1-system.pdf",
     "note": null
   },
   {
