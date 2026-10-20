@@ -134,4 +134,5 @@ python3 -m http.server 8001      # -> http://localhost:8001/blog/
 
 - 커밋은 사용자가 명시적으로 요청할 때만. `git add .` 금지 — 파일별로 추가.
 - 기존 페이지(index/publications/teaching)의 손작성 HTML 구조를 존중한다.
+- 방문자 수는 GoatCounter(https://hist0613.goatcounter.com, 쿠키 없음)로 센다. 새 페이지를 만들면 `</body>` 바로 앞에 다른 페이지와 같은 GoatCounter script 두 줄을 넣는다. 블로그 목록은 `build.py`, 새 글은 `_template/post.html` 에 이미 들어 있다. 리다이렉트 stub(`blog/index.html` 등)에는 넣지 않는다.
 - 스펙·계획 문서: `docs/superpowers/specs|plans/2026-05-19-multilingual-blog*`.
