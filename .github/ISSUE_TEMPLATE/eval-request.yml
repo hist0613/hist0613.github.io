@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Requests are evaluated in a queue on idle lab GPUs, so results can take days to appear.
+        Requests are evaluated in a queue, so results can take days to appear.
         Models with a standard transformers architecture and no remote code are evaluated without review. Others are reviewed first.
   - type: input
     id: model

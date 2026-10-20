@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LLM Leaderboard · Seungtaek Choi</title>
-  <meta name="description" content="Leaderboard of small open-weight LLMs on public benchmarks, evaluated asynchronously on lab GPUs.">
+  <meta name="description" content="Leaderboard of small open-weight LLMs on public benchmarks.">
   <link href="/css/style.css" rel="stylesheet">
   <link href="/leaderboard/leaderboard.css" rel="stylesheet">
 </head>
@@ -29,7 +29,7 @@
       <div>
         <h1>LLM Leaderboard</h1>
         <p class="lb-lede">Small open-weight LLMs on public benchmarks. Requests come in as GitHub issues and are
-          evaluated in a queue on idle lab GPUs, so new results appear over time.</p>
+          evaluated in a queue, so new results appear over time.</p>
       </div>
       <a class="lb-submit" id="submit-link" href="https://github.com/hist0613/hist0613.github.io/issues/new?template=eval-request.yml">Request an evaluation</a>
     </div>
@@ -99,8 +99,7 @@
 
     <h2>Collaborate with us</h2>
     <div class="lb-collab">
-      <p>This leaderboard runs on idle GPUs in our lab, so it grows only as fast as those GPUs free up.
-        If you would like to collaborate on LLM evaluation research, or can offer GPU time or compute credits
+      <p>If you would like to collaborate on LLM evaluation research, or can offer GPU time or compute credits
         so that we can evaluate more models and reasoning settings, please get in touch.</p>
       <p>Contact: seungtaek.choi (at) hufs.ac.kr</p>
     </div>
@@ -108,6 +107,8 @@
 
   <div class="lb-tip" id="tip" role="tooltip" hidden></div>
   <script src="/leaderboard/leaderboard.js"></script>
+  <script data-goatcounter="https://hist0613.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
 </body>
 
 </html>
