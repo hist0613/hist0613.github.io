@@ -1,0 +1,234 @@
+{
+ "benchmarks": [
+  {
+   "id": "mmlu_pro",
+   "name": "MMLU-Pro",
+   "description": "Multiple-choice questions (10 options) across 14 domains, answered with 5-shot chain-of-thought.",
+   "language": "en",
+   "n_items": 12032,
+   "metric": "exact_match",
+   "metric_label": "Accuracy (answer extracted from CoT)",
+   "lm_eval_task": "mmlu_pro",
+   "dataset_url": "https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro",
+   "paper_url": "https://arxiv.org/abs/2406.01574",
+   "subtasks": [
+    {
+     "id": "mmlu_pro_biology",
+     "name": "biology",
+     "n_items": 717
+    },
+    {
+     "id": "mmlu_pro_business",
+     "name": "business",
+     "n_items": 789
+    },
+    {
+     "id": "mmlu_pro_chemistry",
+     "name": "chemistry",
+     "n_items": 1132
+    },
+    {
+     "id": "mmlu_pro_computer_science",
+     "name": "computer science",
+     "n_items": 410
+    },
+    {
+     "id": "mmlu_pro_economics",
+     "name": "economics",
+     "n_items": 844
+    },
+    {
+     "id": "mmlu_pro_engineering",
+     "name": "engineering",
+     "n_items": 969
+    },
+    {
+     "id": "mmlu_pro_health",
+     "name": "health",
+     "n_items": 818
+    },
+    {
+     "id": "mmlu_pro_history",
+     "name": "history",
+     "n_items": 381
+    },
+    {
+     "id": "mmlu_pro_law",
+     "name": "law",
+     "n_items": 1101
+    },
+    {
+     "id": "mmlu_pro_math",
+     "name": "math",
+     "n_items": 1351
+    },
+    {
+     "id": "mmlu_pro_other",
+     "name": "other",
+     "n_items": 924
+    },
+    {
+     "id": "mmlu_pro_philosophy",
+     "name": "philosophy",
+     "n_items": 499
+    },
+    {
+     "id": "mmlu_pro_physics",
+     "name": "physics",
+     "n_items": 1299
+    },
+    {
+     "id": "mmlu_pro_psychology",
+     "name": "psychology",
+     "n_items": 798
+    }
+   ]
+  },
+  {
+   "id": "kmmlu_redux",
+   "name": "KMMLU-Redux",
+   "description": "Korean multiple-choice questions (4 options) from national technical qualification exams, a cleaned subset of KMMLU, answered with zero-shot chain-of-thought.",
+   "language": "ko",
+   "n_items": 2587,
+   "metric": "exact_match",
+   "metric_label": "Accuracy (answer extracted from CoT)",
+   "lm_eval_task": "kmmlu_redux",
+   "dataset_url": "https://huggingface.co/datasets/LGAI-EXAONE/KMMLU-Redux",
+   "paper_url": "https://arxiv.org/abs/2507.08924",
+   "protocol_url": "https://github.com/LG-AI-EXAONE/KMMLU-Pro",
+   "subtasks": [
+    {
+     "id": "kmmlu_redux_safety_management",
+     "name": "Safety Management",
+     "n_items": 400
+    },
+    {
+     "id": "kmmlu_redux_environment_energy",
+     "name": "Environment & Energy",
+     "n_items": 377
+    },
+    {
+     "id": "kmmlu_redux_construction",
+     "name": "Construction",
+     "n_items": 333
+    },
+    {
+     "id": "kmmlu_redux_mechanical",
+     "name": "Mechanical",
+     "n_items": 270
+    },
+    {
+     "id": "kmmlu_redux_materials",
+     "name": "Materials",
+     "n_items": 262
+    },
+    {
+     "id": "kmmlu_redux_information_communication",
+     "name": "Information & Communication",
+     "n_items": 185
+    },
+    {
+     "id": "kmmlu_redux_agriculture_forestry_fishery",
+     "name": "Agriculture, Forestry & Fishery",
+     "n_items": 185
+    },
+    {
+     "id": "kmmlu_redux_chemistry",
+     "name": "Chemistry",
+     "n_items": 140
+    },
+    {
+     "id": "kmmlu_redux_culture_arts_design_broadcasting",
+     "name": "Culture, Arts, Design & Broadcasting",
+     "n_items": 119
+    },
+    {
+     "id": "kmmlu_redux_electrical_electronics",
+     "name": "Electrical & Electronics",
+     "n_items": 114
+    },
+    {
+     "id": "kmmlu_redux_food_processing",
+     "name": "Food Processing",
+     "n_items": 78
+    },
+    {
+     "id": "kmmlu_redux_architecture",
+     "name": "Architecture",
+     "n_items": 71
+    },
+    {
+     "id": "kmmlu_redux_business_accounting_office",
+     "name": "Business, Accounting & Office",
+     "n_items": 34
+    },
+    {
+     "id": "kmmlu_redux_mining_resources",
+     "name": "Mining Resources",
+     "n_items": 19
+    }
+   ]
+  },
+  {
+   "id": "gpqa_diamond",
+   "name": "GPQA Diamond",
+   "description": "Graduate-level science questions written to be hard to look up, answered with zero-shot chain-of-thought.",
+   "language": "en",
+   "n_items": 198,
+   "metric": "exact_match",
+   "metric_label": "Accuracy (answer extracted from CoT)",
+   "lm_eval_task": "gpqa_diamond_cot_zeroshot",
+   "dataset_url": "https://huggingface.co/datasets/Idavidrein/gpqa",
+   "paper_url": "https://arxiv.org/abs/2311.12022",
+   "subtasks": []
+  },
+  {
+   "id": "ifeval",
+   "name": "IFEval",
+   "description": "Prompts with verifiable formatting instructions, checked by rules. The main score is prompt-level strict accuracy.",
+   "language": "en",
+   "n_items": 541,
+   "metric": "prompt_level_strict_acc",
+   "metric_label": "Prompt-level strict accuracy",
+   "lm_eval_task": "ifeval",
+   "dataset_url": "https://huggingface.co/datasets/google/IFEval",
+   "paper_url": "https://arxiv.org/abs/2311.07911",
+   "subtasks": [
+    {
+     "id": "prompt_level_strict_acc",
+     "name": "prompt strict"
+    },
+    {
+     "id": "prompt_level_loose_acc",
+     "name": "prompt loose"
+    },
+    {
+     "id": "inst_level_strict_acc",
+     "name": "instruction strict"
+    },
+    {
+     "id": "inst_level_loose_acc",
+     "name": "instruction loose"
+    }
+   ]
+  }
+ ],
+ "settings": [
+  {
+   "id": "think-off",
+   "label": "Thinking off"
+  },
+  {
+   "id": "think-low",
+   "label": "Thinking low"
+  },
+  {
+   "id": "think-medium",
+   "label": "Thinking medium"
+  },
+  {
+   "id": "think-high",
+   "label": "Thinking high"
+  }
+ ]
+}
