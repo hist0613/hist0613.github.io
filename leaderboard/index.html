@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LLM Leaderboard · Seungtaek Choi</title>
+  <meta name="description" content="Leaderboard of small open-weight LLMs on public benchmarks, evaluated asynchronously on lab GPUs.">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/leaderboard/leaderboard.css" rel="stylesheet">
+</head>
+
+<body class="lb-body">
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Seungtaek Choi</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">About</a>
+        <a href="/publications/" class="nav-link">Publications</a>
+        <a href="/teaching/" class="nav-link">Teaching</a>
+        <a href="/blog/" class="nav-link">Blog</a>
+        <a href="/leaderboard/" class="nav-link active">Leaderboard</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content lb-content">
+    <div class="lb-head">
+      <div>
+        <h1>LLM Leaderboard</h1>
+        <p class="lb-lede">Small open-weight LLMs on public benchmarks. Requests come in as GitHub issues and are
+          evaluated in a queue on idle lab GPUs, so new results appear over time.</p>
+      </div>
+      <a class="lb-submit" id="submit-link" href="https://github.com/hist0613/hist0613.github.io/issues/new?template=eval-request.yml">Request an evaluation</a>
+    </div>
+
+    <p class="lb-sample" id="sample-note" hidden>These numbers are placeholder data for building the page. They are not evaluation results.</p>
+
+    <div class="lb-toolbar">
+      <label class="lb-search">
+        <span class="lb-label">Model</span>
+        <input id="q" type="search" autocomplete="off" spellcheck="false"
+          placeholder="e.g. Qwen/*, *-Instruct, /llama|gemma/, !*-2B">
+      </label>
+      <fieldset class="lb-group" id="settings-filter">
+        <legend class="lb-label">Reasoning</legend>
+      </fieldset>
+      <fieldset class="lb-group" id="size-filter">
+        <legend class="lb-label">Size</legend>
+      </fieldset>
+      <fieldset class="lb-group lb-seg" id="mode">
+        <legend class="lb-label">Cells show</legend>
+        <label><input type="radio" name="mode" value="score" checked>Score</label>
+        <label><input type="radio" name="mode" value="time">Eval time</label>
+        <label><input type="radio" name="mode" value="tokens">Output tokens</label>
+      </fieldset>
+      <label class="lb-check"><input type="checkbox" id="group-variants" checked>Group settings of the same model</label>
+    </div>
+
+    <p class="lb-help" id="search-help">
+      Comma separates patterns. <code>*</code> matches anything, <code>/…/</code> is a regular expression,
+      a leading <code>!</code> excludes. Click a benchmark name to show its subtasks, a column title to sort, a model name for details.
+    </p>
+
+    <div class="lb-scrollbar" id="topbar" aria-hidden="true"><div id="topbar-inner"></div></div>
+    <div class="lb-scrollnav">
+      <button type="button" id="prev-bench" title="Previous benchmark (Shift + ←)">◀ Previous benchmark</button>
+      <span class="lb-scrollhint">Scroll sideways with ← → while the table is focused, Shift + wheel, or the wheel over the header.</span>
+      <button type="button" id="next-bench" title="Next benchmark (Shift + →)">Next benchmark ▶</button>
+    </div>
+    <div class="lb-wrap" id="wrap" tabindex="0" aria-label="Leaderboard table">
+      <table class="lb-table" id="table"></table>
+    </div>
+    <p class="lb-count" id="count"></p>
+
+    <h2>Score vs. cost</h2>
+    <p class="lb-help">Each point is one model in one reasoning setting, and a line joins the settings of the same model.
+      Hollow points are thinking off. The dotted line is the Pareto front: no other point scores higher at a lower cost.
+      Hover a point for details. The filters above apply here too.</p>
+    <div class="lb-toolbar lb-cost-controls">
+      <label class="lb-select"><span class="lb-label">Benchmark</span><select id="cost-bench"></select></label>
+      <fieldset class="lb-group lb-seg" id="cost-x"><legend class="lb-label">Cost axis</legend></fieldset>
+    </div>
+    <p class="lb-help" id="cost-note"></p>
+    <div class="lb-cost" id="cost-chart"></div>
+    <div class="lb-setting-wrap"><table class="lb-setting-table" id="setting-table"></table></div>
+
+    <h2>How models are evaluated</h2>
+    <ul class="lb-notes">
+      <li>Each model is evaluated with <a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-evaluation-harness</a> on vLLM,
+        in bfloat16 with greedy decoding and the model's own chat template.</li>
+      <li><b>Reasoning</b> records whether the chat template's thinking mode was on, and at which effort when the model supports it.</li>
+      <li>Eval time is the wall-clock time of one benchmark on the listed GPU, including model loading.</li>
+      <li>Output tokens are the generated tokens per item, counted with the model's own tokenizer and including any thinking text.</li>
+      <li>GPU memory is the model weights plus the KV cache for one 8,192-token request, as allocated by vLLM.</li>
+      <li>Only models that load with standard transformers architectures (no remote code) are evaluated automatically. Others are reviewed first.</li>
+    </ul>
+    <div id="bench-list"></div>
+
+    <h2>Collaborate with us</h2>
+    <div class="lb-collab">
+      <p>This leaderboard runs on idle GPUs in our lab, so it grows only as fast as those GPUs free up.
+        If you would like to collaborate on LLM evaluation research, or can offer GPU time or compute credits
+        so that we can evaluate more models and reasoning settings, please get in touch.</p>
+      <p>Contact: seungtaek.choi (at) hufs.ac.kr</p>
+    </div>
+  </div>
+
+  <div class="lb-tip" id="tip" role="tooltip" hidden></div>
+  <script src="/leaderboard/leaderboard.js"></script>
+</body>
+
+</html>

@@ -4,3 +4,6 @@ __pycache__/
 *.pyc
 .claude/
 docs/
+
+# leaderboard 화면 확인용 가짜 결과 (seungtaek projects/llm-leaderboard/runner/make_sample.py 로 만든다)
+leaderboard/data/results.sample.json

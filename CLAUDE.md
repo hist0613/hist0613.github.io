@@ -8,6 +8,7 @@ Seungtaek Choi의 학술 홈페이지(GitHub Pages). 손으로 작성한 정적 
 - `index.html` — About (홈)
 - `publications/`, `teaching/` — 각 섹션
 - `blog/` — 블로그 (아래 상세)
+- `leaderboard/` — LLM leaderboard. `leaderboard.js` 가 `data/benchmarks.json`·`data/results.json` 을 읽어 표를 그린다. `results.json` 은 평가 서버 쪽 `collect.py`(seungtaek `projects/llm-leaderboard`)가 만든다. `?data=sample` 은 화면 확인용 가짜 결과(`results.sample.json`, commit 하지 않음, `runner/make_sample.py` 로 만든다)를 읽는다.
 - `css/style.css` — 전 페이지 공유 스타일, `css/blog.css` — 블로그 전용
 
 ## 블로그 구조
@@ -121,7 +122,7 @@ python3 -m http.server 8001      # -> http://localhost:8001/blog/
 - 흰 배경. `.content` 카드 = 흰색 + 1px 테두리(`#e6e6e6`) + 파란 상단 막대
   (3px `#035384`) + 둥근 모서리(8px).
 - nav는 `.nav-inner`(좌측 `Seungtaek Choi` 브랜드 + 우측 `.nav-links`).
-  모든 페이지(About/Publications/Teaching/Blog) 동일.
+  모든 페이지(About/Publications/Teaching/Blog/Leaderboard) 동일. 560px 이하에서는 링크가 brand 아래 줄로 내려간다.
 - 강조는 `<b>`=400, `<strong>`=700으로 굵기가 다르다. body가 300이라 400만으로
   충분히 구분되고, Lato에는 semibold가 없어 700은 곧장 Bold로 튄다. News·Awards처럼
   본문 흐름 안의 강조는 `<b>`를 쓴다.
