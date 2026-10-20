@@ -125,6 +125,8 @@ _LIST_PAGE = '''<!DOCTYPE html>
     </div>
     {items}
   </div>
+  <script data-goatcounter="https://hist0613.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
 </body>
 
 </html>
