@@ -256,10 +256,17 @@
   const median = (a) => (a.length ? quantile([...a].sort((x, y) => x - y), 0.5) : null);
 
   // score and cost of one row for the chosen benchmark; the average only counts rows evaluated on every benchmark
+  // Average 에 쓸 benchmark: 보이는 행의 80% 이상이 점수를 가진 것. benchmark 가 계속 늘어나므로 "전부 끝낸 행만"은 쓰지 않는다
+  function avgBenchmarks(rows) {
+    const scored = rows.filter((r) => META.benchmarks.some((b) => r.runs[b.id]?.score != null));
+    return META.benchmarks.filter((b) => scored.length && scored.filter((r) => r.runs[b.id]?.score != null).length >= 0.8 * scored.length);
+  }
+
   function costPoint(r, benchId, axis) {
-    const runs = benchId === '__avg' ? META.benchmarks.map((b) => r.runs[b.id]) : [r.runs[benchId]];
-    if (runs.some((x) => !x)) return null;
-    const y = benchId === '__avg' ? r.avg : runs[0].score;
+    const set = benchId === '__avg' ? view.avgSet : [META.benchmarks.find((b) => b.id === benchId)];
+    const runs = set.map((b) => r.runs[b.id]);
+    if (!runs.length || runs.some((x) => !x || x.score == null)) return null;
+    const y = runs.reduce((a, b) => a + b.score, 0) / runs.length;
     let x = null;
     if (axis === 'params') x = r.meta.params_b ?? null;
     else if (axis === 'time') x = runs.reduce((a, b) => a + (b.wall_seconds ?? NaN), 0);
@@ -287,12 +294,15 @@
   function renderCost(rows) {
     const benchId = state.costBench, axis = state.costAxis;
     const box = $('#cost-chart');
+    view.avgSet = avgBenchmarks(rows);
     const pts = rows.map((r) => costPoint(r, benchId, axis)).filter(Boolean);
     const note = [];
-    if (benchId === '__avg') note.push(`The average only includes rows evaluated on all ${META.benchmarks.length} benchmarks.`);
+    if (benchId === '__avg') {
+      note.push(`The average uses the ${view.avgSet.length} benchmarks that at least 80% of the rows in view have finished (${view.avgSet.map((b) => b.name).join(', ')}), and only rows that have all of them.`);
+    }
     if (axis === 'time') note.push('Eval time depends on the GPU (RTX 4090 or RTX 5090) that ran it.');
     if (axis === 'memory') note.push('Weights plus the KV cache of one 8,192-token request, as allocated by vLLM. vLLM reserves most of the card up front, so the peak reading of the GPU is not informative.');
-    if (axis === 'tokens' && benchId === '__avg') note.push('Tokens are averaged over the generative benchmarks; log-likelihood benchmarks generate none.');
+    if (axis === 'tokens' && benchId === '__avg') note.push('Tokens are generated tokens per item over those benchmarks.');
     $('#cost-note').textContent = note.join(' ');
     renderSettingTable(rows, benchId, axis);
     if (!pts.length) {
