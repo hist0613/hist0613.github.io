@@ -32,6 +32,8 @@
   // ---------- data ----------
   function buildRows() {
     MODELS = Object.fromEntries(RES.models.map((m) => [m.id, m]));
+    // 평가 중인 (모델, 설정, benchmark): collect.py 가 서버 대기열에서 읽어 둔 것. 결과가 아직 없는 모델도 행으로 보인다
+    view.inProgress = new Map((RES.in_progress || []).map((x) => [`${x.model}|${x.setting}|${x.benchmark}`, x.state]));
     SETTING_LABEL = Object.fromEntries(META.settings.map((s) => [s.id, s.label]));
     SETTING_ORDER = Object.fromEntries(META.settings.map((s, i) => [s.id, i]));
     const byKey = new Map();
@@ -39,6 +41,10 @@
       const key = `${r.model}|${r.setting}`;
       if (!byKey.has(key)) byKey.set(key, { key, model: r.model, setting: r.setting, meta: MODELS[r.model] || { id: r.model }, runs: {} });
       byKey.get(key).runs[r.benchmark] = r;
+    }
+    for (const x of RES.in_progress || []) {
+      const key = `${x.model}|${x.setting}`;
+      if (!byKey.has(key)) byKey.set(key, { key, model: x.model, setting: x.setting, meta: MODELS[x.model] || { id: x.model }, runs: {} });
     }
     ROWS = [...byKey.values()];
     // one color per model, stable across filters
@@ -100,11 +106,23 @@
   // ---------- stats ----------
   function rowSummary(rows) {
     const main = META.benchmarks.map((b) => ({ id: b.id, bench: b, kind: 'main' }));
-    // rank of each row per benchmark among the given rows (1 = best score)
+    // rank of each row per benchmark (1 = best score). When settings are grouped, a row is ranked
+    // against the other models' best setting, so ranks run from 1 to the number of models.
     const ranks = new Map(rows.map((r) => [r.key, []]));
     for (const c of main) {
-      const vals = rows.map((r) => [r, r.runs[c.id]?.score]).filter(([, v]) => v != null).sort((a, b) => b[1] - a[1]);
-      vals.forEach(([r], i) => ranks.get(r.key).push(i + 1));
+      const scored = rows.filter((r) => r.runs[c.id]?.score != null);
+      if (state.group) {
+        const best = new Map();
+        for (const r of scored) best.set(r.model, Math.max(best.get(r.model) ?? -Infinity, r.runs[c.id].score));
+        for (const r of scored) {
+          const v = r.runs[c.id].score;
+          let rank = 1;
+          for (const [m, b] of best) if (m !== r.model && b > v) rank++;
+          ranks.get(r.key).push(rank);
+        }
+      } else {
+        scored.sort((a, b) => b.runs[c.id].score - a.runs[c.id].score).forEach((r, i) => ranks.get(r.key).push(i + 1));
+      }
     }
     for (const r of rows) {
       const scores = main.map((c) => r.runs[c.id]?.score).filter((v) => v != null);
@@ -170,6 +188,8 @@
   const fmt = (v) => (state.mode === 'time' ? fmtTime(v) : state.mode === 'tokens' ? fmtTokens(v) : fmtScore(v));
   const MODE_RGB = { score: '37,99,235', time: '217,119,6', tokens: '13,148,136' };
   const MODE_HEX = { score: '#2563eb', time: '#d97706', tokens: '#0d9488' };
+  // bf16 이 기본이라 표시하지 않고, 양자화 checkpoint 만 FP8 같은 표시를 붙인다
+  const precLabel = (m) => (m.precision && m.precision !== 'bf16' ? m.precision.toUpperCase() : '');
   const fmtParams = (p) => (p == null ? '–' : p < 10 ? p.toFixed(1) + 'B' : Math.round(p) + 'B');
 
   // eval time and tokens span orders of magnitude, so they are colored on a log scale
@@ -256,10 +276,17 @@
   const median = (a) => (a.length ? quantile([...a].sort((x, y) => x - y), 0.5) : null);
 
   // score and cost of one row for the chosen benchmark; the average only counts rows evaluated on every benchmark
+  // Average 에 쓸 benchmark: 보이는 행의 80% 이상이 점수를 가진 것. benchmark 가 계속 늘어나므로 "전부 끝낸 행만"은 쓰지 않는다
+  function avgBenchmarks(rows) {
+    const scored = rows.filter((r) => META.benchmarks.some((b) => r.runs[b.id]?.score != null));
+    return META.benchmarks.filter((b) => scored.length && scored.filter((r) => r.runs[b.id]?.score != null).length >= 0.8 * scored.length);
+  }
+
   function costPoint(r, benchId, axis) {
-    const runs = benchId === '__avg' ? META.benchmarks.map((b) => r.runs[b.id]) : [r.runs[benchId]];
-    if (runs.some((x) => !x)) return null;
-    const y = benchId === '__avg' ? r.avg : runs[0].score;
+    const set = benchId === '__avg' ? view.avgSet : [META.benchmarks.find((b) => b.id === benchId)];
+    const runs = set.map((b) => r.runs[b.id]);
+    if (!runs.length || runs.some((x) => !x || x.score == null)) return null;
+    const y = runs.reduce((a, b) => a + b.score, 0) / runs.length;
     let x = null;
     if (axis === 'params') x = r.meta.params_b ?? null;
     else if (axis === 'time') x = runs.reduce((a, b) => a + (b.wall_seconds ?? NaN), 0);
@@ -287,12 +314,15 @@
   function renderCost(rows) {
     const benchId = state.costBench, axis = state.costAxis;
     const box = $('#cost-chart');
+    view.avgSet = avgBenchmarks(rows);
     const pts = rows.map((r) => costPoint(r, benchId, axis)).filter(Boolean);
     const note = [];
-    if (benchId === '__avg') note.push(`The average only includes rows evaluated on all ${META.benchmarks.length} benchmarks.`);
+    if (benchId === '__avg') {
+      note.push(`The average uses the ${view.avgSet.length} benchmarks that at least 80% of the rows in view have finished (${view.avgSet.map((b) => b.name).join(', ')}), and only rows that have all of them.`);
+    }
     if (axis === 'time') note.push('Eval time depends on the GPU (RTX 4090 or RTX 5090) that ran it.');
     if (axis === 'memory') note.push('Weights plus the KV cache of one 8,192-token request, as allocated by vLLM. vLLM reserves most of the card up front, so the peak reading of the GPU is not informative.');
-    if (axis === 'tokens' && benchId === '__avg') note.push('Tokens are averaged over the generative benchmarks; log-likelihood benchmarks generate none.');
+    if (axis === 'tokens' && benchId === '__avg') note.push('Tokens are generated tokens per item over those benchmarks.');
     $('#cost-note').textContent = note.join(' ');
     renderSettingTable(rows, benchId, axis);
     if (!pts.length) {
@@ -350,7 +380,7 @@
     const hit = (b) => boxes.some((o) => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]) || b[0] < L || b[2] > W - R || b[1] < T || b[3] > H - B;
     const order = [...pts].sort((a, b) => (pareto.has(b) - pareto.has(a)) || b.y - a.y);
     for (const p of order) {
-      const name = p.r.model.split('/').pop();
+      const name = p.r.model.split('/').pop() + (precLabel(p.r.meta) && !/fp8/i.test(p.r.model) ? ` ${precLabel(p.r.meta)}` : '');
       const text = byModel.get(p.r.model).length > 1 || p.r.setting !== 'think-off' ? `${name} (${SETTING_SHORT[p.r.setting] || p.r.setting})` : name;
       const w = text.length * 6.1, h = 12, x = sx(p.x), y = sy(p.y);
       for (const [bx, by, anchor] of [[x + 8, y - 6, 'start'], [x - 8 - w, y - 6, 'end'], [x - w / 2, y - 20, 'middle'], [x - w / 2, y + 8, 'middle']]) {
@@ -459,18 +489,21 @@
         toggle = `<button type="button" class="toggle" data-variants="${esc(r.model)}" aria-expanded="${open}" title="${open ? 'Hide' : 'Show'} other reasoning settings">${open ? '▾' : '▸'}</button>`;
       }
       const more = line.parent && line.nVariants > 0 ? `<span class="vcount">+${line.nVariants}</span>` : '';
+      const prec = precLabel(r.meta);
       const summary = summaryValue(r);
       const partial = state.mode === 'score' && r.n < META.benchmarks.length ? ` title="Average over ${r.n} of ${META.benchmarks.length} benchmarks"` : '';
       html += `<tr class="${line.child ? 'child' : ''}" data-row="${esc(r.key)}">
         <td class="fz c-rank">${line.rank ?? ''}</td>
-        <td class="fz c-model">${line.child ? '' : toggle}<button type="button" class="m-link" data-detail="${esc(r.key)}" title="${esc(r.model)}">${name}</button>${more}</td>
+        <td class="fz c-model">${line.child ? '' : toggle}<button type="button" class="m-link" data-detail="${esc(r.key)}" title="${esc(r.model)}">${name}</button>${prec ? `<span class="prec" title="Weights in ${esc(prec)}">${esc(prec)}</span>` : ''}${more}</td>
         <td class="fz c-setting"><span class="badge ${esc(r.setting)}">${esc(SETTING_LABEL[r.setting] || r.setting)}</span></td>
         <td class="fz fz-last c-params">${fmtParams(r.meta.params_b)}</td>
         <td class="v first stat" style="${heat(summary, view.colStats.__avg)}"${partial}>${fmt(summary)}${partial ? '*' : ''}</td>`;
       if (state.mode === 'score') html += `<td class="v stat">${r.avgRank == null ? '–' : r.avgRank.toFixed(1)}</td>`;
       for (const c of view.cols) {
         const v = cellValue(r, c);
-        html += `<td class="v${c.kind === 'main' ? ' first' : ' sub'}${v == null ? ' na' : ''}" data-col="${esc(c.id)}" style="${heat(v, view.colStats[c.id])}">${fmt(v)}</td>`;
+        const pend = v == null && c.kind === 'main' ? view.inProgress.get(`${r.model}|${r.setting}|${c.bench.id}`) : null;
+        const text = pend ? `<span class="pend ${pend}">${pend === 'running' ? 'running' : 'queued'}</span>` : fmt(v);
+        html += `<td class="v${c.kind === 'main' ? ' first' : ' sub'}${v == null ? ' na' : ''}" data-col="${esc(c.id)}" style="${heat(v, view.colStats[c.id])}">${text}</td>`;
       }
       html += '</tr>';
       if (state.details.has(r.key)) html += `<tr class="detail"><td colspan="${ncols}">${renderDetail(r)}</td></tr>`;
@@ -496,6 +529,7 @@
       <dl>
         <dt>Model</dt><dd><a href="${esc(hf)}" target="_blank" rel="noopener">${esc(r.model)}</a></dd>
         <dt>Reasoning</dt><dd>${esc(SETTING_LABEL[r.setting] || r.setting)}</dd>
+        <dt>Precision</dt><dd>${esc(precLabel(m) || 'BF16')}</dd>
         <dt>Parameters</dt><dd>${m.params_b != null ? m.params_b.toFixed(2) + 'B' : '–'}</dd>
         <dt>Architecture</dt><dd>${esc(m.architecture || '–')}</dd>
         <dt>License</dt><dd>${esc(m.license || '–')}</dd>
@@ -621,7 +655,10 @@
     const row = ROWS.find((r) => r.key === td.closest('tr').dataset.row);
     const c = colById(td.dataset.col);
     const run = row?.runs[c.bench.id];
-    if (!run) return `<b>${esc(row.model)}</b><br>${esc(c.label)}: not evaluated`;
+    if (!run) {
+      const pend = view.inProgress.get(`${row.model}|${row.setting}|${c.bench.id}`);
+      return `<b>${esc(row.model)}</b><br>${esc(c.label)}: ${pend === 'running' ? 'being evaluated now' : pend ? 'waiting in the evaluation queue' : 'not evaluated'}`;
+    }
     const v = cellValue(row, c);
     let html = `<b>${esc(row.model)}</b> · ${esc(SETTING_LABEL[row.setting] || row.setting)}<br>${esc(c.label)}: ${fmt(v)}`;
     if (run.output_tokens) html += `<br>${fmtTokens(run.output_tokens / c.bench.n_items)} output tokens per item`;
@@ -728,8 +765,8 @@
     $('#bench-list').innerHTML = '<h2>Benchmarks</h2>' + META.benchmarks.map((b) => `
       <div class="lb-bench"><h3>${esc(b.name)}</h3>
         <p>${esc(b.description)}</p>
-        <p>${b.n_items.toLocaleString()} items · ${esc(b.metric_label)} · lm-eval task <code>${esc(b.lm_eval_task)}</code>${b.protocol_url ? ` (prompt and answer extraction from the <a href="${esc(b.protocol_url)}">official KMMLU-Pro code</a>)` : ''}
-          · <a href="${esc(b.dataset_url)}">dataset</a> · <a href="${esc(b.paper_url)}">paper</a></p></div>`).join('');
+        <p>${b.n_items.toLocaleString()} items · ${esc(b.metric_label)} · lm-eval task <code>${esc(b.lm_eval_task)}</code>${b.protocol_url ? ` (prompt and answer extraction from the <a href="${esc(b.protocol_url)}">official ${esc(b.protocol_name || '')} code</a>)` : ''}
+          · <a href="${esc(b.dataset_url)}">dataset</a>${b.paper_url ? ` · <a href="${esc(b.paper_url)}">paper</a>` : ''}</p></div>`).join('');
   }
 
   // ?data=sample loads placeholder results that cover every reasoning setting
@@ -739,6 +776,13 @@
       META = meta;
       RES = res;
       $('#sample-note').hidden = !res.sample;
+      const ip = res.in_progress || [];
+      const nRun = ip.filter((x) => x.state === 'running').length;
+      if (res.generated_at && !res.sample) {
+        const t = new Date(res.generated_at);
+        $('#status-line').textContent = `Results last collected ${t.toLocaleString('en-CA', { timeZone: 'Asia/Seoul', hour12: false }).replace(',', '')} KST.` +
+          (ip.length ? ` ${nRun} evaluation${nRun === 1 ? '' : 's'} running and ${ip.length - nRun} queued at that time.` : '');
+      }
       buildRows();
       setupControls();
       renderBenchList();
