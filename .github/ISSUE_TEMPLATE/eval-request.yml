@@ -1,0 +1,47 @@
+name: Leaderboard evaluation request
+description: Ask for an open-weight model to be evaluated on the LLM leaderboard.
+title: "[Eval] "
+labels: ["eval-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Requests are evaluated in a queue on idle lab GPUs, so results can take days to appear.
+        Models with a standard transformers architecture and no remote code are evaluated without review. Others are reviewed first.
+  - type: input
+    id: model
+    attributes:
+      label: Hugging Face model ID
+      description: The model must be open-weight and fit in bfloat16 on one 24–32 GB GPU (roughly up to 10B parameters).
+      placeholder: e.g. Qwen/Qwen3.5-4B
+    validations:
+      required: true
+  - type: input
+    id: revision
+    attributes:
+      label: Revision (optional)
+      description: A commit hash or branch. Leave empty to use the latest commit at evaluation time.
+  - type: checkboxes
+    id: settings
+    attributes:
+      label: Reasoning settings
+      description: Thinking settings only apply when the model's chat template supports them.
+      options:
+        - label: Thinking off
+        - label: Thinking low
+        - label: Thinking medium
+        - label: Thinking high
+  - type: checkboxes
+    id: benchmarks
+    attributes:
+      label: Benchmarks
+      options:
+        - label: MMLU-Pro
+        - label: KMMLU-Redux
+        - label: GPQA Diamond
+        - label: IFEval
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional)
+      description: Anything we should know, such as a recommended chat template setting or a paper to cite.
