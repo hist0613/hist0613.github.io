@@ -114,6 +114,7 @@ _LIST_PAGE = '''<!DOCTYPE html>
         <a href="/publications/" class="nav-link">Publications</a>
         <a href="/teaching/" class="nav-link">Teaching</a>
         <a href="/blog/" class="nav-link active">Blog</a>
+        <a href="/leaderboard/" class="nav-link">Leaderboard</a>
       </div>
     </div>
   </nav>
