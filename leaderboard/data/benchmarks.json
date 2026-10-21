@@ -167,7 +167,8 @@
      "name": "Mining Resources",
      "n_items": 19
     }
-   ]
+   ],
+   "protocol_name": "KMMLU-Pro"
   },
   {
    "id": "gpqa_diamond",
@@ -209,6 +210,273 @@
     {
      "id": "inst_level_loose_acc",
      "name": "instruction loose"
+    }
+   ]
+  },
+  {
+   "id": "hrm8k",
+   "name": "HRM8K",
+   "description": "Korean math word problems drawn from Korean exams and competitions (KSM) and translated from GSM8K, MATH, Omni-MATH and MMMLU, answered with a boxed final answer.",
+   "language": "ko",
+   "n_items": 8011,
+   "metric": "exact_match",
+   "metric_label": "Accuracy (boxed answer, all 8,011 problems)",
+   "lm_eval_task": "hrm8k",
+   "dataset_url": "https://huggingface.co/datasets/HAERAE-HUB/HRM8K",
+   "paper_url": "https://arxiv.org/abs/2501.02448",
+   "subtasks": [
+    {
+     "id": "hrm8k_ksm",
+     "name": "KSM",
+     "n_items": 1428
+    },
+    {
+     "id": "hrm8k_gsm8k",
+     "name": "GSM8K",
+     "n_items": 1319
+    },
+    {
+     "id": "hrm8k_math",
+     "name": "MATH",
+     "n_items": 2885
+    },
+    {
+     "id": "hrm8k_omni_math",
+     "name": "Omni-MATH",
+     "n_items": 1909
+    },
+    {
+     "id": "hrm8k_mmmlu",
+     "name": "MMMLU",
+     "n_items": 470
+    }
+   ]
+  },
+  {
+   "id": "aime25",
+   "name": "AIME 2025",
+   "description": "The 30 problems of the 2025 American Invitational Mathematics Examination, each with an integer answer. The prompt asks for step-by-step reasoning and a boxed final answer, scored from one greedy answer.",
+   "language": "en",
+   "n_items": 30,
+   "metric": "exact_match",
+   "metric_label": "Accuracy (boxed answer, one greedy answer per problem)",
+   "lm_eval_task": "aime25_boxed",
+   "dataset_url": "https://huggingface.co/datasets/math-ai/aime25",
+   "paper_url": null,
+   "subtasks": []
+  },
+  {
+   "id": "kobalt",
+   "name": "KoBALT",
+   "description": "Korean linguistic-phenomena questions (syntax, semantics, pragmatics, phonetics/phonology, morphology) with 10 options, answered with step-by-step reasoning ending in \"정답은 X입니다\".",
+   "language": "ko",
+   "n_items": 700,
+   "metric": "acc",
+   "metric_label": "Accuracy (answer extracted as in the official code)",
+   "lm_eval_task": "kobalt",
+   "dataset_url": "https://huggingface.co/datasets/snunlp/KoBALT-700",
+   "paper_url": "https://arxiv.org/abs/2505.16125",
+   "protocol_url": "https://github.com/snunlp/KoBALT",
+   "subtasks": [
+    {
+     "id": "kobalt_syntax",
+     "name": "Syntax",
+     "n_items": 300
+    },
+    {
+     "id": "kobalt_semantics",
+     "name": "Semantics",
+     "n_items": 215
+    },
+    {
+     "id": "kobalt_pragmatics",
+     "name": "Pragmatics",
+     "n_items": 81
+    },
+    {
+     "id": "kobalt_phonetics_phonology",
+     "name": "Phonetics/Phonology",
+     "n_items": 62
+    },
+    {
+     "id": "kobalt_morphology",
+     "name": "Morphology",
+     "n_items": 42
+    }
+   ],
+   "protocol_name": "KoBALT"
+  },
+  {
+   "id": "kbs",
+   "name": "KBS",
+   "description": "SNU Thunder Korean Benchmark Suite, generative set for post-trained models: Ko-GSM8K (5-shot math), Ko-IFEval (instruction following) and Ko-EQ-Bench (emotion intensity). The score is the plain mean of the three.",
+   "language": "ko",
+   "n_items": 2331,
+   "metric": "mean",
+   "metric_label": "Mean of Ko-GSM8K accuracy, Ko-IFEval prompt-level strict accuracy and Ko-EQ-Bench score / 100",
+   "lm_eval_task": "kbs",
+   "dataset_url": "https://huggingface.co/collections/thunder-research-group/snu-thunder-llm-korean-benchmark-suite",
+   "paper_url": "https://openreview.net/forum?id=oJ3rhISSqO",
+   "protocol_url": "https://github.com/mcrl/korean_benchmarks",
+   "subtasks": [
+    {
+     "id": "ko-gsm8k",
+     "name": "Ko-GSM8K",
+     "n_items": 1319
+    },
+    {
+     "id": "ko-ifeval",
+     "name": "Ko-IFEval",
+     "n_items": 841
+    },
+    {
+     "id": "ko-eqbench",
+     "name": "Ko-EQ-Bench",
+     "n_items": 171
+    }
+   ],
+   "protocol_name": "KBS"
+  },
+  {
+   "id": "chembench",
+   "name": "ChemBench",
+   "description": "Chemistry knowledge and reasoning questions across nine topics, multiple choice and numeric, answered inside [ANSWER] tags. Run with the official ChemBench code, without its LLM-based answer extractor and refusal detector.",
+   "language": "en",
+   "n_items": 2785,
+   "metric": "all_correct",
+   "metric_label": "Fraction correct (exact option set, or numeric within 1%)",
+   "lm_eval_task": "chembench (official code)",
+   "dataset_url": "https://huggingface.co/datasets/jablonkagroup/ChemBench",
+   "paper_url": "https://arxiv.org/abs/2404.01475",
+   "protocol_url": "https://github.com/lamalab-org/chem-bench",
+   "protocol_name": "ChemBench",
+   "subtasks": [
+    {
+     "id": "chembench_analytical_chemistry",
+     "name": "Analytical",
+     "n_items": 152
+    },
+    {
+     "id": "chembench_chemical_preference",
+     "name": "Chemical preference",
+     "n_items": 1000
+    },
+    {
+     "id": "chembench_general_chemistry",
+     "name": "General",
+     "n_items": 149
+    },
+    {
+     "id": "chembench_inorganic_chemistry",
+     "name": "Inorganic",
+     "n_items": 92
+    },
+    {
+     "id": "chembench_materials_science",
+     "name": "Materials",
+     "n_items": 83
+    },
+    {
+     "id": "chembench_organic_chemistry",
+     "name": "Organic",
+     "n_items": 429
+    },
+    {
+     "id": "chembench_physical_chemistry",
+     "name": "Physical",
+     "n_items": 165
+    },
+    {
+     "id": "chembench_technical_chemistry",
+     "name": "Technical",
+     "n_items": 40
+    },
+    {
+     "id": "chembench_toxicity_and_safety",
+     "name": "Toxicity & safety",
+     "n_items": 675
+    }
+   ]
+  },
+  {
+   "id": "bfcl",
+   "name": "BFCL v4",
+   "description": "Berkeley Function Calling Leaderboard v4: single-turn (non-live, live, irrelevance), multi-turn and memory. Every model is run in BFCL prompt mode with its own chat template. Web search is not run because it needs a paid search API, so the agentic part of the official overall uses memory only.",
+   "language": "en",
+   "n_items": 4890,
+   "metric": "acc",
+   "metric_label": "Overall accuracy with the official weights (non-live 10, live 10, irrelevance 10, multi-turn 30, agentic 40), agentic = memory",
+   "lm_eval_task": "bfcl (official code)",
+   "dataset_url": "https://github.com/ShishirPatil/gorilla/tree/main/berkeley-function-call-leaderboard",
+   "paper_url": null,
+   "protocol_url": "https://github.com/ShishirPatil/gorilla/tree/main/berkeley-function-call-leaderboard",
+   "protocol_name": "BFCL",
+   "subtasks": [
+    {
+     "id": "bfcl_non_live",
+     "name": "Non-live",
+     "n_items": 1150
+    },
+    {
+     "id": "bfcl_live",
+     "name": "Live",
+     "n_items": 1351
+    },
+    {
+     "id": "bfcl_irrelevance",
+     "name": "Irrelevance",
+     "n_items": 1124
+    },
+    {
+     "id": "bfcl_multi_turn",
+     "name": "Multi-turn",
+     "n_items": 800
+    },
+    {
+     "id": "bfcl_memory",
+     "name": "Memory",
+     "n_items": 465
+    }
+   ]
+  },
+  {
+   "id": "locomo",
+   "name": "LoCoMo",
+   "description": "Question answering over very long multi-session conversations (about 13K–25K tokens each, given in full). Official prompt and token-F1 scoring, with greedy decoding (the official open-model script samples at temperature 0.4). The main score covers single-hop, multi-hop, temporal and open-domain questions; adversarial questions, whose answer is \"no information\", are shown separately.",
+   "language": "en",
+   "n_items": 1984,
+   "metric": "f1",
+   "metric_label": "Token F1 over 1,540 answerable questions (official scoring)",
+   "lm_eval_task": "locomo",
+   "dataset_url": "https://github.com/snap-research/locomo",
+   "paper_url": "https://arxiv.org/abs/2402.17753",
+   "protocol_url": "https://github.com/snap-research/locomo",
+   "protocol_name": "LoCoMo",
+   "subtasks": [
+    {
+     "id": "locomo_single_hop",
+     "name": "Single-hop",
+     "n_items": 841
+    },
+    {
+     "id": "locomo_multi_hop",
+     "name": "Multi-hop",
+     "n_items": 282
+    },
+    {
+     "id": "locomo_temporal",
+     "name": "Temporal",
+     "n_items": 321
+    },
+    {
+     "id": "locomo_open_domain",
+     "name": "Open-domain",
+     "n_items": 96
+    },
+    {
+     "id": "locomo_adversarial",
+     "name": "Adversarial (not in score)",
+     "n_items": 444
     }
    ]
   }
