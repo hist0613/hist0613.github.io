@@ -190,12 +190,14 @@
 .bh.open .caret { transform: rotate(90deg); }
 .bh .nsub { font-size: 11px; color: #6b7280; }
 .bh .lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
   font-size: 10px;
   color: #6b7280;
-  border: 1px solid #e5e7eb;
-  border-radius: 3px;
-  padding: 0 3px;
+  vertical-align: 1px;
 }
+.bh .lang img { width: 16px; height: 16px; display: block; }
 .bh a.ds { font-size: 11px; color: #6b7280; margin-left: 6px; }
 
 /* Column header with sort + histogram */
