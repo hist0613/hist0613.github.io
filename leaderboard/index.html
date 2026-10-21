@@ -90,7 +90,7 @@
     <ul class="lb-notes">
       <li>Each model is evaluated with <a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-evaluation-harness</a> on vLLM,
         in bfloat16 with greedy decoding and the model's own chat template.</li>
-      <li><b>Reasoning</b> records whether the chat template's thinking mode was on, and at which effort when the model supports it.</li>
+      <li><b>Reasoning</b> records whether the chat template's thinking mode was on, and at which effort when the model supports it. With thinking on, every benchmark allows up to 30,720 generated tokens (LoCoMo 4,096) in a 32K context, and only the text after the thinking section is scored. A response whose thinking does not finish within that limit counts as unanswered.</li>
       <li>Benchmarks marked <span class="modality">image</span> come with images and are run only on models that take images,
         with every image scaled down to at most 2,048 pixels on the longer side. They are not part of the Average or Avg rank.</li>
       <li>Eval time is the wall-clock time of one benchmark on the listed GPU, including model loading.</li>

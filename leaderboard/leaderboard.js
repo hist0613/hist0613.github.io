@@ -273,7 +273,7 @@
 
   // ---------- score vs. cost ----------
   const PALETTE = ['#2563eb', '#dc2626', '#16a34a', '#d97706', '#7c3aed', '#db2777', '#0891b2', '#65a30d', '#475569', '#92400e', '#1e3a8a', '#c026d3'];
-  const SETTING_SHORT = { 'think-off': 'off', 'think-low': 'low', 'think-medium': 'medium', 'think-high': 'high' };
+  const SETTING_SHORT = { 'think-off': 'off', 'think-on': 'on', 'think-low': 'low', 'think-medium': 'medium', 'think-high': 'high' };
   const COST_AXES = {
     tokens: { label: 'Output tokens per item', fmt: (v) => fmtTokens(v) },
     time: { label: 'Eval time', fmt: (v) => fmtTime(v) },

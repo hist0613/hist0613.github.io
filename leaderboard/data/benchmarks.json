@@ -838,6 +838,10 @@
    "label": "Thinking off"
   },
   {
+   "id": "think-on",
+   "label": "Thinking on"
+  },
+  {
    "id": "think-low",
    "label": "Thinking low"
   },
