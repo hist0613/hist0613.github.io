@@ -292,10 +292,17 @@ tr.detail td { background: #f9fafb; white-space: normal; padding: 0; }
 .lb-count { font-size: 12px; color: #6b7280; margin: 6px 0 28px; }
 
 .lb-notes { padding-left: 20px; color: #374151; }
-.lb-bench { margin: 10px 0; }
-.lb-bench h3 { font-size: 15px; margin: 18px 0 4px; }
-.lb-bench h3:after { display: none; }
-.lb-bench p { margin: 2px 0; color: #4b5563; }
+.lb-bench { border-bottom: 1px solid #f0f0f0; }
+.lb-bench summary { cursor: pointer; padding: 7px 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; list-style: none; }
+.lb-bench summary::-webkit-details-marker { display: none; }
+.lb-bench summary::before { content: "▸"; color: #9ca3af; font-size: 11px; width: 10px; transition: transform .15s; }
+.lb-bench[open] summary::before { transform: rotate(90deg); }
+.lb-bench-name { font-weight: 400; color: #111827; }
+.lb-bench .lang { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; color: #6b7280; }
+.lb-bench .lang img { width: 16px; height: 16px; display: block; }
+.lb-bench-meta { font-size: 12px; color: #6b7280; }
+.lb-bench p { margin: 2px 0 6px 18px; color: #4b5563; }
+.lb-bench[open] { padding-bottom: 6px; }
 
 /* Score vs. cost */
 .lb-cost-controls { margin-top: 6px; }
