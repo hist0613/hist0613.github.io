@@ -793,11 +793,10 @@
       RES = res;
       $('#sample-note').hidden = !res.sample;
       const ip = res.in_progress || [];
-      const nRun = ip.filter((x) => x.state === 'running').length;
+      // 갱신 시각만 적는다. 몇 개가 돌고 있는지는 표의 running·queued 칸이 보여 준다
       if (res.generated_at && !res.sample) {
-        const t = new Date(res.generated_at);
-        $('#status-line').textContent = `Results last collected ${t.toLocaleString('en-CA', { timeZone: 'Asia/Seoul', hour12: false }).replace(',', '')} KST.` +
-          (ip.length ? ` ${nRun} evaluation${nRun === 1 ? '' : 's'} running and ${ip.length - nRun} queued at that time.` : '');
+        const t = new Date(res.generated_at).toLocaleString('en-CA', { timeZone: 'Asia/Seoul', hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+        $('#status-line').textContent = `Last updated ${t.replace(',', '')} KST.` + (ip.length ? ' Cells marked queued or running are still being evaluated.' : '');
       }
       buildRows();
       setupControls();
