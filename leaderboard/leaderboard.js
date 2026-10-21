@@ -327,6 +327,10 @@
     if (benchId === '__avg') {
       note.push(`The average uses the ${view.avgSet.length} benchmarks that at least 80% of the rows in view have finished (${view.avgSet.map((b) => b.name).join(', ')}), and only rows that have all of them.`);
     }
+    if (benchId !== '__avg') {
+      const bm = META.benchmarks.find((x) => x.id === benchId);
+      if (bm) note.push(`${bm.name}: ${bm.description} Score: ${bm.metric_label}.`);
+    }
     if (axis === 'time') note.push('Eval time depends on the GPU (RTX 4090 or RTX 5090) that ran it.');
     if (axis === 'memory') note.push('Weights plus the KV cache of one 8,192-token request, as allocated by vLLM. vLLM reserves most of the card up front, so the peak reading of the GPU is not informative.');
     if (axis === 'tokens' && benchId === '__avg') note.push('Tokens are generated tokens per item over those benchmarks.');
@@ -768,12 +772,17 @@
     });
   }
 
+  // benchmark 목록: 한 줄 요약(이름, 언어, 문항 수, 채점)만 보이고, 누르면 설명과 링크가 펼쳐진다
+  function benchLinks(b) {
+    return `lm-eval task <code>${esc(b.lm_eval_task)}</code>${b.protocol_url ? ` (prompt and answer extraction from the <a href="${esc(b.protocol_url)}">official ${esc(b.protocol_name || '')} code</a>)` : ''}
+      · <a href="${esc(b.dataset_url)}">dataset</a>${b.paper_url ? ` · <a href="${esc(b.paper_url)}">paper</a>` : ''}`;
+  }
   function renderBenchList() {
-    $('#bench-list').innerHTML = '<h2>Benchmarks</h2>' + META.benchmarks.map((b) => `
-      <div class="lb-bench"><h3>${esc(b.name)}</h3>
+    $('#bench-list').innerHTML = '<h2>Benchmarks</h2><p class="lb-help">Click a benchmark to see how it is run and scored.</p>' + META.benchmarks.map((b) => `
+      <details class="lb-bench"><summary><span class="lb-bench-name">${esc(b.name)}</span>${langBadge(b.language)}
+        <span class="lb-bench-meta">${b.n_items.toLocaleString()} items · ${esc(b.metric_label)}</span></summary>
         <p>${esc(b.description)}</p>
-        <p>${b.n_items.toLocaleString()} items · ${esc(b.metric_label)} · lm-eval task <code>${esc(b.lm_eval_task)}</code>${b.protocol_url ? ` (prompt and answer extraction from the <a href="${esc(b.protocol_url)}">official ${esc(b.protocol_name || '')} code</a>)` : ''}
-          · <a href="${esc(b.dataset_url)}">dataset</a>${b.paper_url ? ` · <a href="${esc(b.paper_url)}">paper</a>` : ''}</p></div>`).join('');
+        <p>${benchLinks(b)}</p></details>`).join('');
   }
 
   // ?data=sample loads placeholder results that cover every reasoning setting
