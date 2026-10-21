@@ -190,6 +190,13 @@
   const MODE_HEX = { score: '#2563eb', time: '#d97706', tokens: '#0d9488' };
   // bf16 이 기본이라 표시하지 않고, 양자화 checkpoint 만 FP8 같은 표시를 붙인다
   const precLabel = (m) => (m.precision && m.precision !== 'bf16' ? m.precision.toUpperCase() : '');
+  // benchmark 언어. 국기는 Windows 가 이모지로 그리지 못해 Twemoji SVG(flags/)를 쓰고, 언어 이름은 tooltip 과 대체 텍스트에 둔다
+  const LANGS = { en: { name: 'English', flag: 'us' }, ko: { name: 'Korean', flag: 'kr' } };
+  const langBadge = (code) => {
+    const l = LANGS[code];
+    if (!l) return `<span class="lang">${esc(code)}</span>`;
+    return `<span class="lang" title="${l.name}"><img src="/leaderboard/flags/${l.flag}.svg" alt="${l.name}" width="16" height="16">${esc(code.toUpperCase())}</span>`;
+  };
   const fmtParams = (p) => (p == null ? '–' : p < 10 ? p.toFixed(1) + 'B' : Math.round(p) + 'B');
 
   // eval time and tokens span orders of magnitude, so they are colored on a log scale
@@ -466,7 +473,7 @@
         ? `<button type="button" data-bench="${b.id}" aria-expanded="${open}" title="${open ? 'Hide' : 'Show'} ${nsub} subtasks"><span class="caret">▸</span>${esc(b.name)} <span class="nsub">${nsub}</span></button>`
         : `<span>${esc(b.name)}</span>`;
       r1 += `<th class="bh${open ? ' open' : ''}" colspan="${span}" data-bench-head="${b.id}" data-col="${b.id}"><span class="bh-label">${btn}
-        <span class="lang">${esc(b.language)}</span><a class="ds" href="${esc(b.dataset_url)}" target="_blank" rel="noopener" title="Dataset on Hugging Face">data</a></span></th>`;
+        ${langBadge(b.language)}<a class="ds" href="${esc(b.dataset_url)}" target="_blank" rel="noopener" title="Dataset on Hugging Face">data</a></span></th>`;
       for (const c of view.cols.filter((c) => c.bench.id === b.id)) {
         const name = c.kind === 'main' ? (open ? 'Overall' : { score: 'Score', time: 'Time', tokens: 'Tokens / item' }[state.mode]) : c.sub.name;
         const grp = c.kind === 'sub' && c.sub.group ? `<span class="ch-group">${esc(c.sub.group)}</span>` : '';
