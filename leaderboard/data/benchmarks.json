@@ -401,11 +401,11 @@
   {
    "id": "bfcl",
    "name": "BFCL v4",
-   "description": "Berkeley Function Calling Leaderboard v4: single-turn (non-live, live, irrelevance), multi-turn, memory and web search. Every model is run in BFCL prompt mode with its own chat template. Web search uses free DuckDuckGo search through a shared, slowly rate-limited cache instead of the paid SerpAPI, so it runs about one model per day; the overall score appears once web search is done.",
+   "description": "Berkeley Function Calling Leaderboard v4: single-turn (non-live, live, irrelevance), multi-turn and memory. Every model is run in BFCL prompt mode with its own chat template. Web search is not run because it needs a paid search API, so the agentic part of the official overall uses memory only.",
    "language": "en",
-   "n_items": 5090,
+   "n_items": 4890,
    "metric": "acc",
-   "metric_label": "Overall accuracy with the official weights (non-live 10, live 10, irrelevance 10, multi-turn 30, agentic 40)",
+   "metric_label": "Overall accuracy with the official weights (non-live 10, live 10, irrelevance 10, multi-turn 30, agentic 40), agentic = memory",
    "lm_eval_task": "bfcl (official code)",
    "dataset_url": "https://github.com/ShishirPatil/gorilla/tree/main/berkeley-function-call-leaderboard",
    "paper_url": null,
@@ -436,11 +436,6 @@
      "id": "bfcl_memory",
      "name": "Memory",
      "n_items": 465
-    },
-    {
-     "id": "bfcl_web_search",
-     "name": "Web search",
-     "n_items": 200
     }
    ]
   },
