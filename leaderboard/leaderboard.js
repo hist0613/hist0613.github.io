@@ -20,7 +20,6 @@
     group: true,
     openBench: new Set(),
     openModels: new Set(),
-    details: new Set(),
     sort: { key: 'avg', dir: -1 },
     costBench: '__avg',
     costAxis: 'tokens',
@@ -498,19 +497,20 @@
       const r = line.row;
       const [org, ...rest] = r.model.split('/');
       const name = rest.length ? `<span class="m-org">${esc(org)}/</span>${esc(rest.join('/'))}` : esc(r.model);
-      let toggle = '<span class="toggle"></span>';
+      // 같은 모델의 다른 Reasoning 설정 행은 표 안에서 펼치고, 모델 정보는 이름을 눌러 따로 뜨는 창으로 본다
+      let more = '';
       if (line.parent && line.nVariants > 0) {
         const open = state.openModels.has(r.model);
-        toggle = `<button type="button" class="toggle" data-variants="${esc(r.model)}" aria-expanded="${open}" title="${open ? 'Hide' : 'Show'} other reasoning settings">${open ? '▾' : '▸'}</button>`;
+        const n = line.nVariants;
+        more = `<button type="button" class="vtoggle" data-variants="${esc(r.model)}" aria-expanded="${open}">${open ? '▾' : '▸'} ${n} more setting${n > 1 ? 's' : ''}</button>`;
       }
-      const more = line.parent && line.nVariants > 0 ? `<span class="vcount">+${line.nVariants}</span>` : '';
       const prec = precLabel(r.meta);
       const summary = summaryValue(r);
       const nText = textBenchmarks().length;
       const partial = state.mode === 'score' && r.n < nText ? ` title="Average over ${r.n} of ${nText} text benchmarks"` : '';
       html += `<tr class="${line.child ? 'child' : ''}" data-row="${esc(r.key)}">
         <td class="fz c-rank">${line.rank ?? ''}</td>
-        <td class="fz c-model">${line.child ? '' : toggle}<button type="button" class="m-link" data-detail="${esc(r.key)}" title="${esc(r.model)}">${name}</button>${prec ? `<span class="prec" title="Weights in ${esc(prec)}">${esc(prec)}</span>` : ''}${more}</td>
+        <td class="fz c-model"><button type="button" class="m-link" data-detail="${esc(r.key)}" title="Details of ${esc(r.model)}">${name}</button>${prec ? `<span class="prec" title="Weights in ${esc(prec)}">${esc(prec)}</span>` : ''}${more}</td>
         <td class="fz c-setting"><span class="badge ${esc(r.setting)}">${esc(SETTING_LABEL[r.setting] || r.setting)}</span></td>
         <td class="fz fz-last c-params">${fmtParams(r.meta.params_b)}</td>
         <td class="v first stat" style="${heat(summary, view.colStats.__avg)}"${partial}>${fmt(summary)}${partial ? '*' : ''}</td>`;
@@ -524,10 +524,16 @@
         html += `<td class="v${c.kind === 'main' ? ' first' : ' sub'}${v == null ? ' na' : ''}" data-col="${esc(c.id)}" style="${heat(v, view.colStats[c.id])}">${text}</td>`;
       }
       html += '</tr>';
-      if (state.details.has(r.key)) html += `<tr class="detail"><td colspan="${ncols}">${renderDetail(r)}</td></tr>`;
     }
     if (!view.lines.length) html += `<tr><td colspan="${ncols}" style="padding:24px;color:#6b7280">No models match the filters.</td></tr>`;
     return html + '</tbody>';
+  }
+
+  function openDetail(r) {
+    const dlg = $('#model-dialog');
+    $('#model-dialog-title').textContent = `${r.model} · ${SETTING_LABEL[r.setting] || r.setting}`;
+    $('#model-dialog-body').innerHTML = renderDetail(r);
+    dlg.showModal();
   }
 
   function renderDetail(r) {
@@ -611,6 +617,9 @@
     $('#prev-bench').disabled = wrap.scrollLeft <= 2;
     $('#next-bench').disabled = wrap.scrollLeft >= max - 2;
   }
+  // 모델 정보 창: 닫기 버튼, 창 바깥(backdrop) 클릭, Esc 로 닫는다(Esc 는 dialog 기본 동작)
+  $('#model-dialog-close').addEventListener('click', () => $('#model-dialog').close());
+  $('#model-dialog').addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.close(); });
   $('#prev-bench').addEventListener('click', () => jump(-1));
   $('#next-bench').addEventListener('click', () => jump(1));
 
@@ -717,9 +726,8 @@
     }
     const d = e.target.closest('[data-detail]');
     if (d) {
-      const id = d.dataset.detail;
-      state.details.has(id) ? state.details.delete(id) : state.details.add(id);
-      render();
+      const line = view.lines.find((l) => l.row.key === d.dataset.detail);
+      if (line) openDetail(line.row);
       return;
     }
     if (e.target.closest('a')) return;
