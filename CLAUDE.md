@@ -8,7 +8,7 @@ Seungtaek Choi의 학술 홈페이지(GitHub Pages). 손으로 작성한 정적 
 - `index.html` — About (홈)
 - `publications/`, `teaching/` — 각 섹션
 - `blog/` — 블로그 (아래 상세)
-- `leaderboard/` — LLM leaderboard. `leaderboard.js` 가 `data/benchmarks.json`·`data/results.json` 을 읽어 표를 그린다. `results.json` 은 평가 서버 쪽 `collect.py`(seungtaek `projects/llm-leaderboard`)가 만든다. `?data=sample` 은 화면 확인용 가짜 결과(`results.sample.json`, commit 하지 않음, `runner/make_sample.py` 로 만든다)를 읽는다.
+- `leaderboard/` — LLM leaderboard. `leaderboard.js` 가 `data/benchmarks.json`·`data/results.json` 을 읽어 표를 그린다. `results.json` 은 평가 서버 쪽 `collect.py`(seungtaek `projects/llm-leaderboard`)가 만든다. `?data=sample` 은 화면 확인용 가짜 결과(`results.sample.json`, commit 하지 않음, `runner/make_sample.py` 로 만든다)를 읽는다. 작업·PR 규칙은 `leaderboard/CLAUDE.md`.
 - `css/style.css` — 전 페이지 공유 스타일, `css/blog.css` — 블로그 전용
 
 ## 블로그 구조
