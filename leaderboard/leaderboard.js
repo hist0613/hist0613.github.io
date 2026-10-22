@@ -104,8 +104,11 @@
   }
 
   // ---------- stats ----------
+  // 이미지 benchmark 는 이미지를 받는 모델만 돌아서, 모든 모델이 같은 집합으로 비교되도록 Average·Avg rank·Total 에서 뺀다
+  const textBenchmarks = () => META.benchmarks.filter((b) => b.modality !== 'image');
+
   function rowSummary(rows) {
-    const main = META.benchmarks.map((b) => ({ id: b.id, bench: b, kind: 'main' }));
+    const main = textBenchmarks().map((b) => ({ id: b.id, bench: b, kind: 'main' }));
     // rank of each row per benchmark (1 = best score). When settings are grouped, a row is ranked
     // against the other models' best setting, so ranks run from 1 to the number of models.
     const ranks = new Map(rows.map((r) => [r.key, []]));
@@ -197,6 +200,7 @@
     if (!l) return `<span class="lang">${esc(code)}</span>`;
     return `<span class="lang" title="${l.name}"><img src="/leaderboard/flags/${l.flag}.svg" alt="${l.name}" width="16" height="16">${esc(code.toUpperCase())}</span>`;
   };
+  const imageBadge = (b) => (b.modality === 'image' ? '<span class="modality" title="Questions come with images. Only models that take images are evaluated.">image</span>' : '');
   const fmtParams = (p) => (p == null ? '–' : p < 10 ? p.toFixed(1) + 'B' : Math.round(p) + 'B');
 
   // eval time and tokens span orders of magnitude, so they are colored on a log scale
@@ -269,7 +273,7 @@
 
   // ---------- score vs. cost ----------
   const PALETTE = ['#2563eb', '#dc2626', '#16a34a', '#d97706', '#7c3aed', '#db2777', '#0891b2', '#65a30d', '#475569', '#92400e', '#1e3a8a', '#c026d3'];
-  const SETTING_SHORT = { 'think-off': 'off', 'think-low': 'low', 'think-medium': 'medium', 'think-high': 'high' };
+  const SETTING_SHORT = { 'think-off': 'off', 'think-on': 'on', 'think-low': 'low', 'think-medium': 'medium', 'think-high': 'high' };
   const COST_AXES = {
     tokens: { label: 'Output tokens per item', fmt: (v) => fmtTokens(v) },
     time: { label: 'Eval time', fmt: (v) => fmtTime(v) },
@@ -285,8 +289,8 @@
   // score and cost of one row for the chosen benchmark; the average only counts rows evaluated on every benchmark
   // Average 에 쓸 benchmark: 보이는 행의 80% 이상이 점수를 가진 것. benchmark 가 계속 늘어나므로 "전부 끝낸 행만"은 쓰지 않는다
   function avgBenchmarks(rows) {
-    const scored = rows.filter((r) => META.benchmarks.some((b) => r.runs[b.id]?.score != null));
-    return META.benchmarks.filter((b) => scored.length && scored.filter((r) => r.runs[b.id]?.score != null).length >= 0.8 * scored.length);
+    const scored = rows.filter((r) => textBenchmarks().some((b) => r.runs[b.id]?.score != null));
+    return textBenchmarks().filter((b) => scored.length && scored.filter((r) => r.runs[b.id]?.score != null).length >= 0.8 * scored.length);
   }
 
   function costPoint(r, benchId, axis) {
@@ -325,7 +329,7 @@
     const pts = rows.map((r) => costPoint(r, benchId, axis)).filter(Boolean);
     const note = [];
     if (benchId === '__avg') {
-      note.push(`The average uses the ${view.avgSet.length} benchmarks that at least 80% of the rows in view have finished (${view.avgSet.map((b) => b.name).join(', ')}), and only rows that have all of them.`);
+      note.push(`The average uses the ${view.avgSet.length} text benchmarks that at least 80% of the rows in view have finished (${view.avgSet.map((b) => b.name).join(', ')}), and only rows that have all of them. Image benchmarks are left out because only models that take images run them.`);
     }
     if (benchId !== '__avg') {
       const bm = META.benchmarks.find((x) => x.id === benchId);
@@ -477,7 +481,7 @@
         ? `<button type="button" data-bench="${b.id}" aria-expanded="${open}" title="${open ? 'Hide' : 'Show'} ${nsub} subtasks"><span class="caret">▸</span>${esc(b.name)} <span class="nsub">${nsub}</span></button>`
         : `<span>${esc(b.name)}</span>`;
       r1 += `<th class="bh${open ? ' open' : ''}" colspan="${span}" data-bench-head="${b.id}" data-col="${b.id}"><span class="bh-label">${btn}
-        ${langBadge(b.language)}<a class="ds" href="${esc(b.dataset_url)}" target="_blank" rel="noopener" title="Dataset on Hugging Face">data</a></span></th>`;
+        ${langBadge(b.language)}${imageBadge(b)}<a class="ds" href="${esc(b.dataset_url)}" target="_blank" rel="noopener" title="Dataset on Hugging Face">data</a></span></th>`;
       for (const c of view.cols.filter((c) => c.bench.id === b.id)) {
         const name = c.kind === 'main' ? (open ? 'Overall' : { score: 'Score', time: 'Time', tokens: 'Tokens / item' }[state.mode]) : c.sub.name;
         const grp = c.kind === 'sub' && c.sub.group ? `<span class="ch-group">${esc(c.sub.group)}</span>` : '';
@@ -502,7 +506,8 @@
       const more = line.parent && line.nVariants > 0 ? `<span class="vcount">+${line.nVariants}</span>` : '';
       const prec = precLabel(r.meta);
       const summary = summaryValue(r);
-      const partial = state.mode === 'score' && r.n < META.benchmarks.length ? ` title="Average over ${r.n} of ${META.benchmarks.length} benchmarks"` : '';
+      const nText = textBenchmarks().length;
+      const partial = state.mode === 'score' && r.n < nText ? ` title="Average over ${r.n} of ${nText} text benchmarks"` : '';
       html += `<tr class="${line.child ? 'child' : ''}" data-row="${esc(r.key)}">
         <td class="fz c-rank">${line.rank ?? ''}</td>
         <td class="fz c-model">${line.child ? '' : toggle}<button type="button" class="m-link" data-detail="${esc(r.key)}" title="${esc(r.model)}">${name}</button>${prec ? `<span class="prec" title="Weights in ${esc(prec)}">${esc(prec)}</span>` : ''}${more}</td>
@@ -513,7 +518,9 @@
       for (const c of view.cols) {
         const v = cellValue(r, c);
         const pend = v == null && c.kind === 'main' ? view.inProgress.get(`${r.model}|${r.setting}|${c.bench.id}`) : null;
-        const text = pend ? `<span class="pend ${pend}">${pend === 'running' ? 'running' : 'queued'}</span>` : fmt(v);
+        const textOnly = v == null && c.bench.modality === 'image' && r.meta.image_input === false;
+        const text = pend ? `<span class="pend ${pend}">${pend === 'running' ? 'running' : 'queued'}</span>`
+          : textOnly ? '<span class="noimg" title="This model does not take images">text only</span>' : fmt(v);
         html += `<td class="v${c.kind === 'main' ? ' first' : ' sub'}${v == null ? ' na' : ''}" data-col="${esc(c.id)}" style="${heat(v, view.colStats[c.id])}">${text}</td>`;
       }
       html += '</tr>';
@@ -779,7 +786,7 @@
   }
   function renderBenchList() {
     $('#bench-list').innerHTML = '<h2>Benchmarks</h2><p class="lb-help">Click a benchmark to see how it is run and scored.</p>' + META.benchmarks.map((b) => `
-      <details class="lb-bench"><summary><span class="lb-bench-name">${esc(b.name)}</span>${langBadge(b.language)}
+      <details class="lb-bench"><summary><span class="lb-bench-name">${esc(b.name)}</span>${langBadge(b.language)}${imageBadge(b)}
         <span class="lb-bench-meta">${b.n_items.toLocaleString()} items · ${esc(b.metric_label)}</span></summary>
         <p>${esc(b.description)}</p>
         <p>${benchLinks(b)}</p></details>`).join('');

@@ -32,6 +32,60 @@
    "state": "queued"
   },
   {
+   "model": "HuggingFaceTB/SmolLM3-3B",
+   "setting": "think-on",
+   "benchmark": "aime25",
+   "state": "queued"
+  },
+  {
+   "model": "HuggingFaceTB/SmolLM3-3B",
+   "setting": "think-on",
+   "benchmark": "gpqa_diamond",
+   "state": "queued"
+  },
+  {
+   "model": "HuggingFaceTB/SmolLM3-3B",
+   "setting": "think-on",
+   "benchmark": "hrm8k",
+   "state": "queued"
+  },
+  {
+   "model": "HuggingFaceTB/SmolLM3-3B",
+   "setting": "think-on",
+   "benchmark": "ifeval",
+   "state": "queued"
+  },
+  {
+   "model": "HuggingFaceTB/SmolLM3-3B",
+   "setting": "think-on",
+   "benchmark": "kbs",
+   "state": "queued"
+  },
+  {
+   "model": "HuggingFaceTB/SmolLM3-3B",
+   "setting": "think-on",
+   "benchmark": "kmmlu_redux",
+   "state": "queued"
+  },
+  {
+   "model": "HuggingFaceTB/SmolLM3-3B",
+   "setting": "think-on",
+   "benchmark": "kobalt",
+   "state": "queued"
+  },
+  {
+   "model": "HuggingFaceTB/SmolLM3-3B",
+   "setting": "think-on",
+   "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "HuggingFaceTB/SmolLM3-3B",
+   "setting": "think-on",
+   "benchmark": "mmlu_pro",
+   "state": "queued"
+  },
+  {
    "model": "LGAI-EXAONE/EXAONE-4.0-1.2B",
    "setting": "think-off",
    "benchmark": "bfcl",
@@ -62,27 +116,201 @@
    "state": "queued"
   },
   {
-   "model": "Qwen/Qwen3-4B-Instruct-2507",
-   "setting": "think-off",
-   "benchmark": "chembench",
+   "model": "LGAI-EXAONE/EXAONE-4.0-1.2B",
+   "setting": "think-on",
+   "benchmark": "aime25",
    "state": "queued"
   },
   {
-   "model": "Qwen/Qwen3-4B-Instruct-2507",
-   "setting": "think-off",
+   "model": "LGAI-EXAONE/EXAONE-4.0-1.2B",
+   "setting": "think-on",
+   "benchmark": "gpqa_diamond",
+   "state": "queued"
+  },
+  {
+   "model": "LGAI-EXAONE/EXAONE-4.0-1.2B",
+   "setting": "think-on",
+   "benchmark": "hrm8k",
+   "state": "queued"
+  },
+  {
+   "model": "LGAI-EXAONE/EXAONE-4.0-1.2B",
+   "setting": "think-on",
+   "benchmark": "ifeval",
+   "state": "queued"
+  },
+  {
+   "model": "LGAI-EXAONE/EXAONE-4.0-1.2B",
+   "setting": "think-on",
    "benchmark": "kbs",
    "state": "queued"
   },
   {
-   "model": "Qwen/Qwen3-4B-Instruct-2507",
-   "setting": "think-off",
+   "model": "LGAI-EXAONE/EXAONE-4.0-1.2B",
+   "setting": "think-on",
+   "benchmark": "kmmlu_redux",
+   "state": "queued"
+  },
+  {
+   "model": "LGAI-EXAONE/EXAONE-4.0-1.2B",
+   "setting": "think-on",
    "benchmark": "kobalt",
    "state": "queued"
   },
   {
-   "model": "Qwen/Qwen3-4B-Instruct-2507",
-   "setting": "think-off",
+   "model": "LGAI-EXAONE/EXAONE-4.0-1.2B",
+   "setting": "think-on",
    "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "LGAI-EXAONE/EXAONE-4.0-1.2B",
+   "setting": "think-on",
+   "benchmark": "mmlu_pro",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-1.7B",
+   "setting": "think-off",
+   "benchmark": "bfcl",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-4B",
+   "setting": "think-off",
+   "benchmark": "aime25",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-4B",
+   "setting": "think-off",
+   "benchmark": "bfcl",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-4B-Thinking-2507",
+   "setting": "think-on",
+   "benchmark": "aime25",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-4B-Thinking-2507",
+   "setting": "think-on",
+   "benchmark": "gpqa_diamond",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-4B-Thinking-2507",
+   "setting": "think-on",
+   "benchmark": "hrm8k",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-4B-Thinking-2507",
+   "setting": "think-on",
+   "benchmark": "ifeval",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-4B-Thinking-2507",
+   "setting": "think-on",
+   "benchmark": "kbs",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-4B-Thinking-2507",
+   "setting": "think-on",
+   "benchmark": "kmmlu_redux",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-4B-Thinking-2507",
+   "setting": "think-on",
+   "benchmark": "kobalt",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-4B-Thinking-2507",
+   "setting": "think-on",
+   "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-4B-Thinking-2507",
+   "setting": "think-on",
+   "benchmark": "mmlu_pro",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-8B",
+   "setting": "think-off",
+   "benchmark": "aime25",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-8B",
+   "setting": "think-off",
+   "benchmark": "bfcl",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "aime25",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "gpqa_diamond",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "hrm8k",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "ifeval",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "kbs",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "kmmlu_redux",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "kobalt",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "mmlu_pro",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-0.8B",
+   "setting": "think-off",
+   "benchmark": "bfcl",
    "state": "queued"
   },
   {
@@ -100,25 +328,61 @@
   {
    "model": "Qwen/Qwen3.5-4B",
    "setting": "think-off",
-   "benchmark": "chembench",
-   "state": "queued"
-  },
-  {
-   "model": "Qwen/Qwen3.5-4B",
-   "setting": "think-off",
    "benchmark": "kbs",
    "state": "queued"
   },
   {
    "model": "Qwen/Qwen3.5-4B",
-   "setting": "think-off",
+   "setting": "think-on",
+   "benchmark": "aime25",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-on",
+   "benchmark": "gpqa_diamond",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-on",
+   "benchmark": "hrm8k",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-on",
+   "benchmark": "ifeval",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-on",
+   "benchmark": "kbs",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-on",
+   "benchmark": "kmmlu_redux",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-on",
    "benchmark": "kobalt",
    "state": "queued"
   },
   {
    "model": "Qwen/Qwen3.5-4B",
-   "setting": "think-off",
+   "setting": "think-on",
    "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-on",
+   "benchmark": "mmlu_pro",
    "state": "queued"
   },
   {
@@ -130,25 +394,67 @@
   {
    "model": "Qwen/Qwen3.5-9B",
    "setting": "think-off",
-   "benchmark": "chembench",
-   "state": "queued"
-  },
-  {
-   "model": "Qwen/Qwen3.5-9B",
-   "setting": "think-off",
    "benchmark": "kbs",
    "state": "queued"
   },
   {
    "model": "Qwen/Qwen3.5-9B",
    "setting": "think-off",
+   "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-on",
+   "benchmark": "aime25",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-on",
+   "benchmark": "gpqa_diamond",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-on",
+   "benchmark": "hrm8k",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-on",
+   "benchmark": "ifeval",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-on",
+   "benchmark": "kbs",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-on",
+   "benchmark": "kmmlu_redux",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-on",
    "benchmark": "kobalt",
    "state": "queued"
   },
   {
    "model": "Qwen/Qwen3.5-9B",
-   "setting": "think-off",
+   "setting": "think-on",
    "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-on",
+   "benchmark": "mmlu_pro",
    "state": "queued"
   },
   {
@@ -160,7 +466,25 @@
   {
    "model": "Qwen/Qwen3.6-35B-A3B-FP8",
    "setting": "think-off",
-   "benchmark": "chembench",
+   "benchmark": "chartqa",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+   "setting": "think-off",
+   "benchmark": "k_dtcbench",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+   "setting": "think-off",
+   "benchmark": "k_mmbench",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+   "setting": "think-off",
+   "benchmark": "k_mmstar",
    "state": "queued"
   },
   {
@@ -172,25 +496,37 @@
   {
    "model": "Qwen/Qwen3.6-35B-A3B-FP8",
    "setting": "think-off",
-   "benchmark": "kobalt",
+   "benchmark": "koffvqa",
    "state": "queued"
   },
   {
    "model": "Qwen/Qwen3.6-35B-A3B-FP8",
    "setting": "think-off",
-   "benchmark": "locomo",
+   "benchmark": "mathvista",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+   "setting": "think-off",
+   "benchmark": "mmmu",
+   "state": "running"
+  },
+  {
+   "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+   "setting": "think-off",
+   "benchmark": "mmstar",
+   "state": "queued"
+  },
+  {
+   "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+   "setting": "think-off",
+   "benchmark": "ocrbench",
    "state": "queued"
   },
   {
    "model": "Qwen/Qwen3.8-27B-FP8",
    "setting": "think-off",
    "benchmark": "bfcl",
-   "state": "queued"
-  },
-  {
-   "model": "Qwen/Qwen3.8-27B-FP8",
-   "setting": "think-off",
-   "benchmark": "chembench",
    "state": "queued"
   },
   {
@@ -203,12 +539,6 @@
    "model": "Qwen/Qwen3.8-27B-FP8",
    "setting": "think-off",
    "benchmark": "kbs",
-   "state": "queued"
-  },
-  {
-   "model": "Qwen/Qwen3.8-27B-FP8",
-   "setting": "think-off",
-   "benchmark": "kobalt",
    "state": "queued"
   },
   {
@@ -254,6 +584,234 @@
    "state": "queued"
   },
   {
+   "model": "allenai/Olmo-3-7B-Think",
+   "setting": "think-on",
+   "benchmark": "aime25",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/Olmo-3-7B-Think",
+   "setting": "think-on",
+   "benchmark": "gpqa_diamond",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/Olmo-3-7B-Think",
+   "setting": "think-on",
+   "benchmark": "hrm8k",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/Olmo-3-7B-Think",
+   "setting": "think-on",
+   "benchmark": "ifeval",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/Olmo-3-7B-Think",
+   "setting": "think-on",
+   "benchmark": "kbs",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/Olmo-3-7B-Think",
+   "setting": "think-on",
+   "benchmark": "kmmlu_redux",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/Olmo-3-7B-Think",
+   "setting": "think-on",
+   "benchmark": "kobalt",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/Olmo-3-7B-Think",
+   "setting": "think-on",
+   "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/Olmo-3-7B-Think",
+   "setting": "think-on",
+   "benchmark": "mmlu_pro",
+   "state": "queued"
+  },
+  {
+   "model": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "aime25",
+   "state": "queued"
+  },
+  {
+   "model": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "gpqa_diamond",
+   "state": "queued"
+  },
+  {
+   "model": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "hrm8k",
+   "state": "queued"
+  },
+  {
+   "model": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "ifeval",
+   "state": "queued"
+  },
+  {
+   "model": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "kbs",
+   "state": "queued"
+  },
+  {
+   "model": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "kmmlu_redux",
+   "state": "queued"
+  },
+  {
+   "model": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "kobalt",
+   "state": "queued"
+  },
+  {
+   "model": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+   "setting": "think-on",
+   "benchmark": "mmlu_pro",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "aime25",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "bfcl",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "chartqa",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "chembench",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "gpqa_diamond",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "hrm8k",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "ifeval",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "k_dtcbench",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "k_mmbench",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "k_mmstar",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "kbs",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "kmmlu_redux",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "kobalt",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "koffvqa",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "mathvista",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "mmlu_pro",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "mmmu",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "mmstar",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-3n-E4B-it",
+   "setting": "think-off",
+   "benchmark": "ocrbench",
+   "state": "queued"
+  },
+  {
    "model": "google/gemma-4-12B-it",
    "setting": "think-off",
    "benchmark": "bfcl",
@@ -262,25 +820,7 @@
   {
    "model": "google/gemma-4-12B-it",
    "setting": "think-off",
-   "benchmark": "chembench",
-   "state": "queued"
-  },
-  {
-   "model": "google/gemma-4-12B-it",
-   "setting": "think-off",
    "benchmark": "kbs",
-   "state": "queued"
-  },
-  {
-   "model": "google/gemma-4-12B-it",
-   "setting": "think-off",
-   "benchmark": "kobalt",
-   "state": "queued"
-  },
-  {
-   "model": "google/gemma-4-12B-it",
-   "setting": "think-off",
-   "benchmark": "locomo",
    "state": "queued"
   },
   {
@@ -304,7 +844,7 @@
   {
    "model": "google/gemma-4-26B-A4B-it",
    "setting": "think-off",
-   "benchmark": "chembench",
+   "benchmark": "chartqa",
    "state": "queued"
   },
   {
@@ -328,6 +868,24 @@
   {
    "model": "google/gemma-4-26B-A4B-it",
    "setting": "think-off",
+   "benchmark": "k_dtcbench",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-26B-A4B-it",
+   "setting": "think-off",
+   "benchmark": "k_mmbench",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-26B-A4B-it",
+   "setting": "think-off",
+   "benchmark": "k_mmstar",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-26B-A4B-it",
+   "setting": "think-off",
    "benchmark": "kbs",
    "state": "queued"
   },
@@ -340,13 +898,13 @@
   {
    "model": "google/gemma-4-26B-A4B-it",
    "setting": "think-off",
-   "benchmark": "kobalt",
+   "benchmark": "koffvqa",
    "state": "queued"
   },
   {
    "model": "google/gemma-4-26B-A4B-it",
    "setting": "think-off",
-   "benchmark": "locomo",
+   "benchmark": "mathvista",
    "state": "queued"
   },
   {
@@ -356,15 +914,87 @@
    "state": "queued"
   },
   {
-   "model": "google/gemma-4-E4B-it",
+   "model": "google/gemma-4-26B-A4B-it",
+   "setting": "think-off",
+   "benchmark": "mmmu",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-26B-A4B-it",
+   "setting": "think-off",
+   "benchmark": "mmstar",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-26B-A4B-it",
+   "setting": "think-off",
+   "benchmark": "ocrbench",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E2B-it",
    "setting": "think-off",
    "benchmark": "bfcl",
    "state": "queued"
   },
   {
+   "model": "google/gemma-4-E2B-it",
+   "setting": "think-off",
+   "benchmark": "chartqa",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E2B-it",
+   "setting": "think-off",
+   "benchmark": "k_dtcbench",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E2B-it",
+   "setting": "think-off",
+   "benchmark": "k_mmbench",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E2B-it",
+   "setting": "think-off",
+   "benchmark": "k_mmstar",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E2B-it",
+   "setting": "think-off",
+   "benchmark": "koffvqa",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E2B-it",
+   "setting": "think-off",
+   "benchmark": "mathvista",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E2B-it",
+   "setting": "think-off",
+   "benchmark": "mmmu",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E2B-it",
+   "setting": "think-off",
+   "benchmark": "mmstar",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E2B-it",
+   "setting": "think-off",
+   "benchmark": "ocrbench",
+   "state": "queued"
+  },
+  {
    "model": "google/gemma-4-E4B-it",
    "setting": "think-off",
-   "benchmark": "chembench",
+   "benchmark": "bfcl",
    "state": "queued"
   },
   {
@@ -375,14 +1005,110 @@
   },
   {
    "model": "google/gemma-4-E4B-it",
-   "setting": "think-off",
+   "setting": "think-on",
+   "benchmark": "aime25",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-on",
+   "benchmark": "gpqa_diamond",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-on",
+   "benchmark": "hrm8k",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-on",
+   "benchmark": "ifeval",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-on",
+   "benchmark": "kbs",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-on",
+   "benchmark": "kmmlu_redux",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-on",
    "benchmark": "kobalt",
    "state": "queued"
   },
   {
    "model": "google/gemma-4-E4B-it",
-   "setting": "think-off",
+   "setting": "think-on",
    "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-on",
+   "benchmark": "mmlu_pro",
+   "state": "queued"
+  },
+  {
+   "model": "google/medgemma-4b-it",
+   "setting": "think-off",
+   "benchmark": "chartqa",
+   "state": "queued"
+  },
+  {
+   "model": "google/medgemma-4b-it",
+   "setting": "think-off",
+   "benchmark": "k_dtcbench",
+   "state": "queued"
+  },
+  {
+   "model": "google/medgemma-4b-it",
+   "setting": "think-off",
+   "benchmark": "k_mmbench",
+   "state": "queued"
+  },
+  {
+   "model": "google/medgemma-4b-it",
+   "setting": "think-off",
+   "benchmark": "k_mmstar",
+   "state": "queued"
+  },
+  {
+   "model": "google/medgemma-4b-it",
+   "setting": "think-off",
+   "benchmark": "koffvqa",
+   "state": "queued"
+  },
+  {
+   "model": "google/medgemma-4b-it",
+   "setting": "think-off",
+   "benchmark": "mathvista",
+   "state": "queued"
+  },
+  {
+   "model": "google/medgemma-4b-it",
+   "setting": "think-off",
+   "benchmark": "mmmu",
+   "state": "queued"
+  },
+  {
+   "model": "google/medgemma-4b-it",
+   "setting": "think-off",
+   "benchmark": "mmstar",
+   "state": "queued"
+  },
+  {
+   "model": "google/medgemma-4b-it",
+   "setting": "think-off",
+   "benchmark": "ocrbench",
    "state": "queued"
   },
   {
@@ -413,6 +1139,60 @@
    "model": "ibm-granite/granite-4.2-8b",
    "setting": "think-off",
    "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "ibm-granite/granite-4.2-8b",
+   "setting": "think-on",
+   "benchmark": "aime25",
+   "state": "queued"
+  },
+  {
+   "model": "ibm-granite/granite-4.2-8b",
+   "setting": "think-on",
+   "benchmark": "gpqa_diamond",
+   "state": "queued"
+  },
+  {
+   "model": "ibm-granite/granite-4.2-8b",
+   "setting": "think-on",
+   "benchmark": "hrm8k",
+   "state": "queued"
+  },
+  {
+   "model": "ibm-granite/granite-4.2-8b",
+   "setting": "think-on",
+   "benchmark": "ifeval",
+   "state": "queued"
+  },
+  {
+   "model": "ibm-granite/granite-4.2-8b",
+   "setting": "think-on",
+   "benchmark": "kbs",
+   "state": "queued"
+  },
+  {
+   "model": "ibm-granite/granite-4.2-8b",
+   "setting": "think-on",
+   "benchmark": "kmmlu_redux",
+   "state": "queued"
+  },
+  {
+   "model": "ibm-granite/granite-4.2-8b",
+   "setting": "think-on",
+   "benchmark": "kobalt",
+   "state": "queued"
+  },
+  {
+   "model": "ibm-granite/granite-4.2-8b",
+   "setting": "think-on",
+   "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "ibm-granite/granite-4.2-8b",
+   "setting": "think-on",
+   "benchmark": "mmlu_pro",
    "state": "queued"
   },
   {
@@ -488,11 +1268,12 @@
    "state": "queued"
   }
  ],
- "generated_at": "2026-10-21T10:02:56+09:00",
+ "generated_at": "2026-10-22T23:32:00+09:00",
  "models": [
   {
    "id": "HuggingFaceTB/SmolLM3-3B",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 3.08,
    "architecture": "SmolLM3ForCausalLM",
    "license": "apache-2.0",
@@ -501,6 +1282,7 @@
   {
    "id": "LGAI-EXAONE/EXAONE-4.0-1.2B",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 1.28,
    "architecture": "Exaone4ForCausalLM",
    "license": "other",
@@ -509,6 +1291,7 @@
   {
    "id": "Qwen/Qwen3-1.7B",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 2.03,
    "architecture": "Qwen3ForCausalLM",
    "license": "apache-2.0",
@@ -517,6 +1300,7 @@
   {
    "id": "Qwen/Qwen3-4B",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 4.02,
    "architecture": "Qwen3ForCausalLM",
    "license": "apache-2.0",
@@ -525,14 +1309,25 @@
   {
    "id": "Qwen/Qwen3-4B-Instruct-2507",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 4.02,
    "architecture": "Qwen3ForCausalLM",
    "license": "apache-2.0",
    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554"
   },
   {
+   "id": "Qwen/Qwen3-4B-Thinking-2507",
+   "precision": "bf16",
+   "image_input": false,
+   "params_b": 4.02,
+   "architecture": "Qwen3ForCausalLM",
+   "license": "apache-2.0",
+   "revision": null
+  },
+  {
    "id": "Qwen/Qwen3-8B",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 8.19,
    "architecture": "Qwen3ForCausalLM",
    "license": "apache-2.0",
@@ -541,6 +1336,7 @@
   {
    "id": "Qwen/Qwen3.5-0.8B",
    "precision": "bf16",
+   "image_input": true,
    "params_b": 0.87,
    "architecture": "Qwen3_5ForConditionalGeneration",
    "license": "apache-2.0",
@@ -549,6 +1345,7 @@
   {
    "id": "Qwen/Qwen3.5-2B",
    "precision": "bf16",
+   "image_input": true,
    "params_b": 2.27,
    "architecture": "Qwen3_5ForConditionalGeneration",
    "license": "apache-2.0",
@@ -557,6 +1354,7 @@
   {
    "id": "Qwen/Qwen3.5-4B",
    "precision": "bf16",
+   "image_input": true,
    "params_b": 4.66,
    "architecture": "Qwen3_5ForConditionalGeneration",
    "license": "apache-2.0",
@@ -565,6 +1363,7 @@
   {
    "id": "Qwen/Qwen3.5-9B",
    "precision": "bf16",
+   "image_input": true,
    "params_b": 9.65,
    "architecture": "Qwen3_5ForConditionalGeneration",
    "license": "apache-2.0",
@@ -573,6 +1372,7 @@
   {
    "id": "Qwen/Qwen3.6-35B-A3B-FP8",
    "precision": "fp8",
+   "image_input": true,
    "params_b": 35.95,
    "architecture": "Qwen3_5MoeForConditionalGeneration",
    "license": "apache-2.0",
@@ -581,30 +1381,79 @@
   {
    "id": "Qwen/Qwen3.8-27B-FP8",
    "precision": "fp8",
+   "image_input": true,
    "params_b": 27.78,
    "architecture": "Qwen3_5ForConditionalGeneration",
    "license": "apache-2.0",
    "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a"
   },
   {
+   "id": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
+   "precision": "bf16",
+   "image_input": true,
+   "params_b": 9.41,
+   "architecture": "Qwen3_5ForConditionalGeneration",
+   "license": "mit",
+   "revision": "2367e865d009c13ac81713a2878291d33ab28177"
+  },
+  {
    "id": "allenai/Olmo-3-7B-Instruct",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 7.3,
    "architecture": "Olmo3ForCausalLM",
    "license": "apache-2.0",
    "revision": "6e5971d9eba42665f5bd5a0fcf047f299ce1dccc"
   },
   {
+   "id": "allenai/Olmo-3-7B-Think",
+   "precision": "bf16",
+   "image_input": false,
+   "params_b": 7.3,
+   "architecture": "Olmo3ForCausalLM",
+   "license": "apache-2.0",
+   "revision": null
+  },
+  {
    "id": "allenai/Olmo-Hybrid-Instruct-DPO-7B",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 7.43,
    "architecture": "OlmoHybridForCausalLM",
    "license": "apache-2.0",
    "revision": "ec62da5af0106ab4e83a60e07c4796ff358fd204"
   },
   {
+   "id": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+   "precision": "bf16",
+   "image_input": false,
+   "params_b": 8.19,
+   "architecture": "Qwen3ForCausalLM",
+   "license": "mit",
+   "revision": null
+  },
+  {
+   "id": "google/gemma-3-4b-it",
+   "precision": null,
+   "image_input": null,
+   "params_b": 4.3,
+   "architecture": "Gemma3ForConditionalGeneration",
+   "license": "gemma",
+   "revision": "093f9f388b31de276ce2de164bdc2081324b9767"
+  },
+  {
+   "id": "google/gemma-3n-E4B-it",
+   "precision": null,
+   "image_input": null,
+   "params_b": 7.85,
+   "architecture": "Gemma3nForConditionalGeneration",
+   "license": "gemma",
+   "revision": null
+  },
+  {
    "id": "google/gemma-4-12B-it",
    "precision": "bf16",
+   "image_input": true,
    "params_b": 11.96,
    "architecture": "Gemma4UnifiedForConditionalGeneration",
    "license": "apache-2.0",
@@ -613,6 +1462,7 @@
   {
    "id": "google/gemma-4-26B-A4B-it",
    "precision": "bf16",
+   "image_input": true,
    "params_b": 25.81,
    "architecture": "Gemma4ForConditionalGeneration",
    "license": "apache-2.0",
@@ -621,6 +1471,7 @@
   {
    "id": "google/gemma-4-E2B-it",
    "precision": "bf16",
+   "image_input": true,
    "params_b": 5.12,
    "architecture": "Gemma4ForConditionalGeneration",
    "license": "apache-2.0",
@@ -629,14 +1480,25 @@
   {
    "id": "google/gemma-4-E4B-it",
    "precision": "bf16",
+   "image_input": true,
    "params_b": 8.0,
    "architecture": "Gemma4ForConditionalGeneration",
    "license": "apache-2.0",
    "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2"
   },
   {
+   "id": "google/medgemma-4b-it",
+   "precision": null,
+   "image_input": null,
+   "params_b": 4.3,
+   "architecture": "Gemma3ForConditionalGeneration",
+   "license": "other",
+   "revision": null
+  },
+  {
    "id": "ibm-granite/granite-4.0-h-tiny",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 6.94,
    "architecture": "GraniteMoeHybridForCausalLM",
    "license": "apache-2.0",
@@ -645,6 +1507,7 @@
   {
    "id": "ibm-granite/granite-4.1-8b",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 8.79,
    "architecture": "GraniteForCausalLM",
    "license": "apache-2.0",
@@ -653,6 +1516,7 @@
   {
    "id": "ibm-granite/granite-4.2-3b",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 3.66,
    "architecture": "GraniteForCausalLM",
    "license": "apache-2.0",
@@ -661,6 +1525,7 @@
   {
    "id": "ibm-granite/granite-4.2-8b",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 8.79,
    "architecture": "GraniteForCausalLM",
    "license": "apache-2.0",
@@ -669,6 +1534,7 @@
   {
    "id": "kakaocorp/kanana-1.5-8b-instruct-2505",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 8.03,
    "architecture": "LlamaForCausalLM",
    "license": "apache-2.0",
@@ -677,6 +1543,7 @@
   {
    "id": "meta-llama/Llama-3.1-8B-Instruct",
    "precision": null,
+   "image_input": null,
    "params_b": 8.03,
    "architecture": "LlamaForCausalLM",
    "license": "llama3.1",
@@ -685,6 +1552,7 @@
   {
    "id": "openbmb/MiniCPM5-2B",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 2.52,
    "architecture": "LlamaForCausalLM",
    "license": "apache-2.0",
@@ -693,6 +1561,7 @@
   {
    "id": "tencent/Hunyuan-4B-Instruct",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 4.22,
    "architecture": "HunYuanDenseV1ForCausalLM",
    "license": null,
@@ -701,6 +1570,7 @@
   {
    "id": "tencent/Hunyuan-7B-Instruct",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 7.5,
    "architecture": "HunYuanDenseV1ForCausalLM",
    "license": null,
@@ -709,6 +1579,7 @@
   {
    "id": "zai-org/GLM-4-9B-0414",
    "precision": "bf16",
+   "image_input": false,
    "params_b": 9.4,
    "architecture": "Glm4ForCausalLM",
    "license": "mit",
@@ -2124,6 +2995,28 @@
   {
    "model": "Qwen/Qwen3.5-0.8B",
    "setting": "think-off",
+   "benchmark": "chartqa",
+   "score": 0.778,
+   "subtasks": {},
+   "wall_seconds": 335,
+   "input_tokens": 598723,
+   "output_tokens": 579146,
+   "weights_gib": 1.72,
+   "min_memory_gib": 1.82,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-0.8B",
+   "setting": "think-off",
    "benchmark": "chembench",
    "score": 0.2147,
    "subtasks": {
@@ -2233,6 +3126,89 @@
   {
    "model": "Qwen/Qwen3.5-0.8B",
    "setting": "think-off",
+   "benchmark": "k_dtcbench",
+   "score": 0.5875,
+   "subtasks": {
+    "acc": 0.5875,
+    "acc_document": 0.6625,
+    "acc_table": 0.6125,
+    "acc_chart": 0.4875
+   },
+   "wall_seconds": 88,
+   "input_tokens": 19103,
+   "output_tokens": 7601,
+   "weights_gib": 1.72,
+   "min_memory_gib": 1.82,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-0.8B",
+   "setting": "think-off",
+   "benchmark": "k_mmbench",
+   "score": 0.4107,
+   "subtasks": {
+    "acc": 0.4107,
+    "acc_vanilla": 0.6443,
+    "acc_all": 0.6667
+   },
+   "wall_seconds": 347,
+   "input_tokens": 441064,
+   "output_tokens": 164875,
+   "weights_gib": 1.72,
+   "min_memory_gib": 1.82,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-0.8B",
+   "setting": "think-off",
+   "benchmark": "k_mmstar",
+   "score": 0.3927,
+   "subtasks": {
+    "acc": 0.3927,
+    "acc_coarse_perception": 0.58,
+    "acc_fine_grained_perception": 0.34,
+    "acc_instance_reasoning": 0.5,
+    "acc_logical_reasoning": 0.336,
+    "acc_science_technology": 0.228,
+    "acc_math": 0.372
+   },
+   "wall_seconds": 226,
+   "input_tokens": 134136,
+   "output_tokens": 382804,
+   "weights_gib": 1.72,
+   "min_memory_gib": 1.82,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-0.8B",
+   "setting": "think-off",
    "benchmark": "kbs",
    "score": 0.2501,
    "subtasks": {
@@ -2324,6 +3300,39 @@
   {
    "model": "Qwen/Qwen3.5-0.8B",
    "setting": "think-off",
+   "benchmark": "koffvqa",
+   "score": 0.4745,
+   "subtasks": {
+    "koffvqa_KO-OCR": 0.55,
+    "koffvqa_commonsense_reasoning": 0.4467,
+    "koffvqa_document_understanding": 0.5633,
+    "koffvqa_graph_and_chart_understanding": 0.5533,
+    "koffvqa_hallucination_and_robustness": 0.6,
+    "koffvqa_object_attributes": 0.5217,
+    "koffvqa_recognition": 0.25,
+    "koffvqa_recognition-KO": 0.05,
+    "koffvqa_relationship": 0.5533,
+    "koffvqa_table_understanding": 0.3
+   },
+   "wall_seconds": 179,
+   "input_tokens": 11174,
+   "output_tokens": 27608,
+   "weights_gib": 1.72,
+   "min_memory_gib": 1.82,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-0.8B",
+   "setting": "think-off",
    "benchmark": "locomo",
    "score": 0.3957,
    "subtasks": {
@@ -2347,6 +3356,28 @@
     "vllm": "0.23.1.dev0"
    },
    "host": "hufs01",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-0.8B",
+   "setting": "think-off",
+   "benchmark": "mathvista",
+   "score": 0.588,
+   "subtasks": {},
+   "wall_seconds": 263,
+   "input_tokens": 101383,
+   "output_tokens": 974450,
+   "weights_gib": 1.72,
+   "min_memory_gib": 1.82,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
    "issue": null
   },
   {
@@ -2384,6 +3415,99 @@
     "vllm": "0.23.1.dev0"
    },
    "host": "hufs01",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-0.8B",
+   "setting": "think-off",
+   "benchmark": "mmmu",
+   "score": 0.4489,
+   "subtasks": {
+    "mmmu_val_art_and_design": 0.425,
+    "mmmu_val_business": 0.4467,
+    "mmmu_val_health_and_medicine": 0.46,
+    "mmmu_val_humanities_and_social_science": 0.6167,
+    "mmmu_val_science": 0.3867,
+    "mmmu_val_tech_and_engineering": 0.4048
+   },
+   "wall_seconds": 475,
+   "input_tokens": 101424,
+   "output_tokens": 1342395,
+   "weights_gib": 1.72,
+   "min_memory_gib": 1.82,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-0.8B",
+   "setting": "think-off",
+   "benchmark": "mmstar",
+   "score": 0.4947,
+   "subtasks": {
+    "acc": 0.4947,
+    "acc_coarse_perception": 0.632,
+    "acc_fine_grained_perception": 0.388,
+    "acc_instance_reasoning": 0.592,
+    "acc_logical_reasoning": 0.496,
+    "acc_science_technology": 0.324,
+    "acc_math": 0.536
+   },
+   "wall_seconds": 264,
+   "input_tokens": 119977,
+   "output_tokens": 750495,
+   "weights_gib": 1.72,
+   "min_memory_gib": 1.82,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-0.8B",
+   "setting": "think-off",
+   "benchmark": "ocrbench",
+   "score": 0.794,
+   "subtasks": {
+    "acc": 0.794,
+    "regular": 1.0,
+    "irregular": 0.84,
+    "artistic": 0.94,
+    "handwriting": 0.68,
+    "digit": 0.82,
+    "nonsemantic": 0.84,
+    "scene_vqa": 0.8,
+    "doc_vqa": 0.815,
+    "kie": 0.78,
+    "hmer": 0.59
+   },
+   "wall_seconds": 225,
+   "input_tokens": 28470,
+   "output_tokens": 63918,
+   "weights_gib": 1.72,
+   "min_memory_gib": 1.82,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
    "issue": null
   },
   {
@@ -2447,6 +3571,28 @@
    "gpu": "NVIDIA GeForce RTX 5090",
    "n_gpus": 1,
    "evaluated_at": "2026-10-21",
+   "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-2B",
+   "setting": "think-off",
+   "benchmark": "chartqa",
+   "score": 0.7248,
+   "subtasks": {},
+   "wall_seconds": 393,
+   "input_tokens": 598723,
+   "output_tokens": 883076,
+   "weights_gib": 4.25,
+   "min_memory_gib": 4.35,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
    "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
    "versions": {
     "lm_eval": "0.4.12",
@@ -2567,6 +3713,89 @@
   {
    "model": "Qwen/Qwen3.5-2B",
    "setting": "think-off",
+   "benchmark": "k_dtcbench",
+   "score": 0.8458,
+   "subtasks": {
+    "acc": 0.8458,
+    "acc_document": 0.875,
+    "acc_table": 0.8625,
+    "acc_chart": 0.8
+   },
+   "wall_seconds": 111,
+   "input_tokens": 19103,
+   "output_tokens": 43202,
+   "weights_gib": 4.25,
+   "min_memory_gib": 4.35,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-2B",
+   "setting": "think-off",
+   "benchmark": "k_mmbench",
+   "score": 0.6572,
+   "subtasks": {
+    "acc": 0.6572,
+    "acc_vanilla": 0.7895,
+    "acc_all": 0.7933
+   },
+   "wall_seconds": 359,
+   "input_tokens": 441064,
+   "output_tokens": 189845,
+   "weights_gib": 4.25,
+   "min_memory_gib": 4.35,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-2B",
+   "setting": "think-off",
+   "benchmark": "k_mmstar",
+   "score": 0.5213,
+   "subtasks": {
+    "acc": 0.5213,
+    "acc_coarse_perception": 0.588,
+    "acc_fine_grained_perception": 0.46,
+    "acc_instance_reasoning": 0.568,
+    "acc_logical_reasoning": 0.552,
+    "acc_science_technology": 0.368,
+    "acc_math": 0.592
+   },
+   "wall_seconds": 264,
+   "input_tokens": 134136,
+   "output_tokens": 432065,
+   "weights_gib": 4.25,
+   "min_memory_gib": 4.35,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-2B",
+   "setting": "think-off",
    "benchmark": "kmmlu_redux",
    "score": 0.3301,
    "subtasks": {
@@ -2632,6 +3861,39 @@
   {
    "model": "Qwen/Qwen3.5-2B",
    "setting": "think-off",
+   "benchmark": "koffvqa",
+   "score": 0.64,
+   "subtasks": {
+    "koffvqa_KO-OCR": 0.8,
+    "koffvqa_commonsense_reasoning": 0.5933,
+    "koffvqa_document_understanding": 0.6933,
+    "koffvqa_graph_and_chart_understanding": 0.7067,
+    "koffvqa_hallucination_and_robustness": 0.85,
+    "koffvqa_object_attributes": 0.7233,
+    "koffvqa_recognition": 0.5,
+    "koffvqa_recognition-KO": 0.15,
+    "koffvqa_relationship": 0.43,
+    "koffvqa_table_understanding": 0.6667
+   },
+   "wall_seconds": 179,
+   "input_tokens": 11174,
+   "output_tokens": 25130,
+   "weights_gib": 4.25,
+   "min_memory_gib": 4.35,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-2B",
+   "setting": "think-off",
    "benchmark": "locomo",
    "score": 0.471,
    "subtasks": {
@@ -2649,6 +3911,28 @@
    "gpu": "NVIDIA GeForce RTX 5090",
    "n_gpus": 1,
    "evaluated_at": "2026-10-21",
+   "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-2B",
+   "setting": "think-off",
+   "benchmark": "mathvista",
+   "score": 0.749,
+   "subtasks": {},
+   "wall_seconds": 288,
+   "input_tokens": 101383,
+   "output_tokens": 752456,
+   "weights_gib": 4.25,
+   "min_memory_gib": 4.35,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
    "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
    "versions": {
     "lm_eval": "0.4.12",
@@ -2695,6 +3979,99 @@
    "issue": null
   },
   {
+   "model": "Qwen/Qwen3.5-2B",
+   "setting": "think-off",
+   "benchmark": "mmmu",
+   "score": 0.5033,
+   "subtasks": {
+    "mmmu_val_art_and_design": 0.55,
+    "mmmu_val_business": 0.5067,
+    "mmmu_val_health_and_medicine": 0.5333,
+    "mmmu_val_humanities_and_social_science": 0.6417,
+    "mmmu_val_science": 0.4,
+    "mmmu_val_tech_and_engineering": 0.4476
+   },
+   "wall_seconds": 378,
+   "input_tokens": 101424,
+   "output_tokens": 917941,
+   "weights_gib": 4.25,
+   "min_memory_gib": 4.35,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-2B",
+   "setting": "think-off",
+   "benchmark": "mmstar",
+   "score": 0.612,
+   "subtasks": {
+    "acc": 0.612,
+    "acc_coarse_perception": 0.688,
+    "acc_fine_grained_perception": 0.548,
+    "acc_instance_reasoning": 0.604,
+    "acc_logical_reasoning": 0.692,
+    "acc_science_technology": 0.408,
+    "acc_math": 0.732
+   },
+   "wall_seconds": 257,
+   "input_tokens": 119977,
+   "output_tokens": 493016,
+   "weights_gib": 4.25,
+   "min_memory_gib": 4.35,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-2B",
+   "setting": "think-off",
+   "benchmark": "ocrbench",
+   "score": 0.866,
+   "subtasks": {
+    "acc": 0.866,
+    "regular": 1.0,
+    "irregular": 0.92,
+    "artistic": 0.94,
+    "handwriting": 0.66,
+    "digit": 0.82,
+    "nonsemantic": 0.98,
+    "scene_vqa": 0.89,
+    "doc_vqa": 0.88,
+    "kie": 0.845,
+    "hmer": 0.77
+   },
+   "wall_seconds": 257,
+   "input_tokens": 28470,
+   "output_tokens": 59163,
+   "weights_gib": 4.25,
+   "min_memory_gib": 4.35,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
    "model": "Qwen/Qwen3.5-4B",
    "setting": "think-off",
    "benchmark": "aime25",
@@ -2705,6 +4082,60 @@
    "output_tokens": 461054,
    "weights_gib": 8.61,
    "min_memory_gib": 8.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-21",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-off",
+   "benchmark": "chartqa",
+   "score": 0.874,
+   "subtasks": {},
+   "wall_seconds": 1003,
+   "input_tokens": 1197446,
+   "output_tokens": 1630156,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-off",
+   "benchmark": "chembench",
+   "score": 0.5461,
+   "subtasks": {
+    "chembench_analytical_chemistry": 0.4737,
+    "chembench_chemical_preference": 0.538,
+    "chembench_general_chemistry": 0.7584,
+    "chembench_inorganic_chemistry": 0.8152,
+    "chembench_materials_science": 0.5301,
+    "chembench_organic_chemistry": 0.7179,
+    "chembench_physical_chemistry": 0.6606,
+    "chembench_technical_chemistry": 0.725,
+    "chembench_toxicity_and_safety": 0.3452
+   },
+   "wall_seconds": 557,
+   "input_tokens": 596278,
+   "output_tokens": 416707,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.92,
    "gpu": "NVIDIA GeForce RTX 5090",
    "n_gpus": 1,
    "evaluated_at": "2026-10-21",
@@ -2796,6 +4227,89 @@
   {
    "model": "Qwen/Qwen3.5-4B",
    "setting": "think-off",
+   "benchmark": "k_dtcbench",
+   "score": 0.8417,
+   "subtasks": {
+    "acc": 0.8417,
+    "acc_document": 0.8875,
+    "acc_table": 0.875,
+    "acc_chart": 0.7625
+   },
+   "wall_seconds": 234,
+   "input_tokens": 38206,
+   "output_tokens": 19254,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-off",
+   "benchmark": "k_mmbench",
+   "score": 0.7655,
+   "subtasks": {
+    "acc": 0.7655,
+    "acc_vanilla": 0.8505,
+    "acc_all": 0.8586
+   },
+   "wall_seconds": 769,
+   "input_tokens": 882128,
+   "output_tokens": 286371,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-off",
+   "benchmark": "k_mmstar",
+   "score": 0.6547,
+   "subtasks": {
+    "acc": 0.6547,
+    "acc_coarse_perception": 0.632,
+    "acc_fine_grained_perception": 0.576,
+    "acc_instance_reasoning": 0.684,
+    "acc_logical_reasoning": 0.744,
+    "acc_science_technology": 0.516,
+    "acc_math": 0.776
+   },
+   "wall_seconds": 552,
+   "input_tokens": 268272,
+   "output_tokens": 487381,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-off",
    "benchmark": "kmmlu_redux",
    "score": 0.5489,
    "subtasks": {
@@ -2822,6 +4336,117 @@
    "gpu": "NVIDIA GeForce RTX 5090",
    "n_gpus": 1,
    "evaluated_at": "2026-10-20",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-off",
+   "benchmark": "kobalt",
+   "score": 0.2329,
+   "subtasks": {
+    "kobalt_syntax": 0.2,
+    "kobalt_semantics": 0.4279,
+    "kobalt_pragmatics": 0.1235,
+    "kobalt_phonetics_phonology": 0.0,
+    "kobalt_morphology": 0.0238
+   },
+   "wall_seconds": 276,
+   "input_tokens": 247118,
+   "output_tokens": 1009387,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.92,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-21",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-off",
+   "benchmark": "koffvqa",
+   "score": 0.7353,
+   "subtasks": {
+    "koffvqa_KO-OCR": 0.7,
+    "koffvqa_commonsense_reasoning": 0.7489,
+    "koffvqa_document_understanding": 0.7933,
+    "koffvqa_graph_and_chart_understanding": 0.8333,
+    "koffvqa_hallucination_and_robustness": 0.5,
+    "koffvqa_object_attributes": 0.8567,
+    "koffvqa_recognition": 0.4,
+    "koffvqa_recognition-KO": 0.25,
+    "koffvqa_relationship": 0.6467,
+    "koffvqa_table_understanding": 0.78
+   },
+   "wall_seconds": 207,
+   "input_tokens": 11174,
+   "output_tokens": 25370,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-off",
+   "benchmark": "locomo",
+   "score": 0.5785,
+   "subtasks": {
+    "locomo_single_hop": 0.7046,
+    "locomo_multi_hop": 0.4922,
+    "locomo_temporal": 0.4427,
+    "locomo_open_domain": 0.1812,
+    "locomo_adversarial": 0.232
+   },
+   "wall_seconds": 2321,
+   "input_tokens": 46032450,
+   "output_tokens": 11710,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-21",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-off",
+   "benchmark": "mathvista",
+   "score": 0.815,
+   "subtasks": {},
+   "wall_seconds": 711,
+   "input_tokens": 202766,
+   "output_tokens": 1134708,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
    "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
    "versions": {
     "lm_eval": "0.4.12",
@@ -2868,6 +4493,191 @@
    "issue": null
   },
   {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-off",
+   "benchmark": "mmmu",
+   "score": 0.6733,
+   "subtasks": {
+    "mmmu_val_art_and_design": 0.6583,
+    "mmmu_val_business": 0.68,
+    "mmmu_val_health_and_medicine": 0.7467,
+    "mmmu_val_humanities_and_social_science": 0.725,
+    "mmmu_val_science": 0.66,
+    "mmmu_val_tech_and_engineering": 0.6048
+   },
+   "wall_seconds": 907,
+   "input_tokens": 202848,
+   "output_tokens": 1210353,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-off",
+   "benchmark": "mmstar",
+   "score": 0.704,
+   "subtasks": {
+    "acc": 0.704,
+    "acc_coarse_perception": 0.692,
+    "acc_fine_grained_perception": 0.596,
+    "acc_instance_reasoning": 0.716,
+    "acc_logical_reasoning": 0.776,
+    "acc_science_technology": 0.544,
+    "acc_math": 0.9
+   },
+   "wall_seconds": 641,
+   "input_tokens": 239954,
+   "output_tokens": 794989,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-off",
+   "benchmark": "ocrbench",
+   "score": 0.869,
+   "subtasks": {
+    "acc": 0.869,
+    "regular": 1.0,
+    "irregular": 0.94,
+    "artistic": 0.98,
+    "handwriting": 0.68,
+    "digit": 0.8,
+    "nonsemantic": 0.88,
+    "scene_vqa": 0.875,
+    "doc_vqa": 0.895,
+    "kie": 0.875,
+    "hmer": 0.76
+   },
+   "wall_seconds": 538,
+   "input_tokens": 56940,
+   "output_tokens": 115384,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-on",
+   "benchmark": "k_mmstar",
+   "score": 0.7087,
+   "subtasks": {
+    "acc": 0.7087,
+    "acc_coarse_perception": 0.688,
+    "acc_fine_grained_perception": 0.592,
+    "acc_instance_reasoning": 0.764,
+    "acc_logical_reasoning": 0.776,
+    "acc_science_technology": 0.588,
+    "acc_math": 0.844
+   },
+   "wall_seconds": 692,
+   "input_tokens": 131136,
+   "output_tokens": 6205155,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-on",
+   "benchmark": "koffvqa",
+   "score": 0.7876,
+   "subtasks": {
+    "koffvqa_KO-OCR": 0.9,
+    "koffvqa_commonsense_reasoning": 0.7733,
+    "koffvqa_document_understanding": 0.8333,
+    "koffvqa_graph_and_chart_understanding": 0.8667,
+    "koffvqa_hallucination_and_robustness": 0.8,
+    "koffvqa_object_attributes": 0.85,
+    "koffvqa_recognition": 0.55,
+    "koffvqa_recognition-KO": 0.1,
+    "koffvqa_relationship": 0.77,
+    "koffvqa_table_understanding": 0.8067
+   },
+   "wall_seconds": 962,
+   "input_tokens": 10624,
+   "output_tokens": 950385,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-4B",
+   "setting": "think-on",
+   "benchmark": "mmmu",
+   "score": 0.6911,
+   "subtasks": {
+    "mmmu_val_art_and_design": 0.6667,
+    "mmmu_val_business": 0.8067,
+    "mmmu_val_health_and_medicine": 0.7067,
+    "mmmu_val_humanities_and_social_science": 0.775,
+    "mmmu_val_science": 0.6467,
+    "mmmu_val_tech_and_engineering": 0.5952
+   },
+   "wall_seconds": 2196,
+   "input_tokens": 99624,
+   "output_tokens": 7796470,
+   "weights_gib": 8.61,
+   "min_memory_gib": 8.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
    "model": "Qwen/Qwen3.5-9B",
    "setting": "think-off",
    "benchmark": "aime25",
@@ -2881,6 +4691,60 @@
    "gpu": "NVIDIA GeForce RTX 5090",
    "n_gpus": 2,
    "evaluated_at": "2026-10-21",
+   "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-off",
+   "benchmark": "chartqa",
+   "score": 0.8872,
+   "subtasks": {},
+   "wall_seconds": 928,
+   "input_tokens": 598723,
+   "output_tokens": 903012,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-off",
+   "benchmark": "chembench",
+   "score": 0.5989,
+   "subtasks": {
+    "chembench_analytical_chemistry": 0.5592,
+    "chembench_chemical_preference": 0.585,
+    "chembench_general_chemistry": 0.8591,
+    "chembench_inorganic_chemistry": 0.837,
+    "chembench_materials_science": 0.6747,
+    "chembench_organic_chemistry": 0.7319,
+    "chembench_physical_chemistry": 0.7818,
+    "chembench_technical_chemistry": 0.7,
+    "chembench_toxicity_and_safety": 0.3941
+   },
+   "wall_seconds": 1888,
+   "input_tokens": 596278,
+   "output_tokens": 2262689,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.97,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
    "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
    "versions": {
     "lm_eval": "0.4.12",
@@ -2969,6 +4833,89 @@
   {
    "model": "Qwen/Qwen3.5-9B",
    "setting": "think-off",
+   "benchmark": "k_dtcbench",
+   "score": 0.8125,
+   "subtasks": {
+    "acc": 0.8125,
+    "acc_document": 0.925,
+    "acc_table": 0.8375,
+    "acc_chart": 0.675
+   },
+   "wall_seconds": 109,
+   "input_tokens": 19103,
+   "output_tokens": 480,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-off",
+   "benchmark": "k_mmbench",
+   "score": 0.8153,
+   "subtasks": {
+    "acc": 0.8153,
+    "acc_vanilla": 0.8849,
+    "acc_all": 0.8863
+   },
+   "wall_seconds": 355,
+   "input_tokens": 441064,
+   "output_tokens": 9297,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-off",
+   "benchmark": "k_mmstar",
+   "score": 0.67,
+   "subtasks": {
+    "acc": 0.67,
+    "acc_coarse_perception": 0.704,
+    "acc_fine_grained_perception": 0.612,
+    "acc_instance_reasoning": 0.72,
+    "acc_logical_reasoning": 0.736,
+    "acc_science_technology": 0.496,
+    "acc_math": 0.752
+   },
+   "wall_seconds": 364,
+   "input_tokens": 134136,
+   "output_tokens": 150740,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-off",
    "benchmark": "kmmlu_redux",
    "score": 0.6092,
    "subtasks": {
@@ -2995,6 +4942,89 @@
    "gpu": "NVIDIA GeForce RTX 5090",
    "n_gpus": 1,
    "evaluated_at": "2026-10-20",
+   "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-off",
+   "benchmark": "kobalt",
+   "score": 0.3386,
+   "subtasks": {
+    "kobalt_syntax": 0.3067,
+    "kobalt_semantics": 0.5163,
+    "kobalt_pragmatics": 0.2716,
+    "kobalt_phonetics_phonology": 0.0645,
+    "kobalt_morphology": 0.1905
+   },
+   "wall_seconds": 424,
+   "input_tokens": 247118,
+   "output_tokens": 882514,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.97,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-21",
+   "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-off",
+   "benchmark": "koffvqa",
+   "score": 0.8095,
+   "subtasks": {
+    "koffvqa_KO-OCR": 0.9,
+    "koffvqa_commonsense_reasoning": 0.82,
+    "koffvqa_document_understanding": 0.8933,
+    "koffvqa_graph_and_chart_understanding": 0.8333,
+    "koffvqa_hallucination_and_robustness": 0.6,
+    "koffvqa_object_attributes": 0.8817,
+    "koffvqa_recognition": 0.85,
+    "koffvqa_recognition-KO": 0.3,
+    "koffvqa_relationship": 0.6333,
+    "koffvqa_table_understanding": 0.8833
+   },
+   "wall_seconds": 200,
+   "input_tokens": 11174,
+   "output_tokens": 22542,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-off",
+   "benchmark": "mathvista",
+   "score": 0.836,
+   "subtasks": {},
+   "wall_seconds": 552,
+   "input_tokens": 101383,
+   "output_tokens": 628352,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
    "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
    "versions": {
     "lm_eval": "0.4.12",
@@ -3041,6 +5071,99 @@
    "issue": null
   },
   {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-off",
+   "benchmark": "mmmu",
+   "score": 0.6389,
+   "subtasks": {
+    "mmmu_val_art_and_design": 0.675,
+    "mmmu_val_business": 0.7,
+    "mmmu_val_health_and_medicine": 0.68,
+    "mmmu_val_humanities_and_social_science": 0.7667,
+    "mmmu_val_science": 0.6133,
+    "mmmu_val_tech_and_engineering": 0.4905
+   },
+   "wall_seconds": 709,
+   "input_tokens": 101424,
+   "output_tokens": 750858,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-off",
+   "benchmark": "mmstar",
+   "score": 0.7267,
+   "subtasks": {
+    "acc": 0.7267,
+    "acc_coarse_perception": 0.716,
+    "acc_fine_grained_perception": 0.62,
+    "acc_instance_reasoning": 0.784,
+    "acc_logical_reasoning": 0.78,
+    "acc_science_technology": 0.588,
+    "acc_math": 0.872
+   },
+   "wall_seconds": 470,
+   "input_tokens": 119977,
+   "output_tokens": 342419,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.5-9B",
+   "setting": "think-off",
+   "benchmark": "ocrbench",
+   "score": 0.857,
+   "subtasks": {
+    "acc": 0.857,
+    "regular": 0.96,
+    "irregular": 0.98,
+    "artistic": 0.96,
+    "handwriting": 0.66,
+    "digit": 0.3,
+    "nonsemantic": 0.94,
+    "scene_vqa": 0.885,
+    "doc_vqa": 0.91,
+    "kie": 0.905,
+    "hmer": 0.77
+   },
+   "wall_seconds": 340,
+   "input_tokens": 28470,
+   "output_tokens": 61995,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
    "model": "Qwen/Qwen3.6-35B-A3B-FP8",
    "setting": "think-off",
    "benchmark": "aime25",
@@ -3054,6 +5177,38 @@
    "gpu": "NVIDIA GeForce RTX 5090",
    "n_gpus": 2,
    "evaluated_at": "2026-10-21",
+   "revision": "95a723d08a9490559dae23d0cff1d9466213d989",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+   "setting": "think-off",
+   "benchmark": "chembench",
+   "score": 0.6478,
+   "subtasks": {
+    "chembench_analytical_chemistry": 0.6053,
+    "chembench_chemical_preference": 0.587,
+    "chembench_general_chemistry": 0.9396,
+    "chembench_inorganic_chemistry": 0.913,
+    "chembench_materials_science": 0.7229,
+    "chembench_organic_chemistry": 0.8252,
+    "chembench_physical_chemistry": 0.8242,
+    "chembench_technical_chemistry": 0.775,
+    "chembench_toxicity_and_safety": 0.4741
+   },
+   "wall_seconds": 1523,
+   "input_tokens": 596278,
+   "output_tokens": 3425421,
+   "weights_gib": 17.21,
+   "min_memory_gib": 17.32,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
    "revision": "95a723d08a9490559dae23d0cff1d9466213d989",
    "versions": {
     "lm_eval": "0.4.12",
@@ -3179,6 +5334,62 @@
   {
    "model": "Qwen/Qwen3.6-35B-A3B-FP8",
    "setting": "think-off",
+   "benchmark": "kobalt",
+   "score": 0.3857,
+   "subtasks": {
+    "kobalt_syntax": 0.3267,
+    "kobalt_semantics": 0.5767,
+    "kobalt_pragmatics": 0.3827,
+    "kobalt_phonetics_phonology": 0.1613,
+    "kobalt_morphology": 0.1667
+   },
+   "wall_seconds": 335,
+   "input_tokens": 247118,
+   "output_tokens": 961696,
+   "weights_gib": 17.21,
+   "min_memory_gib": 17.32,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "95a723d08a9490559dae23d0cff1d9466213d989",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+   "setting": "think-off",
+   "benchmark": "locomo",
+   "score": 0.61,
+   "subtasks": {
+    "locomo_single_hop": 0.7339,
+    "locomo_multi_hop": 0.5123,
+    "locomo_temporal": 0.4881,
+    "locomo_open_domain": 0.219,
+    "locomo_adversarial": 0.786
+   },
+   "wall_seconds": 1828,
+   "input_tokens": 46032450,
+   "output_tokens": 10661,
+   "weights_gib": 17.21,
+   "min_memory_gib": 17.3,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "95a723d08a9490559dae23d0cff1d9466213d989",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+   "setting": "think-off",
    "benchmark": "mmlu_pro",
    "score": 0.7827,
    "subtasks": {
@@ -3227,6 +5438,60 @@
    "gpu": "NVIDIA GeForce RTX 5090",
    "n_gpus": 2,
    "evaluated_at": "2026-10-21",
+   "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.8-27B-FP8",
+   "setting": "think-off",
+   "benchmark": "chartqa",
+   "score": 0.9012,
+   "subtasks": {},
+   "wall_seconds": 1054,
+   "input_tokens": 598723,
+   "output_tokens": 598248,
+   "weights_gib": 14.54,
+   "min_memory_gib": 14.81,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.8-27B-FP8",
+   "setting": "think-off",
+   "benchmark": "chembench",
+   "score": 0.6255,
+   "subtasks": {
+    "chembench_analytical_chemistry": 0.6184,
+    "chembench_chemical_preference": 0.544,
+    "chembench_general_chemistry": 0.9195,
+    "chembench_inorganic_chemistry": 0.8804,
+    "chembench_materials_science": 0.7349,
+    "chembench_organic_chemistry": 0.8159,
+    "chembench_physical_chemistry": 0.8061,
+    "chembench_technical_chemistry": 0.75,
+    "chembench_toxicity_and_safety": 0.4622
+   },
+   "wall_seconds": 2869,
+   "input_tokens": 596278,
+   "output_tokens": 3380008,
+   "weights_gib": 14.54,
+   "min_memory_gib": 14.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
    "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
    "versions": {
     "lm_eval": "0.4.12",
@@ -3287,6 +5552,89 @@
   {
    "model": "Qwen/Qwen3.8-27B-FP8",
    "setting": "think-off",
+   "benchmark": "k_dtcbench",
+   "score": 0.8542,
+   "subtasks": {
+    "acc": 0.8542,
+    "acc_document": 0.95,
+    "acc_table": 0.9,
+    "acc_chart": 0.7125
+   },
+   "wall_seconds": 153,
+   "input_tokens": 19103,
+   "output_tokens": 480,
+   "weights_gib": 14.54,
+   "min_memory_gib": 14.81,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.8-27B-FP8",
+   "setting": "think-off",
+   "benchmark": "k_mmbench",
+   "score": 0.8316,
+   "subtasks": {
+    "acc": 0.8316,
+    "acc_vanilla": 0.8995,
+    "acc_all": 0.8979
+   },
+   "wall_seconds": 476,
+   "input_tokens": 441064,
+   "output_tokens": 8730,
+   "weights_gib": 14.54,
+   "min_memory_gib": 14.81,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.8-27B-FP8",
+   "setting": "think-off",
+   "benchmark": "k_mmstar",
+   "score": 0.7107,
+   "subtasks": {
+    "acc": 0.7107,
+    "acc_coarse_perception": 0.736,
+    "acc_fine_grained_perception": 0.588,
+    "acc_instance_reasoning": 0.76,
+    "acc_logical_reasoning": 0.776,
+    "acc_science_technology": 0.584,
+    "acc_math": 0.82
+   },
+   "wall_seconds": 461,
+   "input_tokens": 134136,
+   "output_tokens": 149542,
+   "weights_gib": 14.54,
+   "min_memory_gib": 14.81,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.8-27B-FP8",
+   "setting": "think-off",
    "benchmark": "kmmlu_redux",
    "score": 0.6973,
    "subtasks": {
@@ -3314,6 +5662,435 @@
    "n_gpus": 2,
    "evaluated_at": "2026-10-20",
    "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.8-27B-FP8",
+   "setting": "think-off",
+   "benchmark": "kobalt",
+   "score": 0.4029,
+   "subtasks": {
+    "kobalt_syntax": 0.3733,
+    "kobalt_semantics": 0.5721,
+    "kobalt_pragmatics": 0.4321,
+    "kobalt_phonetics_phonology": 0.0806,
+    "kobalt_morphology": 0.1667
+   },
+   "wall_seconds": 636,
+   "input_tokens": 247118,
+   "output_tokens": 957548,
+   "weights_gib": 14.54,
+   "min_memory_gib": 14.88,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.8-27B-FP8",
+   "setting": "think-off",
+   "benchmark": "koffvqa",
+   "score": 0.844,
+   "subtasks": {
+    "koffvqa_KO-OCR": 0.8,
+    "koffvqa_commonsense_reasoning": 0.9067,
+    "koffvqa_document_understanding": 0.88,
+    "koffvqa_graph_and_chart_understanding": 0.9,
+    "koffvqa_hallucination_and_robustness": 0.64,
+    "koffvqa_object_attributes": 0.8883,
+    "koffvqa_recognition": 0.7,
+    "koffvqa_recognition-KO": 0.4,
+    "koffvqa_relationship": 0.7567,
+    "koffvqa_table_understanding": 0.95
+   },
+   "wall_seconds": 261,
+   "input_tokens": 11174,
+   "output_tokens": 38911,
+   "weights_gib": 14.54,
+   "min_memory_gib": 14.81,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.8-27B-FP8",
+   "setting": "think-off",
+   "benchmark": "mathvista",
+   "score": 0.828,
+   "subtasks": {},
+   "wall_seconds": 847,
+   "input_tokens": 101383,
+   "output_tokens": 911497,
+   "weights_gib": 14.54,
+   "min_memory_gib": 14.81,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.8-27B-FP8",
+   "setting": "think-off",
+   "benchmark": "mmmu",
+   "score": 0.6256,
+   "subtasks": {
+    "mmmu_val_art_and_design": 0.6333,
+    "mmmu_val_business": 0.62,
+    "mmmu_val_health_and_medicine": 0.64,
+    "mmmu_val_humanities_and_social_science": 0.7417,
+    "mmmu_val_science": 0.58,
+    "mmmu_val_tech_and_engineering": 0.581
+   },
+   "wall_seconds": 759,
+   "input_tokens": 101424,
+   "output_tokens": 487169,
+   "weights_gib": 14.54,
+   "min_memory_gib": 14.81,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.8-27B-FP8",
+   "setting": "think-off",
+   "benchmark": "mmstar",
+   "score": 0.712,
+   "subtasks": {
+    "acc": 0.712,
+    "acc_coarse_perception": 0.732,
+    "acc_fine_grained_perception": 0.604,
+    "acc_instance_reasoning": 0.776,
+    "acc_logical_reasoning": 0.788,
+    "acc_science_technology": 0.58,
+    "acc_math": 0.792
+   },
+   "wall_seconds": 536,
+   "input_tokens": 119977,
+   "output_tokens": 255695,
+   "weights_gib": 14.54,
+   "min_memory_gib": 14.81,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "Qwen/Qwen3.8-27B-FP8",
+   "setting": "think-off",
+   "benchmark": "ocrbench",
+   "score": 0.866,
+   "subtasks": {
+    "acc": 0.866,
+    "regular": 0.96,
+    "irregular": 0.92,
+    "artistic": 0.92,
+    "handwriting": 0.72,
+    "digit": 0.74,
+    "nonsemantic": 0.88,
+    "scene_vqa": 0.85,
+    "doc_vqa": 0.92,
+    "kie": 0.895,
+    "hmer": 0.76
+   },
+   "wall_seconds": 406,
+   "input_tokens": 28470,
+   "output_tokens": 62405,
+   "weights_gib": 14.54,
+   "min_memory_gib": 14.81,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
+   "setting": "think-off",
+   "benchmark": "chartqa",
+   "score": 0.8464,
+   "subtasks": {},
+   "wall_seconds": 974,
+   "input_tokens": 593723,
+   "output_tokens": 1075832,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2367e865d009c13ac81713a2878291d33ab28177",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
+   "setting": "think-off",
+   "benchmark": "k_dtcbench",
+   "score": 0.7458,
+   "subtasks": {
+    "acc": 0.7458,
+    "acc_document": 0.85,
+    "acc_table": 0.8375,
+    "acc_chart": 0.55
+   },
+   "wall_seconds": 114,
+   "input_tokens": 18383,
+   "output_tokens": 486,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2367e865d009c13ac81713a2878291d33ab28177",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
+   "setting": "think-off",
+   "benchmark": "k_mmbench",
+   "score": 0.7526,
+   "subtasks": {
+    "acc": 0.7526,
+    "acc_vanilla": 0.8342,
+    "acc_all": 0.8351
+   },
+   "wall_seconds": 459,
+   "input_tokens": 428077,
+   "output_tokens": 31247,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2367e865d009c13ac81713a2878291d33ab28177",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
+   "setting": "think-off",
+   "benchmark": "k_mmstar",
+   "score": 0.608,
+   "subtasks": {
+    "acc": 0.608,
+    "acc_coarse_perception": 0.688,
+    "acc_fine_grained_perception": 0.548,
+    "acc_instance_reasoning": 0.68,
+    "acc_logical_reasoning": 0.628,
+    "acc_science_technology": 0.436,
+    "acc_math": 0.668
+   },
+   "wall_seconds": 386,
+   "input_tokens": 129636,
+   "output_tokens": 238075,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2367e865d009c13ac81713a2878291d33ab28177",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
+   "setting": "think-off",
+   "benchmark": "koffvqa",
+   "score": 0.4975,
+   "subtasks": {
+    "koffvqa_KO-OCR": 0.5,
+    "koffvqa_commonsense_reasoning": 0.6178,
+    "koffvqa_document_understanding": 0.5,
+    "koffvqa_graph_and_chart_understanding": 0.5,
+    "koffvqa_hallucination_and_robustness": 0.3,
+    "koffvqa_object_attributes": 0.475,
+    "koffvqa_recognition": 0.5,
+    "koffvqa_recognition-KO": 0.05,
+    "koffvqa_relationship": 0.4933,
+    "koffvqa_table_understanding": 0.5733
+   },
+   "wall_seconds": 211,
+   "input_tokens": 10349,
+   "output_tokens": 41081,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2367e865d009c13ac81713a2878291d33ab28177",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
+   "setting": "think-off",
+   "benchmark": "mathvista",
+   "score": 0.722,
+   "subtasks": {},
+   "wall_seconds": 548,
+   "input_tokens": 98383,
+   "output_tokens": 617315,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2367e865d009c13ac81713a2878291d33ab28177",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
+   "setting": "think-off",
+   "benchmark": "mmmu",
+   "score": 0.5522,
+   "subtasks": {
+    "mmmu_val_art_and_design": 0.5917,
+    "mmmu_val_business": 0.5867,
+    "mmmu_val_health_and_medicine": 0.5467,
+    "mmmu_val_humanities_and_social_science": 0.7417,
+    "mmmu_val_science": 0.5067,
+    "mmmu_val_tech_and_engineering": 0.4333
+   },
+   "wall_seconds": 648,
+   "input_tokens": 98730,
+   "output_tokens": 493716,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2367e865d009c13ac81713a2878291d33ab28177",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
+   "setting": "think-off",
+   "benchmark": "mmstar",
+   "score": 0.6047,
+   "subtasks": {
+    "acc": 0.6047,
+    "acc_coarse_perception": 0.692,
+    "acc_fine_grained_perception": 0.536,
+    "acc_instance_reasoning": 0.668,
+    "acc_logical_reasoning": 0.616,
+    "acc_science_technology": 0.436,
+    "acc_math": 0.68
+   },
+   "wall_seconds": 423,
+   "input_tokens": 115477,
+   "output_tokens": 230143,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2367e865d009c13ac81713a2878291d33ab28177",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
+   "setting": "think-off",
+   "benchmark": "ocrbench",
+   "score": 0.739,
+   "subtasks": {
+    "acc": 0.739,
+    "regular": 0.96,
+    "irregular": 0.84,
+    "artistic": 0.84,
+    "handwriting": 0.4,
+    "digit": 0.68,
+    "nonsemantic": 0.78,
+    "scene_vqa": 0.755,
+    "doc_vqa": 0.83,
+    "kie": 0.805,
+    "hmer": 0.36
+   },
+   "wall_seconds": 332,
+   "input_tokens": 25470,
+   "output_tokens": 49369,
+   "weights_gib": 17.66,
+   "min_memory_gib": 17.93,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "2367e865d009c13ac81713a2878291d33ab28177",
    "versions": {
     "lm_eval": "0.4.12",
     "vllm": "0.23.1rc1.dev49"
@@ -3689,6 +6466,259 @@
    "issue": null
   },
   {
+   "model": "google/gemma-3-4b-it",
+   "setting": "think-off",
+   "benchmark": "chartqa",
+   "score": 0.5108,
+   "subtasks": {},
+   "wall_seconds": 937,
+   "input_tokens": 1172774,
+   "output_tokens": 1372977,
+   "weights_gib": 8.61,
+   "min_memory_gib": 9.03,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "setting": "think-off",
+   "benchmark": "k_dtcbench",
+   "score": 0.5,
+   "subtasks": {
+    "acc": 0.5,
+    "acc_document": 0.5625,
+    "acc_table": 0.4625,
+    "acc_chart": 0.475
+   },
+   "wall_seconds": 88,
+   "input_tokens": 18246,
+   "output_tokens": 480,
+   "weights_gib": 8.61,
+   "min_memory_gib": 9.03,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "setting": "think-off",
+   "benchmark": "k_mmbench",
+   "score": 0.6048,
+   "subtasks": {
+    "acc": 0.6048,
+    "acc_vanilla": 0.7586,
+    "acc_all": 0.757
+   },
+   "wall_seconds": 330,
+   "input_tokens": 433157,
+   "output_tokens": 10598,
+   "weights_gib": 8.61,
+   "min_memory_gib": 9.03,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "setting": "think-off",
+   "benchmark": "k_mmstar",
+   "score": 0.4207,
+   "subtasks": {
+    "acc": 0.4207,
+    "acc_coarse_perception": 0.624,
+    "acc_fine_grained_perception": 0.332,
+    "acc_instance_reasoning": 0.54,
+    "acc_logical_reasoning": 0.4,
+    "acc_science_technology": 0.2,
+    "acc_math": 0.428
+   },
+   "wall_seconds": 312,
+   "input_tokens": 127611,
+   "output_tokens": 135513,
+   "weights_gib": 8.61,
+   "min_memory_gib": 9.03,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "setting": "think-off",
+   "benchmark": "koffvqa",
+   "score": 0.4625,
+   "subtasks": {
+    "koffvqa_KO-OCR": 0.375,
+    "koffvqa_commonsense_reasoning": 0.7622,
+    "koffvqa_document_understanding": 0.1067,
+    "koffvqa_graph_and_chart_understanding": 0.2533,
+    "koffvqa_hallucination_and_robustness": 0.45,
+    "koffvqa_object_attributes": 0.5883,
+    "koffvqa_recognition": 0.7,
+    "koffvqa_recognition-KO": 0.15,
+    "koffvqa_relationship": 0.53,
+    "koffvqa_table_understanding": 0.3467
+   },
+   "wall_seconds": 327,
+   "input_tokens": 20382,
+   "output_tokens": 20222,
+   "weights_gib": 8.61,
+   "min_memory_gib": 9.03,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "setting": "think-off",
+   "benchmark": "mathvista",
+   "score": 0.481,
+   "subtasks": {},
+   "wall_seconds": 404,
+   "input_tokens": 98737,
+   "output_tokens": 514375,
+   "weights_gib": 8.61,
+   "min_memory_gib": 9.03,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "setting": "think-off",
+   "benchmark": "mmmu",
+   "score": 0.4178,
+   "subtasks": {
+    "mmmu_val_art_and_design": 0.6,
+    "mmmu_val_business": 0.42,
+    "mmmu_val_health_and_medicine": 0.3733,
+    "mmmu_val_humanities_and_social_science": 0.5833,
+    "mmmu_val_science": 0.2533,
+    "mmmu_val_tech_and_engineering": 0.3667
+   },
+   "wall_seconds": 435,
+   "input_tokens": 98809,
+   "output_tokens": 358171,
+   "weights_gib": 8.61,
+   "min_memory_gib": 9.03,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "setting": "think-off",
+   "benchmark": "mmstar",
+   "score": 0.4533,
+   "subtasks": {
+    "acc": 0.4533,
+    "acc_coarse_perception": 0.648,
+    "acc_fine_grained_perception": 0.324,
+    "acc_instance_reasoning": 0.516,
+    "acc_logical_reasoning": 0.448,
+    "acc_science_technology": 0.248,
+    "acc_math": 0.536
+   },
+   "wall_seconds": 673,
+   "input_tokens": 227638,
+   "output_tokens": 429153,
+   "weights_gib": 8.61,
+   "min_memory_gib": 9.03,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "setting": "think-off",
+   "benchmark": "ocrbench",
+   "score": 0.67,
+   "subtasks": {
+    "acc": 0.67,
+    "regular": 0.96,
+    "irregular": 0.84,
+    "artistic": 0.92,
+    "handwriting": 0.7,
+    "digit": 0.58,
+    "nonsemantic": 0.6,
+    "scene_vqa": 0.845,
+    "doc_vqa": 0.54,
+    "kie": 0.78,
+    "hmer": 0.07
+   },
+   "wall_seconds": 245,
+   "input_tokens": 22494,
+   "output_tokens": 40186,
+   "weights_gib": 8.61,
+   "min_memory_gib": 9.03,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
    "model": "google/gemma-4-12B-it",
    "setting": "think-off",
    "benchmark": "aime25",
@@ -3699,6 +6729,60 @@
    "output_tokens": 393552,
    "weights_gib": 11.81,
    "min_memory_gib": 12.29,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-21",
+   "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-12B-it",
+   "setting": "think-off",
+   "benchmark": "chartqa",
+   "score": 0.8224,
+   "subtasks": {},
+   "wall_seconds": 804,
+   "input_tokens": 596387,
+   "output_tokens": 782014,
+   "weights_gib": 11.81,
+   "min_memory_gib": 12.29,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-12B-it",
+   "setting": "think-off",
+   "benchmark": "chembench",
+   "score": 0.6395,
+   "subtasks": {
+    "chembench_analytical_chemistry": 0.5855,
+    "chembench_chemical_preference": 0.6,
+    "chembench_general_chemistry": 0.8658,
+    "chembench_inorganic_chemistry": 0.8696,
+    "chembench_materials_science": 0.7229,
+    "chembench_organic_chemistry": 0.8345,
+    "chembench_physical_chemistry": 0.8182,
+    "chembench_technical_chemistry": 0.75,
+    "chembench_toxicity_and_safety": 0.4444
+   },
+   "wall_seconds": 1186,
+   "input_tokens": 583357,
+   "output_tokens": 1194109,
+   "weights_gib": 11.81,
+   "min_memory_gib": 12.47,
    "gpu": "NVIDIA GeForce RTX 5090",
    "n_gpus": 2,
    "evaluated_at": "2026-10-21",
@@ -3790,6 +6874,89 @@
   {
    "model": "google/gemma-4-12B-it",
    "setting": "think-off",
+   "benchmark": "k_dtcbench",
+   "score": 0.8333,
+   "subtasks": {
+    "acc": 0.8333,
+    "acc_document": 0.925,
+    "acc_table": 0.8375,
+    "acc_chart": 0.7375
+   },
+   "wall_seconds": 117,
+   "input_tokens": 19206,
+   "output_tokens": 694,
+   "weights_gib": 11.81,
+   "min_memory_gib": 12.29,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-12B-it",
+   "setting": "think-off",
+   "benchmark": "k_mmbench",
+   "score": 0.8058,
+   "subtasks": {
+    "acc": 0.8058,
+    "acc_vanilla": 0.8617,
+    "acc_all": 0.8713
+   },
+   "wall_seconds": 400,
+   "input_tokens": 451145,
+   "output_tokens": 25345,
+   "weights_gib": 11.81,
+   "min_memory_gib": 12.29,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-12B-it",
+   "setting": "think-off",
+   "benchmark": "k_mmstar",
+   "score": 0.6673,
+   "subtasks": {
+    "acc": 0.6673,
+    "acc_coarse_perception": 0.708,
+    "acc_fine_grained_perception": 0.58,
+    "acc_instance_reasoning": 0.716,
+    "acc_logical_reasoning": 0.756,
+    "acc_science_technology": 0.508,
+    "acc_math": 0.736
+   },
+   "wall_seconds": 402,
+   "input_tokens": 133664,
+   "output_tokens": 165591,
+   "weights_gib": 11.81,
+   "min_memory_gib": 12.29,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-12B-it",
+   "setting": "think-off",
    "benchmark": "kmmlu_redux",
    "score": 0.6533,
    "subtasks": {
@@ -3816,6 +6983,210 @@
    "gpu": "NVIDIA GeForce RTX 5090",
    "n_gpus": 2,
    "evaluated_at": "2026-10-21",
+   "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-12B-it",
+   "setting": "think-off",
+   "benchmark": "kobalt",
+   "score": 0.5614,
+   "subtasks": {
+    "kobalt_syntax": 0.6367,
+    "kobalt_semantics": 0.6186,
+    "kobalt_pragmatics": 0.4568,
+    "kobalt_phonetics_phonology": 0.2742,
+    "kobalt_morphology": 0.3571
+   },
+   "wall_seconds": 376,
+   "input_tokens": 256820,
+   "output_tokens": 577149,
+   "weights_gib": 11.81,
+   "min_memory_gib": 13.19,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-21",
+   "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-12B-it",
+   "setting": "think-off",
+   "benchmark": "koffvqa",
+   "score": 0.7767,
+   "subtasks": {
+    "koffvqa_KO-OCR": 0.765,
+    "koffvqa_commonsense_reasoning": 0.82,
+    "koffvqa_document_understanding": 0.63,
+    "koffvqa_graph_and_chart_understanding": 0.8333,
+    "koffvqa_hallucination_and_robustness": 0.8,
+    "koffvqa_object_attributes": 0.8233,
+    "koffvqa_recognition": 0.75,
+    "koffvqa_recognition-KO": 0.3,
+    "koffvqa_relationship": 0.8133,
+    "koffvqa_table_understanding": 0.84
+   },
+   "wall_seconds": 216,
+   "input_tokens": 11291,
+   "output_tokens": 24586,
+   "weights_gib": 11.81,
+   "min_memory_gib": 12.29,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-12B-it",
+   "setting": "think-off",
+   "benchmark": "locomo",
+   "score": 0.5748,
+   "subtasks": {
+    "locomo_single_hop": 0.7047,
+    "locomo_multi_hop": 0.4678,
+    "locomo_temporal": 0.4504,
+    "locomo_open_domain": 0.167,
+    "locomo_adversarial": 0.8446
+   },
+   "wall_seconds": 184,
+   "input_tokens": 46802709,
+   "output_tokens": 16125,
+   "weights_gib": 11.81,
+   "min_memory_gib": 12.29,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-21",
+   "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-12B-it",
+   "setting": "think-off",
+   "benchmark": "mathvista",
+   "score": 0.77,
+   "subtasks": {},
+   "wall_seconds": 575,
+   "input_tokens": 102737,
+   "output_tokens": 554103,
+   "weights_gib": 11.81,
+   "min_memory_gib": 12.29,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-12B-it",
+   "setting": "think-off",
+   "benchmark": "mmmu",
+   "score": 0.67,
+   "subtasks": {
+    "mmmu_val_art_and_design": 0.6917,
+    "mmmu_val_business": 0.7267,
+    "mmmu_val_health_and_medicine": 0.64,
+    "mmmu_val_humanities_and_social_science": 0.8,
+    "mmmu_val_science": 0.6133,
+    "mmmu_val_tech_and_engineering": 0.6048
+   },
+   "wall_seconds": 622,
+   "input_tokens": 102409,
+   "output_tokens": 324695,
+   "weights_gib": 11.81,
+   "min_memory_gib": 12.29,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-12B-it",
+   "setting": "think-off",
+   "benchmark": "mmstar",
+   "score": 0.67,
+   "subtasks": {
+    "acc": 0.67,
+    "acc_coarse_perception": 0.704,
+    "acc_fine_grained_perception": 0.568,
+    "acc_instance_reasoning": 0.7,
+    "acc_logical_reasoning": 0.74,
+    "acc_science_technology": 0.488,
+    "acc_math": 0.82
+   },
+   "wall_seconds": 456,
+   "input_tokens": 119872,
+   "output_tokens": 291737,
+   "weights_gib": 11.81,
+   "min_memory_gib": 12.29,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-12B-it",
+   "setting": "think-off",
+   "benchmark": "ocrbench",
+   "score": 0.784,
+   "subtasks": {
+    "acc": 0.784,
+    "regular": 0.98,
+    "irregular": 0.9,
+    "artistic": 0.96,
+    "handwriting": 0.68,
+    "digit": 0.72,
+    "nonsemantic": 0.92,
+    "scene_vqa": 0.86,
+    "doc_vqa": 0.8,
+    "kie": 0.81,
+    "hmer": 0.32
+   },
+   "wall_seconds": 304,
+   "input_tokens": 26494,
+   "output_tokens": 31623,
+   "weights_gib": 11.81,
+   "min_memory_gib": 12.29,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
    "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
    "versions": {
     "lm_eval": "0.4.12",
@@ -4136,6 +7507,60 @@
   {
    "model": "google/gemma-4-E4B-it",
    "setting": "think-off",
+   "benchmark": "chartqa",
+   "score": 0.8492,
+   "subtasks": {},
+   "wall_seconds": 876,
+   "input_tokens": 1172774,
+   "output_tokens": 1887157,
+   "weights_gib": 15.31,
+   "min_memory_gib": 15.52,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-off",
+   "benchmark": "chembench",
+   "score": 0.4722,
+   "subtasks": {
+    "chembench_analytical_chemistry": 0.5197,
+    "chembench_chemical_preference": 0.28,
+    "chembench_general_chemistry": 0.7181,
+    "chembench_inorganic_chemistry": 0.8261,
+    "chembench_materials_science": 0.5663,
+    "chembench_organic_chemistry": 0.7249,
+    "chembench_physical_chemistry": 0.7879,
+    "chembench_technical_chemistry": 0.675,
+    "chembench_toxicity_and_safety": 0.3822
+   },
+   "wall_seconds": 897,
+   "input_tokens": 583357,
+   "output_tokens": 1839475,
+   "weights_gib": 15.18,
+   "min_memory_gib": 15.4,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-off",
    "benchmark": "gpqa_diamond",
    "score": 0.5505,
    "subtasks": {},
@@ -4213,6 +7638,89 @@
   {
    "model": "google/gemma-4-E4B-it",
    "setting": "think-off",
+   "benchmark": "k_dtcbench",
+   "score": 0.7458,
+   "subtasks": {
+    "acc": 0.7458,
+    "acc_document": 0.8375,
+    "acc_table": 0.85,
+    "acc_chart": 0.55
+   },
+   "wall_seconds": 234,
+   "input_tokens": 36492,
+   "output_tokens": 19780,
+   "weights_gib": 15.31,
+   "min_memory_gib": 15.52,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-off",
+   "benchmark": "k_mmbench",
+   "score": 0.6804,
+   "subtasks": {
+    "acc": 0.6804,
+    "acc_vanilla": 0.7852,
+    "acc_all": 0.7872
+   },
+   "wall_seconds": 786,
+   "input_tokens": 867658,
+   "output_tokens": 125830,
+   "weights_gib": 15.31,
+   "min_memory_gib": 15.52,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-off",
+   "benchmark": "k_mmstar",
+   "score": 0.5427,
+   "subtasks": {
+    "acc": 0.5427,
+    "acc_coarse_perception": 0.66,
+    "acc_fine_grained_perception": 0.428,
+    "acc_instance_reasoning": 0.584,
+    "acc_logical_reasoning": 0.588,
+    "acc_science_technology": 0.304,
+    "acc_math": 0.692
+   },
+   "wall_seconds": 636,
+   "input_tokens": 255328,
+   "output_tokens": 637131,
+   "weights_gib": 15.31,
+   "min_memory_gib": 15.52,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-off",
    "benchmark": "kmmlu_redux",
    "score": 0.5717,
    "subtasks": {
@@ -4250,6 +7758,117 @@
   {
    "model": "google/gemma-4-E4B-it",
    "setting": "think-off",
+   "benchmark": "kobalt",
+   "score": 0.4,
+   "subtasks": {
+    "kobalt_syntax": 0.43,
+    "kobalt_semantics": 0.507,
+    "kobalt_pragmatics": 0.284,
+    "kobalt_phonetics_phonology": 0.1613,
+    "kobalt_morphology": 0.2143
+   },
+   "wall_seconds": 218,
+   "input_tokens": 254020,
+   "output_tokens": 851836,
+   "weights_gib": 15.31,
+   "min_memory_gib": 15.75,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-off",
+   "benchmark": "koffvqa",
+   "score": 0.6647,
+   "subtasks": {
+    "koffvqa_KO-OCR": 0.9,
+    "koffvqa_commonsense_reasoning": 0.7444,
+    "koffvqa_document_understanding": 0.5267,
+    "koffvqa_graph_and_chart_understanding": 0.68,
+    "koffvqa_hallucination_and_robustness": 0.8,
+    "koffvqa_object_attributes": 0.7583,
+    "koffvqa_recognition": 0.5,
+    "koffvqa_recognition-KO": 0.0,
+    "koffvqa_relationship": 0.6033,
+    "koffvqa_table_understanding": 0.6167
+   },
+   "wall_seconds": 210,
+   "input_tokens": 10191,
+   "output_tokens": 43172,
+   "weights_gib": 15.31,
+   "min_memory_gib": 15.52,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-off",
+   "benchmark": "locomo",
+   "score": 0.508,
+   "subtasks": {
+    "locomo_single_hop": 0.6263,
+    "locomo_multi_hop": 0.4285,
+    "locomo_temporal": 0.3942,
+    "locomo_open_domain": 0.0854,
+    "locomo_adversarial": 0.464
+   },
+   "wall_seconds": 158,
+   "input_tokens": 46794773,
+   "output_tokens": 11575,
+   "weights_gib": 8.39,
+   "min_memory_gib": 8.49,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 2,
+   "evaluated_at": "2026-10-22",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-off",
+   "benchmark": "mathvista",
+   "score": 0.669,
+   "subtasks": {},
+   "wall_seconds": 743,
+   "input_tokens": 197474,
+   "output_tokens": 1431991,
+   "weights_gib": 15.31,
+   "min_memory_gib": 15.52,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-off",
    "benchmark": "mmlu_pro",
    "score": 0.6656,
    "subtasks": {
@@ -4276,6 +7895,191 @@
    "gpu": "NVIDIA GeForce RTX 5090",
    "n_gpus": 1,
    "evaluated_at": "2026-10-20",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-off",
+   "benchmark": "mmmu",
+   "score": 0.5856,
+   "subtasks": {
+    "mmmu_val_art_and_design": 0.5417,
+    "mmmu_val_business": 0.6267,
+    "mmmu_val_health_and_medicine": 0.6,
+    "mmmu_val_humanities_and_social_science": 0.7167,
+    "mmmu_val_science": 0.5133,
+    "mmmu_val_tech_and_engineering": 0.5476
+   },
+   "wall_seconds": 1124,
+   "input_tokens": 197618,
+   "output_tokens": 781442,
+   "weights_gib": 15.31,
+   "min_memory_gib": 15.52,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-off",
+   "benchmark": "mmstar",
+   "score": 0.5733,
+   "subtasks": {
+    "acc": 0.5733,
+    "acc_coarse_perception": 0.64,
+    "acc_fine_grained_perception": 0.452,
+    "acc_instance_reasoning": 0.616,
+    "acc_logical_reasoning": 0.62,
+    "acc_science_technology": 0.312,
+    "acc_math": 0.8
+   },
+   "wall_seconds": 638,
+   "input_tokens": 227744,
+   "output_tokens": 664284,
+   "weights_gib": 15.31,
+   "min_memory_gib": 15.52,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-off",
+   "benchmark": "ocrbench",
+   "score": 0.767,
+   "subtasks": {
+    "acc": 0.767,
+    "regular": 0.98,
+    "irregular": 0.94,
+    "artistic": 0.96,
+    "handwriting": 0.72,
+    "digit": 0.7,
+    "nonsemantic": 0.9,
+    "scene_vqa": 0.865,
+    "doc_vqa": 0.735,
+    "kie": 0.825,
+    "hmer": 0.22
+   },
+   "wall_seconds": 513,
+   "input_tokens": 44988,
+   "output_tokens": 70632,
+   "weights_gib": 15.31,
+   "min_memory_gib": 15.52,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-on",
+   "benchmark": "k_mmstar",
+   "score": 0.6227,
+   "subtasks": {
+    "acc": 0.6227,
+    "acc_coarse_perception": 0.692,
+    "acc_fine_grained_perception": 0.516,
+    "acc_instance_reasoning": 0.696,
+    "acc_logical_reasoning": 0.672,
+    "acc_science_technology": 0.416,
+    "acc_math": 0.744
+   },
+   "wall_seconds": 533,
+   "input_tokens": 138164,
+   "output_tokens": 1205643,
+   "weights_gib": 15.31,
+   "min_memory_gib": 15.52,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-on",
+   "benchmark": "koffvqa",
+   "score": 0.7105,
+   "subtasks": {
+    "koffvqa_KO-OCR": 0.85,
+    "koffvqa_commonsense_reasoning": 0.7933,
+    "koffvqa_document_understanding": 0.6667,
+    "koffvqa_graph_and_chart_understanding": 0.8333,
+    "koffvqa_hallucination_and_robustness": 0.7,
+    "koffvqa_object_attributes": 0.7433,
+    "koffvqa_recognition": 0.5,
+    "koffvqa_recognition-KO": 0.05,
+    "koffvqa_relationship": 0.6133,
+    "koffvqa_table_understanding": 0.74
+   },
+   "wall_seconds": 227,
+   "input_tokens": 12116,
+   "output_tokens": 175582,
+   "weights_gib": 15.31,
+   "min_memory_gib": 15.52,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
+   "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+   "versions": {
+    "lm_eval": "0.4.12",
+    "vllm": "0.23.1rc1.dev49"
+   },
+   "host": "hufs23",
+   "issue": null
+  },
+  {
+   "model": "google/gemma-4-E4B-it",
+   "setting": "think-on",
+   "benchmark": "mmmu",
+   "score": 0.62,
+   "subtasks": {
+    "mmmu_val_art_and_design": 0.6167,
+    "mmmu_val_business": 0.7133,
+    "mmmu_val_health_and_medicine": 0.62,
+    "mmmu_val_humanities_and_social_science": 0.725,
+    "mmmu_val_science": 0.5533,
+    "mmmu_val_tech_and_engineering": 0.5429
+   },
+   "wall_seconds": 700,
+   "input_tokens": 105109,
+   "output_tokens": 1333880,
+   "weights_gib": 15.31,
+   "min_memory_gib": 15.52,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "n_gpus": 1,
+   "evaluated_at": "2026-10-22",
    "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
    "versions": {
     "lm_eval": "0.4.12",
