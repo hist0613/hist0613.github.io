@@ -91,6 +91,8 @@
       <li>Each model is evaluated with <a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-evaluation-harness</a> on vLLM,
         in bfloat16 with greedy decoding and the model's own chat template.</li>
       <li><b>Reasoning</b> records whether the chat template's thinking mode was on, and at which effort when the model supports it.</li>
+      <li>Benchmarks marked <span class="modality">image</span> come with images and are run only on models that take images,
+        with every image scaled down to at most 2,048 pixels on the longer side. They are not part of the Average or Avg rank.</li>
       <li>Eval time is the wall-clock time of one benchmark on the listed GPU, including model loading.</li>
       <li>Output tokens are the generated tokens per item, counted with the model's own tokenizer and including any thinking text.</li>
       <li>GPU memory is the model weights plus the KV cache for one 8,192-token request, as allocated by vLLM.</li>

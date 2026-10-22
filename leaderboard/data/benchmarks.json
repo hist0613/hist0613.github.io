@@ -479,6 +479,357 @@
      "n_items": 444
     }
    ]
+  },
+  {
+   "id": "mmmu",
+   "name": "MMMU",
+   "description": "College-level questions with one or more images across 30 subjects, mostly multiple choice. Validation split, lm-eval prompt.",
+   "language": "en",
+   "modality": "image",
+   "n_items": 900,
+   "metric": "acc",
+   "metric_label": "Accuracy (answer parsed as in the official code)",
+   "lm_eval_task": "mmmu_val",
+   "dataset_url": "https://huggingface.co/datasets/MMMU/MMMU",
+   "paper_url": "https://arxiv.org/abs/2311.16502",
+   "subtasks": [
+    {
+     "id": "mmmu_val_art_and_design",
+     "name": "art & design",
+     "n_items": 120
+    },
+    {
+     "id": "mmmu_val_business",
+     "name": "business",
+     "n_items": 150
+    },
+    {
+     "id": "mmmu_val_health_and_medicine",
+     "name": "health & medicine",
+     "n_items": 150
+    },
+    {
+     "id": "mmmu_val_humanities_and_social_science",
+     "name": "humanities & social science",
+     "n_items": 120
+    },
+    {
+     "id": "mmmu_val_science",
+     "name": "science",
+     "n_items": 150
+    },
+    {
+     "id": "mmmu_val_tech_and_engineering",
+     "name": "tech & engineering",
+     "n_items": 210
+    }
+   ]
+  },
+  {
+   "id": "mmstar",
+   "name": "MMStar",
+   "description": "Multiple-choice questions that cannot be answered without the image, across 6 capabilities.",
+   "language": "en",
+   "modality": "image",
+   "n_items": 1500,
+   "metric": "acc",
+   "metric_label": "Accuracy (option letter parsed by rules)",
+   "lm_eval_task": "mmstar",
+   "dataset_url": "https://huggingface.co/datasets/Lin-Chen/MMStar",
+   "paper_url": "https://arxiv.org/abs/2403.20330",
+   "protocol_url": "https://github.com/MMStar-Benchmark/MMStar",
+   "protocol_name": "MMStar",
+   "subtasks": [
+    {
+     "id": "acc_coarse_perception",
+     "name": "coarse perception",
+     "n_items": 250
+    },
+    {
+     "id": "acc_fine_grained_perception",
+     "name": "fine-grained perception",
+     "n_items": 250
+    },
+    {
+     "id": "acc_instance_reasoning",
+     "name": "instance reasoning",
+     "n_items": 250
+    },
+    {
+     "id": "acc_logical_reasoning",
+     "name": "logical reasoning",
+     "n_items": 250
+    },
+    {
+     "id": "acc_science_technology",
+     "name": "science & technology",
+     "n_items": 250
+    },
+    {
+     "id": "acc_math",
+     "name": "math",
+     "n_items": 250
+    }
+   ]
+  },
+  {
+   "id": "k_mmstar",
+   "name": "K-MMStar",
+   "description": "Korean translation of MMStar.",
+   "language": "ko",
+   "modality": "image",
+   "n_items": 1500,
+   "metric": "acc",
+   "metric_label": "Accuracy (option letter parsed by rules)",
+   "lm_eval_task": "k_mmstar",
+   "dataset_url": "https://huggingface.co/datasets/NCSOFT/K-MMStar",
+   "paper_url": "https://arxiv.org/abs/2411.19103",
+   "subtasks": [
+    {
+     "id": "acc_coarse_perception",
+     "name": "coarse perception",
+     "n_items": 250
+    },
+    {
+     "id": "acc_fine_grained_perception",
+     "name": "fine-grained perception",
+     "n_items": 250
+    },
+    {
+     "id": "acc_instance_reasoning",
+     "name": "instance reasoning",
+     "n_items": 250
+    },
+    {
+     "id": "acc_logical_reasoning",
+     "name": "logical reasoning",
+     "n_items": 250
+    },
+    {
+     "id": "acc_science_technology",
+     "name": "science & technology",
+     "n_items": 250
+    },
+    {
+     "id": "acc_math",
+     "name": "math",
+     "n_items": 250
+    }
+   ]
+  },
+  {
+   "id": "k_mmbench",
+   "name": "K-MMBench",
+   "description": "Korean translation of MMBench (dev). Scored with CircularEval: a question counts only if every rotation of its options is answered correctly.",
+   "language": "ko",
+   "modality": "image",
+   "n_items": 1164,
+   "metric": "acc",
+   "metric_label": "CircularEval accuracy over 1,164 questions (4,329 prompts)",
+   "lm_eval_task": "k_mmbench",
+   "dataset_url": "https://huggingface.co/datasets/NCSOFT/K-MMBench",
+   "paper_url": "https://arxiv.org/abs/2411.19103",
+   "subtasks": [
+    {
+     "id": "acc_vanilla",
+     "name": "original option order",
+     "n_items": 1164
+    }
+   ]
+  },
+  {
+   "id": "k_dtcbench",
+   "name": "K-DTCBench",
+   "description": "Korean multiple-choice questions on documents, tables and charts.",
+   "language": "ko",
+   "modality": "image",
+   "n_items": 240,
+   "metric": "acc",
+   "metric_label": "Accuracy (option letter parsed by rules)",
+   "lm_eval_task": "k_dtcbench",
+   "dataset_url": "https://huggingface.co/datasets/NCSOFT/K-DTCBench",
+   "paper_url": "https://arxiv.org/abs/2411.19103",
+   "subtasks": [
+    {
+     "id": "acc_document",
+     "name": "document",
+     "n_items": 80
+    },
+    {
+     "id": "acc_table",
+     "name": "table",
+     "n_items": 80
+    },
+    {
+     "id": "acc_chart",
+     "name": "chart",
+     "n_items": 80
+    }
+   ]
+  },
+  {
+   "id": "chartqa",
+   "name": "ChartQA",
+   "description": "Questions about charts, answered after step-by-step reasoning. lm-eval prompt.",
+   "language": "en",
+   "modality": "image",
+   "n_items": 2500,
+   "metric": "relaxed_accuracy",
+   "metric_label": "Relaxed accuracy (numbers within 5%)",
+   "lm_eval_task": "chartqa",
+   "dataset_url": "https://huggingface.co/datasets/HuggingFaceM4/ChartQA",
+   "paper_url": "https://arxiv.org/abs/2203.10244",
+   "subtasks": []
+  },
+  {
+   "id": "mathvista",
+   "name": "MathVista",
+   "description": "Math reasoning over figures, plots and diagrams (testmini). The final answer is asked for in \\boxed{} and checked with the official normalization instead of the official GPT-4 extractor.",
+   "language": "en",
+   "modality": "image",
+   "n_items": 1000,
+   "metric": "acc",
+   "metric_label": "Accuracy (boxed answer, official normalization)",
+   "lm_eval_task": "mathvista_testmini",
+   "dataset_url": "https://huggingface.co/datasets/AI4Math/MathVista",
+   "paper_url": "https://arxiv.org/abs/2310.02255",
+   "protocol_url": "https://github.com/lupantech/MathVista",
+   "protocol_name": "MathVista",
+   "subtasks": []
+  },
+  {
+   "id": "ocrbench",
+   "name": "OCRBench",
+   "description": "Text recognition, text-centric VQA, key information extraction and handwritten math, scored by substring match as in the official code.",
+   "language": "en",
+   "modality": "image",
+   "n_items": 1000,
+   "metric": "acc",
+   "metric_label": "Correct answers / 1,000 (official score / 1000)",
+   "lm_eval_task": "ocrbench",
+   "dataset_url": "https://huggingface.co/datasets/echo840/OCRBench",
+   "paper_url": "https://arxiv.org/abs/2305.07895",
+   "protocol_url": "https://github.com/Yuliang-Liu/MultimodalOCR",
+   "protocol_name": "OCRBench",
+   "subtasks": [
+    {
+     "id": "regular",
+     "name": "regular text",
+     "n_items": 50
+    },
+    {
+     "id": "irregular",
+     "name": "irregular text",
+     "n_items": 50
+    },
+    {
+     "id": "artistic",
+     "name": "artistic text",
+     "n_items": 50
+    },
+    {
+     "id": "handwriting",
+     "name": "handwriting",
+     "n_items": 50
+    },
+    {
+     "id": "digit",
+     "name": "digit strings",
+     "n_items": 50
+    },
+    {
+     "id": "nonsemantic",
+     "name": "non-semantic text",
+     "n_items": 50
+    },
+    {
+     "id": "scene_vqa",
+     "name": "scene text VQA",
+     "n_items": 200
+    },
+    {
+     "id": "doc_vqa",
+     "name": "document VQA",
+     "n_items": 200
+    },
+    {
+     "id": "kie",
+     "name": "key information extraction",
+     "n_items": 200
+    },
+    {
+     "id": "hmer",
+     "name": "handwritten math",
+     "n_items": 100
+    }
+   ]
+  },
+  {
+   "id": "koffvqa",
+   "name": "KOFFVQA",
+   "description": "Korean free-form questions about images. Answers are graded 0-10 against per-question criteria by the official judge (gemma-2-9b-it, text only); non-Korean answers get 0.",
+   "language": "ko",
+   "modality": "image",
+   "n_items": 275,
+   "metric": "score",
+   "metric_label": "Official judge score / 100",
+   "lm_eval_task": "koffvqa + official judge",
+   "dataset_url": "https://huggingface.co/datasets/maum-ai/KOFFVQA_Data",
+   "paper_url": "https://arxiv.org/abs/2503.23730",
+   "protocol_url": "https://github.com/maum-ai/KOFFVQA",
+   "protocol_name": "KOFFVQA",
+   "subtasks": [
+    {
+     "id": "koffvqa_object_attributes",
+     "name": "object attributes",
+     "n_items": 60
+    },
+    {
+     "id": "koffvqa_commonsense_reasoning",
+     "name": "commonsense reasoning",
+     "n_items": 45
+    },
+    {
+     "id": "koffvqa_relationship",
+     "name": "relationship",
+     "n_items": 30
+    },
+    {
+     "id": "koffvqa_document_understanding",
+     "name": "document understanding",
+     "n_items": 30
+    },
+    {
+     "id": "koffvqa_table_understanding",
+     "name": "table understanding",
+     "n_items": 30
+    },
+    {
+     "id": "koffvqa_graph_and_chart_understanding",
+     "name": "graph and chart understanding",
+     "n_items": 30
+    },
+    {
+     "id": "koffvqa_KO-OCR",
+     "name": "KO-OCR",
+     "n_items": 20
+    },
+    {
+     "id": "koffvqa_recognition",
+     "name": "recognition",
+     "n_items": 10
+    },
+    {
+     "id": "koffvqa_recognition-KO",
+     "name": "recognition-KO",
+     "n_items": 10
+    },
+    {
+     "id": "koffvqa_hallucination_and_robustness",
+     "name": "hallucination and robustness",
+     "n_items": 10
+    }
+   ]
   }
  ],
  "settings": [
