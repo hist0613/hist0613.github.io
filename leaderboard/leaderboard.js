@@ -106,6 +106,10 @@
   // 이미지 benchmark 는 이미지를 받는 모델만 돌아서, 모든 모델이 같은 집합으로 비교되도록 Average·Avg rank·Total 에서 뺀다
   const textBenchmarks = () => META.benchmarks.filter((b) => b.modality !== 'image');
 
+  // 좁은 화면(휴대폰)에서는 점수 칸이 보이도록 Avg rank 열을 그리지 않는다
+  const NARROW = matchMedia('(max-width: 720px)');
+  const showRank = () => state.mode === 'score' && !NARROW.matches;
+
   function rowSummary(rows) {
     const main = textBenchmarks().map((b) => ({ id: b.id, bench: b, kind: 'main' }));
     // rank of each row per benchmark (1 = best score). When settings are grouped, a row is ranked
@@ -468,9 +472,9 @@
       <th class="fz c-model ch-stat" rowspan="2" data-sort="model" style="text-align:left!important">Model ${sortArrow('model')}</th>
       <th class="fz c-setting" rowspan="2">Reasoning</th>
       <th class="fz fz-last c-params ch-stat" rowspan="2" data-sort="params">Params ${sortArrow('params')}</th>
-      <th class="bh" colspan="${state.mode === 'score' ? 2 : 1}">Summary</th>`;
+      <th class="bh" colspan="${showRank() ? 2 : 1}">Summary</th>`;
     let r2 = `<tr><th class="ch first" data-sort="avg" data-col="__avg"><span class="ch-name">${statLabel} ${sortArrow('avg')}</span>${histogram(view.colStats.__avg)}</th>`;
-    if (state.mode === 'score') r2 += `<th class="ch" data-sort="rank" data-col="__rank"><span class="ch-name">Avg rank ${sortArrow('rank')}</span><svg width="70" height="16"></svg></th>`;
+    if (showRank()) r2 += `<th class="ch" data-sort="rank" data-col="__rank"><span class="ch-name">Avg rank ${sortArrow('rank')}</span><svg width="70" height="16"></svg></th>`;
 
     for (const b of META.benchmarks) {
       const open = state.openBench.has(b.id) && state.mode === 'score';
@@ -491,7 +495,7 @@
   }
 
   function renderBody() {
-    const ncols = 4 + (state.mode === 'score' ? 2 : 1) + view.cols.length;
+    const ncols = 4 + (showRank() ? 2 : 1) + view.cols.length;
     let html = '<tbody>';
     for (const line of view.lines) {
       const r = line.row;
@@ -510,11 +514,11 @@
       const partial = state.mode === 'score' && r.n < nText ? ` title="Average over ${r.n} of ${nText} text benchmarks"` : '';
       html += `<tr class="${line.child ? 'child' : ''}" data-row="${esc(r.key)}">
         <td class="fz c-rank">${line.rank ?? ''}</td>
-        <td class="fz c-model"><button type="button" class="m-link" data-detail="${esc(r.key)}" title="Details of ${esc(r.model)}">${name}</button>${prec ? `<span class="prec" title="Weights in ${esc(prec)}">${esc(prec)}</span>` : ''}${more}</td>
+        <td class="fz c-model"><button type="button" class="m-link" data-detail="${esc(r.key)}" title="Details of ${esc(r.model)}">${name}</button>${prec ? `<span class="prec" title="Weights in ${esc(prec)}">${esc(prec)}</span>` : ''}<span class="m-sub"><span class="m-setting">${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${more}</span></td>
         <td class="fz c-setting"><span class="badge ${esc(r.setting)}">${esc(SETTING_LABEL[r.setting] || r.setting)}</span></td>
         <td class="fz fz-last c-params">${fmtParams(r.meta.params_b)}</td>
         <td class="v first stat" style="${heat(summary, view.colStats.__avg)}"${partial}>${fmt(summary)}${partial ? '*' : ''}</td>`;
-      if (state.mode === 'score') html += `<td class="v stat">${r.avgRank == null ? '–' : r.avgRank.toFixed(1)}</td>`;
+      if (showRank()) html += `<td class="v stat">${r.avgRank == null ? '–' : r.avgRank.toFixed(1)}</td>`;
       for (const c of view.cols) {
         const v = cellValue(r, c);
         const pend = v == null && c.kind === 'main' ? view.inProgress.get(`${r.model}|${r.setting}|${c.bench.id}`) : null;
@@ -779,6 +783,7 @@
     $('#cost-x').insertAdjacentHTML('beforeend', Object.entries(COST_AXES).map(([k, a]) =>
       `<label><input type="radio" name="cost-x" value="${k}"${k === state.costAxis ? ' checked' : ''}>${esc({ tokens: 'Output tokens', time: 'Eval time', memory: 'GPU memory', params: 'Parameters' }[k])}</label>`).join(''));
     $('#cost-x').addEventListener('change', (e) => { state.costAxis = e.target.value; render(); });
+    NARROW.addEventListener('change', () => render());  // 화면을 돌려 폭이 바뀌면 Avg rank 열을 다시 정한다
     let rt;
     window.addEventListener('resize', () => {
       placeFrozen(); syncTopbar(); updateNav();
