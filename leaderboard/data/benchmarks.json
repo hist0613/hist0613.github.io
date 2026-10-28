@@ -1,4 +1,47 @@
 {
+ "axes": [
+  {
+   "id": "benchmark",
+   "label": "Benchmark"
+  },
+  {
+   "id": "subtask",
+   "label": "Subtask"
+  },
+  {
+   "id": "language",
+   "label": "Language"
+  },
+  {
+   "id": "language_pair",
+   "label": "Language pair"
+  },
+  {
+   "id": "input",
+   "label": "Input"
+  },
+  {
+   "id": "task_type",
+   "label": "Task type"
+  },
+  {
+   "id": "domain",
+   "label": "Domain",
+   "hierarchical": true
+  },
+  {
+   "id": "cross_domain",
+   "label": "Cross-domain group"
+  },
+  {
+   "id": "difficulty",
+   "label": "Difficulty"
+  },
+  {
+   "id": "scoring",
+   "label": "Scoring"
+  }
+ ],
  "benchmarks": [
   {
    "id": "mmlu_pro",
@@ -15,74 +58,168 @@
     {
      "id": "mmlu_pro_biology",
      "name": "biology",
-     "n_items": 717
+     "n_items": 717,
+     "tags": {
+      "domain": [
+       "STEM/Biology"
+      ],
+      "cross_domain": [
+       "AI4Science"
+      ]
+     }
     },
     {
      "id": "mmlu_pro_business",
      "name": "business",
-     "n_items": 789
+     "n_items": 789,
+     "tags": {
+      "domain": [
+       "Business/Management"
+      ]
+     }
     },
     {
      "id": "mmlu_pro_chemistry",
      "name": "chemistry",
-     "n_items": 1132
+     "n_items": 1132,
+     "tags": {
+      "domain": [
+       "STEM/Chemistry"
+      ],
+      "cross_domain": [
+       "AI4Science"
+      ]
+     }
     },
     {
      "id": "mmlu_pro_computer_science",
      "name": "computer science",
-     "n_items": 410
+     "n_items": 410,
+     "tags": {
+      "domain": [
+       "STEM/Computer science"
+      ]
+     }
     },
     {
      "id": "mmlu_pro_economics",
      "name": "economics",
-     "n_items": 844
+     "n_items": 844,
+     "tags": {
+      "domain": [
+       "Business/Economics"
+      ]
+     }
     },
     {
      "id": "mmlu_pro_engineering",
      "name": "engineering",
-     "n_items": 969
+     "n_items": 969,
+     "tags": {
+      "domain": [
+       "STEM/Engineering"
+      ]
+     }
     },
     {
      "id": "mmlu_pro_health",
      "name": "health",
-     "n_items": 818
+     "n_items": 818,
+     "tags": {
+      "domain": [
+       "Medicine"
+      ]
+     }
     },
     {
      "id": "mmlu_pro_history",
      "name": "history",
-     "n_items": 381
+     "n_items": 381,
+     "tags": {
+      "domain": [
+       "Humanities/History"
+      ]
+     }
     },
     {
      "id": "mmlu_pro_law",
      "name": "law",
-     "n_items": 1101
+     "n_items": 1101,
+     "tags": {
+      "domain": [
+       "Law"
+      ]
+     }
     },
     {
      "id": "mmlu_pro_math",
      "name": "math",
-     "n_items": 1351
+     "n_items": 1351,
+     "tags": {
+      "domain": [
+       "STEM/Math"
+      ]
+     }
     },
     {
      "id": "mmlu_pro_other",
      "name": "other",
-     "n_items": 924
+     "n_items": 924,
+     "tags": {
+      "domain": [
+       "General"
+      ]
+     }
     },
     {
      "id": "mmlu_pro_philosophy",
      "name": "philosophy",
-     "n_items": 499
+     "n_items": 499,
+     "tags": {
+      "domain": [
+       "Humanities/Philosophy"
+      ]
+     }
     },
     {
      "id": "mmlu_pro_physics",
      "name": "physics",
-     "n_items": 1299
+     "n_items": 1299,
+     "tags": {
+      "domain": [
+       "STEM/Physics"
+      ]
+     }
     },
     {
      "id": "mmlu_pro_psychology",
      "name": "psychology",
-     "n_items": 798
+     "n_items": 798,
+     "tags": {
+      "domain": [
+       "Social science/Psychology"
+      ]
+     }
     }
-   ]
+   ],
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Text"
+    ],
+    "task_type": [
+     "Knowledge"
+    ],
+    "difficulty": [
+     "College"
+    ],
+    "scoring": [
+     "Multiple choice"
+    ]
+   },
+   "metric_short": "Accuracy"
   },
   {
    "id": "kmmlu_redux",
@@ -100,75 +237,169 @@
     {
      "id": "kmmlu_redux_safety_management",
      "name": "Safety Management",
-     "n_items": 400
+     "n_items": 400,
+     "tags": {
+      "domain": [
+       "STEM/Engineering"
+      ]
+     }
     },
     {
      "id": "kmmlu_redux_environment_energy",
      "name": "Environment & Energy",
-     "n_items": 377
+     "n_items": 377,
+     "tags": {
+      "domain": [
+       "STEM/Engineering"
+      ]
+     }
     },
     {
      "id": "kmmlu_redux_construction",
      "name": "Construction",
-     "n_items": 333
+     "n_items": 333,
+     "tags": {
+      "domain": [
+       "STEM/Engineering"
+      ]
+     }
     },
     {
      "id": "kmmlu_redux_mechanical",
      "name": "Mechanical",
-     "n_items": 270
+     "n_items": 270,
+     "tags": {
+      "domain": [
+       "STEM/Engineering"
+      ]
+     }
     },
     {
      "id": "kmmlu_redux_materials",
      "name": "Materials",
-     "n_items": 262
+     "n_items": 262,
+     "tags": {
+      "domain": [
+       "STEM/Materials"
+      ],
+      "cross_domain": [
+       "AI4Science"
+      ]
+     }
     },
     {
      "id": "kmmlu_redux_information_communication",
      "name": "Information & Communication",
-     "n_items": 185
+     "n_items": 185,
+     "tags": {
+      "domain": [
+       "STEM/Computer science"
+      ]
+     }
     },
     {
      "id": "kmmlu_redux_agriculture_forestry_fishery",
      "name": "Agriculture, Forestry & Fishery",
-     "n_items": 185
+     "n_items": 185,
+     "tags": {
+      "domain": [
+       "STEM/Agriculture"
+      ]
+     }
     },
     {
      "id": "kmmlu_redux_chemistry",
      "name": "Chemistry",
-     "n_items": 140
+     "n_items": 140,
+     "tags": {
+      "domain": [
+       "STEM/Chemistry"
+      ],
+      "cross_domain": [
+       "AI4Science"
+      ]
+     }
     },
     {
      "id": "kmmlu_redux_culture_arts_design_broadcasting",
      "name": "Culture, Arts, Design & Broadcasting",
-     "n_items": 119
+     "n_items": 119,
+     "tags": {
+      "domain": [
+       "Humanities/Arts"
+      ]
+     }
     },
     {
      "id": "kmmlu_redux_electrical_electronics",
      "name": "Electrical & Electronics",
-     "n_items": 114
+     "n_items": 114,
+     "tags": {
+      "domain": [
+       "STEM/Engineering"
+      ]
+     }
     },
     {
      "id": "kmmlu_redux_food_processing",
      "name": "Food Processing",
-     "n_items": 78
+     "n_items": 78,
+     "tags": {
+      "domain": [
+       "STEM/Agriculture"
+      ]
+     }
     },
     {
      "id": "kmmlu_redux_architecture",
      "name": "Architecture",
-     "n_items": 71
+     "n_items": 71,
+     "tags": {
+      "domain": [
+       "STEM/Engineering"
+      ]
+     }
     },
     {
      "id": "kmmlu_redux_business_accounting_office",
      "name": "Business, Accounting & Office",
-     "n_items": 34
+     "n_items": 34,
+     "tags": {
+      "domain": [
+       "Business/Accounting"
+      ]
+     }
     },
     {
      "id": "kmmlu_redux_mining_resources",
      "name": "Mining Resources",
-     "n_items": 19
+     "n_items": 19,
+     "tags": {
+      "domain": [
+       "STEM/Engineering"
+      ]
+     }
     }
    ],
-   "protocol_name": "KMMLU-Pro"
+   "protocol_name": "KMMLU-Pro",
+   "tags": {
+    "language": [
+     "Korean"
+    ],
+    "input": [
+     "Text"
+    ],
+    "task_type": [
+     "Knowledge"
+    ],
+    "difficulty": [
+     "College"
+    ],
+    "scoring": [
+     "Multiple choice"
+    ]
+   },
+   "metric_short": "Accuracy"
   },
   {
    "id": "gpqa_diamond",
@@ -181,7 +412,33 @@
    "lm_eval_task": "gpqa_diamond_cot_zeroshot",
    "dataset_url": "https://huggingface.co/datasets/Idavidrein/gpqa",
    "paper_url": "https://arxiv.org/abs/2311.12022",
-   "subtasks": []
+   "subtasks": [],
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Text"
+    ],
+    "task_type": [
+     "Knowledge"
+    ],
+    "difficulty": [
+     "Expert"
+    ],
+    "scoring": [
+     "Multiple choice"
+    ],
+    "domain": [
+     "STEM/Physics",
+     "STEM/Chemistry",
+     "STEM/Biology"
+    ],
+    "cross_domain": [
+     "AI4Science"
+    ]
+   },
+   "metric_short": "Accuracy"
   },
   {
    "id": "ifeval",
@@ -197,21 +454,46 @@
    "subtasks": [
     {
      "id": "prompt_level_strict_acc",
-     "name": "prompt strict"
+     "name": "prompt strict",
+     "slice": false
     },
     {
      "id": "prompt_level_loose_acc",
-     "name": "prompt loose"
+     "name": "prompt loose",
+     "slice": false
     },
     {
      "id": "inst_level_strict_acc",
-     "name": "instruction strict"
+     "name": "instruction strict",
+     "slice": false
     },
     {
      "id": "inst_level_loose_acc",
-     "name": "instruction loose"
+     "name": "instruction loose",
+     "slice": false
     }
-   ]
+   ],
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Text"
+    ],
+    "task_type": [
+     "Instruction following"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "scoring": [
+     "Rule-based"
+    ],
+    "domain": [
+     "General"
+    ]
+   },
+   "metric_short": "Prompt strict acc."
   },
   {
    "id": "hrm8k",
@@ -228,29 +510,78 @@
     {
      "id": "hrm8k_ksm",
      "name": "KSM",
-     "n_items": 1428
+     "n_items": 1428,
+     "tags": {
+      "difficulty": [
+       "Olympiad"
+      ]
+     }
     },
     {
      "id": "hrm8k_gsm8k",
      "name": "GSM8K",
-     "n_items": 1319
+     "n_items": 1319,
+     "tags": {
+      "difficulty": [
+       "General"
+      ]
+     }
     },
     {
      "id": "hrm8k_math",
      "name": "MATH",
-     "n_items": 2885
+     "n_items": 2885,
+     "tags": {
+      "difficulty": [
+       "College"
+      ]
+     }
     },
     {
      "id": "hrm8k_omni_math",
      "name": "Omni-MATH",
-     "n_items": 1909
+     "n_items": 1909,
+     "tags": {
+      "difficulty": [
+       "Olympiad"
+      ]
+     }
     },
     {
      "id": "hrm8k_mmmlu",
      "name": "MMMLU",
-     "n_items": 470
+     "n_items": 470,
+     "tags": {
+      "difficulty": [
+       "College"
+      ],
+      "domain": [
+       "General"
+      ],
+      "task_type": [
+       "Knowledge"
+      ]
+     }
     }
-   ]
+   ],
+   "tags": {
+    "language": [
+     "Korean"
+    ],
+    "input": [
+     "Text"
+    ],
+    "task_type": [
+     "Math reasoning"
+    ],
+    "scoring": [
+     "Exact match"
+    ],
+    "domain": [
+     "STEM/Math"
+    ]
+   },
+   "metric_short": "Accuracy"
   },
   {
    "id": "aime25",
@@ -263,7 +594,28 @@
    "lm_eval_task": "aime25_boxed",
    "dataset_url": "https://huggingface.co/datasets/math-ai/aime25",
    "paper_url": null,
-   "subtasks": []
+   "subtasks": [],
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Text"
+    ],
+    "task_type": [
+     "Math reasoning"
+    ],
+    "difficulty": [
+     "Olympiad"
+    ],
+    "scoring": [
+     "Exact match"
+    ],
+    "domain": [
+     "STEM/Math"
+    ]
+   },
+   "metric_short": "Accuracy"
   },
   {
    "id": "kobalt",
@@ -304,7 +656,28 @@
      "n_items": 42
     }
    ],
-   "protocol_name": "KoBALT"
+   "protocol_name": "KoBALT",
+   "tags": {
+    "language": [
+     "Korean"
+    ],
+    "input": [
+     "Text"
+    ],
+    "task_type": [
+     "Knowledge"
+    ],
+    "difficulty": [
+     "Expert"
+    ],
+    "scoring": [
+     "Multiple choice"
+    ],
+    "domain": [
+     "Humanities/Linguistics"
+    ]
+   },
+   "metric_short": "Accuracy"
   },
   {
    "id": "kbs",
@@ -322,20 +695,74 @@
     {
      "id": "ko-gsm8k",
      "name": "Ko-GSM8K",
-     "n_items": 1319
+     "n_items": 1319,
+     "tags": {
+      "task_type": [
+       "Math reasoning"
+      ],
+      "domain": [
+       "STEM/Math"
+      ],
+      "scoring": [
+       "Exact match"
+      ]
+     }
     },
     {
      "id": "ko-ifeval",
      "name": "Ko-IFEval",
-     "n_items": 841
+     "n_items": 841,
+     "tags": {
+      "task_type": [
+       "Instruction following"
+      ],
+      "domain": [
+       "General"
+      ],
+      "scoring": [
+       "Rule-based"
+      ]
+     }
     },
     {
      "id": "ko-eqbench",
      "name": "Ko-EQ-Bench",
-     "n_items": 171
+     "n_items": 171,
+     "tags": {
+      "task_type": [
+       "Emotional intelligence"
+      ],
+      "domain": [
+       "General"
+      ],
+      "scoring": [
+       "Rule-based"
+      ]
+     }
     }
    ],
-   "protocol_name": "KBS"
+   "protocol_name": "KBS",
+   "tags": {
+    "language": [
+     "Korean"
+    ],
+    "input": [
+     "Text"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "task_type": [
+     "Math reasoning",
+     "Instruction following",
+     "Emotional intelligence"
+    ],
+    "scoring": [
+     "Exact match",
+     "Rule-based"
+    ]
+   },
+   "metric_short": "Mean of 3"
   },
   {
    "id": "chembench",
@@ -374,7 +801,12 @@
     {
      "id": "chembench_materials_science",
      "name": "Materials",
-     "n_items": 83
+     "n_items": 83,
+     "tags": {
+      "domain": [
+       "STEM/Materials"
+      ]
+     }
     },
     {
      "id": "chembench_organic_chemistry",
@@ -394,9 +826,40 @@
     {
      "id": "chembench_toxicity_and_safety",
      "name": "Toxicity & safety",
-     "n_items": 675
+     "n_items": 675,
+     "tags": {
+      "domain": [
+       "STEM/Chemistry",
+       "Medicine"
+      ]
+     }
     }
-   ]
+   ],
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Text"
+    ],
+    "task_type": [
+     "Knowledge"
+    ],
+    "difficulty": [
+     "College"
+    ],
+    "scoring": [
+     "Multiple choice",
+     "Exact match"
+    ],
+    "domain": [
+     "STEM/Chemistry"
+    ],
+    "cross_domain": [
+     "AI4Science"
+    ]
+   },
+   "metric_short": "Accuracy"
   },
   {
    "id": "bfcl",
@@ -437,7 +900,28 @@
      "name": "Memory",
      "n_items": 465
     }
-   ]
+   ],
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Text"
+    ],
+    "task_type": [
+     "Function calling"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "scoring": [
+     "Rule-based"
+    ],
+    "domain": [
+     "General"
+    ]
+   },
+   "metric_short": "Weighted acc."
   },
   {
    "id": "locomo",
@@ -476,9 +960,31 @@
     {
      "id": "locomo_adversarial",
      "name": "Adversarial (not in score)",
-     "n_items": 444
+     "n_items": 444,
+     "slice": false
     }
-   ]
+   ],
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Text"
+    ],
+    "task_type": [
+     "Conversational memory"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "scoring": [
+     "Rule-based"
+    ],
+    "domain": [
+     "General"
+    ]
+   },
+   "metric_short": "F1"
   },
   {
    "id": "mmmu",
@@ -496,34 +1002,84 @@
     {
      "id": "mmmu_val_art_and_design",
      "name": "art & design",
-     "n_items": 120
+     "n_items": 120,
+     "tags": {
+      "domain": [
+       "Humanities/Arts"
+      ]
+     }
     },
     {
      "id": "mmmu_val_business",
      "name": "business",
-     "n_items": 150
+     "n_items": 150,
+     "tags": {
+      "domain": [
+       "Business"
+      ]
+     }
     },
     {
      "id": "mmmu_val_health_and_medicine",
      "name": "health & medicine",
-     "n_items": 150
+     "n_items": 150,
+     "tags": {
+      "domain": [
+       "Medicine"
+      ]
+     }
     },
     {
      "id": "mmmu_val_humanities_and_social_science",
      "name": "humanities & social science",
-     "n_items": 120
+     "n_items": 120,
+     "tags": {
+      "domain": [
+       "Humanities",
+       "Social science"
+      ]
+     }
     },
     {
      "id": "mmmu_val_science",
      "name": "science",
-     "n_items": 150
+     "n_items": 150,
+     "tags": {
+      "domain": [
+       "STEM"
+      ]
+     }
     },
     {
      "id": "mmmu_val_tech_and_engineering",
      "name": "tech & engineering",
-     "n_items": 210
+     "n_items": 210,
+     "tags": {
+      "domain": [
+       "STEM/Engineering"
+      ]
+     }
     }
-   ]
+   ],
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Image"
+    ],
+    "task_type": [
+     "Visual understanding",
+     "Knowledge"
+    ],
+    "difficulty": [
+     "College"
+    ],
+    "scoring": [
+     "Multiple choice"
+    ]
+   },
+   "metric_short": "Accuracy"
   },
   {
    "id": "mmstar",
@@ -543,34 +1099,82 @@
     {
      "id": "acc_coarse_perception",
      "name": "coarse perception",
-     "n_items": 250
+     "n_items": 250,
+     "tags": {
+      "domain": [
+       "General"
+      ]
+     }
     },
     {
      "id": "acc_fine_grained_perception",
      "name": "fine-grained perception",
-     "n_items": 250
+     "n_items": 250,
+     "tags": {
+      "domain": [
+       "General"
+      ]
+     }
     },
     {
      "id": "acc_instance_reasoning",
      "name": "instance reasoning",
-     "n_items": 250
+     "n_items": 250,
+     "tags": {
+      "domain": [
+       "General"
+      ]
+     }
     },
     {
      "id": "acc_logical_reasoning",
      "name": "logical reasoning",
-     "n_items": 250
+     "n_items": 250,
+     "tags": {
+      "domain": [
+       "General"
+      ]
+     }
     },
     {
      "id": "acc_science_technology",
      "name": "science & technology",
-     "n_items": 250
+     "n_items": 250,
+     "tags": {
+      "domain": [
+       "STEM"
+      ]
+     }
     },
     {
      "id": "acc_math",
      "name": "math",
-     "n_items": 250
+     "n_items": 250,
+     "tags": {
+      "domain": [
+       "STEM/Math"
+      ]
+     }
     }
-   ]
+   ],
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Image"
+    ],
+    "task_type": [
+     "Visual understanding"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "scoring": [
+     "Multiple choice"
+    ]
+   },
+   "metric_short": "Accuracy"
   },
   {
    "id": "k_mmstar",
@@ -588,34 +1192,82 @@
     {
      "id": "acc_coarse_perception",
      "name": "coarse perception",
-     "n_items": 250
+     "n_items": 250,
+     "tags": {
+      "domain": [
+       "General"
+      ]
+     }
     },
     {
      "id": "acc_fine_grained_perception",
      "name": "fine-grained perception",
-     "n_items": 250
+     "n_items": 250,
+     "tags": {
+      "domain": [
+       "General"
+      ]
+     }
     },
     {
      "id": "acc_instance_reasoning",
      "name": "instance reasoning",
-     "n_items": 250
+     "n_items": 250,
+     "tags": {
+      "domain": [
+       "General"
+      ]
+     }
     },
     {
      "id": "acc_logical_reasoning",
      "name": "logical reasoning",
-     "n_items": 250
+     "n_items": 250,
+     "tags": {
+      "domain": [
+       "General"
+      ]
+     }
     },
     {
      "id": "acc_science_technology",
      "name": "science & technology",
-     "n_items": 250
+     "n_items": 250,
+     "tags": {
+      "domain": [
+       "STEM"
+      ]
+     }
     },
     {
      "id": "acc_math",
      "name": "math",
-     "n_items": 250
+     "n_items": 250,
+     "tags": {
+      "domain": [
+       "STEM/Math"
+      ]
+     }
     }
-   ]
+   ],
+   "tags": {
+    "language": [
+     "Korean"
+    ],
+    "input": [
+     "Image"
+    ],
+    "task_type": [
+     "Visual understanding"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "scoring": [
+     "Multiple choice"
+    ]
+   },
+   "metric_short": "Accuracy"
   },
   {
    "id": "k_mmbench",
@@ -633,9 +1285,31 @@
     {
      "id": "acc_vanilla",
      "name": "original option order",
-     "n_items": 1164
+     "n_items": 1164,
+     "slice": false
     }
-   ]
+   ],
+   "tags": {
+    "language": [
+     "Korean"
+    ],
+    "input": [
+     "Image"
+    ],
+    "task_type": [
+     "Visual understanding"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "scoring": [
+     "Multiple choice"
+    ],
+    "domain": [
+     "General"
+    ]
+   },
+   "metric_short": "CircularEval acc."
   },
   {
    "id": "k_dtcbench",
@@ -665,7 +1339,28 @@
      "name": "chart",
      "n_items": 80
     }
-   ]
+   ],
+   "tags": {
+    "language": [
+     "Korean"
+    ],
+    "input": [
+     "Image"
+    ],
+    "task_type": [
+     "Visual understanding"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "scoring": [
+     "Multiple choice"
+    ],
+    "domain": [
+     "General"
+    ]
+   },
+   "metric_short": "Accuracy"
   },
   {
    "id": "chartqa",
@@ -679,7 +1374,28 @@
    "lm_eval_task": "chartqa",
    "dataset_url": "https://huggingface.co/datasets/HuggingFaceM4/ChartQA",
    "paper_url": "https://arxiv.org/abs/2203.10244",
-   "subtasks": []
+   "subtasks": [],
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Image"
+    ],
+    "task_type": [
+     "Visual understanding"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "scoring": [
+     "Exact match"
+    ],
+    "domain": [
+     "General"
+    ]
+   },
+   "metric_short": "Relaxed acc."
   },
   {
    "id": "mathvista",
@@ -695,7 +1411,29 @@
    "paper_url": "https://arxiv.org/abs/2310.02255",
    "protocol_url": "https://github.com/lupantech/MathVista",
    "protocol_name": "MathVista",
-   "subtasks": []
+   "subtasks": [],
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Image"
+    ],
+    "task_type": [
+     "Visual understanding",
+     "Math reasoning"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "scoring": [
+     "Exact match"
+    ],
+    "domain": [
+     "STEM/Math"
+    ]
+   },
+   "metric_short": "Accuracy"
   },
   {
    "id": "ocrbench",
@@ -762,7 +1500,28 @@
      "name": "handwritten math",
      "n_items": 100
     }
-   ]
+   ],
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Image"
+    ],
+    "task_type": [
+     "Visual understanding"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "scoring": [
+     "Exact match"
+    ],
+    "domain": [
+     "General"
+    ]
+   },
+   "metric_short": "Accuracy"
   },
   {
    "id": "koffvqa",
@@ -829,7 +1588,28 @@
      "name": "hallucination and robustness",
      "n_items": 10
     }
-   ]
+   ],
+   "tags": {
+    "language": [
+     "Korean"
+    ],
+    "input": [
+     "Image"
+    ],
+    "task_type": [
+     "Visual understanding"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "scoring": [
+     "Judge model"
+    ],
+    "domain": [
+     "General"
+    ]
+   },
+   "metric_short": "Judge 0–100"
   }
  ],
  "settings": [

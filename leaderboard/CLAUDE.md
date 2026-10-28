@@ -2,6 +2,8 @@
 
 LLM leaderboard 화면. 평가 실행 코드와 운영 절차는 seungtaek `projects/llm-leaderboard`(README)와 skill `llm-leaderboard` 에 있다.
 
+benchmark 를 `data/benchmarks.json` 에 더할 때 `metric_short`, benchmark·subtask 의 `tags`(축 목록은 파일 맨 위 `axes`), 같은 문항을 다르게 채점한 subtask 의 `slice: false` 를 함께 단다. `tests/leaderboard/` 의 테스트(`node --test tests/leaderboard/*.test.mjs`)가 빠진 것을 잡는다.
+
 ## PR
 
 - branch 를 따서 draft PR 로 올리고, 사용자가 괜찮다고 하면 squash merge 한다. 성격이 다른 변경은 PR 을 나눈다.

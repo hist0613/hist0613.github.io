@@ -202,6 +202,31 @@
 }
 .bh .lang img { width: 16px; height: 16px; display: block; }
 .bh a.ds { font-size: 11px; color: #6b7280; margin-left: 6px; }
+.bh .metric { font-size: 10px; color: #6b7280; margin-left: 4px; }
+.bh.blank { border-left: 1px solid #e5e7eb; }
+
+/* 머리글 줄 이름표: 줄 순서대로 쌓이고, 끌어서 옮기고 × 로 뺀다 */
+.axis-tags { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; margin-bottom: 6px; }
+.axis-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  border: 1px solid #c7d2fe; background: #eef2ff; color: #3730a3;
+  border-radius: 10px; padding: 0 4px 0 8px; font-size: 11px; font-weight: 400;
+  cursor: grab; user-select: none;
+}
+.axis-tag::before { content: "⋮⋮"; color: #818cf8; letter-spacing: -2px; margin-right: 2px; }
+.axis-tag:focus-visible { outline: 2px solid #93c5fd; }
+.axis-x { all: unset; cursor: pointer; color: #6b7280; padding: 0 3px; }
+.axis-x:hover { color: #111827; }
+.axis-add { position: relative; }
+.axis-add-btn { all: unset; cursor: pointer; border: 1px dashed #c7d2fe; border-radius: 10px; padding: 0 8px; font-size: 11px; color: #4f46e5; }
+.axis-menu {
+  position: absolute; left: 0; top: 100%; z-index: 20; margin-top: 2px;
+  display: flex; flex-direction: column; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .1); padding: 4px 0; min-width: 160px;
+}
+.axis-menu button { all: unset; cursor: pointer; padding: 3px 10px; font-size: 12px; color: #111827; white-space: nowrap; }
+.axis-menu button:hover { background: #f3f4f6; }
+.m-sort { cursor: pointer; }
 /* 이미지 benchmark 표시 */
 .modality { display: inline-block; margin-left: 4px; padding: 0 4px; border: 1px solid #d1d5db; border-radius: 3px; font-size: 10px; line-height: 14px; color: #6b7280; vertical-align: 1px; }
 
@@ -390,3 +415,18 @@ tr.child td.fz { background: #fcfcfd; }
 .lb-collab { border: 1px solid #e5e7eb; border-left: 3px solid #035384; border-radius: 6px; padding: 14px 18px; background: #f9fafb; }
 .lb-collab p { margin: 0 0 8px; color: #374151; }
 .lb-collab p:last-child { margin-bottom: 0; }
+.lb-table thead th.c-model { overflow: visible; }
+
+/* Average 에 넣을 benchmark 고르기 */
+.lb-table thead th.c-avg { overflow: visible; position: sticky; }
+.avg-pick { all: unset; cursor: pointer; display: block; margin-top: 2px; font-size: 10px; color: #4f46e5; white-space: nowrap; }
+.avg-panel {
+  position: absolute; right: 0; top: 100%; z-index: 30; margin-top: 2px; text-align: left; font-weight: 400;
+  width: 280px; max-height: 520px; overflow-y: auto; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .12); padding: 8px 10px; font-size: 12px; color: #111827;
+}
+.avg-quick { display: flex; gap: 6px; margin-bottom: 6px; }
+.avg-quick button { all: unset; cursor: pointer; border: 1px solid #d1d5db; border-radius: 4px; padding: 0 6px; font-size: 11px; }
+.avg-list label, .avg-textonly label { display: flex; align-items: center; gap: 6px; padding: 1px 0; white-space: nowrap; }
+.avg-textonly { margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px solid #f0f0f0; white-space: normal; }
+.avg-textonly > span { display: block; color: #6b7280; margin-bottom: 2px; }
