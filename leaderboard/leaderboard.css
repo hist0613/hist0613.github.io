@@ -422,11 +422,11 @@ tr.child td.fz { background: #fcfcfd; }
 .avg-pick { all: unset; cursor: pointer; display: block; margin-top: 2px; font-size: 10px; color: #4f46e5; white-space: nowrap; }
 .avg-panel {
   position: absolute; right: 0; top: 100%; z-index: 30; margin-top: 2px; text-align: left; font-weight: 400;
-  width: 260px; max-height: 420px; overflow-y: auto; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px;
+  width: 280px; max-height: 520px; overflow-y: auto; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, .12); padding: 8px 10px; font-size: 12px; color: #111827;
 }
 .avg-quick { display: flex; gap: 6px; margin-bottom: 6px; }
 .avg-quick button { all: unset; cursor: pointer; border: 1px solid #d1d5db; border-radius: 4px; padding: 0 6px; font-size: 11px; }
 .avg-list label, .avg-textonly label { display: flex; align-items: center; gap: 6px; padding: 1px 0; white-space: nowrap; }
-.avg-textonly { margin-top: 8px; padding-top: 6px; border-top: 1px solid #f0f0f0; }
+.avg-textonly { margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px solid #f0f0f0; white-space: normal; }
 .avg-textonly > span { display: block; color: #6b7280; margin-bottom: 2px; }

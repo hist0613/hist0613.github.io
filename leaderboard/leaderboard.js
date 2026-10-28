@@ -509,8 +509,8 @@
     const radio = (v, t) => `<label><input type="radio" name="avg-textonly" value="${v}"${state.textOnly === v ? ' checked' : ''}>${t}</label>`;
     return `<div class="avg-panel" role="dialog" aria-label="Benchmarks in the average">
       <div class="avg-quick"><button type="button" data-avg-set="all">All</button><button type="button" data-avg-set="text">Text only</button><button type="button" data-avg-set="none">None</button></div>
+      <div class="avg-textonly"><span>Image benchmarks for models that cannot take images:</span>${radio('zero', 'Count as 0')}${radio('exclude', 'Leave out')}</div>
       <div class="avg-list">${list}</div>
-      <div class="avg-textonly"><span>Models that cannot take images:</span>${radio('zero', 'Count as 0')}${radio('exclude', 'Leave out')}</div>
     </div>`;
   }
 

@@ -149,6 +149,8 @@
     const kept = results.filter((r) => !r.excluded);
     const vals = kept.filter((r) => r.value != null);
     const partial = vals.length < kept.length || vals.some((r) => r.partial);
+    // 실제 결과 없이 이미지 칸 0점만 있고 나머지가 비었으면 숫자를 내지 않는다
+    if (partial && vals.length && vals.every((r) => r.textOnly)) return { value: null, partial, m: vals.length, n: kept.length };
     return { value: vals.length ? vals.reduce((a, r) => a + r.value, 0) / vals.length : null, partial, m: vals.length, n: kept.length };
   }
 

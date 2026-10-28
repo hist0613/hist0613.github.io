@@ -154,3 +154,11 @@ test('no empty groups when a row sits below subtask', () => {
   tree.forEach(walk);
   assert.deepEqual(empty, []);
 });
+
+test('zero fills alone do not make an average', () => {
+  // 텍스트 benchmark 가 아직 하나도 안 끝난 텍스트 전용 모델: 이미지 칸 0점만으로 0.0 을 내지 않는다
+  const row = { meta: { image_input: false }, runs: {} };
+  assert.equal(P.average(row, META, new Set(['A', 'I']), 'score', { textOnly: 'zero' }).value, null);
+  // 이미지 benchmark 만 고르면 0점이 답이다
+  close(P.average(row, META, new Set(['I']), 'score', { textOnly: 'zero' }).value, 0);
+});
