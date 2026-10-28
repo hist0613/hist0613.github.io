@@ -27,7 +27,10 @@
   text-decoration: none;
   white-space: nowrap;
 }
-.lb-submit:hover { background: #035384; color: #fff; text-decoration: none; }
+.lb-submit:hover, .lb-submit[aria-expanded="true"] { background: #035384; color: #fff; text-decoration: none; }
+button.lb-submit { font: inherit; background: #fff; cursor: pointer; }
+/* 평가 신청과 협업 문의는 같은 성격이라 머리말 오른쪽에 나란히 둔다 */
+.lb-actions { flex: none; display: flex; gap: 8px; flex-wrap: wrap; }
 
 .lb-sample {
   margin: 14px 0 0;
@@ -126,6 +129,9 @@
 .lb-wrap {
   position: relative;
   overflow: auto;
+  /* 열이 적으면 테두리를 표 폭에 맞춰 오른쪽 빈 공간을 남기지 않는다 */
+  width: fit-content;
+  max-width: 100%;
   max-height: calc(100vh - 140px);
   border: 1px solid #e5e7eb;
   border-radius: 6px;
@@ -158,7 +164,8 @@
 /* 머리글을 셀 내용과 맞춘다: 순위는 셀처럼 오른쪽 정렬, 모델 이름은 앞의 펼침 단추(14px) 만큼 들여 쓴다 */
 .lb-table thead th.c-rank { text-align: right; }
 .lb-table thead th.c-model { padding-left: 22px; }
-.lb-table thead tr:nth-child(2) th { top: 30px; border-bottom: 1px solid #d1d5db; }
+/* 머리글 줄 수는 줄 구성에 따라 바뀌므로 각 줄의 top 은 placeFrozen() 이 실제 위치로 정한다 */
+.lb-table thead tr:last-child th { border-bottom: 1px solid #d1d5db; }
 
 /* Frozen left columns */
 .lb-table .fz { position: sticky; background: #fff; z-index: 1; }
@@ -328,6 +335,17 @@ tr.child td.fz { background: #fcfcfd; }
 
 .lb-notes { padding-left: 20px; color: #374151; }
 .lb-bench { border-bottom: 1px solid #f0f0f0; }
+.lb-bench-group { font-size: 14px; font-weight: 400; color: #374151; margin: 18px 0 2px; padding: 0; }
+.content h3.lb-bench-group::after { content: none; }  /* 사이트 공통 .content h3 밑줄 장식을 끈다 */
+.lb-bench-group .muted { color: #9ca3af; font-size: 12px; }
+.lb-bench-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 32px; align-items: start; }
+/* 두 열에서는 채점 설명을 한 줄로 줄이고, 전체는 펼치거나 마우스를 올려 본다 */
+@media (min-width: 721px) {
+  .lb-bench-grid .lb-bench summary { flex-wrap: nowrap; }
+  .lb-bench-grid .lb-bench-name, .lb-bench-grid .lang { flex-shrink: 0; white-space: nowrap; }
+  .lb-bench-grid .lb-bench-meta { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+@media (max-width: 720px) { .lb-bench-grid { grid-template-columns: 1fr; } }
 .lb-bench summary { cursor: pointer; padding: 7px 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; list-style: none; }
 .lb-bench summary::-webkit-details-marker { display: none; }
 .lb-bench summary::before { content: "▸"; color: #9ca3af; font-size: 11px; width: 10px; transition: transform .15s; }
@@ -412,7 +430,7 @@ tr.child td.fz { background: #fcfcfd; }
 .pend.running::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 4px; border-radius: 50%; background: #d97706; vertical-align: 1px; }
 
 /* Collaboration note */
-.lb-collab { border: 1px solid #e5e7eb; border-left: 3px solid #035384; border-radius: 6px; padding: 14px 18px; background: #f9fafb; }
+.lb-collab { border: 1px solid #e5e7eb; border-left: 3px solid #035384; border-radius: 6px; padding: 14px 18px; background: #f9fafb; margin-top: 14px; }
 .lb-collab p { margin: 0 0 8px; color: #374151; }
 .lb-collab p:last-child { margin-bottom: 0; }
 .lb-table thead th.c-model { overflow: visible; }
@@ -421,8 +439,8 @@ tr.child td.fz { background: #fcfcfd; }
 .lb-table thead th.c-avg { overflow: visible; position: sticky; }
 .avg-pick { all: unset; cursor: pointer; display: block; margin-top: 2px; font-size: 10px; color: #4f46e5; white-space: nowrap; }
 .avg-panel {
-  position: absolute; right: 0; top: 100%; z-index: 30; margin-top: 2px; text-align: left; font-weight: 400;
-  width: 280px; max-height: 520px; overflow-y: auto; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px;
+  position: fixed; z-index: 40; text-align: left; font-weight: 400;
+  width: 280px; max-height: 520px; overflow-y: auto; overscroll-behavior: contain; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, .12); padding: 8px 10px; font-size: 12px; color: #111827;
 }
 .avg-quick { display: flex; gap: 6px; margin-bottom: 6px; }
