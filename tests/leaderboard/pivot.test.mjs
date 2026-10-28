@@ -130,3 +130,11 @@ test('micro only for accuracy metrics', () => {
   const pair = P.nodeValue(find(P.buildTree(P.cells(META), ['language_pair'], ALL_OPEN), 'en→ko'), ROW, 'score', {});
   assert.equal(pair.micro, null);
 });
+
+test('same subtask id in two benchmarks stays apart', () => {
+  const meta = { benchmarks: [
+    { id: 'X', name: 'X', n_items: 1, subtasks: [{ id: 'acc_math', name: 'math', n_items: 1 }] },
+    { id: 'Y', name: 'Y', n_items: 1, subtasks: [{ id: 'acc_math', name: 'math', n_items: 1 }] },
+  ] };
+  assert.equal(P.buildTree(P.cells(meta), ['subtask'], new Set()).length, 2);
+});

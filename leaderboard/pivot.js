@@ -15,7 +15,7 @@
       const base = { ...(b.tags || {}), benchmark: [b.id] };
       if (b.subtasks && b.subtasks.length) {
         for (const s of b.subtasks) {
-          out.push({ id: `${b.id}::${s.id}`, bench: b, sub: s, slice: s.slice !== false, tags: { ...base, ...(s.tags || {}), subtask: [s.id] } });
+          out.push({ id: `${b.id}::${s.id}`, bench: b, sub: s, slice: s.slice !== false, tags: { ...base, ...(s.tags || {}), subtask: [`${b.id}::${s.id}`] } });
         }
       } else {
         out.push({ id: b.id, bench: b, sub: null, slice: true, tags: base });
