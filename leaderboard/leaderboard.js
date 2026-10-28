@@ -128,8 +128,10 @@
     // rank of each row per benchmark (1 = best score). When settings are grouped, a row is ranked
     // against the other models' best setting, so ranks run from 1 to the number of models.
     const ranks = new Map(rows.map((r) => [r.key, []]));
+    // 실제 결과가 하나도 없는 행(이미지 칸 0점 채움뿐인 행)은 순위에 넣지 않는다
+    const real = rows.filter((r) => main.some((c) => r.runs[c.id]?.score != null));
     for (const c of main) {
-      const scored = rows.filter((r) => benchScore(r, c.bench) != null);
+      const scored = real.filter((r) => benchScore(r, c.bench) != null);
       if (state.group) {
         const best = new Map();
         for (const r of scored) best.set(r.model, Math.max(best.get(r.model) ?? -Infinity, benchScore(r, c.bench)));
@@ -289,6 +291,7 @@
     syncTopbar();
     updateNav();
     renderCost(rows);
+    showAvgPanel();
   }
 
   // ---------- score vs. cost ----------
@@ -313,8 +316,57 @@
     return checkedBenchmarks().filter((b) => scored.length && scored.filter((r) => r.runs[b.id]?.score != null).length >= 0.8 * scored.length);
   }
 
+  // 차트에 고를 수 있는 칸: 지금 표에 보이는 묶음·benchmark·subtask 칸. 이름은 위 묶음부터 ▸ 로 잇는다
+  function costOptions() {
+    const out = [];
+    const walk = (node, path) => {
+      const p = [...path, node.label];
+      out.push({ id: node.key, node, label: p.join(' ▸ ') });
+      if (node.open) node.children.forEach((c) => walk(c, p));
+    };
+    view.tree.forEach((n) => walk(n, []));
+    return out;
+  }
+
+  // 묶음 칸을 고르면 Average 처럼 보이는 행의 80% 이상이 끝낸 바로 아래 칸만 쓴다. 칸 하나(benchmark·subtask)면 그 칸 그대로다
+  function costParts(node, rows) {
+    if (node.leaf || P.isOfficial(node)) return { parts: [node], all: 1 };
+    const kids = node.calc || node.children;
+    const opts = { textOnly: state.textOnly };
+    // 이미지를 못 받는 모델의 0점 채움은 끝낸 것으로 세지 않는다
+    const done = (k, r) => { const v = P.nodeValue(k, r, 'score', opts); return v.value != null && !v.partial && !v.textOnly; };
+    const scored = rows.filter((r) => kids.some((k) => done(k, r)));
+    return { parts: kids.filter((k) => scored.length && scored.filter((r) => done(k, r)).length >= 0.8 * scored.length), all: kids.length };
+  }
+
+  // 고른 칸들의 점수 평균과 비용. 칸을 하나라도 못 끝낸 행은 뺀다
+  function nodeCostPoint(r, parts, axis) {
+    if (!parts.length) return null;
+    const opts = { textOnly: state.textOnly };
+    const mean = (mode) => {
+      const vs = parts.map((k) => P.nodeValue(k, r, mode, opts));
+      return vs.some((v) => v.value == null || v.partial) ? null : vs.reduce((a, v) => a + v.value, 0) / vs.length;
+    };
+    // 0점 채움만으로 된 점은 찍지 않는다
+    if (parts.every((k) => P.nodeValue(k, r, 'score', opts).textOnly)) return null;
+    const y = mean('score');
+    if (y == null) return null;
+    const bs = [...new Map(parts.flatMap((k) => P.benchesOf(k)).map((x) => [x.bench.id, { ...x, run: r.runs[x.bench.id] }])).values()];
+    let x = null;
+    if (axis === 'params') x = r.meta.params_b ?? null;
+    else if (axis === 'tokens') x = mean('tokens');
+    // 시간은 benchmark 단위로만 재서, benchmark 를 일부만 담은 칸은 시간이 없다
+    else if (axis === 'time') x = bs.every((b) => b.whole && b.run?.wall_seconds) ? bs.reduce((a, b) => a + b.run.wall_seconds, 0) : null;
+    else if (axis === 'memory') x = bs.every((b) => b.run?.min_memory_gib) ? Math.max(...bs.map((b) => b.run.min_memory_gib)) : null;
+    return { r, x, y };
+  }
+
   function costPoint(r, benchId, axis) {
-    const set = benchId === '__avg' ? view.avgSet : [META.benchmarks.find((b) => b.id === benchId)];
+    if (benchId !== '__avg') {
+      const p = nodeCostPoint(r, view.costParts.parts, axis);
+      return !p || p.x == null || !isFinite(p.x) || p.x <= 0 ? null : p;
+    }
+    const set = view.avgSet;
     const runs = set.map((b) => r.runs[b.id]);
     if (!runs.length || runs.some((x) => !x || x.score == null)) return null;
     const y = runs.reduce((a, b) => a + b.score, 0) / runs.length;
@@ -343,22 +395,44 @@
   }
 
   function renderCost(rows) {
+    const opts = costOptions();
+    view.costNodes = new Map(opts.map((o) => [o.id, o]));
+    if (state.costBench !== '__avg' && !view.costNodes.has(state.costBench)) state.costBench = '__avg';
+    const cb = $('#cost-bench');
+    // 표의 Average 설정과 줄 구성을 따른다는 것이 목록에서 보이게 한다
+    const html = `<option value="__avg">Average of the ${state.avgChecked.size} checked benchmarks</option>`
+      + `<optgroup label="Columns of the table (${esc(state.axes.map(axisLabel).join(' ▸ '))})">`
+      + opts.map((o) => `<option value="${esc(o.id)}">${esc(o.label)}</option>`).join('') + '</optgroup>';
+    if (cb.dataset.html !== html) { cb.innerHTML = html; cb.dataset.html = html; }
+    cb.value = state.costBench;
     const benchId = state.costBench, axis = state.costAxis;
+    view.costParts = benchId === '__avg' ? null : costParts(view.costNodes.get(benchId).node, rows);
     const box = $('#cost-chart');
     view.avgSet = avgBenchmarks(rows);
     const pts = rows.map((r) => costPoint(r, benchId, axis)).filter(Boolean);
     const note = [];
+    let lead = '';
     if (benchId === '__avg') {
-      note.push(`The average uses the ${view.avgSet.length} benchmarks checked for Average that at least 80% of the rows in view have finished (${view.avgSet.map((b) => b.name).join(', ')}), and only rows that have all of them.`);
+      lead = `Plotted: the average of ${view.avgSet.length} of the ${state.avgChecked.size} benchmarks checked for Average in the table (${view.avgSet.map((b) => b.name).join(', ')}).`;
+      note.push(`The table's Average uses every checked benchmark and marks missing ones with *. Here only the benchmarks that at least 80% of the rows in view have finished are used, and only rows that have all of them, so every point is compared on the same benchmarks.`);
     }
     if (benchId !== '__avg') {
-      const bm = META.benchmarks.find((x) => x.id === benchId);
-      if (bm) note.push(`${bm.name}: ${bm.description} Score: ${bm.metric_label}.`);
+      const o = view.costNodes.get(benchId);
+      const bs = P.benchesOf(o.node);
+      const single = bs.length === 1 && bs[0].whole && (o.node.axis === 'benchmark' || (o.node.leaf && !o.node.leaf.sub));
+      if (single) { lead = `Plotted: ${o.label}, the same column as in the table.`; note.push(`${bs[0].bench.description} Score: ${bs[0].bench.metric_label}.`); }
+      else {
+        const cp = view.costParts;
+        lead = `Plotted: ${o.label} from the table, the macro average of ${cp.parts.length} of its ${cp.all} columns (${cp.parts.slice(0, 8).map((k) => k.label).join(', ')}${cp.parts.length > 8 ? ` and ${cp.parts.length - 8} more` : ''}).`;
+        note.push('As with Average, only the columns that at least 80% of the rows in view have finished are used, and only rows that have all of them.');
+      }
+      if (axis === 'time' && bs.some((b) => !b.whole)) note.push('Eval time is measured per whole benchmark, so this group, which holds only part of a benchmark, has no eval time.');
+      if (axis === 'tokens' && !single) note.push('Tokens are generated tokens per item, averaged the same way.');
     }
     if (axis === 'time') note.push('Eval time depends on the GPU (RTX 4090 or RTX 5090) that ran it.');
     if (axis === 'memory') note.push('Weights plus the KV cache of one 8,192-token request, as allocated by vLLM. vLLM reserves most of the card up front, so the peak reading of the GPU is not informative.');
     if (axis === 'tokens' && benchId === '__avg') note.push('Tokens are generated tokens per item over those benchmarks.');
-    $('#cost-note').textContent = note.join(' ');
+    $('#cost-note').innerHTML = `<b>${esc(lead)}</b> ${esc(note.join(' '))}`;
     renderSettingTable(rows, benchId, axis);
     if (!pts.length) {
       const b = META.benchmarks.find((m) => m.id === benchId);
@@ -435,7 +509,7 @@
   // per setting: how many rows, their median score, and the median change against thinking off for models that have both
   function renderSettingTable(rows, benchId, axis) {
     const settings = META.settings.map((s) => s.id).filter((id) => rows.some((r) => r.setting === id));
-    const pts = rows.map((r) => costPoint(r, benchId, axis) || (benchId === '__avg' ? null : (r.runs[benchId] ? { r, y: r.runs[benchId].score, x: null } : null))).filter(Boolean);
+    const pts = rows.map((r) => costPoint(r, benchId, axis) || (benchId === '__avg' ? null : nodeCostPoint(r, view.costParts.parts, axis))).filter((p) => p && p.y != null);
     const base = new Map(pts.filter((p) => p.r.setting === 'think-off').map((p) => [p.r.model, p]));
     const body = settings.map((s) => {
       const ps = pts.filter((p) => p.r.setting === s);
@@ -472,7 +546,8 @@
     }
     if (!best) { highlight(null); hideTip(); return; }
     highlight(view.colorIdx[best.r.model]);
-    const run0 = state.costBench === '__avg' ? null : best.r.runs[state.costBench];
+    const bs0 = state.costBench === '__avg' ? [] : P.benchesOf(view.costNodes.get(state.costBench).node);
+    const run0 = bs0.length === 1 ? best.r.runs[bs0[0].bench.id] : null;
     showTip(`<b>${esc(best.r.model)}</b> (${esc(SETTING_SHORT[best.r.setting] || best.r.setting)})<br>Score ${fmtScore(best.y)}<br>${esc(COST_AXES[state.costAxis].label)}: ${esc(COST_AXES[state.costAxis].fmt(best.x))}` +
       (run0?.gpu ? `<br>${esc(run0.gpu.replace('NVIDIA GeForce ', ''))}` : ''), e.clientX, e.clientY);
   });
@@ -488,7 +563,11 @@
   function axisTags() {
     const used = new Set(state.axes);
     const rest = META.axes.filter((a) => !used.has(a.id));
-    const tags = state.axes.map((a) => `<span class="axis-tag" draggable="true" tabindex="0" data-axis="${esc(a)}" title="Drag to move this row up or down (or Alt+↑/↓)">${esc(axisLabel(a))}${state.axes.length > 1 ? `<button type="button" class="axis-x" data-axis-remove="${esc(a)}" aria-label="Remove the ${esc(axisLabel(a))} row">×</button>` : ''}</span>`).join('');
+    // 왼쪽이 머리글 맨 윗줄이다. ‹ › 로 한 칸씩 옮기고, 끌어서 옮길 수도 있다
+    const n = state.axes.length;
+    const mv = (a, i, d) => `<button type="button" class="axis-mv" data-axis-move="${esc(a)}" data-dir="${d}"${i + d < 0 || i + d >= n ? ' disabled' : ''} aria-label="Move ${esc(axisLabel(a))} ${d < 0 ? 'earlier' : 'later'}">${d < 0 ? '‹' : '›'}</button>`;
+    // ▸ 는 뒤 이름표와 한 덩어리로 묶어 줄바꿈 때 줄 끝에 홀로 남지 않게 한다
+    const tags = state.axes.map((a, i) => `<span class="axis-item">${i ? '<span class="axis-sep">▸</span>' : ''}<span class="axis-tag" draggable="true" tabindex="0" data-axis="${esc(a)}" title="Use ‹ › or drag to change the order (or Alt+←/→)">${n > 1 ? mv(a, i, -1) : ''}<span class="axis-name">${esc(axisLabel(a))}</span>${n > 1 ? mv(a, i, 1) : ''}${n > 1 ? `<button type="button" class="axis-x" data-axis-remove="${esc(a)}" aria-label="Remove the ${esc(axisLabel(a))} row">×</button>` : ''}</span></span>`).join('');
     const add = rest.length ? `<span class="axis-add"><button type="button" class="axis-add-btn" data-axis-menu aria-expanded="${view.axisMenu ? 'true' : 'false'}" title="Add a header row">＋</button>${view.axisMenu ? `<span class="axis-menu">${rest.map((a) => `<button type="button" data-axis-add="${esc(a.id)}">${esc(a.label)}</button>`).join('')}</span>` : ''}</span>` : '';
     return `<div class="axis-tags">${tags}${add}</div>`;
   }
@@ -505,14 +584,48 @@
   }
 
   // Average 에 넣을 benchmark 와, 이미지를 못 받는 모델의 이미지 칸 처리
+  // Average 패널은 표 밖(body)에 띄운다. 표 안에 두면 가로·세로 스크롤에 같이 밀리고 표 테두리에 잘린다
+  const avgPop = document.createElement('div');
+  avgPop.className = 'avg-panel';
+  avgPop.setAttribute('role', 'dialog');
+  avgPop.setAttribute('aria-label', 'Benchmarks in the average');
+  avgPop.hidden = true;
+  document.body.append(avgPop);
+
   function avgPanel() {
     const list = META.benchmarks.map((b) => `<label><input type="checkbox" data-avg-bench="${esc(b.id)}"${state.avgChecked.has(b.id) ? ' checked' : ''}>${esc(b.name)}${imageBadge(b)}</label>`).join('');
     const radio = (v, t) => `<label><input type="radio" name="avg-textonly" value="${v}"${state.textOnly === v ? ' checked' : ''}>${t}</label>`;
-    return `<div class="avg-panel" role="dialog" aria-label="Benchmarks in the average">
-      <div class="avg-quick"><button type="button" data-avg-set="all">All</button><button type="button" data-avg-set="text">Text only</button><button type="button" data-avg-set="none">None</button></div>
+    return `<div class="avg-quick"><button type="button" data-avg-set="all">All</button><button type="button" data-avg-set="text">Text only</button><button type="button" data-avg-set="none">None</button></div>
       <div class="avg-textonly"><span>Image benchmarks for models that cannot take images:</span>${radio('zero', 'Count as 0')}${radio('exclude', 'Leave out')}</div>
-      <div class="avg-list">${list}</div>
-    </div>`;
+      <div class="avg-list">${list}</div>`;
+  }
+
+  function closeAvgPanel() {
+    view.avgPanel = false;
+    avgPop.hidden = true;
+    $('#table [data-avg-panel]')?.setAttribute('aria-expanded', 'false');
+  }
+
+  // 버튼 바로 아래에 둔다. 버튼이 왼쪽 고정 열 뒤로 가거나 화면 밖으로 나가면 닫는다
+  function placeAvgPanel() {
+    if (!view.avgPanel) return;
+    const btn = $('#table [data-avg-panel]');
+    if (!btn) { closeAvgPanel(); return; }
+    const r = btn.getBoundingClientRect();
+    const w = wrap.getBoundingClientRect();
+    if (r.left < w.left + (view.frozenWidth || 0) - 4 || r.right > w.right + 4 || r.bottom < 0 || r.top > innerHeight) { closeAvgPanel(); return; }
+    avgPop.style.left = Math.max(8, Math.min(r.left, innerWidth - avgPop.offsetWidth - 8)) + 'px';
+    avgPop.style.top = r.bottom + 4 + 'px';
+    avgPop.style.maxHeight = Math.max(160, innerHeight - r.bottom - 16) + 'px';
+  }
+
+  function showAvgPanel() {
+    if (!view.avgPanel || state.mode !== 'score') { closeAvgPanel(); return; }
+    const keep = avgPop.scrollTop;
+    avgPop.innerHTML = avgPanel();
+    avgPop.hidden = false;
+    avgPop.scrollTop = keep;
+    placeAvgPanel();
   }
 
   function renderHead() {
@@ -543,7 +656,7 @@
         i += span - 1;
       }
     }
-    const pick = state.mode === 'score' ? `<button type="button" class="avg-pick" data-avg-panel aria-expanded="${view.avgPanel ? 'true' : 'false'}" title="Choose the benchmarks in the average">macro of ${state.avgChecked.size} benchmark${state.avgChecked.size === 1 ? '' : 's'} ▾</button>${view.avgPanel ? avgPanel() : ''}` : '';
+    const pick = state.mode === 'score' ? `<button type="button" class="avg-pick" data-avg-panel aria-expanded="${view.avgPanel ? 'true' : 'false'}" title="Choose the benchmarks in the average">macro of ${state.avgChecked.size} benchmark${state.avgChecked.size === 1 ? '' : 's'} ▾</button>` : '';
     let last = `<tr><th class="ch first c-avg" data-sort="avg" data-col="__avg"><span class="ch-name">${statLabel} ${sortArrow('avg')}</span>${histogram(view.colStats.__avg)}${pick}</th>`;
     if (showRank()) last += `<th class="ch" data-sort="rank" data-col="__rank"><span class="ch-name">Avg rank ${sortArrow('rank')}</span><svg width="70" height="16"></svg></th>`;
     const measure = { score: 'Score', time: 'Time', tokens: 'Tokens / item' }[state.mode];
@@ -656,6 +769,10 @@
     $('#table').style.setProperty('--frozen', left + 'px');
     for (const tr of $('#table').querySelectorAll('tr')) {
       tr.querySelectorAll('.fz').forEach((cell, i) => { cell.style.left = lefts[i] + 'px'; });
+    }
+    // 세로 스크롤 때 머리글 줄이 몇 줄이든 제자리에 붙어 있도록 줄마다 top 을 준다
+    for (const tr of $('#table').querySelectorAll('thead tr')) {
+      for (const th of tr.children) th.style.top = tr.offsetTop + 'px';
     }
   }
 
@@ -782,7 +899,6 @@
   }
 
   $('#table').addEventListener('mousemove', (e) => {
-    if (e.target.closest('.avg-panel')) { hideTip(); return; }
     const th = e.target.closest('th[data-col]');
     const td = e.target.closest('td[data-col]');
     if (th) showTip(tipForHeader(th), e.clientX, e.clientY);
@@ -794,14 +910,15 @@
   // ---------- interactions ----------
   $('#table').addEventListener('click', (e) => {
     if (e.target.closest('[data-avg-panel]')) { view.avgPanel = !view.avgPanel; render(); return; }
-    const set = e.target.closest('[data-avg-set]');
-    if (set) {
-      const v = set.dataset.avgSet;
-      state.avgChecked = new Set(META.benchmarks.filter((b) => v === 'all' || (v === 'text' && b.modality !== 'image')).map((b) => b.id));
-      render();
+    const mvb = e.target.closest('[data-axis-move]');
+    if (mvb) {
+      const i = state.axes.indexOf(mvb.dataset.axisMove), j = i + Number(mvb.dataset.dir);
+      if (j < 0 || j >= state.axes.length) return;
+      const axes = [...state.axes];
+      [axes[i], axes[j]] = [axes[j], axes[i]];
+      setAxes(axes);
       return;
     }
-    if (e.target.closest('.avg-panel')) return;
     const rm = e.target.closest('[data-axis-remove]');
     if (rm) { setAxes(state.axes.filter((a) => a !== rm.dataset.axisRemove)); return; }
     const add = e.target.closest('[data-axis-add]');
@@ -811,12 +928,13 @@
     const nodeBtn = e.target.closest('[data-node]');
     if (nodeBtn) {
       const id = nodeBtn.dataset.node;
+      // 누른 머리글이 화면에서 같은 자리에 남도록 가로 스크롤을 맞춘다
+      const head = (k) => document.querySelector(`#table th[data-col="${CSS.escape(k)}"]`);
+      const before = head(id)?.getBoundingClientRect().left;
       state.open.has(id) ? state.open.delete(id) : state.open.add(id);
-      const keep = wrap.scrollLeft;
       render();
-      // 펼친 묶음이 보이게 둔다
-      const th = document.querySelector(`#table th[data-col="${CSS.escape(id)}"]`);
-      wrap.scrollLeft = state.open.has(id) && th ? th.offsetLeft - view.frozenWidth : keep;
+      const th = head(id);
+      if (th && before != null) wrap.scrollLeft += th.getBoundingClientRect().left - before;
       return;
     }
     const v = e.target.closest('[data-variants]');
@@ -844,13 +962,24 @@
 
   // 패널 밖을 누르거나 Esc 를 누르면 Average 패널을 닫는다
   document.addEventListener('click', (e) => {
-    if (view.avgPanel && !e.target.closest('.avg-panel, [data-avg-panel]')) { view.avgPanel = false; render(); }
+    if (view.avgPanel && !e.target.closest('.avg-panel, [data-avg-panel]')) closeAvgPanel();
   });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && view.avgPanel) { view.avgPanel = false; render(); }
+    if (e.key === 'Escape' && view.avgPanel) closeAvgPanel();
   });
+  window.addEventListener('scroll', placeAvgPanel, { passive: true });
+  wrap.addEventListener('scroll', placeAvgPanel, { passive: true });
 
-  $('#table').addEventListener('change', (e) => {
+  avgPop.addEventListener('click', (e) => {
+    // 패널을 다시 그리면 누른 단추가 문서에서 빠지므로, 바깥 클릭으로 오인해 닫지 않도록 여기서 멈춘다
+    e.stopPropagation();
+    const set = e.target.closest('[data-avg-set]');
+    if (!set) return;
+    const v = set.dataset.avgSet;
+    state.avgChecked = new Set(META.benchmarks.filter((b) => v === 'all' || (v === 'text' && b.modality !== 'image')).map((b) => b.id));
+    render();
+  });
+  avgPop.addEventListener('change', (e) => {
     const cb = e.target.closest('[data-avg-bench]');
     if (cb) { cb.checked ? state.avgChecked.add(cb.dataset.avgBench) : state.avgChecked.delete(cb.dataset.avgBench); render(); return; }
     if (e.target.name === 'avg-textonly') { state.textOnly = e.target.value; render(); }
@@ -877,7 +1006,7 @@
     e.preventDefault();
     const r = t.getBoundingClientRect();
     const rest = state.axes.filter((a) => a !== dragAxis);
-    const at = rest.indexOf(t.dataset.axis) + (e.clientY > r.top + r.height / 2 ? 1 : 0);
+    const at = rest.indexOf(t.dataset.axis) + (e.clientX > r.left + r.width / 2 ? 1 : 0);
     rest.splice(at, 0, dragAxis);
     dragAxis = null;
     setAxes(rest);
@@ -885,9 +1014,10 @@
   $('#table').addEventListener('dragend', () => { dragAxis = null; });
   $('#table').addEventListener('keydown', (e) => {
     const t = e.target.closest('.axis-tag');
-    if (!t || !e.altKey || (e.key !== 'ArrowUp' && e.key !== 'ArrowDown')) return;
+    const back = e.key === 'ArrowLeft' || e.key === 'ArrowUp', fwd = e.key === 'ArrowRight' || e.key === 'ArrowDown';
+    if (!t || !e.altKey || !(back || fwd)) return;
     e.preventDefault();
-    const i = state.axes.indexOf(t.dataset.axis), j = i + (e.key === 'ArrowUp' ? -1 : 1);
+    const i = state.axes.indexOf(t.dataset.axis), j = i + (back ? -1 : 1);
     if (j < 0 || j >= state.axes.length) return;
     const axes = [...state.axes];
     [axes[i], axes[j]] = [axes[j], axes[i]];
@@ -929,7 +1059,6 @@
       }, 120);
     });
     const cb = $('#cost-bench');
-    cb.innerHTML = '<option value="__avg">Average</option>' + META.benchmarks.map((b) => `<option value="${esc(b.id)}">${esc(b.name)}</option>`).join('');
     cb.addEventListener('change', () => { state.costBench = cb.value; render(); });
     $('#cost-x').insertAdjacentHTML('beforeend', Object.entries(COST_AXES).map(([k, a]) =>
       `<label><input type="radio" name="cost-x" value="${k}"${k === state.costAxis ? ' checked' : ''}>${esc({ tokens: 'Output tokens', time: 'Eval time', memory: 'GPU memory', params: 'Parameters' }[k])}</label>`).join(''));
@@ -948,13 +1077,24 @@
     return `lm-eval task <code>${esc(b.lm_eval_task)}</code>${b.protocol_url ? ` (prompt and answer extraction from the <a href="${esc(b.protocol_url)}">official ${esc(b.protocol_name || '')} code</a>)` : ''}
       · <a href="${esc(b.dataset_url)}">dataset</a>${b.paper_url ? ` · <a href="${esc(b.paper_url)}">paper</a>` : ''}`;
   }
+  // 목록이 길어서 입력(텍스트·이미지)으로 나누고, 넓은 화면에서는 두 열로 놓는다
   function renderBenchList() {
-    $('#bench-list').innerHTML = '<h2>Benchmarks</h2><p class="lb-help">Click a benchmark to see how it is run and scored.</p>' + META.benchmarks.map((b) => `
-      <details class="lb-bench"><summary><span class="lb-bench-name">${esc(b.name)}</span>${langBadge(b.language)}${imageBadge(b)}
-        <span class="lb-bench-meta">${b.n_items.toLocaleString()} items · ${esc(b.metric_label)}</span></summary>
-        <p>${esc(b.description)}</p>
-        <p>${benchLinks(b)}</p></details>`).join('');
+    const item = (b) => `
+      <details class="lb-bench"><summary><span class="lb-bench-name">${esc(b.name)}</span>${langBadge(b.language)}
+        <span class="lb-bench-meta" title="${esc(b.metric_label)}">${b.n_items.toLocaleString()} items · ${esc(b.metric_label)}</span></summary>
+        <p>${esc(b.description)} Score: ${esc(b.metric_label)}.</p>
+        <p>${benchLinks(b)}</p></details>`;
+    const groups = [['Text', META.benchmarks.filter((b) => b.modality !== 'image')], ['Image', META.benchmarks.filter((b) => b.modality === 'image')]];
+    $('#bench-list').innerHTML = '<h2>Benchmarks</h2><p class="lb-help">Click a benchmark to see how it is run and scored.</p>' + groups.filter(([, bs]) => bs.length).map(([name, bs]) =>
+      `<h3 class="lb-bench-group">${name} <span class="muted">${bs.length}</span></h3><div class="lb-bench-grid">${bs.map(item).join('')}</div>`).join('');
   }
+
+  // How to contribute 는 기본으로 펼쳐 두고, 접으면 이 브라우저에서는 다음에도 접힌 채로 연다
+  const contribute = $('#contribute');
+  try { if (localStorage.getItem('lb-contribute') === 'closed') contribute.open = false; } catch (e) { /* 저장소를 못 쓰면 펼친 채로 둔다 */ }
+  contribute.addEventListener('toggle', () => {
+    try { localStorage.setItem('lb-contribute', contribute.open ? 'open' : 'closed'); } catch (e) { /* 무시 */ }
+  });
 
   // ?data=sample loads placeholder results that cover every reasoning setting
   const RESULTS = new URLSearchParams(location.search).get('data') === 'sample' ? 'data/results.sample.json' : 'data/results.json';

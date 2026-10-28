@@ -14,20 +14,8 @@
   gap: 24px;
 }
 .lb-head h1 { margin: 0 0 6px; }
-.lb-lede { margin: 0; max-width: 760px; color: #4b5563; }
+.lb-lede { margin: 0; color: #4b5563; }
 
-.lb-submit {
-  flex: none;
-  margin-top: 6px;
-  padding: 8px 14px;
-  border: 1px solid #035384;
-  border-radius: 6px;
-  color: #035384;
-  font-weight: 400;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.lb-submit:hover { background: #035384; color: #fff; text-decoration: none; }
 
 .lb-sample {
   margin: 14px 0 0;
@@ -76,6 +64,8 @@
   cursor: pointer;
 }
 .lb-seg { display: flex; flex-wrap: wrap; row-gap: 4px; }
+/* 다른 묶음처럼 이름 아래에 두고, 옆 Cells show 버튼과 높이를 맞춘다 */
+.lb-rows .lb-check { padding: 6px 0; border: 1px solid transparent; }
 .lb-seg label + label { border-left: 0; }
 .lb-seg label {
   margin: 0;
@@ -126,6 +116,9 @@
 .lb-wrap {
   position: relative;
   overflow: auto;
+  /* 열이 적으면 테두리를 표 폭에 맞춰 오른쪽 빈 공간을 남기지 않는다 */
+  width: fit-content;
+  max-width: 100%;
   max-height: calc(100vh - 140px);
   border: 1px solid #e5e7eb;
   border-radius: 6px;
@@ -158,7 +151,8 @@
 /* 머리글을 셀 내용과 맞춘다: 순위는 셀처럼 오른쪽 정렬, 모델 이름은 앞의 펼침 단추(14px) 만큼 들여 쓴다 */
 .lb-table thead th.c-rank { text-align: right; }
 .lb-table thead th.c-model { padding-left: 22px; }
-.lb-table thead tr:nth-child(2) th { top: 30px; border-bottom: 1px solid #d1d5db; }
+/* 머리글 줄 수는 줄 구성에 따라 바뀌므로 각 줄의 top 은 placeFrozen() 이 실제 위치로 정한다 */
+.lb-table thead tr:last-child th { border-bottom: 1px solid #d1d5db; }
 
 /* Frozen left columns */
 .lb-table .fz { position: sticky; background: #fff; z-index: 1; }
@@ -205,15 +199,19 @@
 .bh .metric { font-size: 10px; color: #6b7280; margin-left: 4px; }
 .bh.blank { border-left: 1px solid #e5e7eb; }
 
-/* 머리글 줄 이름표: 줄 순서대로 쌓이고, 끌어서 옮기고 × 로 뺀다 */
-.axis-tags { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; margin-bottom: 6px; }
+/* 머리글 줄 이름표: 왼쪽부터 머리글 윗줄 순서로 늘어서고, ‹ › 나 끌기로 옮기고 × 로 뺀다 */
+.axis-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-bottom: 6px; white-space: normal; }
+.axis-item { display: inline-flex; align-items: center; gap: 4px; }
+.axis-sep { color: #9ca3af; font-size: 10px; }
+.axis-mv { all: unset; cursor: pointer; color: #4f46e5; padding: 0 3px; font-size: 13px; line-height: 1; }
+.axis-mv:hover:not(:disabled) { color: #111827; }
+.axis-mv:disabled { color: #c7d2fe; cursor: default; }
 .axis-tag {
   display: inline-flex; align-items: center; gap: 4px;
   border: 1px solid #c7d2fe; background: #eef2ff; color: #3730a3;
-  border-radius: 10px; padding: 0 4px 0 8px; font-size: 11px; font-weight: 400;
+  border-radius: 10px; padding: 0 4px; font-size: 11px; font-weight: 400;
   cursor: grab; user-select: none;
 }
-.axis-tag::before { content: "⋮⋮"; color: #818cf8; letter-spacing: -2px; margin-right: 2px; }
 .axis-tag:focus-visible { outline: 2px solid #93c5fd; }
 .axis-x { all: unset; cursor: pointer; color: #6b7280; padding: 0 3px; }
 .axis-x:hover { color: #111827; }
@@ -328,6 +326,17 @@ tr.child td.fz { background: #fcfcfd; }
 
 .lb-notes { padding-left: 20px; color: #374151; }
 .lb-bench { border-bottom: 1px solid #f0f0f0; }
+.lb-bench-group { font-size: 14px; font-weight: 400; color: #374151; margin: 18px 0 2px; padding: 0; }
+.content h3.lb-bench-group::after { content: none; }  /* 사이트 공통 .content h3 밑줄 장식을 끈다 */
+.lb-bench-group .muted { color: #9ca3af; font-size: 12px; }
+.lb-bench-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 32px; align-items: start; }
+/* 두 열에서는 채점 설명을 한 줄로 줄이고, 전체는 펼치거나 마우스를 올려 본다 */
+@media (min-width: 721px) {
+  .lb-bench-grid .lb-bench summary { flex-wrap: nowrap; }
+  .lb-bench-grid .lb-bench-name, .lb-bench-grid .lang { flex-shrink: 0; white-space: nowrap; }
+  .lb-bench-grid .lb-bench-meta { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+@media (max-width: 720px) { .lb-bench-grid { grid-template-columns: 1fr; } }
 .lb-bench summary { cursor: pointer; padding: 7px 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; list-style: none; }
 .lb-bench summary::-webkit-details-marker { display: none; }
 .lb-bench summary::before { content: "▸"; color: #9ca3af; font-size: 11px; width: 10px; transition: transform .15s; }
@@ -412,17 +421,24 @@ tr.child td.fz { background: #fcfcfd; }
 .pend.running::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 4px; border-radius: 50%; background: #d97706; vertical-align: 1px; }
 
 /* Collaboration note */
-.lb-collab { border: 1px solid #e5e7eb; border-left: 3px solid #035384; border-radius: 6px; padding: 14px 18px; background: #f9fafb; }
+.lb-collab { border: 1px solid #e5e7eb; border-left: 3px solid #035384; border-radius: 6px; padding: 14px 18px; background: #f9fafb; margin: 14px 0 10px; }
 .lb-collab p { margin: 0 0 8px; color: #374151; }
-.lb-collab p:last-child { margin-bottom: 0; }
+.lb-collab summary { cursor: pointer; list-style: none; color: #111827; font-weight: 400; }
+.lb-collab summary::-webkit-details-marker { display: none; }
+/* 접고 펼 때 제목이 움직이지 않도록 ▸ 는 고정 폭 칸 가운데에서 돌고, 상자 여백은 그대로 둔다 */
+.lb-collab summary::before { content: "▸"; display: inline-block; width: 14px; margin-right: 4px; text-align: center; color: #6b7280; font-size: 11px; transition: transform .15s; }
+.lb-collab[open] summary::before { transform: rotate(90deg); }
+.lb-collab[open] summary { margin-bottom: 4px; }
+.lb-collab ul { margin: 0; padding-left: 18px; color: #374151; }
+.lb-collab li { margin: 2px 0; }
 .lb-table thead th.c-model { overflow: visible; }
 
 /* Average 에 넣을 benchmark 고르기 */
 .lb-table thead th.c-avg { overflow: visible; position: sticky; }
 .avg-pick { all: unset; cursor: pointer; display: block; margin-top: 2px; font-size: 10px; color: #4f46e5; white-space: nowrap; }
 .avg-panel {
-  position: absolute; right: 0; top: 100%; z-index: 30; margin-top: 2px; text-align: left; font-weight: 400;
-  width: 280px; max-height: 520px; overflow-y: auto; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px;
+  position: fixed; z-index: 40; text-align: left; font-weight: 400;
+  width: 280px; max-height: 520px; overflow-y: auto; overscroll-behavior: contain; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, .12); padding: 8px 10px; font-size: 12px; color: #111827;
 }
 .avg-quick { display: flex; gap: 6px; margin-bottom: 6px; }

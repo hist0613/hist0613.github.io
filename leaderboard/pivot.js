@@ -26,10 +26,11 @@
     return out;
   }
 
-  function label(axis, value, cell) {
+  // path 는 이 칸 위에 있는 줄들. Benchmark 줄이 위에 없으면 subtask 이름만으로는 어느 benchmark 것인지 몰라 이름을 붙인다
+  function label(axis, value, cell, path = []) {
     if (value === NONE) return NONE;
     if (axis === 'benchmark') return cell.bench.name;
-    if (axis === 'subtask') return cell.sub ? cell.sub.name : cell.bench.name;
+    if (axis === 'subtask') return !cell.sub ? cell.bench.name : path.includes('benchmark') ? cell.sub.name : `${cell.bench.name} · ${cell.sub.name}`;
     return value.split('/').pop();
   }
 
@@ -93,12 +94,12 @@
           // 이 묶음에 칸이 하나뿐이고 축이 끝났으면 그 칸 자체가 leaf 다
           children = !next && kept.length === 1 && axis === 'subtask' ? [] : group(kept, depth + 1, key, nextPath, []);
           if (!next && kept.length === 1 && axis === 'subtask') {
-            return { key, axis, value: v, label: label(axis, v, kept[0]), depth: path.length, children: [], leaf: kept[0], open: false, expandable: false };
+            return { key, axis, value: v, label: label(axis, v, kept[0], path), depth: path.length, children: [], leaf: kept[0], open: false, expandable: false };
           }
         }
         // subtask 가 없는 benchmark 는 그 자신 한 칸뿐이라 펼칠 것이 없다
         const expandable = !(axis === 'benchmark' && children.length === 1 && children[0].leaf && !children[0].leaf.sub);
-        return { key, axis, value: v, label: label(axis, v, sub[0]), depth: path.length, children, calc, leaf: null, open: expandable && open.has(key), expandable };
+        return { key, axis, value: v, label: label(axis, v, sub[0], path), depth: path.length, children, calc, leaf: null, open: expandable && open.has(key), expandable };
       // 아래 줄 때문에 칸이 하나도 남지 않은 묶음(예: slice:false subtask 아래 Domain 줄)은 뺀다
       }).filter((n) => n.leaf || n.children.length).concat(leaves);
     }
@@ -141,12 +142,21 @@
 
   // benchmark 칸이 그 benchmark 의 칸을 모두 담고 있으면 공식 점수를 보인다. 일부(예: Chemistry 아래 MMLU-Pro)면 그 칸들의 평균이다
   function isOfficial(node) {
-    if (node.axis !== 'benchmark') return false;
-    const ls = leavesOf(node);
-    if (ls.some((c) => !c.sub)) return true;
-    const b = ls[0].bench;
-    const ids = new Set(ls.map((c) => c.id));
-    return b.subtasks.filter((s) => s.slice !== false).every((s) => ids.has(`${b.id}::${s.id}`));
+    return node.axis === 'benchmark' && benchesOf(node)[0].whole;
+  }
+
+  // 묶음 안의 benchmark 와, 그 benchmark 의 칸을 모두 담았는지(whole). 시간처럼 benchmark 단위로만 잰 값을 묶을 때 쓴다
+  function benchesOf(node) {
+    const by = new Map();
+    for (const c of leavesOf(node)) {
+      if (!by.has(c.bench.id)) by.set(c.bench.id, { bench: c.bench, cells: [] });
+      by.get(c.bench.id).cells.push(c);
+    }
+    return [...by.values()].map(({ bench, cells }) => {
+      const ids = new Set(cells.map((c) => c.id));
+      const whole = cells.some((c) => !c.sub) || bench.subtasks.filter((s) => s.slice !== false).every((s) => ids.has(`${bench.id}::${s.id}`));
+      return { bench, whole };
+    });
   }
 
   function micro(node, row, mode, opts) {
@@ -191,5 +201,5 @@
     return mean(bs.map((b) => benchValue(b, row, mode, opts)));
   }
 
-  globalThis.LBPivot = { cells, buildTree, nodeValue, average, isOfficial, NONE };
+  globalThis.LBPivot = { cells, buildTree, nodeValue, average, isOfficial, benchesOf, NONE };
 })();

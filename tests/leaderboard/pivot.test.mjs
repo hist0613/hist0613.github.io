@@ -202,3 +202,19 @@ test('micro counts a multi-valued cell once', () => {
   const stem = find(P.buildTree(P.cells(meta), ['domain'], ALL_OPEN), 'STEM');
   close(P.nodeValue(stem, row, 'score', {}).micro, 0.5);
 });
+
+test('benchesOf tells whether each benchmark is whole in the group', () => {
+  // STEM 은 A 의 chemistry 칸만 담고(일부), B·I 는 통째로 담는다
+  const stem = find(P.buildTree(P.cells(META), ['domain'], ALL_OPEN), 'STEM');
+  const got = Object.fromEntries(P.benchesOf(stem).map((x) => [x.bench.id, x.whole]));
+  assert.deepEqual(got, { A: false, B: true, I: true });
+  const a = P.buildTree(P.cells(META), ['benchmark', 'subtask'], new Set())[0];
+  assert.deepEqual(P.benchesOf(a).map((x) => [x.bench.id, x.whole]), [['A', true]]);
+});
+
+test('subtask group names its benchmark when no Benchmark row is above', () => {
+  const top = P.buildTree(P.cells(META), ['subtask'], new Set());
+  assert.ok(top.some((n) => n.label === 'Bench A · chemistry'), top.map((n) => n.label).join(','));
+  const under = P.buildTree(P.cells(META), ['benchmark', 'subtask'], ALL_OPEN)[0];
+  assert.equal(under.children[0].label, 'chemistry');
+});

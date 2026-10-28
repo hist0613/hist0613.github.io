@@ -31,8 +31,16 @@
         <p class="lb-lede">Small open-weight LLMs on public benchmarks. Requests come in as GitHub issues and are
           evaluated in a queue, so new results appear over time.</p>
       </div>
-      <a class="lb-submit" id="submit-link" href="https://github.com/hist0613/hist0613.github.io/issues/new?template=eval-request.yml">Request an evaluation</a>
     </div>
+    <details class="lb-collab" id="contribute" open>
+      <summary>How to contribute</summary>
+      <ul>
+        <li>If there is a model or benchmark you would like to see here, please submit it as a GitHub issue with the
+          <a id="submit-link" href="https://github.com/hist0613/hist0613.github.io/issues/new?template=eval-request.yml">evaluation request form</a>.</li>
+        <li>If you would like to collaborate on LLM evaluation research, or can offer data, GPU time or compute credits,
+          please contact me at <a href="mailto:seungtaek.choi@hufs.ac.kr">seungtaek.choi@hufs.ac.kr</a>.</li>
+      </ul>
+    </details>
 
     <p class="lb-status" id="status-line"></p>
     <p class="lb-sample" id="sample-note" hidden>These numbers are placeholder data for building the page. They are not evaluation results.</p>
@@ -55,7 +63,10 @@
         <label><input type="radio" name="mode" value="time">Eval time</label>
         <label><input type="radio" name="mode" value="tokens">Output tokens</label>
       </fieldset>
-      <label class="lb-check"><input type="checkbox" id="group-variants" checked>Group settings of the same model</label>
+      <fieldset class="lb-group lb-rows">
+        <legend class="lb-label">Rows</legend>
+        <label class="lb-check"><input type="checkbox" id="group-variants" checked>Group settings of the same model</label>
+      </fieldset>
     </div>
 
     <p class="lb-help" id="search-help">
@@ -81,9 +92,9 @@
     <h2>Score vs. cost</h2>
     <p class="lb-help">Each point is one model in one reasoning setting, and a line joins the settings of the same model.
       Hollow points are thinking off. The dotted line is the Pareto front: no other point scores higher at a lower cost.
-      Hover a point for details. The filters above apply here too.</p>
+      Hover a point for details. The model filters, the benchmarks checked for Average and the column grouping of the table above apply here too.</p>
     <div class="lb-toolbar lb-cost-controls">
-      <label class="lb-select"><span class="lb-label">Benchmark</span><select id="cost-bench"></select></label>
+      <label class="lb-select"><span class="lb-label">Plot</span><select id="cost-bench"></select></label>
       <fieldset class="lb-group lb-seg" id="cost-x"><legend class="lb-label">Cost axis</legend></fieldset>
     </div>
     <p class="lb-help" id="cost-note"></p>
@@ -107,12 +118,6 @@
     <div id="bench-list"></div>
     <p class="lb-help">Flag icons are from <a href="https://github.com/jdecked/twemoji">Twemoji</a>, licensed under CC-BY 4.0.</p>
 
-    <h2>Collaborate with us</h2>
-    <div class="lb-collab">
-      <p>If you would like to collaborate on LLM evaluation research, or can offer GPU time or compute credits
-        so that we can evaluate more models and reasoning settings, please get in touch.</p>
-      <p>Contact: seungtaek.choi (at) hufs.ac.kr</p>
-    </div>
   </div>
 
   <div class="lb-tip" id="tip" role="tooltip" hidden></div>
