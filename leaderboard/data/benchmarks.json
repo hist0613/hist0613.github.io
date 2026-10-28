@@ -1002,32 +1002,63 @@
     {
      "id": "mmmu_val_art_and_design",
      "name": "art & design",
-     "n_items": 120
+     "n_items": 120,
+     "tags": {
+      "domain": [
+       "Humanities/Arts"
+      ]
+     }
     },
     {
      "id": "mmmu_val_business",
      "name": "business",
-     "n_items": 150
+     "n_items": 150,
+     "tags": {
+      "domain": [
+       "Business"
+      ]
+     }
     },
     {
      "id": "mmmu_val_health_and_medicine",
      "name": "health & medicine",
-     "n_items": 150
+     "n_items": 150,
+     "tags": {
+      "domain": [
+       "Medicine"
+      ]
+     }
     },
     {
      "id": "mmmu_val_humanities_and_social_science",
      "name": "humanities & social science",
-     "n_items": 120
+     "n_items": 120,
+     "tags": {
+      "domain": [
+       "Humanities",
+       "Social science"
+      ]
+     }
     },
     {
      "id": "mmmu_val_science",
      "name": "science",
-     "n_items": 150
+     "n_items": 150,
+     "tags": {
+      "domain": [
+       "STEM"
+      ]
+     }
     },
     {
      "id": "mmmu_val_tech_and_engineering",
      "name": "tech & engineering",
-     "n_items": 210
+     "n_items": 210,
+     "tags": {
+      "domain": [
+       "STEM/Engineering"
+      ]
+     }
     }
    ],
    "tags": {

@@ -37,3 +37,10 @@ test('every MMLU-Pro subject has a domain', () => {
   assert.equal(m.subtasks.length, 14);
   for (const s of m.subtasks) assert.ok(s.tags?.domain?.length || m.tags?.domain?.length, s.id);
 });
+
+test('subject-split benchmarks give every subtask a domain', () => {
+  for (const id of ['mmlu_pro', 'kmmlu_redux', 'mmmu', 'mmstar', 'k_mmstar', 'chembench']) {
+    const b = META.benchmarks.find((x) => x.id === id);
+    for (const s of b.subtasks) assert.ok(s.tags?.domain?.length || b.tags?.domain?.length, `${id}/${s.id}`);
+  }
+});

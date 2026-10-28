@@ -33,6 +33,8 @@
 
   // 한 칸이 이 단계에서 갖는 값들. 위아래 단계가 있는 속성은 prefix 아래의 다음 단계 값만 낸다
   function valuesAt(cell, axis, prefix) {
+    // subtask 가 없는 benchmark 는 subtask 줄에서 묶음을 만들지 않고 그 자리의 칸이 된다
+    if (axis === 'subtask' && !cell.sub) return [];
     const vals = cell.tags[axis];
     if (!vals || !vals.length) return prefix.length ? [] : [NONE];
     if (!HIERARCHICAL.has(axis)) return [...new Set(vals)];
@@ -54,16 +56,20 @@
     function group(cs, depth, parentKey, path, prefix) {
       // 이 축의 위아래 단계를 다 내려왔으면 다음 축으로
       const axis = axes[depth];
-      if (axis === undefined) return cs.map((c) => ({ key: `${parentKey}>${c.id}`, axis: null, value: c.id, label: `${c.bench.name}${c.sub ? ' · ' + c.sub.name : ''}`, depth: path.length, children: [], leaf: c, open: false }));
+      if (axis === undefined) return cs.map((c) => ({ key: `${parentKey}>${c.id}`, axis: null, value: c.id, label: `${c.bench.name}${c.sub ? ' · ' + c.sub.name : ''}`, depth: path.length, children: [], leaf: c, open: false, expandable: false }));
       const order = [];
       const members = new Map();
+      const direct = [];
       for (const c of cs) {
-        for (const v of valuesAt(c, axis, prefix)) {
+        const vs = valuesAt(c, axis, prefix);
+        if (!vs.length && !prefix.length) direct.push(c);
+        for (const v of vs) {
           if (!members.has(v)) { members.set(v, []); order.push(v); }
           members.get(v).push(c);
         }
       }
       order.sort((a, b) => (a === NONE) - (b === NONE));
+      const leaves = direct.map((c) => ({ key: `${parentKey}>${c.id}`, axis: null, value: c.id, label: c.bench.name, depth: path.length, children: [], leaf: c, open: false, expandable: false }));
       return order.map((v) => {
         const key = `${parentKey}>${axis}=${v}`;
         const sub = members.get(v);
@@ -81,11 +87,14 @@
           // 이 묶음에 칸이 하나뿐이고 축이 끝났으면 그 칸 자체가 leaf 다
           children = !next && kept.length === 1 && axis === 'subtask' ? [] : group(kept, depth + 1, key, nextPath, []);
           if (!next && kept.length === 1 && axis === 'subtask') {
-            return { key, axis, value: v, label: label(axis, v, kept[0]), depth: path.length, children: [], leaf: kept[0], open: false };
+            return { key, axis, value: v, label: label(axis, v, kept[0]), depth: path.length, children: [], leaf: kept[0], open: false, expandable: false };
           }
         }
-        return { key, axis, value: v, label: label(axis, v, sub[0]), depth: path.length, children, leaf: null, open: open.has(key) };
-      });
+        // subtask 가 없는 benchmark 는 그 자신 한 칸뿐이라 펼칠 것이 없다
+        const expandable = !(axis === 'benchmark' && children.length === 1 && children[0].leaf && !children[0].leaf.sub);
+        return { key, axis, value: v, label: label(axis, v, sub[0]), depth: path.length, children, leaf: null, open: expandable && open.has(key), expandable };
+      // 아래 줄 때문에 칸이 하나도 남지 않은 묶음(예: slice:false subtask 아래 Domain 줄)은 뺀다
+      }).filter((n) => n.leaf || n.children.length).concat(leaves);
     }
     return group(cellList.filter((c) => c.slice || axes[0] === 'benchmark'), 0, '', [], []);
   }

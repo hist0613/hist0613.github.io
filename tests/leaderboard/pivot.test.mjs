@@ -138,3 +138,19 @@ test('same subtask id in two benchmarks stays apart', () => {
   ] };
   assert.equal(P.buildTree(P.cells(meta), ['subtask'], new Set()).length, 2);
 });
+
+test('benchmark without subtasks is not expandable', () => {
+  const tree = P.buildTree(P.cells(META), ['benchmark', 'subtask'], ALL_OPEN);
+  const b = find(tree, 'Bench B');
+  assert.equal(b.expandable, false);
+  assert.equal(find(tree, 'Bench A').expandable, true);
+  assert.ok(!b.children.some((n) => n.label === '(none)'));
+});
+
+test('no empty groups when a row sits below subtask', () => {
+  const tree = P.buildTree(P.cells(META), ['benchmark', 'subtask', 'domain'], ALL_OPEN);
+  const empty = [];
+  const walk = (n) => { if (!n.leaf && !n.children.length) empty.push(n.key); n.children.forEach(walk); };
+  tree.forEach(walk);
+  assert.deepEqual(empty, []);
+});
