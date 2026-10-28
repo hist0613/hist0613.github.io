@@ -16,21 +16,6 @@
 .lb-head h1 { margin: 0 0 6px; }
 .lb-lede { margin: 0; max-width: 760px; color: #4b5563; }
 
-.lb-submit {
-  flex: none;
-  margin-top: 6px;
-  padding: 8px 14px;
-  border: 1px solid #035384;
-  border-radius: 6px;
-  color: #035384;
-  font-weight: 400;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.lb-submit:hover, .lb-submit[aria-expanded="true"] { background: #035384; color: #fff; text-decoration: none; }
-button.lb-submit { font: inherit; background: #fff; cursor: pointer; }
-/* 평가 신청과 협업 문의는 같은 성격이라 머리말 오른쪽에 나란히 둔다 */
-.lb-actions { flex: none; display: flex; gap: 8px; flex-wrap: wrap; }
 
 .lb-sample {
   margin: 14px 0 0;
@@ -212,15 +197,19 @@ button.lb-submit { font: inherit; background: #fff; cursor: pointer; }
 .bh .metric { font-size: 10px; color: #6b7280; margin-left: 4px; }
 .bh.blank { border-left: 1px solid #e5e7eb; }
 
-/* 머리글 줄 이름표: 줄 순서대로 쌓이고, 끌어서 옮기고 × 로 뺀다 */
-.axis-tags { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; margin-bottom: 6px; }
+/* 머리글 줄 이름표: 왼쪽부터 머리글 윗줄 순서로 늘어서고, ‹ › 나 끌기로 옮기고 × 로 뺀다 */
+.axis-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-bottom: 6px; white-space: normal; }
+.axis-item { display: inline-flex; align-items: center; gap: 4px; }
+.axis-sep { color: #9ca3af; font-size: 10px; }
+.axis-mv { all: unset; cursor: pointer; color: #4f46e5; padding: 0 3px; font-size: 13px; line-height: 1; }
+.axis-mv:hover:not(:disabled) { color: #111827; }
+.axis-mv:disabled { color: #c7d2fe; cursor: default; }
 .axis-tag {
   display: inline-flex; align-items: center; gap: 4px;
   border: 1px solid #c7d2fe; background: #eef2ff; color: #3730a3;
-  border-radius: 10px; padding: 0 4px 0 8px; font-size: 11px; font-weight: 400;
+  border-radius: 10px; padding: 0 4px; font-size: 11px; font-weight: 400;
   cursor: grab; user-select: none;
 }
-.axis-tag::before { content: "⋮⋮"; color: #818cf8; letter-spacing: -2px; margin-right: 2px; }
 .axis-tag:focus-visible { outline: 2px solid #93c5fd; }
 .axis-x { all: unset; cursor: pointer; color: #6b7280; padding: 0 3px; }
 .axis-x:hover { color: #111827; }
@@ -430,9 +419,11 @@ tr.child td.fz { background: #fcfcfd; }
 .pend.running::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 4px; border-radius: 50%; background: #d97706; vertical-align: 1px; }
 
 /* Collaboration note */
-.lb-collab { border: 1px solid #e5e7eb; border-left: 3px solid #035384; border-radius: 6px; padding: 14px 18px; background: #f9fafb; margin-top: 14px; }
+.lb-collab { border: 1px solid #e5e7eb; border-left: 3px solid #035384; border-radius: 6px; padding: 14px 18px; background: #f9fafb; margin: 14px 0 10px; }
 .lb-collab p { margin: 0 0 8px; color: #374151; }
-.lb-collab p:last-child { margin-bottom: 0; }
+.lb-collab-title { font-weight: 400; color: #111827 !important; margin-bottom: 4px !important; }
+.lb-collab ul { margin: 0; padding-left: 18px; color: #374151; }
+.lb-collab li { margin: 2px 0; }
 .lb-table thead th.c-model { overflow: visible; }
 
 /* Average 에 넣을 benchmark 고르기 */

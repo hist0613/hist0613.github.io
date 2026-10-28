@@ -563,7 +563,11 @@
   function axisTags() {
     const used = new Set(state.axes);
     const rest = META.axes.filter((a) => !used.has(a.id));
-    const tags = state.axes.map((a) => `<span class="axis-tag" draggable="true" tabindex="0" data-axis="${esc(a)}" title="Drag to move this row up or down (or Alt+↑/↓)">${esc(axisLabel(a))}${state.axes.length > 1 ? `<button type="button" class="axis-x" data-axis-remove="${esc(a)}" aria-label="Remove the ${esc(axisLabel(a))} row">×</button>` : ''}</span>`).join('');
+    // 왼쪽이 머리글 맨 윗줄이다. ‹ › 로 한 칸씩 옮기고, 끌어서 옮길 수도 있다
+    const n = state.axes.length;
+    const mv = (a, i, d) => `<button type="button" class="axis-mv" data-axis-move="${esc(a)}" data-dir="${d}"${i + d < 0 || i + d >= n ? ' disabled' : ''} aria-label="Move ${esc(axisLabel(a))} ${d < 0 ? 'earlier' : 'later'}">${d < 0 ? '‹' : '›'}</button>`;
+    // ▸ 는 뒤 이름표와 한 덩어리로 묶어 줄바꿈 때 줄 끝에 홀로 남지 않게 한다
+    const tags = state.axes.map((a, i) => `<span class="axis-item">${i ? '<span class="axis-sep">▸</span>' : ''}<span class="axis-tag" draggable="true" tabindex="0" data-axis="${esc(a)}" title="Use ‹ › or drag to change the order (or Alt+←/→)">${n > 1 ? mv(a, i, -1) : ''}<span class="axis-name">${esc(axisLabel(a))}</span>${n > 1 ? mv(a, i, 1) : ''}${n > 1 ? `<button type="button" class="axis-x" data-axis-remove="${esc(a)}" aria-label="Remove the ${esc(axisLabel(a))} row">×</button>` : ''}</span></span>`).join('');
     const add = rest.length ? `<span class="axis-add"><button type="button" class="axis-add-btn" data-axis-menu aria-expanded="${view.axisMenu ? 'true' : 'false'}" title="Add a header row">＋</button>${view.axisMenu ? `<span class="axis-menu">${rest.map((a) => `<button type="button" data-axis-add="${esc(a.id)}">${esc(a.label)}</button>`).join('')}</span>` : ''}</span>` : '';
     return `<div class="axis-tags">${tags}${add}</div>`;
   }
@@ -906,6 +910,15 @@
   // ---------- interactions ----------
   $('#table').addEventListener('click', (e) => {
     if (e.target.closest('[data-avg-panel]')) { view.avgPanel = !view.avgPanel; render(); return; }
+    const mvb = e.target.closest('[data-axis-move]');
+    if (mvb) {
+      const i = state.axes.indexOf(mvb.dataset.axisMove), j = i + Number(mvb.dataset.dir);
+      if (j < 0 || j >= state.axes.length) return;
+      const axes = [...state.axes];
+      [axes[i], axes[j]] = [axes[j], axes[i]];
+      setAxes(axes);
+      return;
+    }
     const rm = e.target.closest('[data-axis-remove]');
     if (rm) { setAxes(state.axes.filter((a) => a !== rm.dataset.axisRemove)); return; }
     const add = e.target.closest('[data-axis-add]');
@@ -993,7 +1006,7 @@
     e.preventDefault();
     const r = t.getBoundingClientRect();
     const rest = state.axes.filter((a) => a !== dragAxis);
-    const at = rest.indexOf(t.dataset.axis) + (e.clientY > r.top + r.height / 2 ? 1 : 0);
+    const at = rest.indexOf(t.dataset.axis) + (e.clientX > r.left + r.width / 2 ? 1 : 0);
     rest.splice(at, 0, dragAxis);
     dragAxis = null;
     setAxes(rest);
@@ -1001,9 +1014,10 @@
   $('#table').addEventListener('dragend', () => { dragAxis = null; });
   $('#table').addEventListener('keydown', (e) => {
     const t = e.target.closest('.axis-tag');
-    if (!t || !e.altKey || (e.key !== 'ArrowUp' && e.key !== 'ArrowDown')) return;
+    const back = e.key === 'ArrowLeft' || e.key === 'ArrowUp', fwd = e.key === 'ArrowRight' || e.key === 'ArrowDown';
+    if (!t || !e.altKey || !(back || fwd)) return;
     e.preventDefault();
-    const i = state.axes.indexOf(t.dataset.axis), j = i + (e.key === 'ArrowUp' ? -1 : 1);
+    const i = state.axes.indexOf(t.dataset.axis), j = i + (back ? -1 : 1);
     if (j < 0 || j >= state.axes.length) return;
     const axes = [...state.axes];
     [axes[i], axes[j]] = [axes[j], axes[i]];
@@ -1074,12 +1088,6 @@
     $('#bench-list').innerHTML = '<h2>Benchmarks</h2><p class="lb-help">Click a benchmark to see how it is run and scored.</p>' + groups.filter(([, bs]) => bs.length).map(([name, bs]) =>
       `<h3 class="lb-bench-group">${name} <span class="muted">${bs.length}</span></h3><div class="lb-bench-grid">${bs.map(item).join('')}</div>`).join('');
   }
-
-  $('#collab-toggle').addEventListener('click', (e) => {
-    const open = $('#collab').hidden;
-    $('#collab').hidden = !open;
-    e.currentTarget.setAttribute('aria-expanded', String(open));
-  });
 
   // ?data=sample loads placeholder results that cover every reasoning setting
   const RESULTS = new URLSearchParams(location.search).get('data') === 'sample' ? 'data/results.sample.json' : 'data/results.json';
