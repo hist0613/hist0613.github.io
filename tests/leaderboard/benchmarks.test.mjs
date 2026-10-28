@@ -23,6 +23,8 @@ test('slice false marks exactly the re-scored subtasks', () => {
   assert.deepEqual(marked, [
     'ifeval/inst_level_loose_acc', 'ifeval/inst_level_strict_acc', 'ifeval/prompt_level_loose_acc', 'ifeval/prompt_level_strict_acc',
     'k_mmbench/acc_vanilla', 'locomo/locomo_adversarial',
+    // MIH-Bench: 같은 27,660문항을 충돌 수준 k 와 층 짝으로 두 번 나눈 것이라 층 짝 쪽은 묶음 평균에 넣지 않는다
+    'mih/mih_history_vs_tool', 'mih/mih_system_vs_history', 'mih/mih_system_vs_tool', 'mih/mih_system_vs_user', 'mih/mih_user_vs_history', 'mih/mih_user_vs_tool',
   ]);
 });
 
@@ -43,4 +45,12 @@ test('subject-split benchmarks give every subtask a domain', () => {
     const b = META.benchmarks.find((x) => x.id === id);
     for (const s of b.subtasks) assert.ok(s.tags?.domain?.length || b.tags?.domain?.length, `${id}/${s.id}`);
   }
+});
+
+test('MIH-Bench splits 27,660 items by conflict level and by layer pair', () => {
+  const m = META.benchmarks.find((b) => b.id === 'mih');
+  assert.equal(m.n_items, 27660);
+  const k = m.subtasks.filter((x) => x.slice !== false);
+  assert.deepEqual(k.map((x) => x.id), ['mih_k0', 'mih_k1', 'mih_k2', 'mih_k3', 'mih_k4']);
+  assert.equal(k.reduce((a, x) => a + x.n_items, 0), 27660);
 });
