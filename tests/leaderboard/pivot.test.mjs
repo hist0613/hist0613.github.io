@@ -53,9 +53,10 @@ test('benchmark node shows official score', () => {
 test('group is macro of visible children', () => {
   const tree = P.buildTree(P.cells(META), ['domain', 'benchmark'], ALL_OPEN);
   const stem = find(tree, 'STEM');
-  // STEM ▸ (Chemistry ▸ A,B,I / Biology ▸ B): Chemistry = mean(A 0.7, B 0.5, I 0.2), Biology = 0.5
-  close(P.nodeValue(find(stem.children, 'Chemistry'), ROW, 'score', {}).value, (0.7 + 0.5 + 0.2) / 3);
-  close(P.nodeValue(stem, ROW, 'score', {}).value, ((0.7 + 0.5 + 0.2) / 3 + 0.5) / 2);
+  // Chemistry ▸ A 는 A 의 chemistry 칸(0.9)만 담으므로 공식 점수 0.7 이 아니다
+  close(P.nodeValue(find(stem.children, 'Chemistry'), ROW, 'score', {}).value, (0.9 + 0.5 + 0.2) / 3);
+  // STEM 은 STEM 안 benchmark 별 점수(A 0.9, B 0.5, I 0.2)의 평균. B 가 Chemistry·Biology 둘에 있어도 한 번
+  close(P.nodeValue(stem, ROW, 'score', {}).value, (0.9 + 0.5 + 0.2) / 3);
   const flat = P.buildTree(P.cells(META), ['domain'], ALL_OPEN);
   // Domain 한 줄이면 Chemistry 아래는 점수 칸 전체: a_chem 0.9, B 0.5, I 0.2
   close(P.nodeValue(find(find(flat, 'STEM').children, 'Chemistry'), ROW, 'score', {}).value, (0.9 + 0.5 + 0.2) / 3);
@@ -96,10 +97,10 @@ test('text-only cells: zero vs exclude', () => {
   const tree = P.buildTree(P.cells(META), ['domain', 'benchmark'], ALL_OPEN);
   const chem = find(find(tree, 'STEM').children, 'Chemistry');
   const zero = P.nodeValue(chem, TEXT_ROW, 'score', { textOnly: 'zero' });
-  close(zero.value, (0.7 + 0.5 + 0) / 3);
+  close(zero.value, (0.9 + 0.5 + 0) / 3);
   assert.equal(zero.partial, false);
   const excl = P.nodeValue(chem, TEXT_ROW, 'score', { textOnly: 'exclude' });
-  close(excl.value, (0.7 + 0.5) / 2);
+  close(excl.value, (0.9 + 0.5) / 2);
   assert.equal(excl.partial, false);
   const avg = P.average(TEXT_ROW, META, new Set(['A', 'I']), 'score', { textOnly: 'zero' });
   close(avg.value, 0.35);
@@ -161,4 +162,43 @@ test('zero fills alone do not make an average', () => {
   assert.equal(P.average(row, META, new Set(['A', 'I']), 'score', { textOnly: 'zero' }).value, null);
   // 이미지 benchmark 만 고르면 0점이 답이다
   close(P.average(row, META, new Set(['I']), 'score', { textOnly: 'zero' }).value, 0);
+});
+
+test('benchmark under a group shows only its slice', () => {
+  const chem = find(find(P.buildTree(P.cells(META), ['domain', 'benchmark'], ALL_OPEN), 'STEM').children, 'Chemistry');
+  const a = find(chem.children, 'Bench A');
+  close(P.nodeValue(a, ROW, 'score', {}).value, 0.9);
+  assert.equal(P.isOfficial(a), false);
+  assert.equal(P.nodeValue(a, ROW, 'time', {}).value, null);
+  const whole = P.buildTree(P.cells(META), ['benchmark', 'subtask'], new Set())[0];
+  assert.equal(P.isOfficial(whole), true);
+});
+
+test('domain alone averages every score cell in the group', () => {
+  const stem = find(P.buildTree(P.cells(META), ['domain'], ALL_OPEN), 'STEM');
+  close(P.nodeValue(stem, ROW, 'score', {}).value, (0.9 + 0.5 + 0.2) / 3);
+});
+
+test('benchmark whose subtasks all re-score stays in other layouts', () => {
+  const meta = { benchmarks: [
+    { id: 'F', name: 'Bench F', n_items: 10, tags: { task_type: ['Instruction following'] },
+      subtasks: [{ id: 'f1', name: 'strict', slice: false }, { id: 'f2', name: 'loose', slice: false }] },
+  ] };
+  const row = { meta: {}, runs: { F: { score: 0.8, subtasks: { f1: 0.8, f2: 0.9 } } } };
+  const t = P.buildTree(P.cells(meta), ['task_type', 'benchmark'], ALL_OPEN);
+  const f = find(find(t, 'Instruction following').children, 'Bench F');
+  close(P.nodeValue(f, row, 'score', {}).value, 0.8);
+  // 기본 화면에서는 subtask 4칸 그대로, 따로 한 칸이 더 생기지 않는다
+  const d = P.buildTree(P.cells(meta), ['benchmark', 'subtask'], ALL_OPEN)[0];
+  assert.deepEqual(d.children.map((n) => n.label), ['strict', 'loose']);
+});
+
+test('micro counts a multi-valued cell once', () => {
+  const meta = { benchmarks: [
+    { id: 'G', name: 'G', metric: 'acc', n_items: 100, tags: { domain: ['STEM/Physics', 'STEM/Chemistry'] }, subtasks: [] },
+    { id: 'H', name: 'H', metric: 'acc', n_items: 100, tags: { domain: ['STEM/Physics'] }, subtasks: [] },
+  ] };
+  const row = { meta: {}, runs: { G: { score: 1 }, H: { score: 0 } } };
+  const stem = find(P.buildTree(P.cells(meta), ['domain'], ALL_OPEN), 'STEM');
+  close(P.nodeValue(stem, row, 'score', {}).micro, 0.5);
 });

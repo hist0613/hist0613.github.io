@@ -110,7 +110,6 @@
   }
 
   // ---------- stats ----------
-  // 이미지 benchmark 는 이미지를 받는 모델만 돌아서, 모든 모델이 같은 집합으로 비교되도록 Average·Avg rank·Total 에서 뺀다
 
   // 좁은 화면(휴대폰)에서는 점수 칸이 보이도록 Avg rank 열을 그리지 않는다
   const NARROW = matchMedia('(max-width: 720px)');
@@ -252,6 +251,8 @@
   // ---------- render ----------
   function render() {
     view.cols = columns();
+    // 줄 구성을 바꿔 정렬하던 열이 없어지면 Average 순으로 돌아간다
+    if (!['avg', 'rank', 'params', 'model'].includes(state.sort.key) && !view.cols.some((c) => c.id === state.sort.key)) state.sort = { key: 'avg', dir: -1 };
     const rows = ROWS.filter(matches);
     rowSummary(rows);
 
@@ -348,7 +349,7 @@
     const pts = rows.map((r) => costPoint(r, benchId, axis)).filter(Boolean);
     const note = [];
     if (benchId === '__avg') {
-      note.push(`The average uses the ${view.avgSet.length} text benchmarks that at least 80% of the rows in view have finished (${view.avgSet.map((b) => b.name).join(', ')}), and only rows that have all of them. Image benchmarks are left out because only models that take images run them.`);
+      note.push(`The average uses the ${view.avgSet.length} benchmarks checked for Average that at least 80% of the rows in view have finished (${view.avgSet.map((b) => b.name).join(', ')}), and only rows that have all of them.`);
     }
     if (benchId !== '__avg') {
       const bm = META.benchmarks.find((x) => x.id === benchId);
@@ -547,8 +548,11 @@
     if (showRank()) last += `<th class="ch" data-sort="rank" data-col="__rank"><span class="ch-name">Avg rank ${sortArrow('rank')}</span><svg width="70" height="16"></svg></th>`;
     const measure = { score: 'Score', time: 'Time', tokens: 'Tokens / item' }[state.mode];
     for (const c of view.cols) {
-      const isBench = c.node.axis === 'benchmark' || (c.kind === 'leaf' && !c.sub);
-      const name = c.kind === 'leaf' ? (c.sub ? c.sub.name : measure)
+      const isBench = P.isOfficial(c.node) || (c.kind === 'leaf' && !c.sub);
+      // Benchmark 줄이 위에 없으면 leaf 이름만으로는 어느 benchmark 인지 모르므로 benchmark 이름을 붙인다
+      const benchAbove = c.path.some((n) => n.axis === 'benchmark');
+      const leafName = () => (c.sub ? (benchAbove ? c.sub.name : `${c.bench.name} · ${c.sub.name}`) : benchAbove ? measure : c.bench.name);
+      const name = c.kind === 'leaf' ? leafName()
         : c.kind === 'sum' ? (isBench ? 'Overall' : 'macro') : isBench ? measure : 'macro';
       const grp = c.sub?.group ? `<span class="ch-group">${esc(c.sub.group)}</span>` : '';
       last += `<th class="ch${c.kind === 'leaf' && c.sub ? ' sub' : ' first'}" data-sort="${esc(c.id)}" data-col="${esc(c.id)}">${grp}<span class="ch-name">${esc(name)} ${sortArrow(c.id)}</span>${histogram(view.colStats[c.id])}</th>`;
@@ -590,7 +594,7 @@
         if (pend) text = `<span class="pend ${pend}">${pend === 'running' ? 'running' : 'queued'}</span>`;
         else if (res.textOnly && v != null) { text = `${fmt(v)} <span class="noimg">(text only)</span>`; title = 'This model does not take images, so this benchmark counts as 0'; }
         else if (res.excluded) { text = '<span class="noimg">text only</span>'; title = 'This model does not take images; left out of averages'; }
-        else if (v == null && state.mode === 'time' && !c.bench) { text = ''; title = 'Eval time is measured per benchmark only'; }
+        else if (v == null && state.mode === 'time' && !(c.node.leaf ? !c.node.leaf.sub : P.isOfficial(c.node))) { text = ''; title = 'Eval time is measured per benchmark only'; }
         else {
           text = fmt(v) + (v != null && res.partial ? '*' : '');
           if (v != null && res.partial) title = `Average over ${res.m} of ${res.n}`;
@@ -742,7 +746,8 @@
     let html = `<b>${esc(c.label || '')}</b>`;
     if (th.classList.contains('bh')) {
       if (c.node?.axis === 'benchmark' && c.bench) {
-        return html + `<br>${esc(c.bench.description)}<br>${c.bench.n_items.toLocaleString()} items · ${esc(c.bench.metric_label)}<br>The benchmark column shows its official score.`;
+        const whole = P.isOfficial(c.node) ? 'The benchmark column shows its official score.' : `This column holds only the ${esc(c.bench.name)} subtasks in this group, so it shows their macro average.`;
+        return html + `<br>${esc(c.bench.description)}<br>${c.bench.n_items.toLocaleString()} items · ${esc(c.bench.metric_label)}<br>${whole}`;
       }
       if (c.node) return html + `<br>${esc(axisLabel(c.node.axis))}: macro average of the columns inside.`;
       return html;

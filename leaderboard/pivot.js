@@ -17,6 +17,8 @@
         for (const s of b.subtasks) {
           out.push({ id: `${b.id}::${s.id}`, bench: b, sub: s, slice: s.slice !== false, tags: { ...base, ...(s.tags || {}), subtask: [`${b.id}::${s.id}`] } });
         }
+        // subtask 가 모두 같은 문항을 다시 채점한 것(IFEval 등)이면 다른 줄 구성에서는 benchmark 자체를 한 칸으로 쓴다
+        if (b.subtasks.every((s) => s.slice === false)) out.push({ id: b.id, bench: b, sub: null, slice: true, whole: true, tags: base });
       } else {
         out.push({ id: b.id, bench: b, sub: null, slice: true, tags: base });
       }
@@ -76,11 +78,15 @@
         const deeper = HIERARCHICAL.has(axis) && v !== NONE && sub.some((c) => valuesAt(c, axis, v.split('/')).length);
         const nextPath = [...path, axis];
         let children;
+        let calc = null;
         if (deeper) {
           children = group(sub, depth, key, nextPath, v.split('/'));
           // 더 깊은 단계 값이 없는 칸(예: "STEM" 만 단 칸)은 그 단계에서 바로 칸으로 둔다
           const flat = sub.filter((c) => !valuesAt(c, axis, v.split('/')).length);
           if (flat.length) children = children.concat(group(flat, depth + 1, key, nextPath, []));
+          // 값은 아래 단계(Chemistry 등)가 아니라 다음 줄 기준으로 낸다: "Domain ▸ Benchmark"면 STEM 안 benchmark 별 점수의 평균
+          const next = axes[depth + 1];
+          calc = group(sub.filter((c) => allowed(c, next ? [...nextPath, next] : nextPath)), depth + 1, key, nextPath, []);
         } else {
           const next = axes[depth + 1];
           const kept = sub.filter((c) => allowed(c, next ? [...nextPath, next] : nextPath));
@@ -92,11 +98,13 @@
         }
         // subtask 가 없는 benchmark 는 그 자신 한 칸뿐이라 펼칠 것이 없다
         const expandable = !(axis === 'benchmark' && children.length === 1 && children[0].leaf && !children[0].leaf.sub);
-        return { key, axis, value: v, label: label(axis, v, sub[0]), depth: path.length, children, leaf: null, open: expandable && open.has(key), expandable };
+        return { key, axis, value: v, label: label(axis, v, sub[0]), depth: path.length, children, calc, leaf: null, open: expandable && open.has(key), expandable };
       // 아래 줄 때문에 칸이 하나도 남지 않은 묶음(예: slice:false subtask 아래 Domain 줄)은 뺀다
       }).filter((n) => n.leaf || n.children.length).concat(leaves);
     }
-    return group(cellList.filter((c) => c.slice || axes[0] === 'benchmark'), 0, '', [], []);
+    // 같은 문항을 다시 채점한 subtask 는 Benchmark 가 맨 위이고 Benchmark·Subtask 줄뿐일 때만 보이고, 그 밖에는 benchmark 한 칸(whole)이 대신한다
+    const alt = axes[0] === 'benchmark' && axes.every((a) => a === 'benchmark' || a === 'subtask');
+    return group(cellList.filter((c) => (c.whole ? !alt : c.slice || alt)), 0, '', [], []);
   }
 
   // 이미지를 받지 못하는 모델의 이미지 benchmark 칸. opts.imageInput 이 없으면 row.meta.image_input 을 쓴다
@@ -128,7 +136,18 @@
     return { value: s && !Array.isArray(s) ? s[cell.sub.id] ?? null : null };
   }
 
-  const leavesOf = (node) => (node.leaf ? [node.leaf] : node.children.flatMap(leavesOf));
+  // 여러 값을 단 칸은 한 묶음 아래 여러 번 나올 수 있어 한 번씩만 센다
+  const leavesOf = (node) => [...new Map((function all(n) { return n.leaf ? [n.leaf] : n.children.flatMap(all); })(node).map((c) => [c.id, c])).values()];
+
+  // benchmark 칸이 그 benchmark 의 칸을 모두 담고 있으면 공식 점수를 보인다. 일부(예: Chemistry 아래 MMLU-Pro)면 그 칸들의 평균이다
+  function isOfficial(node) {
+    if (node.axis !== 'benchmark') return false;
+    const ls = leavesOf(node);
+    if (ls.some((c) => !c.sub)) return true;
+    const b = ls[0].bench;
+    const ids = new Set(ls.map((c) => c.id));
+    return b.subtasks.filter((s) => s.slice !== false).every((s) => ids.has(`${b.id}::${s.id}`));
+  }
 
   function micro(node, row, mode, opts) {
     if (mode !== 'score') return null;
@@ -156,12 +175,12 @@
 
   function nodeValue(node, row, mode, opts = {}) {
     if (node.leaf) return { m: 1, n: 1, partial: false, micro: null, ...leafValue(node.leaf, row, mode, opts) };
-    if (node.axis === 'benchmark') {
+    if (isOfficial(node)) {
       // benchmark 칸은 subtask 평균이 아니라 공식 점수다(MMLU-Pro 전체 정답률, BFCL 가중 overall 등)
       return { m: 1, n: 1, partial: false, micro: null, ...benchValue(leavesOf(node)[0].bench, row, mode, opts) };
     }
     if (mode === 'time') return { value: null, partial: false, m: 0, n: 0, micro: null };
-    const r = mean(node.children.map((c) => nodeValue(c, row, mode, opts)));
+    const r = mean((node.calc || node.children).map((c) => nodeValue(c, row, mode, opts)));
     return { ...r, micro: micro(node, row, mode, opts) };
   }
 
@@ -172,5 +191,5 @@
     return mean(bs.map((b) => benchValue(b, row, mode, opts)));
   }
 
-  globalThis.LBPivot = { cells, buildTree, nodeValue, average, NONE };
+  globalThis.LBPivot = { cells, buildTree, nodeValue, average, isOfficial, NONE };
 })();
