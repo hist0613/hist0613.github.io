@@ -425,10 +425,10 @@ tr.child td.fz { background: #fcfcfd; }
 .lb-collab p { margin: 0 0 8px; color: #374151; }
 .lb-collab summary { cursor: pointer; list-style: none; color: #111827; font-weight: 400; }
 .lb-collab summary::-webkit-details-marker { display: none; }
-.lb-collab summary::before { content: "▸"; display: inline-block; width: 14px; color: #6b7280; font-size: 11px; transition: transform .15s; }
+/* 접고 펼 때 제목이 움직이지 않도록 ▸ 는 고정 폭 칸 가운데에서 돌고, 상자 여백은 그대로 둔다 */
+.lb-collab summary::before { content: "▸"; display: inline-block; width: 14px; margin-right: 4px; text-align: center; color: #6b7280; font-size: 11px; transition: transform .15s; }
 .lb-collab[open] summary::before { transform: rotate(90deg); }
 .lb-collab[open] summary { margin-bottom: 4px; }
-.lb-collab:not([open]) { padding-top: 8px; padding-bottom: 8px; }
 .lb-collab ul { margin: 0; padding-left: 18px; color: #374151; }
 .lb-collab li { margin: 2px 0; }
 .lb-table thead th.c-model { overflow: visible; }
