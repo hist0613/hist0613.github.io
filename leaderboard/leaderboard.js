@@ -1089,6 +1089,13 @@
       `<h3 class="lb-bench-group">${name} <span class="muted">${bs.length}</span></h3><div class="lb-bench-grid">${bs.map(item).join('')}</div>`).join('');
   }
 
+  // How to contribute 는 기본으로 펼쳐 두고, 접으면 이 브라우저에서는 다음에도 접힌 채로 연다
+  const contribute = $('#contribute');
+  try { if (localStorage.getItem('lb-contribute') === 'closed') contribute.open = false; } catch (e) { /* 저장소를 못 쓰면 펼친 채로 둔다 */ }
+  contribute.addEventListener('toggle', () => {
+    try { localStorage.setItem('lb-contribute', contribute.open ? 'open' : 'closed'); } catch (e) { /* 무시 */ }
+  });
+
   // ?data=sample loads placeholder results that cover every reasoning setting
   const RESULTS = new URLSearchParams(location.search).get('data') === 'sample' ? 'data/results.sample.json' : 'data/results.json';
   Promise.all([fetch('data/benchmarks.json').then((r) => r.json()), fetch(RESULTS).then((r) => r.json())])

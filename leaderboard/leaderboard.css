@@ -14,7 +14,7 @@
   gap: 24px;
 }
 .lb-head h1 { margin: 0 0 6px; }
-.lb-lede { margin: 0; max-width: 760px; color: #4b5563; }
+.lb-lede { margin: 0; color: #4b5563; }
 
 
 .lb-sample {
@@ -64,6 +64,8 @@
   cursor: pointer;
 }
 .lb-seg { display: flex; flex-wrap: wrap; row-gap: 4px; }
+/* 다른 묶음처럼 이름 아래에 두고, 옆 Cells show 버튼과 높이를 맞춘다 */
+.lb-rows .lb-check { padding: 6px 0; border: 1px solid transparent; }
 .lb-seg label + label { border-left: 0; }
 .lb-seg label {
   margin: 0;
@@ -421,7 +423,12 @@ tr.child td.fz { background: #fcfcfd; }
 /* Collaboration note */
 .lb-collab { border: 1px solid #e5e7eb; border-left: 3px solid #035384; border-radius: 6px; padding: 14px 18px; background: #f9fafb; margin: 14px 0 10px; }
 .lb-collab p { margin: 0 0 8px; color: #374151; }
-.lb-collab-title { font-weight: 400; color: #111827 !important; margin-bottom: 4px !important; }
+.lb-collab summary { cursor: pointer; list-style: none; color: #111827; font-weight: 400; }
+.lb-collab summary::-webkit-details-marker { display: none; }
+.lb-collab summary::before { content: "▸"; display: inline-block; width: 14px; color: #6b7280; font-size: 11px; transition: transform .15s; }
+.lb-collab[open] summary::before { transform: rotate(90deg); }
+.lb-collab[open] summary { margin-bottom: 4px; }
+.lb-collab:not([open]) { padding-top: 8px; padding-bottom: 8px; }
 .lb-collab ul { margin: 0; padding-left: 18px; color: #374151; }
 .lb-collab li { margin: 2px 0; }
 .lb-table thead th.c-model { overflow: visible; }
