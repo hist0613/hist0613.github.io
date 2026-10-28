@@ -111,37 +111,46 @@
 
   // ---------- stats ----------
   // 이미지 benchmark 는 이미지를 받는 모델만 돌아서, 모든 모델이 같은 집합으로 비교되도록 Average·Avg rank·Total 에서 뺀다
-  const textBenchmarks = () => META.benchmarks.filter((b) => b.modality !== 'image');
 
   // 좁은 화면(휴대폰)에서는 점수 칸이 보이도록 Avg rank 열을 그리지 않는다
   const NARROW = matchMedia('(max-width: 720px)');
   const showRank = () => state.mode === 'score' && !NARROW.matches;
 
+  // Average 에 넣기로 체크한 benchmark
+  const checkedBenchmarks = () => META.benchmarks.filter((b) => state.avgChecked.has(b.id));
+  // 순위·Average 계산에 쓰는 benchmark 값(이미지 못 받는 모델은 state.textOnly 를 따른다)
+  const benchScore = (r, b) => {
+    const v = P.average(r, { benchmarks: [b] }, new Set([b.id]), 'score', { textOnly: state.textOnly });
+    return v.n ? v.value : undefined;  // undefined = 평균에서 뺀 칸
+  };
+
   function rowSummary(rows) {
-    const main = textBenchmarks().map((b) => ({ id: b.id, bench: b, kind: 'main' }));
+    const main = checkedBenchmarks().map((b) => ({ id: b.id, bench: b, kind: 'main' }));
     // rank of each row per benchmark (1 = best score). When settings are grouped, a row is ranked
     // against the other models' best setting, so ranks run from 1 to the number of models.
     const ranks = new Map(rows.map((r) => [r.key, []]));
     for (const c of main) {
-      const scored = rows.filter((r) => r.runs[c.id]?.score != null);
+      const scored = rows.filter((r) => benchScore(r, c.bench) != null);
       if (state.group) {
         const best = new Map();
-        for (const r of scored) best.set(r.model, Math.max(best.get(r.model) ?? -Infinity, r.runs[c.id].score));
+        for (const r of scored) best.set(r.model, Math.max(best.get(r.model) ?? -Infinity, benchScore(r, c.bench)));
         for (const r of scored) {
-          const v = r.runs[c.id].score;
+          const v = benchScore(r, c.bench);
           let rank = 1;
           for (const [m, b] of best) if (m !== r.model && b > v) rank++;
           ranks.get(r.key).push(rank);
         }
       } else {
-        scored.sort((a, b) => b.runs[c.id].score - a.runs[c.id].score).forEach((r, i) => ranks.get(r.key).push(i + 1));
+        scored.sort((a, b) => benchScore(b, c.bench) - benchScore(a, c.bench)).forEach((r, i) => ranks.get(r.key).push(i + 1));
       }
     }
     for (const r of rows) {
-      const scores = main.map((c) => r.runs[c.id]?.score).filter((v) => v != null);
       const secs = main.map((c) => r.runs[c.id]?.wall_seconds).filter((v) => v != null);
-      r.n = scores.length;
-      r.avg = scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : null;
+      // Average: 체크한 benchmark 공식 점수의 macro. m 개만 결과가 있으면 * (n 은 평균에서 뺀 칸을 빼고 센다)
+      const a = P.average(r, META, state.avgChecked, 'score', { textOnly: state.textOnly });
+      r.avg = a.value;
+      r.n = a.m;
+      r.nOf = a.n;
       const rk = ranks.get(r.key);
       r.avgRank = rk.length ? rk.reduce((a, b) => a + b, 0) / rk.length : null;
       r.total = secs.length ? secs.reduce((a, b) => a + b, 0) : null;
@@ -299,8 +308,8 @@
   // score and cost of one row for the chosen benchmark; the average only counts rows evaluated on every benchmark
   // Average 에 쓸 benchmark: 보이는 행의 80% 이상이 점수를 가진 것. benchmark 가 계속 늘어나므로 "전부 끝낸 행만"은 쓰지 않는다
   function avgBenchmarks(rows) {
-    const scored = rows.filter((r) => textBenchmarks().some((b) => r.runs[b.id]?.score != null));
-    return textBenchmarks().filter((b) => scored.length && scored.filter((r) => r.runs[b.id]?.score != null).length >= 0.8 * scored.length);
+    const scored = rows.filter((r) => checkedBenchmarks().some((b) => r.runs[b.id]?.score != null));
+    return checkedBenchmarks().filter((b) => scored.length && scored.filter((r) => r.runs[b.id]?.score != null).length >= 0.8 * scored.length);
   }
 
   function costPoint(r, benchId, axis) {
@@ -494,6 +503,17 @@
     return `<span class="bh-label">${name}${extra}</span>`;
   }
 
+  // Average 에 넣을 benchmark 와, 이미지를 못 받는 모델의 이미지 칸 처리
+  function avgPanel() {
+    const list = META.benchmarks.map((b) => `<label><input type="checkbox" data-avg-bench="${esc(b.id)}"${state.avgChecked.has(b.id) ? ' checked' : ''}>${esc(b.name)}${imageBadge(b)}</label>`).join('');
+    const radio = (v, t) => `<label><input type="radio" name="avg-textonly" value="${v}"${state.textOnly === v ? ' checked' : ''}>${t}</label>`;
+    return `<div class="avg-panel" role="dialog" aria-label="Benchmarks in the average">
+      <div class="avg-quick"><button type="button" data-avg-set="all">All</button><button type="button" data-avg-set="text">Text only</button><button type="button" data-avg-set="none">None</button></div>
+      <div class="avg-list">${list}</div>
+      <div class="avg-textonly"><span>Models that cannot take images:</span>${radio('zero', 'Count as 0')}${radio('exclude', 'Leave out')}</div>
+    </div>`;
+  }
+
   function renderHead() {
     const statLabel = { score: 'Average', time: 'Total time', tokens: 'Per item' }[state.mode];
     // 열마다 머리글 줄에 보일 묶음들. leaf 는 맨 아래 줄에 이름이 나오므로 빼고 센다
@@ -522,7 +542,8 @@
         i += span - 1;
       }
     }
-    let last = `<tr><th class="ch first" data-sort="avg" data-col="__avg"><span class="ch-name">${statLabel} ${sortArrow('avg')}</span>${histogram(view.colStats.__avg)}</th>`;
+    const pick = state.mode === 'score' ? `<button type="button" class="avg-pick" data-avg-panel aria-expanded="${view.avgPanel ? 'true' : 'false'}" title="Choose the benchmarks in the average">macro of ${state.avgChecked.size} benchmark${state.avgChecked.size === 1 ? '' : 's'} ▾</button>${view.avgPanel ? avgPanel() : ''}` : '';
+    let last = `<tr><th class="ch first c-avg" data-sort="avg" data-col="__avg"><span class="ch-name">${statLabel} ${sortArrow('avg')}</span>${histogram(view.colStats.__avg)}${pick}</th>`;
     if (showRank()) last += `<th class="ch" data-sort="rank" data-col="__rank"><span class="ch-name">Avg rank ${sortArrow('rank')}</span><svg width="70" height="16"></svg></th>`;
     const measure = { score: 'Score', time: 'Time', tokens: 'Tokens / item' }[state.mode];
     for (const c of view.cols) {
@@ -551,8 +572,7 @@
       }
       const prec = precLabel(r.meta);
       const summary = summaryValue(r);
-      const nText = textBenchmarks().length;
-      const partial = state.mode === 'score' && r.n < nText ? ` title="Average over ${r.n} of ${nText} text benchmarks"` : '';
+      const partial = state.mode === 'score' && r.avg != null && r.n < r.nOf ? ` title="Average over ${r.n} of ${r.nOf} benchmarks"` : '';
       html += `<tr class="${line.child ? 'child' : ''}" data-row="${esc(r.key)}">
         <td class="fz c-rank">${line.rank ?? ''}</td>
         <td class="fz c-model"><button type="button" class="m-link" data-detail="${esc(r.key)}" title="Details of ${esc(r.model)}">${name}</button>${prec ? `<span class="prec" title="Weights in ${esc(prec)}">${esc(prec)}</span>` : ''}<span class="m-sub"><span class="m-setting">${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${more}</span></td>
@@ -757,6 +777,7 @@
   }
 
   $('#table').addEventListener('mousemove', (e) => {
+    if (e.target.closest('.avg-panel')) { hideTip(); return; }
     const th = e.target.closest('th[data-col]');
     const td = e.target.closest('td[data-col]');
     if (th) showTip(tipForHeader(th), e.clientX, e.clientY);
@@ -767,6 +788,15 @@
 
   // ---------- interactions ----------
   $('#table').addEventListener('click', (e) => {
+    if (e.target.closest('[data-avg-panel]')) { view.avgPanel = !view.avgPanel; render(); return; }
+    const set = e.target.closest('[data-avg-set]');
+    if (set) {
+      const v = set.dataset.avgSet;
+      state.avgChecked = new Set(META.benchmarks.filter((b) => v === 'all' || (v === 'text' && b.modality !== 'image')).map((b) => b.id));
+      render();
+      return;
+    }
+    if (e.target.closest('.avg-panel')) return;
     const rm = e.target.closest('[data-axis-remove]');
     if (rm) { setAxes(state.axes.filter((a) => a !== rm.dataset.axisRemove)); return; }
     const add = e.target.closest('[data-axis-add]');
@@ -805,6 +835,20 @@
       else state.sort = { key, dir: key === 'model' || key === 'rank' || (state.mode !== 'score' && key !== 'params') ? 1 : -1 };
       render();
     }
+  });
+
+  // 패널 밖을 누르거나 Esc 를 누르면 Average 패널을 닫는다
+  document.addEventListener('click', (e) => {
+    if (view.avgPanel && !e.target.closest('.avg-panel, [data-avg-panel]')) { view.avgPanel = false; render(); }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && view.avgPanel) { view.avgPanel = false; render(); }
+  });
+
+  $('#table').addEventListener('change', (e) => {
+    const cb = e.target.closest('[data-avg-bench]');
+    if (cb) { cb.checked ? state.avgChecked.add(cb.dataset.avgBench) : state.avgChecked.delete(cb.dataset.avgBench); render(); return; }
+    if (e.target.name === 'avg-textonly') { state.textOnly = e.target.value; render(); }
   });
 
   // 머리글 줄 순서를 바꾼다. 줄이 바뀌면 묶음 key 가 달라지므로 펼친 상태는 비운다
