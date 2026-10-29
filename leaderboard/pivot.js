@@ -108,19 +108,32 @@
     return group(cellList.filter((c) => (c.whole ? !alt : c.slice || alt)), 0, '', [], []);
   }
 
-  // 이미지를 받지 못하는 모델의 이미지 benchmark 칸. opts.imageInput 이 없으면 row.meta.image_input 을 쓴다
-  function isTextOnly(bench, row, run, opts) {
+  // 모델이 받을 수 없는 칸이면 그 이유. 이미지를 못 받는 모델의 이미지 benchmark 는 모델 정보로 알고(opts.imageInput 이 없으면
+  // row.meta.image_input), 그 밖의 이유(tool_calling, context_length 등)는 평가 쪽이 run 마다 남긴 row.unsupported 에서 온다
+  function cannotReason(bench, row, run, opts) {
+    if (run && run.score != null) return null;
     const input = opts.imageInput ?? row.meta?.image_input;
-    return bench.modality === 'image' && input === false && (!run || run.score == null);
+    if (bench.modality === 'image' && input === false) return 'image_input';
+    return row.unsupported?.[bench.id] || null;
+  }
+
+  // 모델이 아니라 리더보드가 아직 그 설정(thinking 등)으로 돌리지 않는 benchmark
+  const notYet = (bench, row) => Boolean(bench.settings && row.setting && !bench.settings.includes(row.setting));
+
+  // 받을 수 없는 칸은 opts.cannot 에 따라 0점으로 세거나(zero) 평균에서 뺀다(exclude). 아직 안 돌리는 칸은 늘 뺀다
+  function unavailable(bench, row, run, mode, opts) {
+    if (notYet(bench, row) && !(run && run.score != null)) return { excluded: true, notYet: true };
+    const reason = cannotReason(bench, row, run, opts);
+    if (!reason) return null;
+    if (opts.cannot === 'exclude') return { excluded: true, reason };
+    return { value: mode === 'score' ? 0 : null, cannot: true, reason };
   }
 
   // benchmark 하나의 공식 값(점수·문항당 토큰·시간)
   function benchValue(bench, row, mode, opts) {
     const run = row.runs[bench.id];
-    if (isTextOnly(bench, row, run, opts)) {
-      if (opts.textOnly === 'exclude') return { excluded: true };
-      return { value: mode === 'score' ? 0 : null, textOnly: true };
-    }
+    const u = unavailable(bench, row, run, mode, opts);
+    if (u) return u;
     if (!run) return { value: null };
     if (mode === 'time') return { value: run.wall_seconds ?? null };
     if (mode === 'tokens') return { value: run.output_tokens ? run.output_tokens / bench.n_items : null };
@@ -130,7 +143,8 @@
   function leafValue(cell, row, mode, opts) {
     if (!cell.sub) return benchValue(cell.bench, row, mode, opts);
     const run = row.runs[cell.bench.id];
-    if (isTextOnly(cell.bench, row, run, opts)) return opts.textOnly === 'exclude' ? { excluded: true } : { value: mode === 'score' ? 0 : null, textOnly: true };
+    const u = unavailable(cell.bench, row, run, mode, opts);
+    if (u) return u;
     if (!run || mode === 'time') return { value: null };
     if (mode === 'tokens') return { value: run.subtask_tokens?.[cell.sub.id] ?? null };
     const s = run.subtasks;
@@ -179,7 +193,7 @@
     const vals = kept.filter((r) => r.value != null);
     const partial = vals.length < kept.length || vals.some((r) => r.partial);
     // 실제 결과 없이 이미지 칸 0점만 있고 나머지가 비었으면 숫자를 내지 않는다
-    if (partial && vals.length && vals.every((r) => r.textOnly)) return { value: null, partial, m: vals.length, n: kept.length };
+    if (partial && vals.length && vals.every((r) => r.cannot)) return { value: null, partial, m: vals.length, n: kept.length };
     return { value: vals.length ? vals.reduce((a, r) => a + r.value, 0) / vals.length : null, partial, m: vals.length, n: kept.length };
   }
 

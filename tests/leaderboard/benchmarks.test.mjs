@@ -54,3 +54,10 @@ test('MIH-Bench splits 27,660 items by conflict level and by layer pair', () => 
   assert.deepEqual(k.map((x) => x.id), ['mih_k0', 'mih_k1', 'mih_k2', 'mih_k3', 'mih_k4']);
   assert.equal(k.reduce((a, x) => a + x.n_items, 0), 27660);
 });
+
+test('benchmarks run with their official code list the settings they support', () => {
+  const limited = META.benchmarks.filter((b) => b.settings).map((b) => b.id).sort();
+  assert.deepEqual(limited, ['bfcl', 'chembench', 'mih']);
+  const ids = META.settings.map((s) => s.id);
+  for (const b of META.benchmarks.filter((x) => x.settings)) assert.ok(b.settings.every((s) => ids.includes(s)), b.id);
+});

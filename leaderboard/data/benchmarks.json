@@ -835,6 +835,9 @@
      }
     }
    ],
+   "settings": [
+    "think-off"
+   ],
    "tags": {
     "language": [
      "English"
@@ -900,6 +903,9 @@
      "name": "Memory",
      "n_items": 465
     }
+   ],
+   "settings": [
+    "think-off"
    ],
    "tags": {
     "language": [
@@ -999,6 +1005,9 @@
    "paper_url": "https://aclanthology.org/2026.emnlp-main.2261/",
    "protocol_url": "https://github.com/Yerin-Hwang49/MIH-release",
    "protocol_name": "MIH-Bench",
+   "settings": [
+    "think-off"
+   ],
    "tags": {
     "language": [
      "English"

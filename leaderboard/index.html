@@ -75,6 +75,13 @@
     </p>
 
     <div class="lb-scrollbar" id="topbar" aria-hidden="true"><div id="topbar-inner"></div></div>
+    <ul class="lb-legend" aria-label="What the cells mean">
+      <li><span class="lg st-queued"><span class="pend queued">queued</span></span> waiting to be evaluated</li>
+      <li><span class="lg st-running"><span class="pend running">running</span></span> being evaluated now</li>
+      <li><span class="lg st-cannot"><span class="why">no image input</span></span> the model cannot take this benchmark; the cell names the reason, such as no image input or no tool calling</li>
+      <li><span class="lg st-notyet"><span class="why">not supported yet</span></span> this leaderboard does not run the benchmark with this setting yet</li>
+      <li><span class="lg">–</span> no result</li>
+    </ul>
     <div class="lb-scrollnav">
       <button type="button" id="prev-bench" title="Previous benchmark (Shift + ←)">◀ Previous benchmark</button>
       <span class="lb-scrollhint">Scroll sideways with ← → while the table is focused, Shift + wheel, or the wheel over the header.</span>
@@ -108,7 +115,7 @@
       <li><b>Reasoning</b> records whether the chat template's thinking mode was on, and at which effort when the model supports it. With thinking on, every benchmark allows up to 30,720 generated tokens (LoCoMo 4,096) in a 32K context, and only the text after the thinking section is scored. A response whose thinking does not finish within that limit counts as unanswered.</li>
       <li>Benchmarks marked <span class="modality">image</span> come with images and are run only on models that take images,
         with every image scaled down to at most 2,048 pixels on the longer side.</li>
-      <li><b>Average</b> is the macro average of the official scores of the checked benchmarks, and Avg rank uses the same benchmarks. All benchmarks are checked by default, image benchmarks included; a model that cannot take images counts as 0 on them unless you choose to leave them out. Use the button under Average to change either.</li>
+      <li><b>Average</b> is the macro average of the official scores of the checked benchmarks, and Avg rank uses the same benchmarks. All benchmarks are checked by default, image benchmarks included. A benchmark a model cannot take (for example, images for a text-only model) counts as 0 unless you choose to leave it out, and a benchmark this leaderboard does not run with a setting yet is always left out. Use the button under Average to change either.</li>
       <li>Columns can be regrouped by benchmark properties such as language, task type, or domain with the tags above the Model column. A group shows the macro average of the columns under it (and the micro average, weighted by items, in its tooltip when every column is an accuracy); a value marked * is missing some columns.</li>
       <li>Eval time is the wall-clock time of one benchmark on the listed GPU, including model loading.</li>
       <li>Output tokens are the generated tokens per item, counted with the model's own tokenizer and including any thinking text.</li>
