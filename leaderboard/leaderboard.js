@@ -721,13 +721,16 @@
         let text;
         let title = '';
         let cls = '';
+        let tag = '';  // 툴팁 맨 위에 눈에 띄게 보일 짧은 이름(context too short 등)
         if (pend) { text = `<span class="pend ${pend}">${pend === 'running' ? 'running' : 'queued'}</span>`; cls = ` st-${pend}`; }
-        else if (res.notYet) { text = '<span class="why">not supported yet</span>'; title = `This leaderboard does not run ${c.bench ? c.bench.name : 'this benchmark'} with ${SETTING_LABEL[r.setting] || r.setting} yet. Left out of averages.`; cls = ' st-notyet'; }
+        else if (res.notYet) { text = '<span class="why">not supported yet</span>'; tag = 'not supported yet'; title = `This leaderboard does not run ${c.bench ? c.bench.name : 'this benchmark'} with ${SETTING_LABEL[r.setting] || r.setting} yet. Left out of averages.`; cls = ' st-notyet'; }
         else if (res.reason) {
           const [label, long] = REASONS[res.reason] || [res.reason.replace(/_/g, ' '), ''];
           const detail = r.unsupportedDetail?.[c.bench?.id] ? ` ${r.unsupportedDetail[c.bench.id]}` : '';
-          text = res.cannot && v != null ? `${fmt(v)} <span class="why">${esc(label)}</span>` : `<span class="why">${esc(label)}</span>`;
-          title = `${long}${detail} ${res.cannot ? 'Counts as 0 in averages.' : 'Left out of averages.'}`;
+          // 칸에는 빗금과 Average 에 들어가는 값(0)만 두고, 이유는 툴팁에 짧은 이름으로 크게 보인다
+          text = res.cannot && v != null ? fmt(v) : '';
+          tag = label;
+          title = `${long}${detail} ${res.cannot ? 'Counted as 0 in averages.' : 'Left out of averages.'}`;
           cls = ' st-cannot';
         }
         // 결과도 없고 대기열에도 없는 benchmark 칸: 모든 칸을 평가하므로 앞으로 넣을 대상이다
@@ -738,7 +741,7 @@
           if (v != null && res.partial) title = `Average over ${res.m} of ${res.n}`;
           if (v != null && res.micro != null) title += `${title ? '. ' : ''}macro ${fmtScore(v)}, micro ${fmtScore(res.micro)}`;
         }
-        html += `<td class="v${c.kind === 'leaf' && c.sub ? ' sub' : ' first'}${v == null ? ' na' : ''}${cls}" data-col="${esc(c.id)}" style="${cls ? '' : heat(v, view.colStats[c.id])}"${title ? ` data-note="${esc(title)}"` : ''}>${text}</td>`;
+        html += `<td class="v${c.kind === 'leaf' && c.sub ? ' sub' : ' first'}${v == null ? ' na' : ''}${cls}" data-col="${esc(c.id)}" style="${cls ? '' : heat(v, view.colStats[c.id])}"${title ? ` data-note="${esc(title)}"` : ''}${tag ? ` data-tag="${esc(tag)}"` : ''}>${text}</td>`;
       }
       html += '</tr>';
     }
@@ -910,6 +913,7 @@
     const c = colById(td.dataset.col);
     const note = td.dataset.note ? `<br>${esc(td.dataset.note)}` : '';
     const head = `<b>${esc(row.model)}</b> · ${esc(SETTING_LABEL[row.setting] || row.setting)}<br>${esc(c.label)}`;
+    if (td.dataset.tag) return `${head}: <span class="tip-tag">${esc(td.dataset.tag)}</span>${note}`;
     if (!c.bench) return `${head}: ${fmt(cellValue(row, c))}${note}`;
     const run = row?.runs[c.bench.id];
     if (!run) {
