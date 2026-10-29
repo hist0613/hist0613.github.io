@@ -359,7 +359,7 @@
    "model": "LGAI-EXAONE/EXAONE-4.0-1.2B",
    "setting": "think-on",
    "benchmark": "hrm8k",
-   "state": "queued"
+   "state": "running"
   },
   {
    "model": "LGAI-EXAONE/EXAONE-4.0-1.2B",
@@ -821,13 +821,13 @@
    "model": "Qwen/Qwen3-8B",
    "setting": "think-on",
    "benchmark": "kmmlu_redux",
-   "state": "running"
+   "state": "queued"
   },
   {
    "model": "Qwen/Qwen3-8B",
    "setting": "think-on",
    "benchmark": "kobalt",
-   "state": "running"
+   "state": "queued"
   },
   {
    "model": "Qwen/Qwen3-8B",
@@ -1667,7 +1667,7 @@
    "model": "ibm-granite/granite-4.2-8b",
    "setting": "think-on",
    "benchmark": "mmlu_pro",
-   "state": "queued"
+   "state": "running"
   },
   {
    "model": "kakaocorp/kanana-2-3b-instruct",
@@ -2444,7 +2444,7 @@
    "state": "queued"
   }
  ],
- "generated_at": "2026-10-29T13:08:53+01:00",
+ "generated_at": "2026-10-29T19:46:50+03:00",
  "models": [
   {
    "id": "Bllossom/llama-3.2-Korean-Bllossom-3B",
@@ -2727,8 +2727,8 @@
   },
   {
    "id": "google/gemma-3-4b-it",
-   "precision": null,
-   "image_input": null,
+   "precision": "bf16",
+   "image_input": true,
    "params_b": 4.3,
    "architecture": "Gemma3ForConditionalGeneration",
    "license": "gemma",
@@ -2736,8 +2736,8 @@
   },
   {
    "id": "google/gemma-3n-E4B-it",
-   "precision": null,
-   "image_input": null,
+   "precision": "bf16",
+   "image_input": true,
    "params_b": 7.85,
    "architecture": "Gemma3nForConditionalGeneration",
    "license": "gemma",
@@ -2781,8 +2781,8 @@
   },
   {
    "id": "google/medgemma-4b-it",
-   "precision": null,
-   "image_input": null,
+   "precision": "bf16",
+   "image_input": true,
    "params_b": 4.3,
    "architecture": "Gemma3ForConditionalGeneration",
    "license": "other",
@@ -2844,8 +2844,8 @@
   },
   {
    "id": "meta-llama/Llama-3.1-8B-Instruct",
-   "precision": null,
-   "image_input": null,
+   "precision": "bf16",
+   "image_input": false,
    "params_b": 8.03,
    "architecture": "LlamaForCausalLM",
    "license": "llama3.1",
