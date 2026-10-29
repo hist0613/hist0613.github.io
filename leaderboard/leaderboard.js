@@ -23,7 +23,7 @@
     open: new Set(),
     // Average 에 들어갈 benchmark 와, 이미지를 못 받는 모델의 이미지 칸 처리("zero": 0점, "exclude": 평균에서 뺌)
     avgChecked: new Set(),
-    textOnly: 'zero',
+    cannot: 'zero',  // 모델이 받을 수 없는 benchmark: 0점으로 셈(zero) 또는 평균에서 뺌(exclude)
     openModels: new Set(),
     sort: { key: 'avg', dir: -1 },
     costBench: '__avg',
@@ -35,6 +35,14 @@
   let view = { cols: [], lines: [], colStats: {} };
 
   // ---------- data ----------
+  // 모델이 받을 수 없는 이유: 칸에 쓰는 짧은 이름과 마우스를 올리면 보이는 설명
+  const REASONS = {
+    image_input: ['no image input', 'This model does not take images.'],
+    audio_input: ['no audio input', 'This model does not take audio.'],
+    tool_calling: ['no tool calling', "This model's chat template cannot render tool calls, so the tool scenarios of this benchmark cannot be built."],
+    context_length: ['context too short', "This model's context window is shorter than the length this benchmark is run with."],
+  };
+
   function buildRows() {
     MODELS = Object.fromEntries(RES.models.map((m) => [m.id, m]));
     // 평가 중인 (모델, 설정, benchmark): collect.py 가 서버 대기열에서 읽어 둔 것. 결과가 아직 없는 모델도 행으로 보인다
@@ -50,6 +58,14 @@
     for (const x of RES.in_progress || []) {
       const key = `${x.model}|${x.setting}`;
       if (!byKey.has(key)) byKey.set(key, { key, model: x.model, setting: x.setting, meta: MODELS[x.model] || { id: x.model }, runs: {} });
+    }
+    // 평가 쪽이 run 마다 남긴 "모델이 받을 수 없음" 이유(tool_calling, context_length 등). 이 칸만 있는 모델도 행으로 보인다
+    for (const x of RES.unsupported || []) {
+      const key = `${x.model}|${x.setting}`;
+      if (!byKey.has(key)) byKey.set(key, { key, model: x.model, setting: x.setting, meta: MODELS[x.model] || { id: x.model }, runs: {} });
+      const row = byKey.get(key);
+      (row.unsupported ||= {})[x.benchmark] = x.reason;
+      (row.unsupportedDetail ||= {})[x.benchmark] = x.detail || '';
     }
     ROWS = [...byKey.values()];
     // one color per model, stable across filters
@@ -76,7 +92,7 @@
     return cols;
   }
 
-  const cellResult = (row, col) => P.nodeValue(col.node, row, state.mode, { textOnly: state.textOnly });
+  const cellResult = (row, col) => P.nodeValue(col.node, row, state.mode, { cannot: state.cannot });
   const cellValue = (row, col) => cellResult(row, col).value ?? null;
 
   // ---------- filtering ----------
@@ -117,9 +133,9 @@
 
   // Average 에 넣기로 체크한 benchmark
   const checkedBenchmarks = () => META.benchmarks.filter((b) => state.avgChecked.has(b.id));
-  // 순위·Average 계산에 쓰는 benchmark 값(이미지 못 받는 모델은 state.textOnly 를 따른다)
+  // 순위·Average 계산에 쓰는 benchmark 값(이미지 못 받는 모델은 state.cannot 를 따른다)
   const benchScore = (r, b) => {
-    const v = P.average(r, { benchmarks: [b] }, new Set([b.id]), 'score', { textOnly: state.textOnly });
+    const v = P.average(r, { benchmarks: [b] }, new Set([b.id]), 'score', { cannot: state.cannot });
     return v.n ? v.value : undefined;  // undefined = 평균에서 뺀 칸
   };
 
@@ -148,7 +164,7 @@
     for (const r of rows) {
       const secs = main.map((c) => r.runs[c.id]?.wall_seconds).filter((v) => v != null);
       // Average: 체크한 benchmark 공식 점수의 macro. m 개만 결과가 있으면 * (n 은 평균에서 뺀 칸을 빼고 센다)
-      const a = P.average(r, META, state.avgChecked, 'score', { textOnly: state.textOnly });
+      const a = P.average(r, META, state.avgChecked, 'score', { cannot: state.cannot });
       r.avg = a.value;
       r.n = a.m;
       r.nOf = a.n;
@@ -332,9 +348,9 @@
   function costParts(node, rows) {
     if (node.leaf || P.isOfficial(node)) return { parts: [node], all: 1 };
     const kids = node.calc || node.children;
-    const opts = { textOnly: state.textOnly };
+    const opts = { cannot: state.cannot };
     // 이미지를 못 받는 모델의 0점 채움은 끝낸 것으로 세지 않는다
-    const done = (k, r) => { const v = P.nodeValue(k, r, 'score', opts); return v.value != null && !v.partial && !v.textOnly; };
+    const done = (k, r) => { const v = P.nodeValue(k, r, 'score', opts); return v.value != null && !v.partial && !v.cannot; };
     const scored = rows.filter((r) => kids.some((k) => done(k, r)));
     return { parts: kids.filter((k) => scored.length && scored.filter((r) => done(k, r)).length >= 0.8 * scored.length), all: kids.length };
   }
@@ -342,13 +358,13 @@
   // 고른 칸들의 점수 평균과 비용. 칸을 하나라도 못 끝낸 행은 뺀다
   function nodeCostPoint(r, parts, axis) {
     if (!parts.length) return null;
-    const opts = { textOnly: state.textOnly };
+    const opts = { cannot: state.cannot };
     const mean = (mode) => {
       const vs = parts.map((k) => P.nodeValue(k, r, mode, opts));
       return vs.some((v) => v.value == null || v.partial) ? null : vs.reduce((a, v) => a + v.value, 0) / vs.length;
     };
     // 0점 채움만으로 된 점은 찍지 않는다
-    if (parts.every((k) => P.nodeValue(k, r, 'score', opts).textOnly)) return null;
+    if (parts.every((k) => P.nodeValue(k, r, 'score', opts).cannot)) return null;
     const y = mean('score');
     if (y == null) return null;
     const bs = [...new Map(parts.flatMap((k) => P.benchesOf(k)).map((x) => [x.bench.id, { ...x, run: r.runs[x.bench.id] }])).values()];
@@ -594,9 +610,9 @@
 
   function avgPanel() {
     const list = META.benchmarks.map((b) => `<label><input type="checkbox" data-avg-bench="${esc(b.id)}"${state.avgChecked.has(b.id) ? ' checked' : ''}>${esc(b.name)}${imageBadge(b)}</label>`).join('');
-    const radio = (v, t) => `<label><input type="radio" name="avg-textonly" value="${v}"${state.textOnly === v ? ' checked' : ''}>${t}</label>`;
+    const radio = (v, t) => `<label><input type="radio" name="avg-textonly" value="${v}"${state.cannot === v ? ' checked' : ''}>${t}</label>`;
     return `<div class="avg-quick"><button type="button" data-avg-set="all">All</button><button type="button" data-avg-set="text">Text only</button><button type="button" data-avg-set="none">None</button></div>
-      <div class="avg-textonly"><span>Image benchmarks for models that cannot take images:</span>${radio('zero', 'Count as 0')}${radio('exclude', 'Leave out')}</div>
+      <div class="avg-textonly"><span>Benchmarks a model cannot take (for example, images for a text-only model):</span>${radio('zero', 'Count as 0')}${radio('exclude', 'Leave out')}</div>
       <div class="avg-list">${list}</div>`;
   }
 
@@ -704,16 +720,25 @@
         const pend = v == null && benchCell ? view.inProgress.get(`${r.model}|${r.setting}|${c.bench.id}`) : null;
         let text;
         let title = '';
-        if (pend) text = `<span class="pend ${pend}">${pend === 'running' ? 'running' : 'queued'}</span>`;
-        else if (res.textOnly && v != null) { text = `${fmt(v)} <span class="noimg">(text only)</span>`; title = 'This model does not take images, so this benchmark counts as 0'; }
-        else if (res.excluded) { text = '<span class="noimg">text only</span>'; title = 'This model does not take images; left out of averages'; }
+        let cls = '';
+        if (pend) { text = `<span class="pend ${pend}">${pend === 'running' ? 'running' : 'queued'}</span>`; cls = ` st-${pend}`; }
+        else if (res.notYet) { text = '<span class="why">not supported yet</span>'; title = `This leaderboard does not run ${c.bench ? c.bench.name : 'this benchmark'} with ${SETTING_LABEL[r.setting] || r.setting} yet. Left out of averages.`; cls = ' st-notyet'; }
+        else if (res.reason) {
+          const [label, long] = REASONS[res.reason] || [res.reason.replace(/_/g, ' '), ''];
+          const detail = r.unsupportedDetail?.[c.bench?.id] ? ` ${r.unsupportedDetail[c.bench.id]}` : '';
+          text = res.cannot && v != null ? `${fmt(v)} <span class="why">${esc(label)}</span>` : `<span class="why">${esc(label)}</span>`;
+          title = `${long}${detail} ${res.cannot ? 'Counts as 0 in averages.' : 'Left out of averages.'}`;
+          cls = ' st-cannot';
+        }
+        // 결과도 없고 대기열에도 없는 benchmark 칸: 모든 칸을 평가하므로 앞으로 넣을 대상이다
+        else if (v == null && c.bench && !r.runs[c.bench.id] && (c.node.leaf || P.isOfficial(c.node))) { text = '<span class="why">to be added</span>'; title = 'Not evaluated yet and not in the queue yet. It will be added.'; cls = ' st-todo'; }
         else if (v == null && state.mode === 'time' && !(c.node.leaf ? !c.node.leaf.sub : P.isOfficial(c.node))) { text = ''; title = 'Eval time is measured per benchmark only'; }
         else {
           text = fmt(v) + (v != null && res.partial ? '*' : '');
           if (v != null && res.partial) title = `Average over ${res.m} of ${res.n}`;
           if (v != null && res.micro != null) title += `${title ? '. ' : ''}macro ${fmtScore(v)}, micro ${fmtScore(res.micro)}`;
         }
-        html += `<td class="v${c.kind === 'leaf' && c.sub ? ' sub' : ' first'}${v == null ? ' na' : ''}" data-col="${esc(c.id)}" style="${heat(v, view.colStats[c.id])}"${title ? ` data-note="${esc(title)}"` : ''}>${text}</td>`;
+        html += `<td class="v${c.kind === 'leaf' && c.sub ? ' sub' : ' first'}${v == null ? ' na' : ''}${cls}" data-col="${esc(c.id)}" style="${cls ? '' : heat(v, view.colStats[c.id])}"${title ? ` data-note="${esc(title)}"` : ''}>${text}</td>`;
       }
       html += '</tr>';
     }
@@ -982,7 +1007,7 @@
   avgPop.addEventListener('change', (e) => {
     const cb = e.target.closest('[data-avg-bench]');
     if (cb) { cb.checked ? state.avgChecked.add(cb.dataset.avgBench) : state.avgChecked.delete(cb.dataset.avgBench); render(); return; }
-    if (e.target.name === 'avg-textonly') { state.textOnly = e.target.value; render(); }
+    if (e.target.name === 'avg-textonly') { state.cannot = e.target.value; render(); }
   });
 
   // 머리글 줄 순서를 바꾼다. 줄이 바뀌면 묶음 key 가 달라지므로 펼친 상태는 비운다

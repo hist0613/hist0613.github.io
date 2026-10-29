@@ -96,13 +96,13 @@ test('slice false excluded from groups', () => {
 test('text-only cells: zero vs exclude', () => {
   const tree = P.buildTree(P.cells(META), ['domain', 'benchmark'], ALL_OPEN);
   const chem = find(find(tree, 'STEM').children, 'Chemistry');
-  const zero = P.nodeValue(chem, TEXT_ROW, 'score', { textOnly: 'zero' });
+  const zero = P.nodeValue(chem, TEXT_ROW, 'score', { cannot: 'zero' });
   close(zero.value, (0.9 + 0.5 + 0) / 3);
   assert.equal(zero.partial, false);
-  const excl = P.nodeValue(chem, TEXT_ROW, 'score', { textOnly: 'exclude' });
+  const excl = P.nodeValue(chem, TEXT_ROW, 'score', { cannot: 'exclude' });
   close(excl.value, (0.9 + 0.5) / 2);
   assert.equal(excl.partial, false);
-  const avg = P.average(TEXT_ROW, META, new Set(['A', 'I']), 'score', { textOnly: 'zero' });
+  const avg = P.average(TEXT_ROW, META, new Set(['A', 'I']), 'score', { cannot: 'zero' });
   close(avg.value, 0.35);
 });
 
@@ -159,9 +159,9 @@ test('no empty groups when a row sits below subtask', () => {
 test('zero fills alone do not make an average', () => {
   // 텍스트 benchmark 가 아직 하나도 안 끝난 텍스트 전용 모델: 이미지 칸 0점만으로 0.0 을 내지 않는다
   const row = { meta: { image_input: false }, runs: {} };
-  assert.equal(P.average(row, META, new Set(['A', 'I']), 'score', { textOnly: 'zero' }).value, null);
+  assert.equal(P.average(row, META, new Set(['A', 'I']), 'score', { cannot: 'zero' }).value, null);
   // 이미지 benchmark 만 고르면 0점이 답이다
-  close(P.average(row, META, new Set(['I']), 'score', { textOnly: 'zero' }).value, 0);
+  close(P.average(row, META, new Set(['I']), 'score', { cannot: 'zero' }).value, 0);
 });
 
 test('benchmark under a group shows only its slice', () => {
@@ -217,4 +217,34 @@ test('subtask group names its benchmark when no Benchmark row is above', () => {
   assert.ok(top.some((n) => n.label === 'Bench A · chemistry'), top.map((n) => n.label).join(','));
   const under = P.buildTree(P.cells(META), ['benchmark', 'subtask'], ALL_OPEN)[0];
   assert.equal(under.children[0].label, 'chemistry');
+});
+
+// 모델이 받을 수 없는 칸(이유와 함께)과 리더보드가 아직 돌리지 않는 칸
+const META2 = { benchmarks: [
+  { id: 'P', name: 'Plain', n_items: 10, subtasks: [] },
+  { id: 'T', name: 'Tools', n_items: 10, settings: ['think-off'], subtasks: [] },
+  { id: 'I', name: 'Image', modality: 'image', n_items: 10, subtasks: [] },
+] };
+
+test('cells a model cannot take carry the reason', () => {
+  const row = { setting: 'think-off', meta: { image_input: false }, unsupported: { T: 'tool_calling' }, runs: { P: { score: 0.6 } } };
+  const [p, t, i] = P.buildTree(P.cells(META2), ['benchmark'], new Set());
+  assert.equal(P.nodeValue(t, row, 'score', { cannot: 'zero' }).reason, 'tool_calling');
+  assert.equal(P.nodeValue(t, row, 'score', { cannot: 'zero' }).value, 0);
+  assert.equal(P.nodeValue(i, row, 'score', { cannot: 'zero' }).reason, 'image_input');
+  assert.equal(P.nodeValue(t, row, 'score', { cannot: 'exclude' }).excluded, true);
+  close(P.average(row, META2, new Set(['P', 'T', 'I']), 'score', { cannot: 'zero' }).value, 0.2);
+  close(P.average(row, META2, new Set(['P', 'T', 'I']), 'score', { cannot: 'exclude' }).value, 0.6);
+  assert.equal(P.nodeValue(p, row, 'score', {}).reason, undefined);
+});
+
+test('benchmarks not run with a setting yet are left out without a star', () => {
+  const row = { setting: 'think-on', meta: { image_input: true }, runs: { P: { score: 0.6 }, I: { score: 0.4 } } };
+  const t = P.buildTree(P.cells(META2), ['benchmark'], new Set())[1];
+  const v = P.nodeValue(t, row, 'score', { cannot: 'zero' });
+  assert.equal(v.notYet, true);
+  assert.equal(v.excluded, true);
+  const a = P.average(row, META2, new Set(['P', 'T', 'I']), 'score', { cannot: 'zero' });
+  close(a.value, 0.5);
+  assert.equal(a.partial, false);
 });
