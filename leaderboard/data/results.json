@@ -1222,7 +1222,73 @@
   {
    "model": "allenai/OLMoE-1B-7B-0125-Instruct",
    "setting": "think-off",
+   "benchmark": "aime25",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
+   "setting": "think-off",
+   "benchmark": "bfcl",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
+   "setting": "think-off",
+   "benchmark": "chembench",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
+   "setting": "think-off",
+   "benchmark": "gpqa_diamond",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
+   "setting": "think-off",
+   "benchmark": "hrm8k",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
+   "setting": "think-off",
+   "benchmark": "ifeval",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
+   "setting": "think-off",
+   "benchmark": "kbs",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
+   "setting": "think-off",
+   "benchmark": "kmmlu_redux",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
+   "setting": "think-off",
+   "benchmark": "kobalt",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
+   "setting": "think-off",
+   "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
+   "setting": "think-off",
    "benchmark": "mih",
+   "state": "queued"
+  },
+  {
+   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
+   "setting": "think-off",
+   "benchmark": "mmlu_pro",
    "state": "queued"
   },
   {
@@ -2438,13 +2504,85 @@
    "state": "queued"
   },
   {
+   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
+   "setting": "think-off",
+   "benchmark": "aime25",
+   "state": "queued"
+  },
+  {
+   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
+   "setting": "think-off",
+   "benchmark": "bfcl",
+   "state": "queued"
+  },
+  {
+   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
+   "setting": "think-off",
+   "benchmark": "chembench",
+   "state": "queued"
+  },
+  {
+   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
+   "setting": "think-off",
+   "benchmark": "gpqa_diamond",
+   "state": "queued"
+  },
+  {
+   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
+   "setting": "think-off",
+   "benchmark": "hrm8k",
+   "state": "queued"
+  },
+  {
+   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
+   "setting": "think-off",
+   "benchmark": "ifeval",
+   "state": "queued"
+  },
+  {
+   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
+   "setting": "think-off",
+   "benchmark": "kbs",
+   "state": "queued"
+  },
+  {
+   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
+   "setting": "think-off",
+   "benchmark": "kmmlu_redux",
+   "state": "queued"
+  },
+  {
+   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
+   "setting": "think-off",
+   "benchmark": "kobalt",
+   "state": "queued"
+  },
+  {
+   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
+   "setting": "think-off",
+   "benchmark": "locomo",
+   "state": "queued"
+  },
+  {
+   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
+   "setting": "think-off",
+   "benchmark": "mih",
+   "state": "queued"
+  },
+  {
+   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
+   "setting": "think-off",
+   "benchmark": "mmlu_pro",
+   "state": "queued"
+  },
+  {
    "model": "zai-org/GLM-4-9B-0414",
    "setting": "think-off",
    "benchmark": "mih",
    "state": "queued"
   }
  ],
- "generated_at": "2026-10-29T19:46:50+03:00",
+ "generated_at": "2026-10-29T20:18:11+03:00",
  "models": [
   {
    "id": "Bllossom/llama-3.2-Korean-Bllossom-3B",
@@ -2907,11 +3045,6 @@
   },
   {
    "id": "swiss-ai/Apertus-8B-Instruct-2509",
-   "precision": "bf16",
-   "image_input": false,
-   "params_b": 8.05,
-   "architecture": "ApertusForCausalLM",
-   "license": "apache-2.0",
    "revision": null
   },
   {
@@ -2961,8 +3094,8 @@
   },
   {
    "id": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "precision": "bf16",
-   "image_input": false,
+   "precision": null,
+   "image_input": null,
    "params_b": 10.8,
    "architecture": "LlamaForCausalLM",
    "license": "apache-2.0",
@@ -16739,298 +16872,11 @@
  ],
  "unsupported": [
   {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "aime25",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 32,768."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "bfcl",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "chartqa",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "chembench",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "gpqa_diamond",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "hrm8k",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "ifeval",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "k_dtcbench",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "k_mmbench",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "k_mmstar",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "kbs",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "kmmlu_redux",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "kobalt",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "koffvqa",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "locomo",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 32,768."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "mathvista",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "mmlu_pro",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "mmmu",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "mmstar",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "allenai/OLMoE-1B-7B-0125-Instruct",
-   "setting": "think-off",
-   "benchmark": "ocrbench",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
    "model": "kakaocorp/kanana-1.5-8b-instruct-2505",
    "setting": "think-off",
    "benchmark": "mih",
    "reason": "tool_calling",
    "detail": ""
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "aime25",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "bfcl",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "chartqa",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "chembench",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "gpqa_diamond",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "hrm8k",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "ifeval",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "k_dtcbench",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "k_mmbench",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "k_mmstar",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "kbs",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "kmmlu_redux",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "kobalt",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "koffvqa",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "locomo",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "mathvista",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "mih",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "mmlu_pro",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and this benchmark runs with 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "mmmu",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "mmstar",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
-  },
-  {
-   "model": "yanolja/EEVE-Korean-Instruct-10.8B-v1.0",
-   "setting": "think-off",
-   "benchmark": "ocrbench",
-   "reason": "context_length",
-   "detail": "Its context window is 4,096 tokens and every benchmark here runs with at least 8,192."
   }
  ]
 }
