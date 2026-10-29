@@ -987,6 +987,104 @@
    "metric_short": "F1"
   },
   {
+   "id": "mih",
+   "name": "MIH-Bench",
+   "description": "Instruction hierarchy under multiple conflicts (EMNLP 2026). Each item puts a higher-priority and a lower-priority instruction in two of four places (system prompt, user turn, conversation history, tool output), and the two conflict in k of their constraint groups, from k = 0 (no conflict) to k = 4. 922 base items x 5 conflict levels x 6 place pairs. Prompts are built and scored with the official code, with up to 4,096 generated tokens.",
+   "language": "en",
+   "n_items": 27660,
+   "metric": "acc",
+   "metric_label": "Accuracy: the response keeps every constraint of the higher-priority instruction (official strict check)",
+   "lm_eval_task": "mih (official code)",
+   "dataset_url": "https://github.com/Yerin-Hwang49/MIH-release",
+   "paper_url": "https://aclanthology.org/2026.emnlp-main.2261/",
+   "protocol_url": "https://github.com/Yerin-Hwang49/MIH-release",
+   "protocol_name": "MIH-Bench",
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Text"
+    ],
+    "task_type": [
+     "Instruction following"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "scoring": [
+     "Rule-based"
+    ],
+    "domain": [
+     "General"
+    ]
+   },
+   "metric_short": "Accuracy",
+   "subtasks": [
+    {
+     "id": "mih_k0",
+     "name": "k=0",
+     "n_items": 5532
+    },
+    {
+     "id": "mih_k1",
+     "name": "k=1",
+     "n_items": 5532
+    },
+    {
+     "id": "mih_k2",
+     "name": "k=2",
+     "n_items": 5532
+    },
+    {
+     "id": "mih_k3",
+     "name": "k=3",
+     "n_items": 5532
+    },
+    {
+     "id": "mih_k4",
+     "name": "k=4",
+     "n_items": 5532
+    },
+    {
+     "id": "mih_system_vs_user",
+     "name": "System vs. user",
+     "n_items": 4610,
+     "slice": false
+    },
+    {
+     "id": "mih_system_vs_history",
+     "name": "System vs. history",
+     "n_items": 4610,
+     "slice": false
+    },
+    {
+     "id": "mih_system_vs_tool",
+     "name": "System vs. tool",
+     "n_items": 4610,
+     "slice": false
+    },
+    {
+     "id": "mih_user_vs_history",
+     "name": "User vs. history",
+     "n_items": 4610,
+     "slice": false
+    },
+    {
+     "id": "mih_user_vs_tool",
+     "name": "User vs. tool",
+     "n_items": 4610,
+     "slice": false
+    },
+    {
+     "id": "mih_history_vs_tool",
+     "name": "History vs. tool",
+     "n_items": 4610,
+     "slice": false
+    }
+   ]
+  },
+  {
    "id": "mmmu",
    "name": "MMMU",
    "description": "College-level questions with one or more images across 30 subjects, mostly multiple choice. Validation split, lm-eval prompt.",
