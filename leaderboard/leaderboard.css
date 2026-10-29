@@ -419,6 +419,7 @@ tr.child td.fz { background: #fcfcfd; }
 /* 결과가 없는 칸의 종류: 칸 글씨와 색을 같이 쓰고, 표 위 legend 가 둘을 잇는다 */
 .why { font-size: 11px; }
 .lb-table td.st-queued, .lg.st-queued { background: #f8fafc; }
+.lb-table td.st-todo, .lg.st-todo { background: #fff; color: #9ca3af; font-style: italic; }
 .lb-table td.st-running, .lg.st-running { background: #fff7ed; }
 .lb-table td.st-cannot, .lg.st-cannot { background: #f3f4f6; color: #6b7280; }
 .lb-table td.st-notyet, .lg.st-notyet { background: #fef9c3; color: #854d0e; }

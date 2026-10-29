@@ -76,11 +76,12 @@
 
     <div class="lb-scrollbar" id="topbar" aria-hidden="true"><div id="topbar-inner"></div></div>
     <ul class="lb-legend" aria-label="What the cells mean">
-      <li><span class="lg st-queued"><span class="pend queued">queued</span></span> waiting to be evaluated</li>
+      <li><span class="lg st-todo"><span class="why">to be added</span></span> not evaluated yet and not in the queue yet</li>
+      <li><span class="lg st-queued"><span class="pend queued">queued</span></span> in the queue</li>
       <li><span class="lg st-running"><span class="pend running">running</span></span> being evaluated now</li>
       <li><span class="lg st-cannot"><span class="why">no image input</span></span> the model cannot take this benchmark; the cell names the reason, such as no image input or no tool calling</li>
       <li><span class="lg st-notyet"><span class="why">not supported yet</span></span> this leaderboard does not run the benchmark with this setting yet</li>
-      <li><span class="lg">–</span> no result</li>
+      <li><span class="lg">–</span> no value</li>
     </ul>
     <div class="lb-scrollnav">
       <button type="button" id="prev-bench" title="Previous benchmark (Shift + ←)">◀ Previous benchmark</button>

@@ -730,6 +730,8 @@
           title = `${long}${detail} ${res.cannot ? 'Counts as 0 in averages.' : 'Left out of averages.'}`;
           cls = ' st-cannot';
         }
+        // 결과도 없고 대기열에도 없는 benchmark 칸: 모든 칸을 평가하므로 앞으로 넣을 대상이다
+        else if (v == null && c.bench && !r.runs[c.bench.id] && (c.node.leaf || P.isOfficial(c.node))) { text = '<span class="why">to be added</span>'; title = 'Not evaluated yet and not in the queue yet. It will be added.'; cls = ' st-todo'; }
         else if (v == null && state.mode === 'time' && !(c.node.leaf ? !c.node.leaf.sub : P.isOfficial(c.node))) { text = ''; title = 'Eval time is measured per benchmark only'; }
         else {
           text = fmt(v) + (v != null && res.partial ? '*' : '');
