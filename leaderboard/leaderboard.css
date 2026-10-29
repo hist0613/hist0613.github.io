@@ -387,7 +387,8 @@ tr.child td.fz { background: #fcfcfd; }
   max-width: 280px;
   box-shadow: 0 4px 12px rgba(0,0,0,.18);
 }
-.lb-tip b { font-weight: 700; }
+.lb-tip b { font-weight: 700; color: inherit; }  /* 사이트 공통 b 글자색(#222)이 어두운 툴팁에서 안 보인다 */
+.tip-tag { display: inline-block; padding: 0 6px; border-radius: 3px; background: #f3f4f6; color: #111827; font-weight: 700; }
 .lb-tip table { border-collapse: collapse; }
 .lb-tip td { padding: 0 8px 0 0; }
 
@@ -421,7 +422,8 @@ tr.child td.fz { background: #fcfcfd; }
 .lb-table td.st-queued, .lg.st-queued { background: #f8fafc; }
 .lb-table td.st-todo, .lg.st-todo { background: #fff; color: #9ca3af; font-style: italic; }
 .lb-table td.st-running, .lg.st-running { background: #fff7ed; }
-.lb-table td.st-cannot, .lg.st-cannot { background: #f3f4f6; color: #6b7280; }
+/* 모델이 받을 수 없는 칸: 잰 점수가 아니라는 것을 빗금으로 보인다. 칸에는 Average 에 들어가는 0 만 흐리게 적는다 */
+.lb-table td.st-cannot, .lg.st-cannot { background: repeating-linear-gradient(135deg, #e5e7eb 0 2px, #f9fafb 2px 7px); color: #9ca3af; }
 .lb-table td.st-notyet, .lg.st-notyet { background: #fef9c3; color: #854d0e; }
 .lb-legend { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 12px; color: #6b7280; }
 .lb-legend li { display: flex; align-items: center; gap: 6px; }
