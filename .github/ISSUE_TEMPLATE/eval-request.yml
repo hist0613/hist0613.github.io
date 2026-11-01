@@ -1,5 +1,5 @@
 name: Leaderboard evaluation request
-description: Ask for an open-weight model to be evaluated on the LLM leaderboard.
+description: Ask for an open-weight model to be evaluated on the Open-weight LLM Leaderboard.
 title: "[Eval] "
 labels: ["eval-request"]
 body:
