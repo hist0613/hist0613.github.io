@@ -48,6 +48,7 @@
     // 평가 중인 (모델, 설정, benchmark): collect.py 가 서버 대기열에서 읽어 둔 것. 결과가 아직 없는 모델도 행으로 보인다
     view.inProgress = new Map((RES.in_progress || []).map((x) => [`${x.model}|${x.setting}|${x.benchmark}`, x.state]));
     SETTING_LABEL = Object.fromEntries(META.settings.map((s) => [s.id, s.label]));
+    // 배지와 칸은 짧은 값(off, on, low ...)만, 문장 안에서는 'thinking off' 처럼 쓴다
     SETTING_ORDER = Object.fromEntries(META.settings.map((s, i) => [s.id, i]));
     const byKey = new Map();
     for (const r of RES.runs) {
@@ -536,7 +537,7 @@
       return `<tr><td><span class="badge ${esc(s)}">${esc(SETTING_LABEL[s] || s)}</span></td><td>${ps.length}</td><td>${fmtScore(median(ps.map((p) => p.y)))}</td>
         <td>${dy == null ? '–' : `${sign(dy)} <span class="muted">(${paired.length})</span>`}</td><td>${rx == null ? '–' : '×' + rx.toFixed(1)}</td></tr>`;
     }).join('');
-    $('#setting-table').innerHTML = `<thead><tr><th>Reasoning</th><th>Rows</th><th>Median score</th>
+    $('#setting-table').innerHTML = `<thead><tr><th>Thinking</th><th>Rows</th><th>Median score</th>
       <th title="Median over models evaluated both with thinking off and in this setting">Score vs. thinking off</th>
       <th title="Median ratio over the same models">${esc(COST_AXES[axis].label)} vs. thinking off</th></tr></thead><tbody>${body}</tbody>`;
   }
@@ -653,7 +654,7 @@
     rows[0] = `
       <th class="fz c-rank" rowspan="${depth + 1}">#</th>
       <th class="fz c-model ch-stat" rowspan="${depth + 1}" style="text-align:left!important">${axisTags()}<span data-sort="model" class="m-sort">Model ${sortArrow('model')}</span></th>
-      <th class="fz c-setting" rowspan="${depth + 1}">Reasoning</th>
+      <th class="fz c-setting" rowspan="${depth + 1}">Thinking</th>
       <th class="fz fz-last c-params ch-stat" rowspan="${depth + 1}" data-sort="params">Params ${sortArrow('params')}</th>
       <th class="bh" colspan="${showRank() ? 2 : 1}" rowspan="${depth}">Summary</th>`;
     for (let L = 0; L < depth; L++) {
@@ -696,7 +697,7 @@
       const r = line.row;
       const [org, ...rest] = r.model.split('/');
       const name = rest.length ? `<span class="m-org">${esc(org)}/</span>${esc(rest.join('/'))}` : esc(r.model);
-      // 같은 모델의 다른 Reasoning 설정 행은 표 안에서 펼치고, 모델 정보는 이름을 눌러 따로 뜨는 창으로 본다
+      // 같은 모델의 다른 Thinking 설정 행은 표 안에서 펼치고, 모델 정보는 이름을 눌러 따로 뜨는 창으로 본다
       let more = '';
       if (line.parent && line.nVariants > 0) {
         const open = state.openModels.has(r.model);
@@ -708,7 +709,7 @@
       const partial = state.mode === 'score' && r.avg != null && r.n < r.nOf ? ` title="Average over ${r.n} of ${r.nOf} benchmarks"` : '';
       html += `<tr class="${line.child ? 'child' : ''}" data-row="${esc(r.key)}">
         <td class="fz c-rank">${line.rank ?? ''}</td>
-        <td class="fz c-model"><button type="button" class="m-link" data-detail="${esc(r.key)}" title="Details of ${esc(r.model)}">${name}</button>${prec ? `<span class="prec" title="Weights in ${esc(prec)}">${esc(prec)}</span>` : ''}<span class="m-sub"><span class="m-setting">${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${more}</span></td>
+        <td class="fz c-model"><button type="button" class="m-link" data-detail="${esc(r.key)}" title="Details of ${esc(r.model)}">${name}</button>${prec ? `<span class="prec" title="Weights in ${esc(prec)}">${esc(prec)}</span>` : ''}<span class="m-sub"><span class="m-setting">thinking ${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${more}</span></td>
         <td class="fz c-setting"><span class="badge ${esc(r.setting)}">${esc(SETTING_LABEL[r.setting] || r.setting)}</span></td>
         <td class="fz fz-last c-params">${fmtParams(r.meta.params_b)}</td>
         <td class="v first stat" style="${heat(summary, view.colStats.__avg)}"${partial}>${fmt(summary)}${partial ? '*' : ''}</td>`;
@@ -723,7 +724,7 @@
         let cls = '';
         let tag = '';  // 툴팁 맨 위에 눈에 띄게 보일 짧은 이름(context too short 등)
         if (pend) { text = `<span class="pend ${pend}">${pend === 'running' ? 'running' : 'queued'}</span>`; cls = ` st-${pend}`; }
-        else if (res.notYet) { text = '<span class="why">not supported yet</span>'; tag = 'not supported yet'; title = `This leaderboard does not run ${c.bench ? c.bench.name : 'this benchmark'} with ${SETTING_LABEL[r.setting] || r.setting} yet. Left out of averages.`; cls = ' st-notyet'; }
+        else if (res.notYet) { text = '<span class="why">not supported yet</span>'; tag = 'not supported yet'; title = `This leaderboard does not run ${c.bench ? c.bench.name : 'this benchmark'} with thinking ${SETTING_LABEL[r.setting] || r.setting} yet. Left out of averages.`; cls = ' st-notyet'; }
         else if (res.reason) {
           const [label, long] = REASONS[res.reason] || [res.reason.replace(/_/g, ' '), ''];
           const detail = r.unsupportedDetail?.[c.bench?.id] ? ` ${r.unsupportedDetail[c.bench.id]}` : '';
@@ -751,7 +752,7 @@
 
   function openDetail(r) {
     const dlg = $('#model-dialog');
-    $('#model-dialog-title').textContent = `${r.model} · ${SETTING_LABEL[r.setting] || r.setting}`;
+    $('#model-dialog-title').textContent = `${r.model} · thinking ${SETTING_LABEL[r.setting] || r.setting}`;
     $('#model-dialog-body').innerHTML = renderDetail(r);
     dlg.showModal();
   }
@@ -772,7 +773,7 @@
     return `<div class="detail-box">
       <dl>
         <dt>Model</dt><dd><a href="${esc(hf)}" target="_blank" rel="noopener">${esc(r.model)}</a></dd>
-        <dt>Reasoning</dt><dd>${esc(SETTING_LABEL[r.setting] || r.setting)}</dd>
+        <dt>Thinking</dt><dd>${esc(SETTING_LABEL[r.setting] || r.setting)}</dd>
         <dt>Precision</dt><dd>${esc(precLabel(m) || 'BF16')}</dd>
         <dt>Parameters</dt><dd>${m.params_b != null ? m.params_b.toFixed(2) + 'B' : '–'}</dd>
         <dt>Architecture</dt><dd>${esc(m.architecture || '–')}</dd>
@@ -912,7 +913,7 @@
     const row = ROWS.find((r) => r.key === td.closest('tr').dataset.row);
     const c = colById(td.dataset.col);
     const note = td.dataset.note ? `<br>${esc(td.dataset.note)}` : '';
-    const head = `<b>${esc(row.model)}</b> · ${esc(SETTING_LABEL[row.setting] || row.setting)}<br>${esc(c.label)}`;
+    const head = `<b>${esc(row.model)}</b> · thinking ${esc(SETTING_LABEL[row.setting] || row.setting)}<br>${esc(c.label)}`;
     if (td.dataset.tag) return `${head}: <span class="tip-tag">${esc(td.dataset.tag)}</span>${note}`;
     if (!c.bench) return `${head}: ${fmt(cellValue(row, c))}${note}`;
     const run = row?.runs[c.bench.id];
@@ -1125,7 +1126,7 @@
     try { localStorage.setItem('lb-contribute', contribute.open ? 'open' : 'closed'); } catch (e) { /* 무시 */ }
   });
 
-  // ?data=sample loads placeholder results that cover every reasoning setting
+  // ?data=sample loads placeholder results that cover every thinking setting
   const RESULTS = new URLSearchParams(location.search).get('data') === 'sample' ? 'data/results.sample.json' : 'data/results.json';
   Promise.all([fetch('data/benchmarks.json').then((r) => r.json()), fetch(RESULTS).then((r) => r.json())])
     .then(([meta, res]) => {

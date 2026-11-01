@@ -165,7 +165,7 @@
 .lb-table .fz-last { box-shadow: 1px 0 0 #d1d5db; }
 .c-rank { width: 34px; min-width: 34px; max-width: 34px; text-align: right; color: #9ca3af; }
 .c-model { width: 290px; min-width: 290px; max-width: 290px; overflow: hidden; text-overflow: ellipsis; }
-.c-setting { width: 92px; min-width: 92px; max-width: 92px; }  /* 가장 긴 배지(Thinking medium)에 맞춘다 */
+.c-setting { width: 64px; min-width: 64px; max-width: 64px; }  /* 가장 긴 배지(medium)에 맞춘다 */
 .c-params { width: 44px; min-width: 44px; max-width: 44px; text-align: right; }
 
 /* Benchmark group header */

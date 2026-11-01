@@ -1722,23 +1722,23 @@
  "settings": [
   {
    "id": "think-off",
-   "label": "Thinking off"
+   "label": "off"
   },
   {
    "id": "think-on",
-   "label": "Thinking on"
+   "label": "on"
   },
   {
    "id": "think-low",
-   "label": "Thinking low"
+   "label": "low"
   },
   {
    "id": "think-medium",
-   "label": "Thinking medium"
+   "label": "medium"
   },
   {
    "id": "think-high",
-   "label": "Thinking high"
+   "label": "high"
   }
  ]
 }
