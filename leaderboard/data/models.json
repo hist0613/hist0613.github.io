@@ -1,0 +1,191 @@
+{
+ "_about": "Models approved for evaluation that do not have results yet. The daily job queues every benchmark for them in each listed setting. Add a model here through a PR.",
+ "models": [
+  {
+   "id": "alexliap/typakos-140M-it",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "DALabCommunity/Haidass1.5-143M",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>"
+  },
+  {
+   "id": "DedeProGames/cosmo.0",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "DedeProGames/Kiyo-230M-Instruct",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "DedeProGames/Kiyo-65M",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "LiquidAI/LFM2.5-230M-Base",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "LiquidAI/LFM2.5-350M-Base",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "nkthebass/tinybrainbot-100m-v3-base",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "nkthebass/tinybrainbot-350mV3-base",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "StentorLabs/Portimbria-150M",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "SupraLabs/Supra2-100M-Base",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "SupraLabs/Supra2-100M-Instruct",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "SupraLabs/Supra2-Medium-Instruct",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "SupraLabs/Supra2-Nano",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "SupraLabs/Supra2.1-Ultra",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "ThingAI/Quark-135m",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "ThingAI/Quark-50m",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "ThingAI/Quark-50m-v2",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "veyra-ai/Veyra-30M-Base",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "veyra-ai/Veyra2-Blueberry-10M-Instruct",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "veyra-ai/Veyra2-Blueberry-5M-Instruct",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "veyra-ai/Veyra2-Mango-15M-Instruct",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  },
+  {
+   "id": "veyra-ai/Veyra2-Mango-30M-Instruct",
+   "added": "2026-11-01",
+   "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
+   "settings": [
+    "think-off"
+   ]
+  }
+ ]
+}
