@@ -45,18 +45,29 @@
     <p class="lb-status" id="status-line"></p>
     <p class="lb-sample" id="sample-note" hidden>These numbers are placeholder data for building the page. They are not evaluation results.</p>
 
+    <!-- 찾기(어떤 행을 볼지)와 보기(칸에 무엇을 보일지)를 줄로 나눈다 -->
     <div class="lb-toolbar">
-      <label class="lb-search">
-        <span class="lb-label">Model</span>
-        <input id="q" type="search" autocomplete="off" spellcheck="false"
-          placeholder="e.g. Qwen/*, *-Instruct, /llama|gemma/, !*-2B">
-      </label>
+      <div class="lb-row lb-row-search">
+        <label class="lb-search">
+          <span class="lb-label">Model</span>
+          <input id="q" type="search" autocomplete="off" spellcheck="false"
+            placeholder="e.g. Qwen/*, *-Instruct, /llama|gemma/, !*-2B">
+        </label>
+        <p class="lb-help lb-search-help" id="search-help">
+          Comma separates patterns. <code>*</code> matches anything, <code>/…/</code> is a regular expression, a leading <code>!</code> excludes.
+        </p>
+      </div>
+      <div class="lb-row">
       <fieldset class="lb-group" id="settings-filter">
-        <legend class="lb-label">Reasoning</legend>
+        <legend class="lb-label">Thinking</legend>
       </fieldset>
       <fieldset class="lb-group" id="size-filter">
         <legend class="lb-label">Size</legend>
       </fieldset>
+      </div>
+    </div>
+
+    <div class="lb-toolbar lb-view">
       <fieldset class="lb-group lb-seg" id="mode">
         <legend class="lb-label">Cells show</legend>
         <label><input type="radio" name="mode" value="score" checked>Score</label>
@@ -69,12 +80,8 @@
       </fieldset>
     </div>
 
-    <p class="lb-help" id="search-help">
-      Comma separates patterns. <code>*</code> matches anything, <code>/…/</code> is a regular expression,
-      a leading <code>!</code> excludes. Click a benchmark name to show its subtasks, a column title to sort, a model name for details.
-    </p>
+    <p class="lb-help">Click a benchmark name to show its subtasks, a column title to sort, a model name for details.</p>
 
-    <div class="lb-scrollbar" id="topbar" aria-hidden="true"><div id="topbar-inner"></div></div>
     <ul class="lb-legend" aria-label="What the cells mean">
       <li><span class="lg st-todo"><span class="why">to be added</span></span> not evaluated yet and not in the queue yet</li>
       <li><span class="lg st-queued"><span class="pend queued">queued</span></span> in the queue</li>
@@ -88,6 +95,8 @@
       <span class="lb-scrollhint">Scroll sideways with ← → while the table is focused, Shift + wheel, or the wheel over the header.</span>
       <button type="button" id="next-bench" title="Next benchmark (Shift + →)">Next benchmark ▶</button>
     </div>
+    <!-- 가로 스크롤바는 움직이는 표 바로 위에 붙인다 -->
+    <div class="lb-scrollbar" id="topbar" aria-hidden="true"><div id="topbar-inner"></div></div>
     <div class="lb-wrap" id="wrap" tabindex="0" aria-label="Leaderboard table">
       <table class="lb-table" id="table"></table>
     </div>
@@ -98,7 +107,7 @@
     <p class="lb-count" id="count"></p>
 
     <h2>Score vs. cost</h2>
-    <p class="lb-help">Each point is one model in one reasoning setting, and a line joins the settings of the same model.
+    <p class="lb-help">Each point is one model in one thinking setting, and a line joins the settings of the same model.
       Hollow points are thinking off. The dotted line is the Pareto front: no other point scores higher at a lower cost.
       Hover a point for details. The model filters, the benchmarks checked for Average and the column grouping of the table above apply here too.</p>
     <div class="lb-toolbar lb-cost-controls">
@@ -113,7 +122,7 @@
     <ul class="lb-notes">
       <li>Each model is evaluated with <a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-evaluation-harness</a> on vLLM,
         in bfloat16 with greedy decoding and the model's own chat template.</li>
-      <li><b>Reasoning</b> records whether the chat template's thinking mode was on, and at which effort when the model supports it. With thinking on, every benchmark allows up to 30,720 generated tokens (LoCoMo 4,096) in a 32K context, and only the text after the thinking section is scored. A response whose thinking does not finish within that limit counts as unanswered.</li>
+      <li><b>Thinking</b> is the chat template's thinking mode. <i>off</i> and <i>on</i> are for models with an on/off switch, where <i>on</i> is the model's own default amount of thinking. <i>low</i>, <i>medium</i> and <i>high</i> are for models that take an effort level instead. With thinking on, every benchmark allows up to 30,720 generated tokens (LoCoMo 4,096) in a 32K context, and only the text after the thinking section is scored. A response whose thinking does not finish within that limit counts as unanswered.</li>
       <li>With thinking off, benchmarks run in an 8,192-token context (AIME 2025, LoCoMo and image benchmarks in 32K). A model whose context window is shorter is run within its own window, with up to half of it for the answer; items that do not fit count as wrong. LoCoMo inputs alone run to about 26,000 tokens, so such a model shows it as one it cannot take.</li>
       <li>Benchmarks marked <span class="modality">image</span> come with images and are run only on models that take images,
         with every image scaled down to at most 2,048 pixels on the longer side.</li>
