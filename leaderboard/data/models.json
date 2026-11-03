@@ -239,10 +239,14 @@
    "added": "2026-11-01",
    "source": "https://openrouter.ai/openai/gpt-oss-20b",
    "settings": [
-    "think-off"
+    "think-low",
+    "think-medium",
+    "think-high"
    ],
    "kind": "official",
-   "method": "post-training, MoE weights는 MXFP4"
+   "method": "post-training, MoE weights는 MXFP4",
+   "think_end_token": "<|channel|>final<|message|>",
+   "think_gen_kwargs": "skip_special_tokens=False"
   },
   {
    "id": "Qwen/Qwen2.5-7B-Instruct",
