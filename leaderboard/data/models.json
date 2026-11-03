@@ -10,6 +10,31 @@
    ]
   },
   {
+   "id": "ATH-MaaS/OvisOCR3",
+   "added": "2026-11-01",
+   "source": "trending https://huggingface.co/ATH-MaaS/OvisOCR3",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.5-0.8B"
+   ],
+   "method": "continued pretraining + mid-training + on-policy distillation + RL"
+  },
+  {
+   "id": "ByteDance-Seed/UI-TARS-1.5-7B",
+   "added": "2026-11-01",
+   "source": "https://openrouter.ai/bytedance/ui-tars-1.5-7b",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "method": "RL로 reasoning 학습"
+  },
+  {
    "id": "DALabCommunity/Haidass1.5-143M",
    "added": "2026-11-01",
    "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
@@ -18,6 +43,16 @@
     "think-on"
    ],
    "think_end_token": "</think>"
+  },
+  {
+   "id": "datalab-to/surya-ocr-2.5",
+   "added": "2026-11-02",
+   "source": "trending https://huggingface.co/datalab-to/surya-ocr-2.5",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "method": "문서 이미지로 학습해 프롬프트에 따라 레이아웃 JSON 또는 전체 페이지 HTML 을 출력한다. 아키텍처는 Qwen3.5 계열이고 Qwen3-VL 을 acknowledgments 에 언급하지만, 베이스 체크포인트는 카드에 명시되어 있지 않다."
   },
   {
    "id": "DedeProGames/cosmo.0",
@@ -44,6 +79,92 @@
    ]
   },
   {
+   "id": "google/gemma-3-12b-it",
+   "added": "2026-11-01",
+   "source": "https://openrouter.ai/google/gemma-3-12b-it",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "parents": [
+    "google/gemma-3-12b-pt"
+   ],
+   "method": "pretraining + instruction tuning (카드에 세부 미기재)"
+  },
+  {
+   "id": "GrootTeam/Groot-19B-A3B-261023",
+   "added": "2026-11-01",
+   "source": "trending https://huggingface.co/GrootTeam/Groot-19B-A3B-261023",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.6-35B-A3B"
+   ],
+   "method": "post-training (<100M tokens, 세부 방법 미기재)"
+  },
+  {
+   "id": "gugujiji/novel-humanize-4b",
+   "added": "2026-11-01",
+   "source": "trending https://huggingface.co/gugujiji/novel-humanize-4b",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3-4B"
+   ],
+   "method": "fine-tune (세부 미기재)"
+  },
+  {
+   "id": "HuggingFaceBio/Carbon-X",
+   "added": "2026-11-01",
+   "source": "trending https://huggingface.co/HuggingFaceBio/Carbon-X",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3-14B"
+   ],
+   "method": "vocab 확장 + mid-training 302B tokens + SFT + GRPO"
+  },
+  {
+   "id": "JetBrains/Mellum2.1-12B-A2.5B-Thinking-MTP",
+   "added": "2026-11-01",
+   "source": "new https://huggingface.co/JetBrains/Mellum2.1-12B-A2.5B-Thinking-MTP",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "official",
+   "parents": [
+    "JetBrains/Mellum2-12B-A2.5B-Base"
+   ],
+   "method": "Base에서 SFT 후 RL(math, coding, tool use, SWE), 이후 MTP head 추가"
+  },
+  {
+   "id": "LiquidAI/LFM2.5-2.6B",
+   "added": "2026-11-01",
+   "source": "https://openrouter.ai/liquid/lfm-2.5-2.6b",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "parents": [
+    "LiquidAI/LFM2.5-2.6B-Base"
+   ],
+   "method": "SFT 2회 + on-policy distillation + agentic RL"
+  },
+  {
    "id": "LiquidAI/LFM2.5-230M-Base",
    "added": "2026-11-01",
    "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
@@ -60,6 +181,44 @@
    ]
   },
   {
+   "id": "meta-llama/Llama-3.2-1B-Instruct",
+   "added": "2026-11-01",
+   "source": "https://openrouter.ai/meta-llama/llama-3.2-1b-instruct",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "parents": [
+    "meta-llama/Llama-3.1-8B",
+    "meta-llama/Llama-3.1-70B"
+   ],
+   "method": "pruning + Llama 3.1 8B/70B logit distillation, SFT + rejection sampling + DPO"
+  },
+  {
+   "id": "meta-llama/Llama-3.2-3B-Instruct",
+   "added": "2026-11-01",
+   "source": "https://openrouter.ai/meta-llama/llama-3.2-3b-instruct",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "parents": [
+    "meta-llama/Llama-3.1-8B",
+    "meta-llama/Llama-3.1-70B"
+   ],
+   "method": "pruning + Llama 3.1 8B/70B logit distillation, SFT + rejection sampling + DPO"
+  },
+  {
+   "id": "microsoft/phi-4",
+   "added": "2026-11-01",
+   "source": "https://openrouter.ai/microsoft/phi-4",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "method": "9.8T tokens pretraining(synthetic 포함) + SFT + iterative DPO"
+  },
+  {
    "id": "nkthebass/tinybrainbot-100m-v3-base",
    "added": "2026-11-01",
    "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
@@ -74,6 +233,71 @@
    "settings": [
     "think-off"
    ]
+  },
+  {
+   "id": "openai/gpt-oss-20b",
+   "added": "2026-11-01",
+   "source": "https://openrouter.ai/openai/gpt-oss-20b",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "method": "post-training, MoE weights는 MXFP4"
+  },
+  {
+   "id": "Qwen/Qwen2.5-7B-Instruct",
+   "added": "2026-11-01",
+   "source": "https://openrouter.ai/qwen/qwen-2.5-7b-instruct",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "parents": [
+    "Qwen/Qwen2.5-7B"
+   ],
+   "method": "pretraining + post-training"
+  },
+  {
+   "id": "Qwen/Qwen3-14B",
+   "added": "2026-11-01",
+   "source": "https://openrouter.ai/qwen/qwen3-14b",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "official",
+   "parents": [
+    "Qwen/Qwen3-14B-Base"
+   ],
+   "method": "pretraining + post-training"
+  },
+  {
+   "id": "Qwen/Qwen3-VL-8B-Instruct",
+   "added": "2026-11-01",
+   "source": "https://openrouter.ai/qwen/qwen3-vl-8b-instruct",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "method": "pretraining + post-training"
+  },
+  {
+   "id": "Sao10K/L3-8B-Lunaris-v1",
+   "added": "2026-11-01",
+   "source": "https://openrouter.ai/sao10k/l3-lunaris-8b",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "merge",
+   "parents": [
+    "meta-llama/Meta-Llama-3-8B-Instruct",
+    "crestf411/L3-8B-sunfall-v0.1",
+    "Hastagaras/Jamet-8B-L3-MK1",
+    "maldv/badger-iota-llama-3-8b",
+    "Sao10K/Stheno-3.2-Beta"
+   ],
+   "method": "TIES (mergekit, base=Llama-3-8B-Instruct)"
   },
   {
    "id": "StentorLabs/Portimbria-150M",
@@ -186,6 +410,21 @@
    "settings": [
     "think-off"
    ]
+  },
+  {
+   "id": "xiaomi-research/Xiaomi-OCR-0",
+   "added": "2026-11-01",
+   "source": "trending https://huggingface.co/xiaomi-research/Xiaomi-OCR-0",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.5-0.8B-Base"
+   ],
+   "method": "Q-Mask text anchoring + OCR continued pretraining(170M samples) + RL(verifiable rewards)"
   }
  ]
 }
