@@ -15,6 +15,8 @@
   const state = {
     query: [],
     settings: new Set(),
+    // pref: 권장 decoding 행을 보이고, 아직 권장 행이 없는 (모델, 설정)은 greedy 행(2026-11-05 전 결과)으로 대신 보인다
+    decoding: 'pref',
     sizes: new Set(SIZE_BUCKETS.map((b) => b.id)),
     mode: 'score',
     group: true,
@@ -50,25 +52,38 @@
     SETTING_LABEL = Object.fromEntries(META.settings.map((s) => [s.id, s.label]));
     // 배지와 칸은 짧은 값(off, on, low ...)만, 문장 안에서는 'thinking off' 처럼 쓴다
     SETTING_ORDER = Object.fromEntries(META.settings.map((s, i) => [s.id, i]));
+    // 행 = (모델, 설정, decoding). 설정 이름 앞의 greedy- 는 2026-11-05 전 결과(greedy ablation)이고, 나머지는 모델 권장 decoding 이다.
+    // row.setting 은 greedy- 를 뗀 설정(off, on ...), row.raw 는 데이터에 적힌 그대로다(대기열 표시는 raw 로 맞춘다)
     const byKey = new Map();
-    for (const r of RES.runs) {
-      const key = `${r.model}|${r.setting}`;
-      if (!byKey.has(key)) byKey.set(key, { key, model: r.model, setting: r.setting, meta: MODELS[r.model] || { id: r.model }, runs: {} });
-      byKey.get(key).runs[r.benchmark] = r;
-    }
-    for (const x of RES.in_progress || []) {
+    const rowFor = (x) => {
       const key = `${x.model}|${x.setting}`;
-      if (!byKey.has(key)) byKey.set(key, { key, model: x.model, setting: x.setting, meta: MODELS[x.model] || { id: x.model }, runs: {} });
-    }
-    // 평가 쪽이 run 마다 남긴 "모델이 받을 수 없음" 이유(tool_calling, context_length 등). 이 칸만 있는 모델도 행으로 보인다
+      if (!byKey.has(key)) {
+        const greedy = x.setting.startsWith('greedy-');
+        byKey.set(key, { key, model: x.model, raw: x.setting, setting: greedy ? x.setting.slice(7) : x.setting, greedy,
+          meta: MODELS[x.model] || { id: x.model }, runs: {} });
+      }
+      return byKey.get(key);
+    };
+    for (const r of RES.runs) rowFor(r).runs[r.benchmark] = r;
+    for (const x of RES.in_progress || []) rowFor(x);
+    // 평가 쪽이 run 마다 남긴 "모델이 받을 수 없음" 이유(tool_calling, context_length 등). 이 칸만 있는 모델도 행으로 보인다.
+    // 모델 한계라 decoding 과 관계없으므로, 같은 모델·설정의 다른 decoding 행에도 같이 표시한다
+    const limits = [];
     for (const x of RES.unsupported || []) {
-      const key = `${x.model}|${x.setting}`;
-      if (!byKey.has(key)) byKey.set(key, { key, model: x.model, setting: x.setting, meta: MODELS[x.model] || { id: x.model }, runs: {} });
-      const row = byKey.get(key);
-      (row.unsupported ||= {})[x.benchmark] = x.reason;
-      (row.unsupportedDetail ||= {})[x.benchmark] = x.detail || '';
+      rowFor(x);
+      limits.push(x);
+    }
+    for (const x of limits) {
+      const base = x.setting.replace(/^greedy-/, '');
+      for (const row of byKey.values()) {
+        if (row.model !== x.model || row.setting !== base) continue;
+        (row.unsupported ||= {})[x.benchmark] = x.reason;
+        (row.unsupportedDetail ||= {})[x.benchmark] = x.detail || '';
+      }
     }
     ROWS = [...byKey.values()];
+    view.hasRec = new Set(ROWS.filter((r) => !r.greedy && Object.keys(r.runs).length).map((r) => `${r.model}|${r.setting}`));
+    view.hasGreedy = new Set(ROWS.filter((r) => r.greedy).map((r) => `${r.model}|${r.setting}`));
     // one color per model, stable across filters
     const ids = [...new Set(ROWS.map((r) => r.model))].sort();
     view.colorIdx = Object.fromEntries(ids.map((m, i) => [m, i]));
@@ -117,6 +132,11 @@
 
   function matches(row) {
     if (!state.settings.has(row.setting)) return false;
+    if (state.decoding === 'rec' && row.greedy) return false;
+    if (state.decoding === 'greedy' && !row.greedy) return false;
+    if (state.decoding === 'pref' && row.greedy && view.hasRec.has(`${row.model}|${row.setting}`)) return false;
+    // 결과 없이 대기열에만 있는 권장 행은, greedy 행이 대신 보이고 그 칸에 대기 상태가 나오므로 따로 보이지 않는다
+    if (state.decoding === 'pref' && !row.greedy && !Object.keys(row.runs).length && view.hasGreedy.has(`${row.model}|${row.setting}`)) return false;
     const p = row.meta.params_b;
     if (p != null && !SIZE_BUCKETS.some((b) => state.sizes.has(b.id) && b.test(p))) return false;
     const pos = state.query.filter((q) => !q.neg);
@@ -710,7 +730,7 @@
       html += `<tr class="${line.child ? 'child' : ''}" data-row="${esc(r.key)}">
         <td class="fz c-rank">${line.rank ?? ''}</td>
         <td class="fz c-model"><button type="button" class="m-link" data-detail="${esc(r.key)}" title="Details of ${esc(r.model)}">${name}</button>${prec ? `<span class="prec" title="Weights in ${esc(prec)}">${esc(prec)}</span>` : ''}<span class="m-sub"><span class="m-setting">thinking ${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${more}</span></td>
-        <td class="fz c-setting"><span class="badge ${esc(r.setting)}">${esc(SETTING_LABEL[r.setting] || r.setting)}</span></td>
+        <td class="fz c-setting"><span class="badge ${esc(r.setting)}">${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${r.greedy ? '<span class="dec" title="Greedy decoding (runs before 2026-11-05)">greedy</span>' : ''}</td>
         <td class="fz fz-last c-params">${fmtParams(r.meta.params_b)}</td>
         <td class="v first stat" style="${heat(summary, view.colStats.__avg)}"${partial}>${fmt(summary)}${partial ? '*' : ''}</td>`;
       if (showRank()) html += `<td class="v stat">${r.avgRank == null ? '–' : r.avgRank.toFixed(1)}</td>`;
@@ -718,7 +738,7 @@
         const res = cellResult(r, c);
         const v = res.value ?? null;
         const benchCell = c.bench && (c.node.axis === 'benchmark' || !c.sub);
-        const pend = v == null && benchCell ? view.inProgress.get(`${r.model}|${r.setting}|${c.bench.id}`) : null;
+        const pend = v == null && benchCell ? pendingFor(r, c.bench.id) : null;
         let text;
         let title = '';
         let cls = '';
@@ -752,7 +772,7 @@
 
   function openDetail(r) {
     const dlg = $('#model-dialog');
-    $('#model-dialog-title').textContent = `${r.model} · thinking ${SETTING_LABEL[r.setting] || r.setting}`;
+    $('#model-dialog-title').textContent = `${r.model} · thinking ${SETTING_LABEL[r.setting] || r.setting}${r.greedy ? ' · greedy decoding' : ''}`;
     $('#model-dialog-body').innerHTML = renderDetail(r);
     dlg.showModal();
   }
@@ -762,6 +782,27 @@
   const swLabel = (run) => {
     const v = run.versions || {};
     return [['vLLM', v.vllm], ['transformers', v.transformers], ['lm-eval', v.lm_eval]].filter(([, x]) => x).map(([k, x]) => `${k} ${x}`).join(', ');
+  };
+
+  // 대기열 상태. greedy 행이 권장 decoding 행 대신 보일 때는 그 칸의 권장 decoding job 이 대기·실행 중인지도 본다
+  const pendingFor = (row, bench) => view.inProgress.get(`${row.model}|${row.raw}|${bench}`)
+    || (row.greedy && state.decoding === 'pref' ? view.inProgress.get(`${row.model}|${row.setting}|${bench}`) : null);
+
+  // decoding 과 생성 한도: 모델 권장 sampling 값(없으면 greedy), 그리고 우리 평가의 생성 한도에 걸린 문항 비율(그중 같은 구절을 되풀이한 것)
+  const decLabel = (run, row) => {
+    if (row.greedy) return 'Decoding: greedy (runs before 2026-11-05)';
+    if (!run.decoding) return '';
+    const s = run.sampling;
+    if (!s) return 'Decoding: greedy (the model recommends no sampling)';
+    const parts = [['temperature', s.temperature], ['top-p', s.top_p], ['top-k', s.top_k], ['min-p', s.min_p], ['presence penalty', s.presence_penalty], ['repetition penalty', s.repetition_penalty]]
+      .filter(([, v]) => v != null).map(([k, v]) => `${k} ${v}`);
+    return `Decoding: the model's recommended sampling (${parts.join(', ')})`;
+  };
+  const cutLabel = (run) => {
+    const g = run.gen;
+    if (!g || !g.items || !g.cut) return '';
+    const n = (x) => x.toLocaleString('en-US');
+    return `${n(g.cut)} of ${n(g.items)} items hit the generation limit of this evaluation${g.loop ? `, ${n(g.loop)} of them repeating the same text` : ''}`;
   };
 
   function renderDetail(r) {
@@ -920,17 +961,21 @@
     const row = ROWS.find((r) => r.key === td.closest('tr').dataset.row);
     const c = colById(td.dataset.col);
     const note = td.dataset.note ? `<br>${esc(td.dataset.note)}` : '';
-    const head = `<b>${esc(row.model)}</b> · thinking ${esc(SETTING_LABEL[row.setting] || row.setting)}<br>${esc(c.label)}`;
+    const head = `<b>${esc(row.model)}</b> · thinking ${esc(SETTING_LABEL[row.setting] || row.setting)}${row.greedy ? ' · greedy decoding' : ''}<br>${esc(c.label)}`;
     if (td.dataset.tag) return `${head}: <span class="tip-tag">${esc(td.dataset.tag)}</span>${note}`;
     if (!c.bench) return `${head}: ${fmt(cellValue(row, c))}${note}`;
     const run = row?.runs[c.bench.id];
     if (!run) {
-      const pend = view.inProgress.get(`${row.model}|${row.setting}|${c.bench.id}`);
+      const pend = pendingFor(row, c.bench.id);
       return `${head}: ${pend === 'running' ? 'being evaluated now' : pend ? 'waiting in the evaluation queue' : 'not evaluated'}${note}`;
     }
     let html = `${head}: ${fmt(cellValue(row, c))}${note}`;
     if (run.output_tokens) html += `<br>${fmtTokens(run.output_tokens / c.bench.n_items)} output tokens per item`;
     html += `<br>Eval time ${fmtTime(run.wall_seconds)} on ${esc(gpuLabel(run))}`;
+    const dec = decLabel(run, row);
+    if (dec) html += `<br>${esc(dec)}`;
+    const cut = cutLabel(run);
+    if (cut) html += `<br>${esc(cut)}`;
     const sw = swLabel(run);
     if (sw) html += `<br>${esc(sw)}`;
     if (run.evaluated_at) html += `<br>Evaluated ${esc(run.evaluated_at)}`;
@@ -1075,6 +1120,7 @@
       e.target.checked ? state.settings.add(e.target.value) : state.settings.delete(e.target.value);
       render();
     });
+    $('#decoding').addEventListener('change', (e) => { state.decoding = e.target.value; render(); });
     const zf = $('#size-filter');
     for (const b of SIZE_BUCKETS) zf.insertAdjacentHTML('beforeend', `<label><input type="checkbox" value="${b.id}" checked>${b.label}</label>`);
     zf.addEventListener('change', (e) => {
