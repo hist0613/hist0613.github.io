@@ -757,18 +757,25 @@
     dlg.showModal();
   }
 
+  // 평가한 GPU(여러 장이면 장 수까지)와 소프트웨어 버전. 같은 열이라도 서버마다 버전이 다를 수 있어 칸마다 보여 준다
+  const gpuLabel = (run) => (run.gpu || '').replace('NVIDIA GeForce ', '') + (run.n_gpus > 1 ? ' × ' + run.n_gpus : '');
+  const swLabel = (run) => {
+    const v = run.versions || {};
+    return [['vLLM', v.vllm], ['transformers', v.transformers], ['lm-eval', v.lm_eval]].filter(([, x]) => x).map(([k, x]) => `${k} ${x}`).join(', ');
+  };
+
   function renderDetail(r) {
     const m = r.meta;
     const hf = `https://huggingface.co/${r.model}`;
     let rows = '';
     for (const b of META.benchmarks) {
       const run = r.runs[b.id];
-      if (!run) { rows += `<tr><td>${esc(b.name)}</td><td colspan="9" style="color:#9ca3af">not evaluated</td></tr>`; continue; }
+      if (!run) { rows += `<tr><td>${esc(b.name)}</td><td colspan="10" style="color:#9ca3af">not evaluated</td></tr>`; continue; }
       const issue = run.issue ? `<a href="${esc(run.issue)}">request</a>` : '–';
       rows += `<tr><td>${esc(b.name)}</td><td>${fmtScore(run.score)}</td><td>${fmtTime(run.wall_seconds)}</td>
         <td>${run.output_tokens ? fmtTokens(run.output_tokens / b.n_items) : '–'}</td><td>${run.min_memory_gib != null ? run.min_memory_gib.toFixed(1) + ' GiB' : '–'}</td>
-        <td>${esc((run.gpu || '').replace('NVIDIA GeForce ', ''))}${run.n_gpus > 1 ? ' × ' + run.n_gpus : ''}</td>
-        <td>${esc(run.evaluated_at || '')}</td><td>${esc(run.versions?.lm_eval || '')}</td><td>${esc(run.versions?.vllm || '')}</td><td>${issue}</td></tr>`;
+        <td>${esc(gpuLabel(run))}</td>
+        <td>${esc(run.evaluated_at || '')}</td><td>${esc(run.versions?.lm_eval || '')}</td><td>${esc(run.versions?.vllm || '')}</td><td>${esc(run.versions?.transformers || '')}</td><td>${issue}</td></tr>`;
     }
     return `<div class="detail-box">
       <dl>
@@ -780,7 +787,7 @@
         <dt>License</dt><dd>${esc(m.license || '–')}</dd>
         <dt>Revision</dt><dd>${esc(m.revision || '–')}</dd>
       </dl>
-      <table><thead><tr><th>Benchmark</th><th>Score</th><th>Eval time</th><th title="Generated tokens per item">Tokens / item</th><th title="Weights plus the KV cache of one 8,192-token request">Min. memory</th><th>GPU</th><th>Evaluated</th><th>lm-eval</th><th>vLLM</th><th>Request</th></tr></thead>
+      <table><thead><tr><th>Benchmark</th><th>Score</th><th>Eval time</th><th title="Generated tokens per item">Tokens / item</th><th title="Weights plus the KV cache of one 8,192-token request">Min. memory</th><th>GPU</th><th>Evaluated</th><th>lm-eval</th><th>vLLM</th><th>transformers</th><th>Request</th></tr></thead>
       <tbody>${rows}</tbody></table></div>`;
   }
 
@@ -923,7 +930,9 @@
     }
     let html = `${head}: ${fmt(cellValue(row, c))}${note}`;
     if (run.output_tokens) html += `<br>${fmtTokens(run.output_tokens / c.bench.n_items)} output tokens per item`;
-    html += `<br>Eval time ${fmtTime(run.wall_seconds)} on ${esc((run.gpu || '').replace('NVIDIA GeForce ', ''))}`;
+    html += `<br>Eval time ${fmtTime(run.wall_seconds)} on ${esc(gpuLabel(run))}`;
+    const sw = swLabel(run);
+    if (sw) html += `<br>${esc(sw)}`;
     if (run.evaluated_at) html += `<br>Evaluated ${esc(run.evaluated_at)}`;
     return html;
   }
