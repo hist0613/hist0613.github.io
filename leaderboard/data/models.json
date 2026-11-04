@@ -152,6 +152,21 @@
    "method": "Base에서 SFT 후 RL(math, coding, tool use, SWE), 이후 MTP head 추가"
   },
   {
+   "id": "JonathanColetti/Qwen3.5-0.8B-Astra-WeightEdit",
+   "added": "2026-11-04",
+   "source": "new https://huggingface.co/JonathanColetti/Qwen3.5-0.8B-Astra-WeightEdit",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.5-0.8B"
+   ],
+   "method": "학습 없이 weight editing (down_proj 64개 열에서 루프 방향 제거)"
+  },
+  {
    "id": "LiquidAI/LFM2.5-2.6B",
    "added": "2026-11-01",
    "source": "https://openrouter.ai/liquid/lfm-2.5-2.6b",
@@ -217,6 +232,21 @@
    ],
    "kind": "official",
    "method": "9.8T tokens pretraining(synthetic 포함) + SFT + iterative DPO"
+  },
+  {
+   "id": "ML-Intern-lab/Qwen3.5-0.8B-weight-space-programming",
+   "added": "2026-11-04",
+   "source": "trending https://huggingface.co/ML-Intern-lab/Qwen3.5-0.8B-weight-space-programming",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.5-0.8B"
+   ],
+   "method": "학습 없이 weight editing (layer 15·19 down_proj)"
   },
   {
    "id": "nkthebass/tinybrainbot-100m-v3-base",
