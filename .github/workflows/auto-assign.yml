@@ -1,0 +1,17 @@
+# PR 을 열면 assignee 에 hist0613 을 넣는다(사람이 매번 넣던 것, 2026-11-04). 코드를 checkout 하지 않으므로 pull_request_target 으로도 안전하다
+name: Assign PRs
+on:
+  pull_request_target:
+    types: [opened, reopened]
+permissions:
+  pull-requests: write
+jobs:
+  assign:
+    if: github.event.pull_request.user.login != 'dependabot[bot]' && github.event.pull_request.assignees[0] == null
+    runs-on: ubuntu-latest
+    steps:
+      - run: gh pr edit "$PR" --repo "$REPO" --add-assignee hist0613
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
