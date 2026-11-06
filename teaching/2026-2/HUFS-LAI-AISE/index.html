@@ -16,7 +16,7 @@
   <link href="../../css/style.css" rel="stylesheet">
 
   <style>
-    .phase-label { background:#e2e8f0; color:#4a5568; padding:4px 8px; border-radius:12px; font-size:0.75rem; font-weight:500; display:inline-block; margin-top:4px; }
+    .phase-label { background:#e2e8f0; color:#4a5568; padding:3px 8px; border-radius:12px; font-size:0.75rem; font-weight:500; display:inline-block; vertical-align:middle; }
     .phase-intro { background:#e2e8f0; color:#4a5568; }
     .phase-ai    { background:#ccfbf1; color:#0f766e; }
     .phase-oss   { background:#dbeafe; color:#1e40af; }
@@ -43,7 +43,10 @@
     .schedule-table { background:white; border-radius:10px; overflow:hidden; box-shadow:0 4px 6px rgba(0,0,0,0.1); border:1px solid #dee2e6; }
     .schedule-table th { background:linear-gradient(135deg, #0F9B8E 0%, #2C5364 100%); color:white; padding:15px; font-weight:600; text-align:left; border-bottom:2px solid #0B7A70; }
     .schedule-table td { padding:18px 15px; border-bottom:1px solid #e9ecef; vertical-align:middle; line-height:1.5; }
-    .week-number { background:#0F9B8E; color:white; padding:6px 10px; border-radius:20px; font-weight:500; font-size:0.85rem; display:inline-block; min-width:60px; text-align:center; }
+    #schedule tr.row-talk > td { background:#fdf2f2; }
+    @media (min-width:768px) { #schedule td:first-child { white-space:nowrap; } }
+    @media (max-width:576px) { #schedule th:nth-child(3), #schedule td:nth-child(3) { display:none; } }
+    .week-number { color:#2d3748; font-weight:600; font-size:0.95rem; display:inline-block; margin-right:6px; vertical-align:middle; }
 
     .resource-link { display:inline-block; margin:3px; padding:6px 12px; background:#0F9B8E; color:white; border-radius:15px; text-decoration:none; font-size:0.85rem; transition:all 0.3s; }
     .resource-link:hover { background:#0B7A70; color:white; text-decoration:none; transform:translateY(-1px); }
@@ -124,7 +127,7 @@
 
       <div class="mt-4">
         <h5><i class="fas fa-code-branch text-primary"></i> 공동 저장소</h5>
-        <p class="mb-2">한 학기 동안 수강생 전원이 함께 기여하는 공개 저장소입니다. 무엇을 만들지는 1주차에 다 같이 정합니다.</p>
+        <p class="mb-2">한 학기 동안 수강생 전원이 함께 기여하는 공개 저장소입니다.</p>
         <a class="resource-link" href="https://github.com/hist0613/HUFS-LAI-AISE-2026-2" target="_blank" rel="noopener">
           <i class="fab fa-github"></i> hist0613/HUFS-LAI-AISE-2026-2
         </a>
@@ -157,17 +160,16 @@
       <table class="schedule-table table">
         <thead>
           <tr>
-            <th style="width: 14%;">주차</th>
-            <th style="width: 24%;">주제</th>
-            <th style="width: 45%;">세부 내용</th>
+            <th style="width: 15%;">주차</th>
+            <th style="width: 26%;">주제</th>
+            <th style="width: 42%;">세부 내용</th>
             <th style="width: 17%;">자료</th>
           </tr>
         </thead>
       <tbody>
         <tr>
           <td>
-            <span class="week-number">1주차</span><br>
-            <small class="text-muted">2026.09.03</small>
+            <span class="week-number">1주차</span>
           </td>
           <td>오리엔테이션</td>
           <td>Course Overview</td>
@@ -175,9 +177,7 @@
         </tr>
         <tr>
           <td>
-            <span class="week-number">2주차</span><br>
-            <small class="text-muted">2026.09.10</small><br>
-            <span class="phase-label phase-oss">OSS</span>
+            <span class="week-number">2주차</span> <span class="phase-label phase-oss">OSS</span>
           </td>
           <td>Git &amp; GitHub</td>
           <td>Version Control, Branch, Pull Request</td>
@@ -185,9 +185,7 @@
         </tr>
         <tr>
           <td>
-            <span class="week-number">3주차</span><br>
-            <small class="text-muted">2026.09.17</small><br>
-            <span class="phase-label phase-oss">OSS</span>
+            <span class="week-number">3주차</span> <span class="phase-label phase-oss">OSS</span>
           </td>
           <td>코드 리뷰</td>
           <td>Review Practices</td>
@@ -195,9 +193,7 @@
         </tr>
         <tr>
           <td>
-            <span class="week-number">4주차</span><br>
-            <small class="text-muted">2026.09.24</small><br>
-            <span class="phase-label phase-ai">Agent</span>
+            <span class="week-number">4주차</span> <span class="phase-label phase-ai">Agent</span>
           </td>
           <td>AI 코딩 에이전트 (1)</td>
           <td>LLM Basics, Coding Agents</td>
@@ -205,29 +201,23 @@
         </tr>
         <tr>
           <td>
-            <span class="week-number">5주차</span><br>
-            <small class="text-muted">2026.10.01</small><br>
-            <span class="phase-label phase-ai">Agent</span>
+            <span class="week-number">5주차</span> <span class="phase-label phase-ai">Agent</span>
           </td>
           <td>AI 코딩 에이전트 (2)</td>
           <td>Context Engineering, Spec-Driven Development, MCP, Skills</td>
           <td><a class="resource-link" href="https://drive.google.com/file/d/1PCB39bdS8UuKbT4_l_WPAMDMVn0PVhGs/view?usp=sharing" target="_blank">강의자료</a></td>
         </tr>
-        <tr>
+        <tr class="row-talk">
           <td>
-            <span class="week-number">6주차</span><br>
-            <small class="text-muted">2026.10.08</small><br>
-            <span class="phase-label phase-talk">발표</span>
+            <span class="week-number">6주차</span> <span class="phase-label phase-talk">발표</span>
           </td>
-          <td>[발표 1] AI 세팅</td>
+          <td>[발표 1] AI 세팅 공유</td>
           <td>개인 발표</td>
-          <td><span class="resource-link disabled">강의자료</span></td>
+          <td></td>
         </tr>
         <tr>
           <td>
-            <span class="week-number">7주차</span><br>
-            <small class="text-muted">2026.10.15</small><br>
-            <span class="phase-label phase-ai">Agent</span>
+            <span class="week-number">7주차</span> <span class="phase-label phase-ai">Agent</span>
           </td>
           <td>AI 코딩 에이전트 (3)</td>
           <td>Multi-Agent Patterns</td>
@@ -235,9 +225,7 @@
         </tr>
         <tr>
           <td>
-            <span class="week-number">8주차</span><br>
-            <small class="text-muted">2026.10.22</small><br>
-            <span class="phase-label phase-oss">OSS</span>
+            <span class="week-number">8주차</span> <span class="phase-label phase-oss">OSS</span>
           </td>
           <td>오픈소스 (1)</td>
           <td>Licensing, Governance</td>
@@ -245,29 +233,23 @@
         </tr>
         <tr>
           <td>
-            <span class="week-number">9주차</span><br>
-            <small class="text-muted">2026.10.29</small><br>
-            <span class="phase-label phase-oss">OSS</span>
+            <span class="week-number">9주차</span> <span class="phase-label phase-oss">OSS</span>
           </td>
           <td>오픈소스 (2)</td>
           <td>Code Reading, ADR</td>
           <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
-        <tr>
+        <tr class="row-talk">
           <td>
-            <span class="week-number">10주차</span><br>
-            <small class="text-muted">2026.11.12</small><br>
-            <span class="phase-label phase-talk">발표</span>
+            <span class="week-number">10주차</span> <span class="phase-label phase-talk">발표</span>
           </td>
           <td>[발표 2] OSS 분석</td>
           <td>개인 발표</td>
-          <td><span class="resource-link disabled">강의자료</span></td>
+          <td></td>
         </tr>
         <tr>
           <td>
-            <span class="week-number">11주차</span><br>
-            <small class="text-muted">2026.11.19</small><br>
-            <span class="phase-label phase-swe">SWE</span>
+            <span class="week-number">11주차</span> <span class="phase-label phase-swe">SWE</span>
           </td>
           <td>AI 코드리뷰·리팩토링 + CI/CD</td>
           <td>AI Code Review, Refactoring, CI/CD</td>
@@ -275,9 +257,7 @@
         </tr>
         <tr>
           <td>
-            <span class="week-number">12주차</span><br>
-            <small class="text-muted">2026.11.26</small><br>
-            <span class="phase-label phase-swe">SWE</span>
+            <span class="week-number">12주차</span> <span class="phase-label phase-swe">SWE</span>
           </td>
           <td>서비스·배포·운영</td>
           <td>Deployment, Operations</td>
@@ -285,9 +265,7 @@
         </tr>
         <tr>
           <td>
-            <span class="week-number">13주차</span><br>
-            <small class="text-muted">2026.12.03</small><br>
-            <span class="phase-label phase-swe">SWE</span>
+            <span class="week-number">13주차</span> <span class="phase-label phase-swe">SWE</span>
           </td>
           <td>AI 테스팅 &amp; 보안</td>
           <td>Testing, Security</td>
@@ -295,32 +273,19 @@
         </tr>
         <tr>
           <td>
-            <span class="week-number">14주차</span><br>
-            <small class="text-muted">2026.12.10</small><br>
-            <span class="phase-label phase-swe">SWE</span>
+            <span class="week-number">14주차</span> <span class="phase-label phase-swe">SWE</span>
           </td>
           <td>AI·개발자 경제학 + SWE 미래</td>
           <td>AI Economics, Future of SWE</td>
           <td><span class="resource-link disabled">강의자료</span></td>
         </tr>
-        <tr class="table-light">
+        <tr class="row-talk">
           <td>
-            <span class="week-number" style="background:#adb5bd;">—</span><br>
-            <small class="text-muted">2026.12.10</small>
+            <span class="week-number">15주차</span> <span class="phase-label phase-talk">발표</span>
           </td>
-          <td class="text-muted">수업 없음</td>
-          <td class="text-muted">&mdash;</td>
-          <td><span class="text-muted">—</span></td>
-        </tr>
-        <tr>
-          <td>
-            <span class="week-number">15주차</span><br>
-            <small class="text-muted">2026.12.17</small><br>
-            <span class="phase-label phase-talk">발표</span>
-          </td>
-          <td>[발표 3] 팀 프로젝트 발표</td>
+          <td>[발표 3] 팀 프로젝트 개인 발표</td>
           <td>개인 발표</td>
-          <td><span class="resource-link disabled">강의자료</span></td>
+          <td></td>
         </tr>
       </tbody>
       </table>
@@ -334,11 +299,15 @@
           <table class="table table-sm">
             <tbody>
               <tr>
-                <td><i class="fas fa-microphone text-primary me-2"></i>중간시험 <small class="text-muted">(10주차 발표)</small></td>
+                <td><i class="fas fa-microphone text-primary me-2"></i>발표 1 <small class="text-muted">(AI 세팅 공유)</small></td>
+                <td class="text-end"><span class="evaluation-percentage">20%</span></td>
+              </tr>
+              <tr>
+                <td><i class="fas fa-microphone text-primary me-2"></i>발표 2 <small class="text-muted">(OSS 분석)</small></td>
                 <td class="text-end"><span class="evaluation-percentage">30%</span></td>
               </tr>
               <tr>
-                <td><i class="fas fa-microphone text-primary me-2"></i>기말시험 <small class="text-muted">(15주차 발표)</small></td>
+                <td><i class="fas fa-microphone text-primary me-2"></i>발표 3 <small class="text-muted">(팀 프로젝트 개인 발표)</small></td>
                 <td class="text-end"><span class="evaluation-percentage">30%</span></td>
               </tr>
             </tbody>
@@ -348,16 +317,12 @@
           <table class="table table-sm">
             <tbody>
               <tr>
-                <td><i class="fas fa-microphone text-primary me-2"></i>과제물 <small class="text-muted">(6주차 발표)</small></td>
-                <td class="text-end"><span class="evaluation-percentage">30%</span></td>
-              </tr>
-              <tr>
-                <td><i class="fas fa-comments text-primary me-2"></i>기타 <small class="text-muted">(수업 참여 성실도)</small></td>
+                <td><i class="fas fa-laptop-code text-primary me-2"></i>실습·과제 <small class="text-muted">(주간 실습 제출물)</small></td>
                 <td class="text-end"><span class="evaluation-percentage">10%</span></td>
               </tr>
               <tr>
-                <td><i class="fas fa-user-check text-primary me-2"></i>출석</td>
-                <td class="text-end"><span class="evaluation-percentage">0%</span></td>
+                <td><i class="fas fa-comments text-primary me-2"></i>참여 <small class="text-muted">(수업 내 디스커션·협업)</small></td>
+                <td class="text-end"><span class="evaluation-percentage">10%</span></td>
               </tr>
               <tr>
                 <td colspan="2" class="text-center text-muted"><small>총합 100%</small></td>
@@ -368,7 +333,7 @@
       </div>
 
       <p class="mt-3 mb-0 text-muted">
-        <small>지필시험이 없습니다. 발표 세 번이 중간시험&middot;기말시험&middot;과제물을 대신하며,
+        <small>시험·출석 점수는 없습니다.
         점수는 팀이 아니라 개인 단위입니다 &mdash; 공동 저장소에 어떤 기여를 얼마나 했는지를 PR&middot;리뷰&middot;커밋 기록으로 봅니다.</small>
       </p>
     </div>
@@ -384,8 +349,7 @@
       <h4><i class="fas fa-bullhorn"></i> 공지사항</h4>
       <ul class="mb-0">
         <li><i class="fas fa-clock me-2"></i>목요일 4, 5, 6교시 수업입니다.</li>
-        <li><i class="fas fa-calendar-xmark me-2"></i>12월 10일(목) 보강주간에는 수업이 없습니다.</li>
-        <li><i class="fas fa-microphone me-2"></i>발표 3회 &mdash; 10월 8일(목) &middot; 11월 5일(목) &middot; 12월 17일(목). 지필시험은 없습니다.</li>
+        <li><i class="fas fa-microphone me-2"></i>발표 3회 &mdash; 10월 8일(목) &middot; 11월 12일(목) &middot; 12월 17일(목). 지필시험은 없습니다.</li>
         <li><i class="fab fa-github me-2"></i>1주차 전에 GitHub 계정을 만들어 두세요.</li>
       </ul>
     </div>
