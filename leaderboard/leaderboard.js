@@ -16,7 +16,8 @@
     query: [],
     settings: new Set(),
     // pref: 권장 decoding 행을 보이고, 아직 권장 행이 없는 (모델, 설정)은 greedy 행(2026-11-05 전 결과)으로 대신 보인다
-    decoding: 'pref',
+    // decoding 은 thinking 처럼 행을 나눈다(같은 모델·설정이라도 권장 decoding 행과 greedy 행이 따로). 기본으로 둘 다 보인다
+    decodings: new Set(['rec', 'greedy']),
     sizes: new Set(SIZE_BUCKETS.map((b) => b.id)),
     mode: 'score',
     group: true,
@@ -82,23 +83,6 @@
       }
     }
     ROWS = [...byKey.values()];
-    // 기본 보기(pref): (모델, 설정)마다 한 행. 칸마다 권장 decoding 결과가 있으면 그것을, 없으면 greedy 결과를 쓴다.
-    // 행 단위로 고르면 권장 결과가 몇 개뿐인 행이 greedy 행을 가려 평균이 1~2개 benchmark 로 계산된다(2026-11-07)
-    const merged = new Map();
-    for (const r of ROWS) {
-      const k = `${r.model}|${r.setting}|pref`;
-      if (!merged.has(k)) merged.set(k, { key: k, model: r.model, setting: r.setting, raw: r.setting, greedy: false, merged: true, meta: r.meta, runs: {}, greedyBench: new Set() });
-      const m = merged.get(k);
-      for (const [b, run] of Object.entries(r.runs)) {
-        if (!r.greedy) { m.runs[b] = run; m.greedyBench.delete(b); }
-        else if (!m.runs[b]) { m.runs[b] = run; m.greedyBench.add(b); }
-      }
-      if (r.unsupported) {
-        m.unsupported = { ...m.unsupported, ...r.unsupported };
-        m.unsupportedDetail = { ...m.unsupportedDetail, ...r.unsupportedDetail };
-      }
-    }
-    ROWS.push(...merged.values());
     // one color per model, stable across filters
     const ids = [...new Set(ROWS.map((r) => r.model))].sort();
     view.colorIdx = Object.fromEntries(ids.map((m, i) => [m, i]));
@@ -147,10 +131,7 @@
 
   function matches(row) {
     if (!state.settings.has(row.setting)) return false;
-    // pref 는 합친 행만, 나머지는 원래 행(권장 / greedy / 둘 다)
-    if (state.decoding === 'pref' ? !row.merged : row.merged) return false;
-    if (state.decoding === 'rec' && row.greedy) return false;
-    if (state.decoding === 'greedy' && !row.greedy) return false;
+    if (!state.decodings.has(row.greedy ? 'greedy' : 'rec')) return false;
     const p = row.meta.params_b;
     if (p != null && !SIZE_BUCKETS.some((b) => state.sizes.has(b.id) && b.test(p))) return false;
     const pos = state.query.filter((q) => !q.neg);
@@ -745,7 +726,7 @@
         <td class="fz c-rank">${line.rank ?? ''}</td>
         <td class="fz c-model"><button type="button" class="m-link" data-detail="${esc(r.key)}" title="Details of ${esc(r.model)}">${name}</button>${prec ? `<span class="prec" title="Weights in ${esc(prec)}">${esc(prec)}</span>` : ''}<span class="m-sub"><span class="m-setting">thinking ${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${more}</span></td>
         <td class="fz c-setting"><span class="badge ${esc(r.setting)}">${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${r.greedy ? '<span class="dec" title="Greedy decoding (runs before 2026-11-05)">greedy</span>'
-          : r.greedyBench?.size ? `<span class="dec" title="${r.greedyBench.size} cells show greedy results until the run with the model's recommended decoding finishes">${r.greedyBench.size} greedy</span>` : ''}</td>
+          : ''}</td>
         <td class="fz fz-last c-params">${fmtParams(r.meta.params_b)}</td>
         <td class="v first stat" data-col="__avg" style="${heat(summary, view.colStats.__avg)}">${fmt(summary)}${partial ? '*' : ''}</td>`;
       if (showRank()) html += `<td class="v stat">${r.avgRank == null ? '–' : r.avgRank.toFixed(1)}</td>`;
@@ -777,9 +758,7 @@
           if (v != null && res.partial) title = `Average over ${res.m} of ${res.n}`;
           if (v != null && res.micro != null) title += `${title ? '. ' : ''}macro ${fmtScore(v)}, micro ${fmtScore(res.micro)}`;
         }
-        // 기본 보기에서 권장 decoding 결과가 아직 없어 greedy 결과를 대신 보이는 칸
-        const fromGreedy = v != null && !cls && c.bench && r.greedyBench?.has(c.bench.id);
-        html += `<td class="v${c.kind === 'leaf' && c.sub ? ' sub' : ' first'}${v == null ? ' na' : ''}${cls}${fromGreedy ? ' from-greedy' : ''}" data-col="${esc(c.id)}" style="${cls ? '' : heat(v, view.colStats[c.id])}"${title ? ` data-note="${esc(title)}"` : ''}${tag ? ` data-tag="${esc(tag)}"` : ''}>${text}</td>`;
+        html += `<td class="v${c.kind === 'leaf' && c.sub ? ' sub' : ' first'}${v == null ? ' na' : ''}${cls}" data-col="${esc(c.id)}" style="${cls ? '' : heat(v, view.colStats[c.id])}"${title ? ` data-note="${esc(title)}"` : ''}${tag ? ` data-tag="${esc(tag)}"` : ''}>${text}</td>`;
       }
       html += '</tr>';
     }
@@ -805,9 +784,7 @@
   function avgDetail(row) {
     const checked = META.benchmarks.filter((b) => state.avgChecked.has(b.id));
     const missing = checked.filter((b) => row.runs[b.id]?.score == null && !row.unsupported?.[b.id]);
-    const greedy = checked.filter((b) => row.greedyBench?.has(b.id) && row.runs[b.id]?.score != null);
-    const items = [['Benchmarks', `average of ${row.n} of the ${row.nOf} checked`], ['Missing', missing.map((b) => b.name).join(', ')],
-      ['Greedy results', greedy.length ? `${greedy.length} (${greedy.map((b) => b.name).join(', ')}), shown until the run with the recommended decoding finishes` : '']]
+    const items = [['Benchmarks', `average of ${row.n} of the ${row.nOf} checked`], ['Missing', missing.map((b) => b.name).join(', ')]]
       .filter(([, v]) => v);
     return `<dl class="tip-grid">${items.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>`;
   }
@@ -1151,7 +1128,16 @@
       e.target.checked ? state.settings.add(e.target.value) : state.settings.delete(e.target.value);
       render();
     });
-    $('#decoding').addEventListener('change', (e) => { state.decoding = e.target.value; render(); });
+    const df = $('#decoding-filter');
+    for (const [id, label, title] of [['rec', 'recommended', "Each model's recommended sampling, greedy when it recommends none"],
+      ['greedy', 'greedy', 'Greedy decoding for every model (runs before 2026-11-05)']]) {
+      const n = ROWS.filter((r) => (r.greedy ? 'greedy' : 'rec') === id).length;
+      df.insertAdjacentHTML('beforeend', `<label title="${esc(title)}"><input type="checkbox" value="${id}"${state.decodings.has(id) ? ' checked' : ''}>${esc(label)} <span class="n">${n}</span></label>`);
+    }
+    df.addEventListener('change', (e) => {
+      e.target.checked ? state.decodings.add(e.target.value) : state.decodings.delete(e.target.value);
+      render();
+    });
     const zf = $('#size-filter');
     for (const b of SIZE_BUCKETS) zf.insertAdjacentHTML('beforeend', `<label><input type="checkbox" value="${b.id}" checked>${b.label}</label>`);
     zf.addEventListener('change', (e) => {
