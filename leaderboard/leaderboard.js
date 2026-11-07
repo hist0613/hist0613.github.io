@@ -987,7 +987,8 @@
     ].filter(([, v]) => v);
     const sw = swLabel(run);
     return `${head}<div class="tip-score">${fmt(cellValue(row, c))}<span>${esc(c.bench.metric_label || '')}</span></div>${note}
-      <dl class="tip-grid">${items.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>${sw ? `<div class="tip-sw">${esc(sw)}</div>` : ''}`;
+      <dl class="tip-grid">${items.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>${sw ? `<div class="tip-sw">${esc(sw)}</div>` : ''}
+      <div class="tip-hint">Click the cell to see one item the model got right and one it got wrong</div>`;
   }
 
   $('#table').addEventListener('mousemove', (e) => {
@@ -999,8 +1000,141 @@
   });
   $('#table').addEventListener('mouseleave', hideTip);
 
+  // ---------- sample panel ----------
+  // 벤치마크 칸을 누르면 오른쪽 패널에 그 모델이 맞힌 문항 하나와 틀린 문항 하나를 보인다(2026-11-07).
+  // 데이터는 collect.py 가 만든 data/samples/<org__model>/<설정>.json. 칸의 결과가 greedy 면 greedy 파일을 연다
+  const samplePanel = $('#sample-panel');
+  const sampleCache = new Map();
+  const sampleState = { row: null, bench: null, which: 'correct', data: null };
+  const SHOT_BENCH = new Set(['mmlu_pro']);  // few-shot 을 쓰는 benchmark. 그 밖의 앞선 대화는 earlier turns
+
+  async function loadSamples(model, setting) {
+    const path = `data/samples/${model.replace('/', '__')}/${setting}.json`;
+    if (!sampleCache.has(path)) sampleCache.set(path, fetch(path).then((r) => (r.ok ? r.json() : {})).catch(() => ({})));
+    return sampleCache.get(path);
+  }
+
+  // 문항 본문(대화·이미지)은 benchmark 별 공용 파일(_items)에 있다. 문항 순서가 모든 모델에 같아 여러 모델이 같은 파일을 쓴다
+  async function loadItem(bench, ref) {
+    const path = `data/samples/_items/${bench}/${ref}.json`;
+    if (!sampleCache.has(path)) sampleCache.set(path, fetch(path).then((r) => (r.ok ? r.json() : {})).catch(() => ({})));
+    return sampleCache.get(path);
+  }
+
+  let mathjax = null;
+  function typeset(el) {
+    if (!mathjax) {
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] }, svg: { fontCache: 'global' }, startup: { typeset: false } };
+      mathjax = new Promise((res) => {
+        const sc = document.createElement('script');
+        sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js';
+        sc.onload = () => window.MathJax.startup.promise.then(res);
+        sc.onerror = () => res();
+        document.head.appendChild(sc);
+      });
+    }
+    mathjax.then(() => window.MathJax?.typesetPromise?.([el]).catch(() => {}));
+  }
+
+  // 출력에서 thinking 을 떼어 낸다. 끝 표시는 모델마다 다르다(</think>, Gemma 4 <channel|>, gpt-oss final 채널)
+  function splitThinking(raw) {
+    if (!raw) return null;
+    for (const end of ['</think>', '<channel|>', '<|channel|>final<|message|>']) {
+      const i = raw.lastIndexOf(end);
+      if (i >= 0) return raw.slice(0, i).replace(/^<\|channel>thought\n?|^<think>\n?|^<\|channel\|>analysis<\|message\|>/, '').trim();
+    }
+    return null;
+  }
+
+  function bubble(m, extra = '') {
+    const role = m.role === 'assistant' && m.tool_calls ? 'assistant (tool call)' : m.role;
+    let body = typeof m.content === 'string' ? m.content : Array.isArray(m.content) ? m.content.map((c) => c.text || '').join('\n') : '';
+    if (m.tool_calls) body += (body ? '\n' : '') + m.tool_calls.map((t) => `${t.function?.name}(${t.function?.arguments})`).join('\n');
+    return `<div class="sp-msg ${m.role === 'tool' ? 'tool' : esc(m.role)}"><div class="sp-role">${esc(role)}</div><div class="sp-text">${esc(body)}</div>${extra}</div>`;
+  }
+
+  function chatHtml(item, bench) {
+    const msgs = item.messages || [];
+    const lastUser = msgs.map((m) => m.role).lastIndexOf('user');
+    const sys = msgs.filter((m, i) => m.role === 'system' && i < lastUser);
+    const shots = msgs.filter((m, i) => m.role !== 'system' && i < lastUser);
+    const tail = lastUser >= 0 ? msgs.slice(lastUser) : msgs;
+    const imgs = (item.images || []).map((src, i) => `<img src="${src}" alt="Image ${i + 1} of the item" data-zoom>`).join('');
+    let h = sys.map((m) => bubble(m)).join('');
+    if (shots.length) h += `<details class="sp-fold"><summary>${SHOT_BENCH.has(bench) ? `${shots.length / 2} worked examples (few-shot)` : `${shots.length} earlier turns`}</summary>${shots.map((m) => bubble(m)).join('')}</details>`;
+    h += tail.map((m, i) => bubble(m, i === 0 ? imgs : '')).join('');
+    const thinking = splitThinking(item.raw);
+    const think = thinking ? `<details class="sp-think"><summary>Thinking${item.output_tokens ? ` · ${item.output_tokens.toLocaleString('en-US')} tokens in total` : ''}${item.finish === 'length' ? ' · hit the generation limit' : ''}</summary><div class="sp-text">${esc(thinking)}</div></details>` : '';
+    h += `<div class="sp-msg model"><div class="sp-role">model output</div>${think}<div class="sp-text">${esc(item.answer || '(empty)')}</div></div>`;
+    return `<div class="sp-chat">${h}</div>`;
+  }
+
+  function gradeHtml(item, ok, bench) {
+    const checked = bench === 'mih' || bench === 'ifeval';
+    // IFEval·MIH 는 정답이 아니라 지시를 지켰는지 검사한다(target 값은 문항 번호라 보이지 않는다)
+    const ref = checked ? (bench === 'mih' ? 'every constraint of the higher-priority instruction' : "the prompt's verifiable instructions") : item.reference ?? '–';
+    const ext = item.extracted != null && item.extracted !== item.answer ? `<dt>Extracted</dt><dd>${esc(String(item.extracted).slice(0, 300))}</dd>` : '';
+    return `<dl class="sp-grade ${ok ? 'ok' : 'bad'}"><dt>Result</dt><dd class="sp-verdict">${ok ? 'Correct' : 'Wrong'}</dd><dt>${checked ? 'Checked by' : 'Reference'}</dt><dd>${esc(Array.isArray(ref) ? ref.join(', ') : ref)}</dd>${ext}</dl>`;
+  }
+
+  function renderSamplePanel() {
+    const { row, bench, data } = sampleState;
+    if (!row) { samplePanel.hidden = true; return; }
+    const b = META.benchmarks.find((x) => x.id === bench);
+    const run = row.runs[bench];
+    const v = data?.[bench];
+    const has = { correct: !!v?.correct, wrong: !!v?.wrong };
+    if (v && !has[sampleState.which]) sampleState.which = has.correct ? 'correct' : 'wrong';
+    const item = v?.[sampleState.which];
+    if (item?.ref && !item.messages) {
+      // 본문을 불러온 뒤 다시 그린다
+      loadItem(bench, item.ref).then((body) => { Object.assign(item, { messages: [], images: [] }, body); if (sampleState.row === row) renderSamplePanel(); });
+    }
+    const dec = run ? decLabel(run, row) : '';
+    let body;
+    if (!data) body = '<p class="sp-note">Loading…</p>';
+    else if (!v) body = '<p class="sp-note">Sample answers for this cell are not ready yet.</p>';
+    else if (v.hidden) body = `<div class="sp-box">${esc(b.name)} asks that its questions not be posted online in plain text, so this panel shows no question or output for it. The score in the table counts every item as usual.</div>`;
+    else if (!item) body = `<p class="sp-note">${sampleState.which === 'wrong' ? 'The model answered every item correctly.' : 'The model answered no item correctly.'}</p>`;
+    else body = `<p class="sp-note">Item ${esc(item.item_id)}${item.category ? ` · ${esc(item.category)}` : ''}. Picked at random from the items the model answered ${sampleState.which === 'correct' ? 'correctly' : 'wrongly'}.</p>
+      ${gradeHtml(item, sampleState.which === 'correct', bench)}${chatHtml(item, bench)}
+      <p class="sp-note">Shown as messages. Each model received them through its own chat template; templates without a system role put the system message into the first user turn.</p>`;
+    const toggle = v && !v.hidden ? `<div class="sp-seg" role="group" aria-label="Which item"><button type="button" class="ok" data-which="correct" aria-pressed="${sampleState.which === 'correct'}"${has.correct ? '' : ' disabled'}>Correct item</button><button type="button" class="bad" data-which="wrong" aria-pressed="${sampleState.which === 'wrong'}"${has.wrong ? '' : ' disabled'}>Wrong item</button></div>` : '';
+    samplePanel.innerHTML = `<div class="sp-head"><div class="sp-title"><h2>${esc(row.model)}<span class="sp-sub">${esc(b.name)} · thinking ${esc(SETTING_LABEL[row.setting] || row.setting)}${dec ? ` · ${esc(dec)}` : ''}${run?.score != null ? ` · score ${fmtScore(run.score)}` : ''}</span></h2><button type="button" aria-label="Close" data-sp-close>×</button></div>${toggle}</div><div class="sp-body">${body}</div>`;
+    samplePanel.hidden = false;
+    typeset(samplePanel.querySelector('.sp-body'));
+  }
+
+  async function openSample(row, bench) {
+    const run = row.runs[bench];
+    Object.assign(sampleState, { row, bench, which: 'correct', data: null });
+    renderSamplePanel();
+    const data = await loadSamples(row.model, run.setting);
+    if (sampleState.row === row && sampleState.bench === bench) { sampleState.data = data; renderSamplePanel(); }
+  }
+
+  samplePanel.addEventListener('click', (e) => {
+    if (e.target.closest('[data-sp-close]')) { sampleState.row = null; renderSamplePanel(); return; }
+    const w = e.target.closest('[data-which]');
+    if (w && !w.disabled) { sampleState.which = w.dataset.which; renderSamplePanel(); return; }
+    const z = e.target.closest('img[data-zoom]');
+    if (z) { const L = $('#lightbox'); L.querySelector('img').src = z.src; L.hidden = false; }
+  });
+  $('#lightbox').addEventListener('click', (e) => { e.currentTarget.hidden = true; });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (!$('#lightbox').hidden) $('#lightbox').hidden = true;
+    else if (sampleState.row) { sampleState.row = null; renderSamplePanel(); }
+  });
+
   // ---------- interactions ----------
   $('#table').addEventListener('click', (e) => {
+    const cell = e.target.closest('td[data-col]');
+    if (cell && cell.dataset.col !== '__avg') {
+      const row = ROWS.find((r) => r.key === cell.closest('tr').dataset.row);
+      const c = colById(cell.dataset.col);
+      if (row && c?.bench && row.runs[c.bench.id]) { hideTip(); openSample(row, c.bench.id); return; }
+    }
     if (e.target.closest('[data-avg-panel]')) { view.avgPanel = !view.avgPanel; render(); return; }
     const mvb = e.target.closest('[data-axis-move]');
     if (mvb) {
