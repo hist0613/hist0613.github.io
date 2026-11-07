@@ -781,7 +781,7 @@
   const gpuLabel = (run) => (run.gpu || '').replace('NVIDIA GeForce ', '') + (run.n_gpus > 1 ? ' × ' + run.n_gpus : '');
   const swLabel = (run) => {
     const v = run.versions || {};
-    return [['vLLM', v.vllm], ['transformers', v.transformers], ['lm-eval', v.lm_eval]].filter(([, x]) => x).map(([k, x]) => `${k} ${x}`).join(', ');
+    return [['vLLM', v.vllm], ['transformers', v.transformers], ['lm-eval', v.lm_eval]].filter(([, x]) => x).map(([k, x]) => `${k} ${x}`).join(' · ');
   };
 
   // 대기열 상태. greedy 행이 권장 decoding 행 대신 보일 때는 그 칸의 권장 decoding job 이 대기·실행 중인지도 본다
@@ -790,19 +790,20 @@
 
   // decoding 과 생성 한도: 모델 권장 sampling 값(없으면 greedy), 그리고 우리 평가의 생성 한도에 걸린 문항 비율(그중 같은 구절을 되풀이한 것)
   const decLabel = (run, row) => {
-    if (row.greedy) return 'Decoding: greedy (runs before 2026-11-05)';
+    if (row.greedy) return 'greedy (runs before 2026-11-05)';
     if (!run.decoding) return '';
     const s = run.sampling;
-    if (!s) return 'Decoding: greedy (the model recommends no sampling)';
+    if (!s) return 'greedy (the model recommends no sampling)';
     const parts = [['temperature', s.temperature], ['top-p', s.top_p], ['top-k', s.top_k], ['min-p', s.min_p], ['presence penalty', s.presence_penalty], ['repetition penalty', s.repetition_penalty]]
       .filter(([, v]) => v != null).map(([k, v]) => `${k} ${v}`);
-    return `Decoding: the model's recommended sampling (${parts.join(', ')})`;
+    return `the model's recommended sampling: ${parts.join(', ')}`;
   };
   const cutLabel = (run) => {
     const g = run.gen;
-    if (!g || !g.items || !g.cut) return '';
+    if (!g || !g.items) return '';
     const n = (x) => x.toLocaleString('en-US');
-    return `${n(g.cut)} of ${n(g.items)} items hit the generation limit of this evaluation${g.loop ? `, ${n(g.loop)} of them repeating the same text` : ''}`;
+    if (!g.cut) return `no item hit it (${n(g.items)} items)`;
+    return `${n(g.cut)} of ${n(g.items)} items hit it${g.loop ? `, ${n(g.loop)} of them repeating the same text` : ''}`;
   };
 
   function renderDetail(r) {
@@ -957,29 +958,31 @@
       <tr><td>Max</td><td>${f(st.max.value)} · ${esc(st.max.row.model.split('/').pop())}</td></tr></table>`;
   }
 
+  // 칸 툴팁: 머리(모델·설정) → benchmark 와 점수 → 결과·실행 항목 표 → 소프트웨어 버전(작게) 순으로 묶는다
   function tipForCell(td) {
     const row = ROWS.find((r) => r.key === td.closest('tr').dataset.row);
     const c = colById(td.dataset.col);
-    const note = td.dataset.note ? `<br>${esc(td.dataset.note)}` : '';
-    const head = `<b>${esc(row.model)}</b> · thinking ${esc(SETTING_LABEL[row.setting] || row.setting)}${row.greedy ? ' · greedy decoding' : ''}<br>${esc(c.label)}`;
-    if (td.dataset.tag) return `${head}: <span class="tip-tag">${esc(td.dataset.tag)}</span>${note}`;
-    if (!c.bench) return `${head}: ${fmt(cellValue(row, c))}${note}`;
+    const chips = [`thinking ${SETTING_LABEL[row.setting] || row.setting}`, row.greedy ? 'greedy decoding' : ''].filter(Boolean)
+      .map((x) => `<span class="tip-chip">${esc(x)}</span>`).join('');
+    const head = `<div class="tip-head"><b>${esc(row.model)}</b>${chips}</div><div class="tip-bench">${esc(c.label)}</div>`;
+    const note = td.dataset.note ? `<div class="tip-note">${esc(td.dataset.note)}</div>` : '';
+    if (td.dataset.tag) return `${head}<div class="tip-status"><span class="tip-tag">${esc(td.dataset.tag)}</span></div>${note}`;
+    if (!c.bench) return `${head}<div class="tip-score">${fmt(cellValue(row, c))}</div>${note}`;
     const run = row?.runs[c.bench.id];
     if (!run) {
       const pend = pendingFor(row, c.bench.id);
-      return `${head}: ${pend === 'running' ? 'being evaluated now' : pend ? 'waiting in the evaluation queue' : 'not evaluated'}${note}`;
+      return `${head}<div class="tip-status">${pend === 'running' ? 'Being evaluated now' : pend ? 'Waiting in the evaluation queue' : 'Not evaluated yet'}</div>${note}`;
     }
-    let html = `${head}: ${fmt(cellValue(row, c))}${note}`;
-    if (run.output_tokens) html += `<br>${fmtTokens(run.output_tokens / c.bench.n_items)} output tokens per item`;
-    html += `<br>Eval time ${fmtTime(run.wall_seconds)} on ${esc(gpuLabel(run))}`;
-    const dec = decLabel(run, row);
-    if (dec) html += `<br>${esc(dec)}`;
-    const cut = cutLabel(run);
-    if (cut) html += `<br>${esc(cut)}`;
+    const items = [
+      ['Output', run.output_tokens ? `${fmtTokens(run.output_tokens / c.bench.n_items)} tokens per item` : ''],
+      ['Generation limit', cutLabel(run)],
+      ['Decoding', decLabel(run, row)],
+      ['Eval time', `${fmtTime(run.wall_seconds)} on ${gpuLabel(run)}`],
+      ['Evaluated', run.evaluated_at || ''],
+    ].filter(([, v]) => v);
     const sw = swLabel(run);
-    if (sw) html += `<br>${esc(sw)}`;
-    if (run.evaluated_at) html += `<br>Evaluated ${esc(run.evaluated_at)}`;
-    return html;
+    return `${head}<div class="tip-score">${fmt(cellValue(row, c))}<span>${esc(c.bench.metric_label || '')}</span></div>${note}
+      <dl class="tip-grid">${items.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>${sw ? `<div class="tip-sw">${esc(sw)}</div>` : ''}`;
   }
 
   $('#table').addEventListener('mousemove', (e) => {

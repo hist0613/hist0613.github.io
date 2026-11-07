@@ -385,16 +385,28 @@ tr.child td.fz { background: #fcfcfd; }
   z-index: 50;
   pointer-events: none;
   background: #111827;
-  color: #f9fafb;
+  color: #f3f4f6;
   font-size: 12px;
   line-height: 1.45;
-  padding: 7px 9px;
-  border-radius: 5px;
-  max-width: 280px;
-  box-shadow: 0 4px 12px rgba(0,0,0,.18);
+  padding: 9px 11px;
+  border-radius: 6px;
+  max-width: 330px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
 }
 .lb-tip b { font-weight: 700; color: inherit; }  /* 사이트 공통 b 글자색(#222)이 어두운 툴팁에서 안 보인다 */
 .tip-tag { display: inline-block; padding: 0 6px; border-radius: 3px; background: #f3f4f6; color: #111827; font-weight: 700; }
+/* 칸 툴팁 구획: 머리 → benchmark·점수 → 항목 표 → 버전. 줄글로 늘어놓지 않고 항목 이름과 값을 나눠 보인다 */
+.tip-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 6px; }
+.tip-chip { font-size: 11px; padding: 0 5px; border-radius: 3px; background: #374151; color: #e5e7eb; }
+.tip-bench { color: #9ca3af; margin-top: 2px; }
+.tip-score { font-size: 18px; font-weight: 700; margin: 2px 0 6px; font-variant-numeric: tabular-nums; }
+.tip-score span { font-size: 11px; font-weight: 400; color: #9ca3af; margin-left: 6px; }
+.tip-status { margin: 4px 0 2px; }
+.tip-note { color: #9ca3af; margin-bottom: 4px; }
+.tip-grid { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; margin: 0; padding-top: 6px; border-top: 1px solid #374151; }
+.tip-grid dt { color: #9ca3af; white-space: nowrap; }
+.tip-grid dd { margin: 0; }
+.tip-sw { margin-top: 6px; padding-top: 5px; border-top: 1px solid #374151; font-size: 11px; color: #9ca3af; }
 .lb-tip table { border-collapse: collapse; }
 .lb-tip td { padding: 0 8px 0 0; }
 
