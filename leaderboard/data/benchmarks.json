@@ -1750,7 +1750,260 @@
     ]
    },
    "metric_short": "Judge 0–100"
-  }
+  },
+ {
+  "id": "vlm_subtlebench",
+  "name": "VLM-SubtleBench",
+  "description": "Multiple-choice questions on subtle differences between two similar images (attribute, state, emotion, temporal, spatial, existence, quantity, quality, viewpoint, action) from natural, game, industrial, aerial and synthetic images, with 2 to 5 options. The 330 medical items are left out because their images are not public. The two images are given in order, with the paper's standard prompt asking for the answer letter only.",
+  "language": "en",
+  "modality": "image",
+  "n_items": 11358,
+  "metric": "acc",
+  "metric_label": "Accuracy (option letter parsed by rules)",
+  "description_ko": "비슷한 두 이미지 사이의 미세한 차이(속성, 상태, 감정, 시간, 공간, 존재, 수량, 품질, 시점, 행동)를 묻는 객관식 문항으로, 자연·게임·산업·항공·합성 이미지에서 뽑았고 보기는 2–5개입니다. 의료 330문항은 이미지가 공개되지 않아 뺍니다. 두 이미지를 차례로 주고, 논문의 standard prompt 로 답 글자만 요구합니다.",
+  "metric_label_ko": "정확도 (규칙으로 보기 글자 파싱)",
+  "lm_eval_task": "vlm_subtlebench",
+  "dataset_url": "https://huggingface.co/datasets/KRAFTON/VLM-SubtleBench",
+  "paper_url": "https://arxiv.org/abs/2603.07888",
+  "protocol_url": "https://github.com/krafton-ai/VLM-SubtleBench",
+  "protocol_name": "VLM-SubtleBench",
+  "subtasks": [
+   {
+    "id": "acc_attribute",
+    "name": "attribute",
+    "n_items": 1114
+   },
+   {
+    "id": "acc_state",
+    "name": "state",
+    "n_items": 1051
+   },
+   {
+    "id": "acc_emotion",
+    "name": "emotion",
+    "n_items": 1007
+   },
+   {
+    "id": "acc_temporal",
+    "name": "temporal",
+    "n_items": 1009
+   },
+   {
+    "id": "acc_spatial",
+    "name": "spatial",
+    "n_items": 1120
+   },
+   {
+    "id": "acc_existence",
+    "name": "existence",
+    "n_items": 1092
+   },
+   {
+    "id": "acc_quantity",
+    "name": "quantity",
+    "n_items": 1370
+   },
+   {
+    "id": "acc_quality",
+    "name": "quality",
+    "n_items": 1007
+   },
+   {
+    "id": "acc_viewpoint",
+    "name": "viewpoint",
+    "n_items": 1580
+   },
+   {
+    "id": "acc_action",
+    "name": "action",
+    "n_items": 1008
+   }
+  ],
+  "tags": {
+   "language": [
+    "English"
+   ],
+   "input": [
+    "Image"
+   ],
+   "task_type": [
+    "Visual understanding"
+   ],
+   "difficulty": [
+    "General"
+   ],
+   "scoring": [
+    "Multiple choice"
+   ],
+   "domain": [
+    "General"
+   ]
+  },
+  "metric_short": "Accuracy"
+ },
+ {
+  "id": "vdiff_bench",
+  "name": "VDiff-Bench",
+  "description": "Four-way multiple-choice questions on what changed between two images, over 10 change types from semantic edits (position, motion, objects, text) to low-level ones (noise, texture, whole-image color, illumination). Distractors include near-miss descriptions and \"no difference\". Prompt from the paper.",
+  "language": "en",
+  "modality": "image",
+  "n_items": 1756,
+  "metric": "acc",
+  "metric_label": "Accuracy (option letter parsed by rules)",
+  "description_ko": "두 이미지 사이에서 무엇이 바뀌었는지 묻는 4지선다 문항으로, 의미 변화(위치, 동작, 물체, 글자)부터 저수준 변화(노이즈, 질감, 전체 색, 조명)까지 변화 유형 10가지를 다룹니다. 오답 보기에는 비슷하지만 틀린 설명과 \"차이 없음\"이 들어 있습니다. prompt 는 논문 것을 씁니다.",
+  "metric_label_ko": "정확도 (규칙으로 보기 글자 파싱)",
+  "lm_eval_task": "vdiff_bench",
+  "dataset_url": "https://huggingface.co/datasets/elaine1wan/image_diff_data",
+  "paper_url": "https://arxiv.org/abs/2609.06245",
+  "subtasks": [
+   {
+    "id": "acc_position",
+    "name": "position",
+    "n_items": 158
+   },
+   {
+    "id": "acc_motion",
+    "name": "motion",
+    "n_items": 138
+   },
+   {
+    "id": "acc_color_regional",
+    "name": "color (regional)",
+    "n_items": 170
+   },
+   {
+    "id": "acc_color_whole",
+    "name": "color (whole image)",
+    "n_items": 147
+   },
+   {
+    "id": "acc_appear_disappear",
+    "name": "appear / disappear",
+    "n_items": 201
+   },
+   {
+    "id": "acc_noise_resolution",
+    "name": "noise / resolution",
+    "n_items": 150
+   },
+   {
+    "id": "acc_texture",
+    "name": "texture",
+    "n_items": 177
+   },
+   {
+    "id": "acc_substitution_size",
+    "name": "substitution / size",
+    "n_items": 199
+   },
+   {
+    "id": "acc_ocr",
+    "name": "OCR / text",
+    "n_items": 221
+   },
+   {
+    "id": "acc_illumination",
+    "name": "illumination",
+    "n_items": 195
+   }
+  ],
+  "tags": {
+   "language": [
+    "English"
+   ],
+   "input": [
+    "Image"
+   ],
+   "task_type": [
+    "Visual understanding"
+   ],
+   "difficulty": [
+    "General"
+   ],
+   "scoring": [
+    "Multiple choice"
+   ],
+   "domain": [
+    "General"
+   ]
+  },
+  "metric_short": "Accuracy"
+ },
+ {
+  "id": "oddgridbench",
+  "name": "OddGridBench",
+  "description": "Grids of 5×5 to 9×9 identical icons where one differs in color, size, rotation or position (or 2–4 of these at once); the model answers the row and column of the odd one in \\boxed{Row X, Column Y}. Official prompt and exact-match scoring on all 1,400 test images.",
+  "language": "en",
+  "modality": "image",
+  "n_items": 1400,
+  "metric": "acc",
+  "metric_label": "Accuracy (exact row and column, official parsing)",
+  "description_ko": "똑같은 아이콘이 5×5–9×9 격자로 놓이고 하나만 색, 크기, 회전, 위치 중 하나(또는 2–4가지)가 다릅니다. 다른 하나의 행과 열을 \\boxed{Row X, Column Y} 로 답합니다. 공식 prompt 와 정확 일치 채점으로 test 1,400장 전체를 씁니다.",
+  "metric_label_ko": "정확도 (행·열 정확 일치, 공식 파싱)",
+  "lm_eval_task": "oddgridbench",
+  "dataset_url": "https://huggingface.co/datasets/wwwtttjjj/OddGridBench",
+  "paper_url": "https://arxiv.org/abs/2603.09326",
+  "protocol_url": "https://github.com/GML-FMGroup/OddGridBench",
+  "protocol_name": "OddGridBench",
+  "subtasks": [
+   {
+    "id": "acc_color",
+    "name": "color",
+    "n_items": 200
+   },
+   {
+    "id": "acc_size",
+    "name": "size",
+    "n_items": 200
+   },
+   {
+    "id": "acc_rotation",
+    "name": "rotation",
+    "n_items": 200
+   },
+   {
+    "id": "acc_position",
+    "name": "position",
+    "n_items": 200
+   },
+   {
+    "id": "acc_2type",
+    "name": "2 attributes",
+    "n_items": 200
+   },
+   {
+    "id": "acc_3type",
+    "name": "3 attributes",
+    "n_items": 200
+   },
+   {
+    "id": "acc_4type",
+    "name": "4 attributes",
+    "n_items": 200
+   }
+  ],
+  "tags": {
+   "language": [
+    "English"
+   ],
+   "input": [
+    "Image"
+   ],
+   "task_type": [
+    "Visual understanding"
+   ],
+   "difficulty": [
+    "General"
+   ],
+   "scoring": [
+    "Exact match"
+   ],
+   "domain": [
+    "General"
+   ]
+  },
+  "metric_short": "Accuracy"
+ }
  ],
  "settings": [
   {
