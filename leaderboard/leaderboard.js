@@ -1096,7 +1096,7 @@
     else if (!v) body = '<p class="sp-note">Sample answers for this cell are not ready yet.</p>';
     else if (v.hidden) body = `<div class="sp-box">${esc(b.name)} asks that its questions not be posted online in plain text, so this panel shows no question or output for it. The score in the table counts every item as usual.</div>`;
     else if (!item) body = `<p class="sp-note">${sampleState.which === 'wrong' ? 'The model answered every item correctly.' : 'The model answered no item correctly.'}</p>`;
-    else body = `<p class="sp-note">Item ${esc(item.item_id)}${item.category ? ` · ${esc(item.category)}` : ''}. The first ${sampleState.which === 'correct' ? 'correct' : 'wrong'} answer in a fixed item order that is the same for every model, so different models often show the same item.</p>
+    else body = `<p class="sp-note">Item ${esc(item.item_id)}${item.category ? ` · ${esc(item.category)}` : ''}. Picked at random from the items the model answered ${sampleState.which === 'correct' ? 'correctly' : 'wrongly'}.</p>
       ${gradeHtml(item, sampleState.which === 'correct', bench)}${chatHtml(item, bench)}
       <p class="sp-note">Shown as messages. Each model received them through its own chat template; templates without a system role put the system message into the first user turn.</p>`;
     const toggle = v && !v.hidden ? `<div class="sp-seg" role="group" aria-label="Which item"><button type="button" class="ok" data-which="correct" aria-pressed="${sampleState.which === 'correct'}"${has.correct ? '' : ' disabled'}>Correct item</button><button type="button" class="bad" data-which="wrong" aria-pressed="${sampleState.which === 'wrong'}"${has.wrong ? '' : ' disabled'}>Wrong item</button></div>` : '';
