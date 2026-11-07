@@ -18,6 +18,9 @@
 /* 언어 단추(English | 한국어): 제목 오른쪽 위. 고른 언어는 i18n.js 가 저장한다 */
 .lb-lang { display: flex; flex-shrink: 0; margin-top: 4px; }
 .lb-lang button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font: inherit;
   font-size: 13px;
   padding: 4px 10px;
@@ -26,6 +29,7 @@
   color: #374151;
   cursor: pointer;
 }
+.lb-lang img { width: 16px; height: 16px; }
 .lb-lang button + button { border-left: 0; }
 .lb-lang button:first-child { border-radius: 6px 0 0 6px; }
 .lb-lang button:last-child { border-radius: 0 6px 6px 0; }
