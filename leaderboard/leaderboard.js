@@ -3,6 +3,9 @@
   'use strict';
 
   const $ = (s) => document.querySelector(s);
+  const I18N = globalThis.LBI18N;
+  const t = I18N.t;
+  I18N.apply();  // index.html 문구를 저장된 언어로 바꾼다. JS 가 그리는 것은 t() 로 그린다
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   const SIZE_BUCKETS = [
@@ -250,9 +253,9 @@
   const langBadge = (code) => {
     const l = LANGS[code];
     if (!l) return `<span class="lang">${esc(code)}</span>`;
-    return `<span class="lang" title="${l.name}"><img src="/leaderboard/flags/${l.flag}.svg" alt="${l.name}" width="16" height="16">${esc(code.toUpperCase())}</span>`;
+    return `<span class="lang" title="${t(l.name)}"><img src="/leaderboard/flags/${l.flag}.svg" alt="${t(l.name)}" width="16" height="16">${esc(code.toUpperCase())}</span>`;
   };
-  const imageBadge = (b) => (b.modality === 'image' ? '<span class="modality" title="Questions come with images. Only models that take images are evaluated.">image</span>' : '');
+  const imageBadge = (b) => (b.modality === 'image' ? `<span class="modality" title="${esc(t('Questions come with images. Only models that take images are evaluated.'))}">${esc(t('image'))}</span>` : '');
   const fmtParams = (p) => (p == null ? '–' : p < 10 ? p.toFixed(1) + 'B' : Math.round(p) + 'B');
 
   // eval time and tokens span orders of magnitude, so they are colored on a log scale
@@ -317,8 +320,8 @@
     view.colStats.__rank = describe(shown.map((r) => ({ value: r.avgRank, row: r })));
 
     $('#table').innerHTML = renderHead() + renderBody();
-    $('#count').textContent = `${new Set(shown.map((r) => r.model)).size} models, ${shown.length} rows shown` +
-      (state.group ? ' (settings grouped under each model; the top row is the best setting by the current sort)' : '');
+    $('#count').textContent = t('{m} models, {r} rows shown', { m: new Set(shown.map((r) => r.model)).size, r: shown.length }) +
+      (state.group ? t(' (settings grouped under each model; the top row is the best setting by the current sort)') : '');
     placeFrozen();
     syncTopbar();
     updateNav();
@@ -335,6 +338,7 @@
     memory: { label: 'Minimum GPU memory (GiB)', fmt: (v) => (v < 10 ? v.toFixed(1) : Math.round(v)) + ' GiB' },
     params: { label: 'Parameters', fmt: (v) => fmtParams(v) },
   };
+  const costLabel = (axis) => t(COST_AXES[axis].label);
   const quantile = (s, q) => {
     const i = (s.length - 1) * q, lo = Math.floor(i), hi = Math.ceil(i);
     return s[lo] + (s[hi] - s[lo]) * (i - lo);
@@ -432,8 +436,8 @@
     if (state.costBench !== '__avg' && !view.costNodes.has(state.costBench)) state.costBench = '__avg';
     const cb = $('#cost-bench');
     // 표의 Average 설정과 줄 구성을 따른다는 것이 목록에서 보이게 한다
-    const html = `<option value="__avg">Average of the ${state.avgChecked.size} checked benchmarks</option>`
-      + `<optgroup label="Columns of the table (${esc(state.axes.map(axisLabel).join(' ▸ '))})">`
+    const html = `<option value="__avg">${esc(t('Average of the {n} checked benchmarks', { n: state.avgChecked.size }))}</option>`
+      + `<optgroup label="${esc(t('Columns of the table ({axes})', { axes: state.axes.map(axisLabel).join(' ▸ ') }))}">`
       + opts.map((o) => `<option value="${esc(o.id)}">${esc(o.label)}</option>`).join('') + '</optgroup>';
     if (cb.dataset.html !== html) { cb.innerHTML = html; cb.dataset.html = html; }
     cb.value = state.costBench;
@@ -445,32 +449,33 @@
     const note = [];
     let lead = '';
     if (benchId === '__avg') {
-      lead = `Plotted: the average of ${view.avgSet.length} of the ${state.avgChecked.size} benchmarks checked for Average in the table (${view.avgSet.map((b) => b.name).join(', ')}).`;
-      note.push(`The table's Average uses every checked benchmark and marks missing ones with *. Here only the benchmarks that at least 80% of the rows in view have finished are used, and only rows that have all of them, so every point is compared on the same benchmarks.`);
+      lead = t('Plotted: the average of {a} of the {n} benchmarks checked for Average in the table ({list}).', { a: view.avgSet.length, n: state.avgChecked.size, list: view.avgSet.map((b) => b.name).join(', ') });
+      note.push(t("The table's Average uses every checked benchmark and marks missing ones with *. Here only the benchmarks that at least 80% of the rows in view have finished are used, and only rows that have all of them, so every point is compared on the same benchmarks."));
     }
     if (benchId !== '__avg') {
       const o = view.costNodes.get(benchId);
       const bs = P.benchesOf(o.node);
       const single = bs.length === 1 && bs[0].whole && (o.node.axis === 'benchmark' || (o.node.leaf && !o.node.leaf.sub));
-      if (single) { lead = `Plotted: ${o.label}, the same column as in the table.`; note.push(`${bs[0].bench.description} Score: ${bs[0].bench.metric_label}.`); }
+      if (single) { lead = t('Plotted: {label}, the same column as in the table.', { label: o.label }); note.push(t('{desc} Score: {metric}.', { desc: I18N.field(bs[0].bench, 'description'), metric: I18N.field(bs[0].bench, 'metric_label') })); }
       else {
         const cp = view.costParts;
-        lead = `Plotted: ${o.label} from the table, the macro average of ${cp.parts.length} of its ${cp.all} columns (${cp.parts.slice(0, 8).map((k) => k.label).join(', ')}${cp.parts.length > 8 ? ` and ${cp.parts.length - 8} more` : ''}).`;
-        note.push('As with Average, only the columns that at least 80% of the rows in view have finished are used, and only rows that have all of them.');
+        lead = t('Plotted: {label} from the table, the macro average of {p} of its {all} columns ({list}{more}).', { label: o.label, p: cp.parts.length, all: cp.all,
+          list: cp.parts.slice(0, 8).map((k) => k.label).join(', '), more: cp.parts.length > 8 ? t(' and {n} more', { n: cp.parts.length - 8 }) : '' });
+        note.push(t('As with Average, only the columns that at least 80% of the rows in view have finished are used, and only rows that have all of them.'));
       }
-      if (axis === 'time' && bs.some((b) => !b.whole)) note.push('Eval time is measured per whole benchmark, so this group, which holds only part of a benchmark, has no eval time.');
-      if (axis === 'tokens' && !single) note.push('Tokens are generated tokens per item, averaged the same way.');
+      if (axis === 'time' && bs.some((b) => !b.whole)) note.push(t('Eval time is measured per whole benchmark, so this group, which holds only part of a benchmark, has no eval time.'));
+      if (axis === 'tokens' && !single) note.push(t('Tokens are generated tokens per item, averaged the same way.'));
     }
-    if (axis === 'time') note.push('Eval time depends on the GPU (RTX 4090 or RTX 5090) that ran it.');
-    if (axis === 'memory') note.push('Weights plus the KV cache of one 8,192-token request, as allocated by vLLM. vLLM reserves most of the card up front, so the peak reading of the GPU is not informative.');
-    if (axis === 'tokens' && benchId === '__avg') note.push('Tokens are generated tokens per item over those benchmarks.');
+    if (axis === 'time') note.push(t('Eval time depends on the GPU (RTX 4090 or RTX 5090) that ran it.'));
+    if (axis === 'memory') note.push(t('Weights plus the KV cache of one 8,192-token request, as allocated by vLLM. vLLM reserves most of the card up front, so the peak reading of the GPU is not informative.'));
+    if (axis === 'tokens' && benchId === '__avg') note.push(t('Tokens are generated tokens per item over those benchmarks.'));
     $('#cost-note').innerHTML = `<b>${esc(lead)}</b> ${esc(note.join(' '))}`;
     renderSettingTable(rows, benchId, axis);
     if (!pts.length) {
       const b = META.benchmarks.find((m) => m.id === benchId);
       box.innerHTML = `<p class="lb-empty">${axis === 'tokens' && b && /log-likelihood/i.test(b.metric_label)
-        ? `${esc(b.name)} is scored by log-likelihood, so it generates no tokens. Pick another cost axis.`
-        : 'No rows with both a score and this cost in the current view.'}</p>`;
+        ? esc(t('{name} is scored by log-likelihood, so it generates no tokens. Pick another cost axis.', { name: b.name }))
+        : esc(t('No rows with both a score and this cost in the current view.'))}</p>`;
       return;
     }
 
@@ -491,8 +496,8 @@
       const x = sx(t);
       svg += `<line x1="${x}" x2="${x}" y1="${T}" y2="${H - B}" class="grid"/><text x="${x}" y="${H - B + 16}" class="tick" text-anchor="middle">${esc(COST_AXES[axis].fmt(t))}</text>`;
     }
-    svg += `<text x="${(L + W - R) / 2}" y="${H - 6}" class="axis" text-anchor="middle">${esc(COST_AXES[axis].label)} (log scale) →</text>`;
-    svg += `<text transform="translate(12 ${(T + H - B) / 2}) rotate(-90)" class="axis" text-anchor="middle">${esc(benchId === '__avg' ? 'Average score' : 'Score')} →</text>`;
+    svg += `<text x="${(L + W - R) / 2}" y="${H - 6}" class="axis" text-anchor="middle">${esc(t('{label} (log scale) →', { label: costLabel(axis) }))}</text>`;
+    svg += `<text transform="translate(12 ${(T + H - B) / 2}) rotate(-90)" class="axis" text-anchor="middle">${esc(t(benchId === '__avg' ? 'Average score' : 'Score'))} →</text>`;
 
     // Pareto front: points that no cheaper point beats
     const sorted = [...pts].sort((a, b) => a.x - b.x || b.y - a.y);
@@ -535,7 +540,7 @@
     }
     view.costPts = pts.map((p) => ({ ...p, px: sx(p.x), py: sy(p.y) }));
     view.costScale = W / box.clientWidth;
-    box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Score against ${esc(COST_AXES[axis].label)}">${svg}</svg>`;
+    box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(t('Score against {label}', { label: costLabel(axis) }))}">${svg}</svg>`;
   }
 
   // per setting: how many rows, their median score, and the median change against thinking off for models that have both
@@ -552,9 +557,9 @@
       return `<tr><td><span class="badge ${esc(s)}">${esc(SETTING_LABEL[s] || s)}</span></td><td>${ps.length}</td><td>${fmtScore(median(ps.map((p) => p.y)))}</td>
         <td>${dy == null ? '–' : `${sign(dy)} <span class="muted">(${paired.length})</span>`}</td><td>${rx == null ? '–' : '×' + rx.toFixed(1)}</td></tr>`;
     }).join('');
-    $('#setting-table').innerHTML = `<thead><tr><th>Thinking</th><th>Rows</th><th>Median score</th>
-      <th title="Median over models evaluated both with thinking off and in this setting">Score vs. thinking off</th>
-      <th title="Median ratio over the same models">${esc(COST_AXES[axis].label)} vs. thinking off</th></tr></thead><tbody>${body}</tbody>`;
+    $('#setting-table').innerHTML = `<thead><tr><th>Thinking</th><th>${t('Rows')}</th><th>${t('Median score')}</th>
+      <th title="${esc(t('Median over models evaluated both with thinking off and in this setting'))}">${t('Score vs. thinking off')}</th>
+      <th title="${esc(t('Median ratio over the same models'))}">${esc(t('{label} vs. thinking off', { label: costLabel(axis) }))}</th></tr></thead><tbody>${body}</tbody>`;
   }
 
   const costBox = $('#cost-chart');
@@ -580,7 +585,7 @@
     highlight(view.colorIdx[best.r.model]);
     const bs0 = state.costBench === '__avg' ? [] : P.benchesOf(view.costNodes.get(state.costBench).node);
     const run0 = bs0.length === 1 ? best.r.runs[bs0[0].bench.id] : null;
-    showTip(`<b>${esc(best.r.model)}</b> (${esc(SETTING_SHORT[best.r.setting] || best.r.setting)})<br>Score ${fmtScore(best.y)}<br>${esc(COST_AXES[state.costAxis].label)}: ${esc(COST_AXES[state.costAxis].fmt(best.x))}` +
+    showTip(`<b>${esc(best.r.model)}</b> (${esc(SETTING_SHORT[best.r.setting] || best.r.setting)})<br>${t('Score')} ${fmtScore(best.y)}<br>${esc(costLabel(state.costAxis))}: ${esc(COST_AXES[state.costAxis].fmt(best.x))}` +
       (run0?.gpu ? `<br>${esc(run0.gpu.replace('NVIDIA GeForce ', ''))}` : ''), e.clientX, e.clientY);
   });
   costBox.addEventListener('mouseleave', () => { highlight(null); hideTip(); });
@@ -589,7 +594,7 @@
     return state.sort.key === key ? `<span class="arrow">${state.sort.dir < 0 ? '▼' : '▲'}</span>` : '';
   }
 
-  const axisLabel = (id) => META.axes.find((a) => a.id === id)?.label || id;
+  const axisLabel = (id) => t(META.axes.find((a) => a.id === id)?.label || id);
 
   // 머리글 줄 이름표: Model 칸 위에 줄 순서대로 쌓는다. 끌어서 순서를 바꾸고 × 로 빼고 ＋ 로 더한다
   function axisTags() {
@@ -597,10 +602,10 @@
     const rest = META.axes.filter((a) => !used.has(a.id));
     // 왼쪽이 머리글 맨 윗줄이다. ‹ › 로 한 칸씩 옮기고, 끌어서 옮길 수도 있다
     const n = state.axes.length;
-    const mv = (a, i, d) => `<button type="button" class="axis-mv" data-axis-move="${esc(a)}" data-dir="${d}"${i + d < 0 || i + d >= n ? ' disabled' : ''} aria-label="Move ${esc(axisLabel(a))} ${d < 0 ? 'earlier' : 'later'}">${d < 0 ? '‹' : '›'}</button>`;
+    const mv = (a, i, d) => `<button type="button" class="axis-mv" data-axis-move="${esc(a)}" data-dir="${d}"${i + d < 0 || i + d >= n ? ' disabled' : ''} aria-label="${esc(t(d < 0 ? 'Move {name} earlier' : 'Move {name} later', { name: axisLabel(a) }))}">${d < 0 ? '‹' : '›'}</button>`;
     // ▸ 는 뒤 이름표와 한 덩어리로 묶어 줄바꿈 때 줄 끝에 홀로 남지 않게 한다
-    const tags = state.axes.map((a, i) => `<span class="axis-item">${i ? '<span class="axis-sep">▸</span>' : ''}<span class="axis-tag" draggable="true" tabindex="0" data-axis="${esc(a)}" title="Use ‹ › or drag to change the order (or Alt+←/→)">${n > 1 ? mv(a, i, -1) : ''}<span class="axis-name">${esc(axisLabel(a))}</span>${n > 1 ? mv(a, i, 1) : ''}${n > 1 ? `<button type="button" class="axis-x" data-axis-remove="${esc(a)}" aria-label="Remove the ${esc(axisLabel(a))} row">×</button>` : ''}</span></span>`).join('');
-    const add = rest.length ? `<span class="axis-add"><button type="button" class="axis-add-btn" data-axis-menu aria-expanded="${view.axisMenu ? 'true' : 'false'}" title="Add a header row">＋</button>${view.axisMenu ? `<span class="axis-menu">${rest.map((a) => `<button type="button" data-axis-add="${esc(a.id)}">${esc(a.label)}</button>`).join('')}</span>` : ''}</span>` : '';
+    const tags = state.axes.map((a, i) => `<span class="axis-item">${i ? '<span class="axis-sep">▸</span>' : ''}<span class="axis-tag" draggable="true" tabindex="0" data-axis="${esc(a)}" title="${esc(t('Use ‹ › or drag to change the order (or Alt+←/→)'))}">${n > 1 ? mv(a, i, -1) : ''}<span class="axis-name">${esc(axisLabel(a))}</span>${n > 1 ? mv(a, i, 1) : ''}${n > 1 ? `<button type="button" class="axis-x" data-axis-remove="${esc(a)}" aria-label="${esc(t('Remove the {name} row', { name: axisLabel(a) }))}">×</button>` : ''}</span></span>`).join('');
+    const add = rest.length ? `<span class="axis-add"><button type="button" class="axis-add-btn" data-axis-menu aria-expanded="${view.axisMenu ? 'true' : 'false'}" title="${esc(t('Add a header row'))}">＋</button>${view.axisMenu ? `<span class="axis-menu">${rest.map((a) => `<button type="button" data-axis-add="${esc(a.id)}">${esc(t(a.label))}</button>`).join('')}</span>` : ''}</span>` : '';
     return `<div class="axis-tags">${tags}${add}</div>`;
   }
 
@@ -609,9 +614,9 @@
     const b = node.axis === 'benchmark' ? firstLeaf(node).bench : null;
     const caret = node.expandable && node.children.length ? `<span class="caret">▸</span>` : '';
     const name = node.expandable && node.children.length
-      ? `<button type="button" data-node="${esc(node.key)}" aria-expanded="${node.open}" title="${node.open ? 'Hide' : 'Show'} what is inside">${caret}${esc(node.label)}</button>`
+      ? `<button type="button" data-node="${esc(node.key)}" aria-expanded="${node.open}" title="${esc(t(node.open ? 'Hide what is inside' : 'Show what is inside'))}">${caret}${esc(node.label)}</button>`
       : `<span>${esc(node.label)}</span>`;
-    const extra = b ? `${langBadge(b.language)}${imageBadge(b)}<span class="metric" title="Main metric">${esc(b.metric_short || '')}</span><a class="ds" href="${esc(b.dataset_url)}" target="_blank" rel="noopener" title="Dataset">data</a>` : '';
+    const extra = b ? `${langBadge(b.language)}${imageBadge(b)}<span class="metric" title="${esc(t('Main metric'))}">${esc(b.metric_short || '')}</span><a class="ds" href="${esc(b.dataset_url)}" target="_blank" rel="noopener" title="${esc(t('Dataset'))}">data</a>` : '';
     return `<span class="bh-label">${name}${extra}</span>`;
   }
 
@@ -620,15 +625,15 @@
   const avgPop = document.createElement('div');
   avgPop.className = 'avg-panel';
   avgPop.setAttribute('role', 'dialog');
-  avgPop.setAttribute('aria-label', 'Benchmarks in the average');
+  avgPop.setAttribute('aria-label', t('Benchmarks in the average'));
   avgPop.hidden = true;
   document.body.append(avgPop);
 
   function avgPanel() {
     const list = META.benchmarks.map((b) => `<label><input type="checkbox" data-avg-bench="${esc(b.id)}"${state.avgChecked.has(b.id) ? ' checked' : ''}>${esc(b.name)}${imageBadge(b)}</label>`).join('');
     const radio = (v, t) => `<label><input type="radio" name="avg-textonly" value="${v}"${state.cannot === v ? ' checked' : ''}>${t}</label>`;
-    return `<div class="avg-quick"><button type="button" data-avg-set="all">All</button><button type="button" data-avg-set="text">Text only</button><button type="button" data-avg-set="none">None</button></div>
-      <div class="avg-textonly"><span>Benchmarks a model cannot take (for example, images for a text-only model):</span>${radio('zero', 'Count as 0')}${radio('exclude', 'Leave out')}</div>
+    return `<div class="avg-quick"><button type="button" data-avg-set="all">${t('All')}</button><button type="button" data-avg-set="text">${t('Text only')}</button><button type="button" data-avg-set="none">${t('None')}</button></div>
+      <div class="avg-textonly"><span>${t('Benchmarks a model cannot take (for example, images for a text-only model):')}</span>${radio('zero', t('Count as 0'))}${radio('exclude', t('Leave out'))}</div>
       <div class="avg-list">${list}</div>`;
   }
 
@@ -661,17 +666,17 @@
   }
 
   function renderHead() {
-    const statLabel = { score: 'Average', time: 'Total time', tokens: 'Per item' }[state.mode];
+    const statLabel = t({ score: 'Average', time: 'Total time', tokens: 'Per item' }[state.mode]);
     // 열마다 머리글 줄에 보일 묶음들. leaf 는 맨 아래 줄에 이름이 나오므로 빼고 센다
     const hp = (c) => (c.kind === 'leaf' ? c.path.slice(0, -1) : c.path);
     const depth = Math.max(1, ...view.cols.map((c) => hp(c).length));
     const rows = Array.from({ length: depth }, () => '');
     rows[0] = `
       <th class="fz c-rank" rowspan="${depth + 1}">#</th>
-      <th class="fz c-model ch-stat" rowspan="${depth + 1}" style="text-align:left!important">${axisTags()}<span data-sort="model" class="m-sort">Model ${sortArrow('model')}</span></th>
+      <th class="fz c-model ch-stat" rowspan="${depth + 1}" style="text-align:left!important">${axisTags()}<span data-sort="model" class="m-sort">${t('Model')} ${sortArrow('model')}</span></th>
       <th class="fz c-setting" rowspan="${depth + 1}">Thinking</th>
-      <th class="fz fz-last c-params ch-stat" rowspan="${depth + 1}" data-sort="params">Params ${sortArrow('params')}</th>
-      <th class="bh" colspan="${showRank() ? 2 : 1}" rowspan="${depth}">Summary</th>`;
+      <th class="fz fz-last c-params ch-stat" rowspan="${depth + 1}" data-sort="params">${t('Params')} ${sortArrow('params')}</th>
+      <th class="bh" colspan="${showRank() ? 2 : 1}" rowspan="${depth}">${t('Summary')}</th>`;
     for (let L = 0; L < depth; L++) {
       for (let i = 0; i < view.cols.length; i++) {
         const path = hp(view.cols[i]);
@@ -688,17 +693,17 @@
         i += span - 1;
       }
     }
-    const pick = state.mode === 'score' ? `<button type="button" class="avg-pick" data-avg-panel aria-expanded="${view.avgPanel ? 'true' : 'false'}" title="Choose the benchmarks in the average">macro of ${state.avgChecked.size} benchmark${state.avgChecked.size === 1 ? '' : 's'} ▾</button>` : '';
+    const pick = state.mode === 'score' ? `<button type="button" class="avg-pick" data-avg-panel aria-expanded="${view.avgPanel ? 'true' : 'false'}" title="${esc(t('Choose the benchmarks in the average'))}">${esc(t(state.avgChecked.size === 1 ? 'macro of {n} benchmark ▾' : 'macro of {n} benchmarks ▾', { n: state.avgChecked.size }))}</button>` : '';
     let last = `<tr><th class="ch first c-avg" data-sort="avg" data-col="__avg"><span class="ch-name">${statLabel} ${sortArrow('avg')}</span>${histogram(view.colStats.__avg)}${pick}</th>`;
-    if (showRank()) last += `<th class="ch" data-sort="rank" data-col="__rank"><span class="ch-name">Avg rank ${sortArrow('rank')}</span><svg width="70" height="16"></svg></th>`;
-    const measure = { score: 'Score', time: 'Time', tokens: 'Tokens / item' }[state.mode];
+    if (showRank()) last += `<th class="ch" data-sort="rank" data-col="__rank"><span class="ch-name">${t('Avg rank')} ${sortArrow('rank')}</span><svg width="70" height="16"></svg></th>`;
+    const measure = t({ score: 'Score', time: 'Time', tokens: 'Tokens / item' }[state.mode]);
     for (const c of view.cols) {
       const isBench = P.isOfficial(c.node) || (c.kind === 'leaf' && !c.sub);
       // Benchmark 줄이 위에 없으면 leaf 이름만으로는 어느 benchmark 인지 모르므로 benchmark 이름을 붙인다
       const benchAbove = c.path.some((n) => n.axis === 'benchmark');
       const leafName = () => (c.sub ? (benchAbove ? c.sub.name : `${c.bench.name} · ${c.sub.name}`) : benchAbove ? measure : c.bench.name);
       const name = c.kind === 'leaf' ? leafName()
-        : c.kind === 'sum' ? (isBench ? 'Overall' : 'macro') : isBench ? measure : 'macro';
+        : c.kind === 'sum' ? (isBench ? t('Overall') : 'macro') : isBench ? measure : 'macro';
       const grp = c.sub?.group ? `<span class="ch-group">${esc(c.sub.group)}</span>` : '';
       last += `<th class="ch${c.kind === 'leaf' && c.sub ? ' sub' : ' first'}" data-sort="${esc(c.id)}" data-col="${esc(c.id)}">${grp}<span class="ch-name">${esc(name)} ${sortArrow(c.id)}</span>${histogram(view.colStats[c.id])}</th>`;
     }
@@ -717,15 +722,15 @@
       if (line.parent && line.nVariants > 0) {
         const open = state.openModels.has(r.model);
         const n = line.nVariants;
-        more = `<button type="button" class="vtoggle" data-variants="${esc(r.model)}" aria-expanded="${open}">${open ? '▾' : '▸'} ${n} more setting${n > 1 ? 's' : ''}</button>`;
+        more = `<button type="button" class="vtoggle" data-variants="${esc(r.model)}" aria-expanded="${open}">${open ? '▾' : '▸'} ${esc(t(n > 1 ? '{n} more settings' : '{n} more setting', { n }))}</button>`;
       }
       const prec = precLabel(r.meta);
       const summary = summaryValue(r);
       const partial = state.mode === 'score' && r.avg != null && r.n < r.nOf;
       html += `<tr class="${line.child ? 'child' : ''}" data-row="${esc(r.key)}">
         <td class="fz c-rank">${line.rank ?? ''}</td>
-        <td class="fz c-model"><button type="button" class="m-link" data-detail="${esc(r.key)}" title="Details of ${esc(r.model)}">${name}</button>${prec ? `<span class="prec" title="Weights in ${esc(prec)}">${esc(prec)}</span>` : ''}<span class="m-sub"><span class="m-setting">thinking ${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${more}</span></td>
-        <td class="fz c-setting"><span class="badge ${esc(r.setting)}">${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${r.greedy ? '<span class="dec" title="Greedy decoding (runs before 2026-11-05)">greedy</span>'
+        <td class="fz c-model"><button type="button" class="m-link" data-detail="${esc(r.key)}" title="${esc(t('Details of {model}', { model: r.model }))}">${name}</button>${prec ? `<span class="prec" title="${esc(t('Weights in {prec}', { prec }))}">${esc(prec)}</span>` : ''}<span class="m-sub"><span class="m-setting">thinking ${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${more}</span></td>
+        <td class="fz c-setting"><span class="badge ${esc(r.setting)}">${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${r.greedy ? `<span class="dec" title="${esc(t('Greedy decoding (runs before 2026-11-05)'))}">greedy</span>`
           : ''}</td>
         <td class="fz fz-last c-params">${fmtParams(r.meta.params_b)}</td>
         <td class="v first stat" data-col="__avg" style="${heat(summary, view.colStats.__avg)}">${fmt(summary)}${partial ? '*' : ''}</td>`;
@@ -739,35 +744,36 @@
         let title = '';
         let cls = '';
         let tag = '';  // 툴팁 맨 위에 눈에 띄게 보일 짧은 이름(context too short 등)
-        if (pend) { text = `<span class="pend ${pend}">${pend === 'running' ? 'running' : 'queued'}</span>`; cls = ` st-${pend}`; }
-        else if (res.notYet) { text = '<span class="why">not supported yet</span>'; tag = 'not supported yet'; title = `This leaderboard does not run ${c.bench ? c.bench.name : 'this benchmark'} with thinking ${SETTING_LABEL[r.setting] || r.setting} yet. Left out of averages.`; cls = ' st-notyet'; }
+        if (pend) { text = `<span class="pend ${pend}">${t(pend === 'running' ? 'running' : 'queued')}</span>`; cls = ` st-${pend}`; }
+        else if (res.notYet) { text = `<span class="why">${t('not supported yet')}</span>`; tag = t('not supported yet'); title = t('This leaderboard does not run {bench} with thinking {setting} yet. Left out of averages.', { bench: c.bench ? c.bench.name : t('this benchmark'), setting: SETTING_LABEL[r.setting] || r.setting }); cls = ' st-notyet'; }
         else if (res.reason) {
-          const [label, long] = REASONS[res.reason] || [res.reason.replace(/_/g, ' '), ''];
+          const [label, long] = (REASONS[res.reason] || [res.reason.replace(/_/g, ' '), '']).map((x) => (x ? t(x) : x));
           const detail = r.unsupportedDetail?.[c.bench?.id] ? ` ${r.unsupportedDetail[c.bench.id]}` : '';
           // 칸에는 빗금과 Average 에 들어가는 값(0)만 두고, 이유는 툴팁에 짧은 이름으로 크게 보인다
           text = res.cannot && v != null ? fmt(v) : '';
           tag = label;
-          title = `${long}${detail} ${res.cannot ? 'Counted as 0 in averages.' : 'Left out of averages.'}`;
+          title = `${long}${detail} ${t(res.cannot ? 'Counted as 0 in averages.' : 'Left out of averages.')}`;
           cls = ' st-cannot';
         }
         // 결과도 없고 대기열에도 없는 benchmark 칸: 모든 칸을 평가하므로 앞으로 넣을 대상이다
-        else if (v == null && c.bench && !r.runs[c.bench.id] && (c.node.leaf || P.isOfficial(c.node))) { text = '<span class="why">to be added</span>'; title = 'Not evaluated yet and not in the queue yet. It will be added.'; cls = ' st-todo'; }
-        else if (v == null && state.mode === 'time' && !(c.node.leaf ? !c.node.leaf.sub : P.isOfficial(c.node))) { text = ''; title = 'Eval time is measured per benchmark only'; }
+        else if (v == null && c.bench && !r.runs[c.bench.id] && (c.node.leaf || P.isOfficial(c.node))) { text = `<span class="why">${t('to be added')}</span>`; title = t('Not evaluated yet and not in the queue yet. It will be added.'); cls = ' st-todo'; }
+        else if (v == null && state.mode === 'time' && !(c.node.leaf ? !c.node.leaf.sub : P.isOfficial(c.node))) { text = ''; title = t('Eval time is measured per benchmark only'); }
         else {
           text = fmt(v) + (v != null && res.partial ? '*' : '');
-          if (v != null && res.partial) title = `Average over ${res.m} of ${res.n}`;
+          if (v != null && res.partial) title = t('Average over {m} of {n}', { m: res.m, n: res.n });
           if (v != null && res.micro != null) title += `${title ? '. ' : ''}macro ${fmtScore(v)}, micro ${fmtScore(res.micro)}`;
         }
         html += `<td class="v${c.kind === 'leaf' && c.sub ? ' sub' : ' first'}${v == null ? ' na' : ''}${cls}" data-col="${esc(c.id)}" style="${cls ? '' : heat(v, view.colStats[c.id])}"${title ? ` data-note="${esc(title)}"` : ''}${tag ? ` data-tag="${esc(tag)}"` : ''}>${text}</td>`;
       }
       html += '</tr>';
     }
-    if (!view.lines.length) html += `<tr><td colspan="${ncols}" style="padding:24px;color:#6b7280">No models match the filters.</td></tr>`;
+    if (!view.lines.length) html += `<tr><td colspan="${ncols}" style="padding:24px;color:#6b7280">${t('No models match the filters.')}</td></tr>`;
     return html + '</tbody>';
   }
 
   function openDetail(r) {
     const dlg = $('#model-dialog');
+    view.detailRow = r;
     $('#model-dialog-title').textContent = `${r.model} · thinking ${SETTING_LABEL[r.setting] || r.setting}${r.greedy ? ' · greedy decoding' : ''}`;
     $('#model-dialog-body').innerHTML = renderDetail(r);
     dlg.showModal();
@@ -784,7 +790,7 @@
   function avgDetail(row) {
     const checked = META.benchmarks.filter((b) => state.avgChecked.has(b.id));
     const missing = checked.filter((b) => row.runs[b.id]?.score == null && !row.unsupported?.[b.id]);
-    const items = [['Benchmarks', `average of ${row.n} of the ${row.nOf} checked`], ['Missing', missing.map((b) => b.name).join(', ')]]
+    const items = [[t('Benchmarks'), t('average of {n} of the {of} checked', { n: row.n, of: row.nOf })], [t('Missing'), missing.map((b) => b.name).join(', ')]]
       .filter(([, v]) => v);
     return `<dl class="tip-grid">${items.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>`;
   }
@@ -794,20 +800,20 @@
 
   // decoding 과 생성 한도: 모델 권장 sampling 값(없으면 greedy), 그리고 우리 평가의 생성 한도에 걸린 문항 비율(그중 같은 구절을 되풀이한 것)
   const decLabel = (run, row) => {
-    if (row.greedy || run.setting?.startsWith('greedy-')) return 'greedy (runs before 2026-11-05)';
+    if (row.greedy || run.setting?.startsWith('greedy-')) return t('greedy (runs before 2026-11-05)');
     if (!run.decoding) return '';
     const s = run.sampling;
-    if (!s) return 'greedy (the model recommends no sampling)';
+    if (!s) return t('greedy (the model recommends no sampling)');
     const parts = [['temperature', s.temperature], ['top-p', s.top_p], ['top-k', s.top_k], ['min-p', s.min_p], ['presence penalty', s.presence_penalty], ['repetition penalty', s.repetition_penalty]]
       .filter(([, v]) => v != null).map(([k, v]) => `${k} ${v}`);
-    return `the model's recommended sampling: ${parts.join(', ')}`;
+    return t("the model's recommended sampling: {parts}", { parts: parts.join(', ') });
   };
   const cutLabel = (run) => {
     const g = run.gen;
     if (!g || !g.items) return '';
     const n = (x) => x.toLocaleString('en-US');
-    if (!g.cut) return `no item hit it (${n(g.items)} items)`;
-    return `${n(g.cut)} of ${n(g.items)} items hit it${g.loop ? `, ${n(g.loop)} of them repeating the same text` : ''}`;
+    if (!g.cut) return t('no item hit it ({n} items)', { n: n(g.items) });
+    return t('{c} of {n} items hit it', { c: n(g.cut), n: n(g.items) }) + (g.loop ? t(', {n} of them repeating the same text', { n: n(g.loop) }) : '');
   };
 
   function renderDetail(r) {
@@ -816,8 +822,8 @@
     let rows = '';
     for (const b of META.benchmarks) {
       const run = r.runs[b.id];
-      if (!run) { rows += `<tr><td>${esc(b.name)}</td><td colspan="10" style="color:#9ca3af">not evaluated</td></tr>`; continue; }
-      const issue = run.issue ? `<a href="${esc(run.issue)}">request</a>` : '–';
+      if (!run) { rows += `<tr><td>${esc(b.name)}</td><td colspan="10" style="color:#9ca3af">${t('not evaluated')}</td></tr>`; continue; }
+      const issue = run.issue ? `<a href="${esc(run.issue)}">${t('request')}</a>` : '–';
       rows += `<tr><td>${esc(b.name)}</td><td>${fmtScore(run.score)}</td><td>${fmtTime(run.wall_seconds)}</td>
         <td>${run.output_tokens ? fmtTokens(run.output_tokens / b.n_items) : '–'}</td><td>${run.min_memory_gib != null ? run.min_memory_gib.toFixed(1) + ' GiB' : '–'}</td>
         <td>${esc(gpuLabel(run))}</td>
@@ -825,15 +831,15 @@
     }
     return `<div class="detail-box">
       <dl>
-        <dt>Model</dt><dd><a href="${esc(hf)}" target="_blank" rel="noopener">${esc(r.model)}</a></dd>
+        <dt>${t('Model')}</dt><dd><a href="${esc(hf)}" target="_blank" rel="noopener">${esc(r.model)}</a></dd>
         <dt>Thinking</dt><dd>${esc(SETTING_LABEL[r.setting] || r.setting)}</dd>
-        <dt>Precision</dt><dd>${esc(precLabel(m) || 'BF16')}</dd>
-        <dt>Parameters</dt><dd>${m.params_b != null ? m.params_b.toFixed(2) + 'B' : '–'}</dd>
-        <dt>Architecture</dt><dd>${esc(m.architecture || '–')}</dd>
-        <dt>License</dt><dd>${esc(m.license || '–')}</dd>
-        <dt>Revision</dt><dd>${esc(m.revision || '–')}</dd>
+        <dt>${t('Precision')}</dt><dd>${esc(precLabel(m) || 'BF16')}</dd>
+        <dt>${t('Parameters')}</dt><dd>${m.params_b != null ? m.params_b.toFixed(2) + 'B' : '–'}</dd>
+        <dt>${t('Architecture')}</dt><dd>${esc(m.architecture || '–')}</dd>
+        <dt>${t('License')}</dt><dd>${esc(m.license || '–')}</dd>
+        <dt>${t('Revision')}</dt><dd>${esc(m.revision || '–')}</dd>
       </dl>
-      <table><thead><tr><th>Benchmark</th><th>Score</th><th>Eval time</th><th title="Generated tokens per item">Tokens / item</th><th title="Weights plus the KV cache of one 8,192-token request">Min. memory</th><th>GPU</th><th>Evaluated</th><th>lm-eval</th><th>vLLM</th><th>transformers</th><th>Request</th></tr></thead>
+      <table><thead><tr><th>Benchmark</th><th>${t('Score')}</th><th>${t('Eval time')}</th><th title="${esc(t('Generated tokens per item'))}">${t('Tokens / item')}</th><th title="${esc(t('Weights plus the KV cache of one 8,192-token request'))}">${t('Min. memory')}</th><th>GPU</th><th>${t('Evaluated')}</th><th>lm-eval</th><th>vLLM</th><th>transformers</th><th>${t('Request')}</th></tr></thead>
       <tbody>${rows}</tbody></table></div>`;
   }
 
@@ -929,8 +935,8 @@
   function hideTip() { tip.hidden = true; }
 
   function colById(id) {
-    if (id === '__avg') return { label: { score: 'Average score', time: 'Total eval time', tokens: 'Output tokens per item, generative benchmarks' }[state.mode] };
-    if (id === '__rank') return { label: 'Average rank (lower is better)' };
+    if (id === '__avg') return { label: t({ score: 'Average score', time: 'Total eval time', tokens: 'Output tokens per item, generative benchmarks' }[state.mode]) };
+    if (id === '__rank') return { label: t('Average rank (lower is better)') };
     const c = view.cols.find((c) => c.id === id) || view.cols.find((c) => c.node.key === id);
     if (!c) return { label: id };
     const names = c.path.map((n) => n.label);
@@ -945,21 +951,21 @@
     let html = `<b>${esc(c.label || '')}</b>`;
     if (th.classList.contains('bh')) {
       if (c.node?.axis === 'benchmark' && c.bench) {
-        const whole = P.isOfficial(c.node) ? 'The benchmark column shows its official score.' : `This column holds only the ${esc(c.bench.name)} subtasks in this group, so it shows their macro average.`;
-        return html + `<br>${esc(c.bench.description)}<br>${c.bench.n_items.toLocaleString()} items · ${esc(c.bench.metric_label)}<br>${whole}`;
+        const whole = esc(P.isOfficial(c.node) ? t('The benchmark column shows its official score.') : t('This column holds only the {bench} subtasks in this group, so it shows their macro average.', { bench: c.bench.name }));
+        return html + `<br>${esc(I18N.field(c.bench, 'description'))}<br>${esc(t('{n} items · {metric}', { n: c.bench.n_items.toLocaleString('en-US'), metric: I18N.field(c.bench, 'metric_label') }))}<br>${whole}`;
       }
-      if (c.node) return html + `<br>${esc(axisLabel(c.node.axis))}: macro average of the columns inside.`;
+      if (c.node) return html + `<br>${esc(t('{axis}: macro average of the columns inside.', { axis: axisLabel(c.node.axis) }))}`;
       return html;
     }
-    if (c.sub?.n_items) html += `<br>${c.sub.n_items.toLocaleString()} items`;
-    if (!st) return html + '<br>No values in the current view.';
+    if (c.sub?.n_items) html += `<br>${esc(t('{n} items', { n: c.sub.n_items.toLocaleString('en-US') }))}`;
+    if (!st) return html + `<br>${t('No values in the current view.')}`;
     return html + `<table>
-      <tr><td>Models</td><td>${st.n}</td></tr>
-      <tr><td>Mean</td><td>${f(st.mean)}</td></tr>
-      <tr><td>Median</td><td>${f(st.median)}</td></tr>
-      ${id === '__rank' ? '' : `<tr><td>Std</td><td>${f(st.sd)}</td></tr>`}
-      <tr><td>Min</td><td>${f(st.min.value)} · ${esc(st.min.row.model.split('/').pop())}</td></tr>
-      <tr><td>Max</td><td>${f(st.max.value)} · ${esc(st.max.row.model.split('/').pop())}</td></tr></table>`;
+      <tr><td>${t('Models')}</td><td>${st.n}</td></tr>
+      <tr><td>${t('Mean')}</td><td>${f(st.mean)}</td></tr>
+      <tr><td>${t('Median')}</td><td>${f(st.median)}</td></tr>
+      ${id === '__rank' ? '' : `<tr><td>${t('Std')}</td><td>${f(st.sd)}</td></tr>`}
+      <tr><td>${t('Min')}</td><td>${f(st.min.value)} · ${esc(st.min.row.model.split('/').pop())}</td></tr>
+      <tr><td>${t('Max')}</td><td>${f(st.max.value)} · ${esc(st.max.row.model.split('/').pop())}</td></tr></table>`;
   }
 
   // 칸 툴팁: 머리(모델·설정) → benchmark 와 점수 → 결과·실행 항목 표 → 소프트웨어 버전(작게) 순으로 묶는다
@@ -976,19 +982,19 @@
     const run = row?.runs[c.bench.id];
     if (!run) {
       const pend = pendingFor(row, c.bench.id);
-      return `${head}<div class="tip-status">${pend === 'running' ? 'Being evaluated now' : pend ? 'Waiting in the evaluation queue' : 'Not evaluated yet'}</div>${note}`;
+      return `${head}<div class="tip-status">${t(pend === 'running' ? 'Being evaluated now' : pend ? 'Waiting in the evaluation queue' : 'Not evaluated yet')}</div>${note}`;
     }
     const items = [
-      ['Output', run.output_tokens ? `${fmtTokens(run.output_tokens / c.bench.n_items)} tokens per item` : ''],
-      ['Generation limit', cutLabel(run)],
+      [t('Output'), run.output_tokens ? t('{n} tokens per item', { n: fmtTokens(run.output_tokens / c.bench.n_items) }) : ''],
+      [t('Generation limit'), cutLabel(run)],
       ['Decoding', decLabel(run, row)],
-      ['Eval time', `${fmtTime(run.wall_seconds)} on ${gpuLabel(run)}`],
-      ['Evaluated', run.evaluated_at || ''],
+      [t('Eval time'), t('{time} on {gpu}', { time: fmtTime(run.wall_seconds), gpu: gpuLabel(run) })],
+      [t('Evaluated'), run.evaluated_at || ''],
     ].filter(([, v]) => v);
     const sw = swLabel(run);
-    return `${head}<div class="tip-score">${fmt(cellValue(row, c))}<span>${esc(c.bench.metric_label || '')}</span></div>${note}
+    return `${head}<div class="tip-score">${fmt(cellValue(row, c))}<span>${esc(I18N.field(c.bench, 'metric_label') || '')}</span></div>${note}
       <dl class="tip-grid">${items.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>${sw ? `<div class="tip-sw">${esc(sw)}</div>` : ''}
-      <div class="tip-hint">Click the cell to see one item the model got right and one it got wrong</div>`;
+      <div class="tip-hint">${t('Click the cell to see one item the model got right and one it got wrong')}</div>`;
   }
 
   $('#table').addEventListener('mousemove', (e) => {
@@ -1059,22 +1065,22 @@
     const sys = msgs.filter((m, i) => m.role === 'system' && i < lastUser);
     const shots = msgs.filter((m, i) => m.role !== 'system' && i < lastUser);
     const tail = lastUser >= 0 ? msgs.slice(lastUser) : msgs;
-    const imgs = (item.images || []).map((src, i) => `<img src="${src}" alt="Image ${i + 1} of the item" data-zoom>`).join('');
+    const imgs = (item.images || []).map((src, i) => `<img src="${src}" alt="${esc(t('Image {i} of the item', { i: i + 1 }))}" data-zoom>`).join('');
     let h = sys.map((m) => bubble(m)).join('');
-    if (shots.length) h += `<details class="sp-fold"><summary>${SHOT_BENCH.has(bench) ? `${shots.length / 2} worked examples (few-shot)` : `${shots.length} earlier turns`}</summary>${shots.map((m) => bubble(m)).join('')}</details>`;
+    if (shots.length) h += `<details class="sp-fold"><summary>${esc(SHOT_BENCH.has(bench) ? t('{n} worked examples (few-shot)', { n: shots.length / 2 }) : t('{n} earlier turns', { n: shots.length }))}</summary>${shots.map((m) => bubble(m)).join('')}</details>`;
     h += tail.map((m, i) => bubble(m, i === 0 ? imgs : '')).join('');
     const thinking = splitThinking(item.raw);
-    const think = thinking ? `<details class="sp-think"><summary>Thinking${item.output_tokens ? ` · ${item.output_tokens.toLocaleString('en-US')} tokens in total` : ''}${item.finish === 'length' ? ' · hit the generation limit' : ''}</summary><div class="sp-text">${esc(thinking)}</div></details>` : '';
-    h += `<div class="sp-msg model"><div class="sp-role">model output</div>${think}<div class="sp-text">${esc(item.answer || '(empty)')}</div></div>`;
+    const think = thinking ? `<details class="sp-think"><summary>Thinking${item.output_tokens ? esc(t(' · {n} tokens in total', { n: item.output_tokens.toLocaleString('en-US') })) : ''}${item.finish === 'length' ? t(' · hit the generation limit') : ''}</summary><div class="sp-text">${esc(thinking)}</div></details>` : '';
+    h += `<div class="sp-msg model"><div class="sp-role">${t('model output')}</div>${think}<div class="sp-text">${esc(item.answer || t('(empty)'))}</div></div>`;
     return `<div class="sp-chat">${h}</div>`;
   }
 
   function gradeHtml(item, ok, bench) {
     const checked = bench === 'mih' || bench === 'ifeval';
     // IFEval·MIH 는 정답이 아니라 지시를 지켰는지 검사한다(target 값은 문항 번호라 보이지 않는다)
-    const ref = checked ? (bench === 'mih' ? 'every constraint of the higher-priority instruction' : "the prompt's verifiable instructions") : item.reference ?? '–';
-    const ext = item.extracted != null && item.extracted !== item.answer ? `<dt>Extracted</dt><dd>${esc(String(item.extracted).slice(0, 300))}</dd>` : '';
-    return `<dl class="sp-grade ${ok ? 'ok' : 'bad'}"><dt>Result</dt><dd class="sp-verdict">${ok ? 'Correct' : 'Wrong'}</dd><dt>${checked ? 'Checked by' : 'Reference'}</dt><dd>${esc(Array.isArray(ref) ? ref.join(', ') : ref)}</dd>${ext}</dl>`;
+    const ref = checked ? t(bench === 'mih' ? 'every constraint of the higher-priority instruction' : "the prompt's verifiable instructions") : item.reference ?? '–';
+    const ext = item.extracted != null && item.extracted !== item.answer ? `<dt>${t('Extracted')}</dt><dd>${esc(String(item.extracted).slice(0, 300))}</dd>` : '';
+    return `<dl class="sp-grade ${ok ? 'ok' : 'bad'}"><dt>${t('Result')}</dt><dd class="sp-verdict">${t(ok ? 'Correct' : 'Wrong')}</dd><dt>${t(checked ? 'Checked by' : 'Reference')}</dt><dd>${esc(Array.isArray(ref) ? ref.join(', ') : ref)}</dd>${ext}</dl>`;
   }
 
   function renderSamplePanel() {
@@ -1092,15 +1098,15 @@
     }
     const dec = run ? decLabel(run, row) : '';
     let body;
-    if (!data) body = '<p class="sp-note">Loading…</p>';
-    else if (!v) body = '<p class="sp-note">Sample answers for this cell are not ready yet.</p>';
-    else if (v.hidden) body = `<div class="sp-box">${esc(b.name)} asks that its questions not be posted online in plain text, so this panel shows no question or output for it. The score in the table counts every item as usual.</div>`;
-    else if (!item) body = `<p class="sp-note">${sampleState.which === 'wrong' ? 'The model answered every item correctly.' : 'The model answered no item correctly.'}</p>`;
-    else body = `<p class="sp-note">Item ${esc(item.item_id)}${item.category ? ` · ${esc(item.category)}` : ''}. Picked at random from the items the model answered ${sampleState.which === 'correct' ? 'correctly' : 'wrongly'}.</p>
+    if (!data) body = `<p class="sp-note">${t('Loading…')}</p>`;
+    else if (!v) body = `<p class="sp-note">${t('Sample answers for this cell are not ready yet.')}</p>`;
+    else if (v.hidden) body = `<div class="sp-box">${esc(t('{bench} asks that its questions not be posted online in plain text, so this panel shows no question or output for it. The score in the table counts every item as usual.', { bench: b.name }))}</div>`;
+    else if (!item) body = `<p class="sp-note">${t(sampleState.which === 'wrong' ? 'The model answered every item correctly.' : 'The model answered no item correctly.')}</p>`;
+    else body = `<p class="sp-note">${esc(t('Item {id}', { id: item.item_id }))}${item.category ? ` · ${esc(item.category)}` : ''}${t(sampleState.which === 'correct' ? '. Picked at random from the items the model answered correctly.' : '. Picked at random from the items the model answered wrongly.')}</p>
       ${gradeHtml(item, sampleState.which === 'correct', bench)}${chatHtml(item, bench)}
-      <p class="sp-note">Shown as messages. Each model received them through its own chat template; templates without a system role put the system message into the first user turn.</p>`;
-    const toggle = v && !v.hidden ? `<div class="sp-seg" role="group" aria-label="Which item"><button type="button" class="ok" data-which="correct" aria-pressed="${sampleState.which === 'correct'}"${has.correct ? '' : ' disabled'}>Correct item</button><button type="button" class="bad" data-which="wrong" aria-pressed="${sampleState.which === 'wrong'}"${has.wrong ? '' : ' disabled'}>Wrong item</button></div>` : '';
-    samplePanel.innerHTML = `<div class="sp-head"><div class="sp-title"><h2>${esc(row.model)}<span class="sp-sub">${esc(b.name)} · thinking ${esc(SETTING_LABEL[row.setting] || row.setting)}${dec ? ` · ${esc(dec)}` : ''}${run?.score != null ? ` · score ${fmtScore(run.score)}` : ''}</span></h2><button type="button" aria-label="Close" data-sp-close>×</button></div>${toggle}</div><div class="sp-body">${body}</div>`;
+      <p class="sp-note">${t('Shown as messages. Each model received them through its own chat template; templates without a system role put the system message into the first user turn.')}</p>`;
+    const toggle = v && !v.hidden ? `<div class="sp-seg" role="group" aria-label="${t('Which item')}"><button type="button" class="ok" data-which="correct" aria-pressed="${sampleState.which === 'correct'}"${has.correct ? '' : ' disabled'}>${t('Correct item')}</button><button type="button" class="bad" data-which="wrong" aria-pressed="${sampleState.which === 'wrong'}"${has.wrong ? '' : ' disabled'}>${t('Wrong item')}</button></div>` : '';
+    samplePanel.innerHTML = `<div class="sp-head"><div class="sp-title"><h2>${esc(row.model)}<span class="sp-sub">${esc(b.name)} · thinking ${esc(SETTING_LABEL[row.setting] || row.setting)}${dec ? ` · ${esc(dec)}` : ''}${run?.score != null ? t(' · score {s}', { s: fmtScore(run.score) }) : ''}</span></h2><button type="button" aria-label="${t('Close')}" data-sp-close>×</button></div>${toggle}</div><div class="sp-body">${body}</div>`;
     samplePanel.hidden = false;
     typeset(samplePanel.querySelector('.sp-body'));
   }
@@ -1251,23 +1257,36 @@
     document.querySelector(`.axis-tag[data-axis="${CSS.escape(t.dataset.axis)}"]`)?.focus();
   });
 
-  function setupControls() {
+  // 조건 단추의 이름표. 언어를 바꾸면 다시 채운다(눌린 상태는 state 에서 다시 읽는다)
+  function fillControls() {
     const sf = $('#settings-filter');
+    sf.querySelectorAll('label').forEach((l) => l.remove());
     for (const s of META.settings) {
       const n = ROWS.filter((r) => r.setting === s.id).length;
-      state.settings.add(s.id);
-      sf.insertAdjacentHTML('beforeend', `<label class="${n ? '' : 'none'}" title="${n ? `${n} rows` : 'No results yet'}"><input type="checkbox" value="${esc(s.id)}" checked${n ? '' : ' disabled'}>${esc(s.label)} <span class="n">${n}</span></label>`);
+      sf.insertAdjacentHTML('beforeend', `<label class="${n ? '' : 'none'}" title="${esc(n ? t('{n} rows', { n }) : t('No results yet'))}"><input type="checkbox" value="${esc(s.id)}"${state.settings.has(s.id) ? ' checked' : ''}${n ? '' : ' disabled'}>${esc(s.label)} <span class="n">${n}</span></label>`);
     }
+    const df = $('#decoding-filter');
+    df.querySelectorAll('label').forEach((l) => l.remove());
+    for (const [id, label, title] of [['rec', t('recommended'), t("Each model's recommended sampling, greedy when it recommends none")],
+      ['greedy', 'greedy', t('Greedy decoding for every model (runs before 2026-11-05)')]]) {
+      const n = ROWS.filter((r) => (r.greedy ? 'greedy' : 'rec') === id).length;
+      df.insertAdjacentHTML('beforeend', `<label title="${esc(title)}"><input type="checkbox" value="${id}"${state.decodings.has(id) ? ' checked' : ''}>${esc(label)} <span class="n">${n}</span></label>`);
+    }
+    const cx = $('#cost-x');
+    cx.querySelectorAll('label').forEach((l) => l.remove());
+    cx.insertAdjacentHTML('beforeend', Object.entries(COST_AXES).map(([k, a]) =>
+      `<label><input type="radio" name="cost-x" value="${k}"${k === state.costAxis ? ' checked' : ''}>${esc(t({ tokens: 'Output tokens', time: 'Eval time', memory: 'GPU memory', params: 'Parameters' }[k]))}</label>`).join(''));
+  }
+
+  function setupControls() {
+    for (const s of META.settings) state.settings.add(s.id);
+    fillControls();
+    const sf = $('#settings-filter');
     sf.addEventListener('change', (e) => {
       e.target.checked ? state.settings.add(e.target.value) : state.settings.delete(e.target.value);
       render();
     });
     const df = $('#decoding-filter');
-    for (const [id, label, title] of [['rec', 'recommended', "Each model's recommended sampling, greedy when it recommends none"],
-      ['greedy', 'greedy', 'Greedy decoding for every model (runs before 2026-11-05)']]) {
-      const n = ROWS.filter((r) => (r.greedy ? 'greedy' : 'rec') === id).length;
-      df.insertAdjacentHTML('beforeend', `<label title="${esc(title)}"><input type="checkbox" value="${id}"${state.decodings.has(id) ? ' checked' : ''}>${esc(label)} <span class="n">${n}</span></label>`);
-    }
     df.addEventListener('change', (e) => {
       e.target.checked ? state.decodings.add(e.target.value) : state.decodings.delete(e.target.value);
       render();
@@ -1290,14 +1309,12 @@
       clearTimeout(timer);
       timer = setTimeout(() => {
         try { state.query = parseQuery(q.value); q.classList.remove('invalid'); q.title = ''; }
-        catch (err) { q.classList.add('invalid'); q.title = 'Invalid regular expression'; return; }
+        catch (err) { q.classList.add('invalid'); q.title = t('Invalid regular expression'); return; }
         render();
       }, 120);
     });
     const cb = $('#cost-bench');
     cb.addEventListener('change', () => { state.costBench = cb.value; render(); });
-    $('#cost-x').insertAdjacentHTML('beforeend', Object.entries(COST_AXES).map(([k, a]) =>
-      `<label><input type="radio" name="cost-x" value="${k}"${k === state.costAxis ? ' checked' : ''}>${esc({ tokens: 'Output tokens', time: 'Eval time', memory: 'GPU memory', params: 'Parameters' }[k])}</label>`).join(''));
     $('#cost-x').addEventListener('change', (e) => { state.costAxis = e.target.value; render(); });
     NARROW.addEventListener('change', () => render());  // 화면을 돌려 폭이 바뀌면 Avg rank 열을 다시 정한다
     let rt;
@@ -1310,18 +1327,19 @@
 
   // benchmark 목록: 한 줄 요약(이름, 언어, 문항 수, 채점)만 보이고, 누르면 설명과 링크가 펼쳐진다
   function benchLinks(b) {
-    return `lm-eval task <code>${esc(b.lm_eval_task)}</code>${b.protocol_url ? ` (prompt and answer extraction from the <a href="${esc(b.protocol_url)}">official ${esc(b.protocol_name || '')} code</a>)` : ''}
-      · <a href="${esc(b.dataset_url)}">dataset</a>${b.paper_url ? ` · <a href="${esc(b.paper_url)}">paper</a>` : ''}`;
+    const link = b.protocol_url ? `<a href="${esc(b.protocol_url)}">${esc(t('official {name} code', { name: b.protocol_name || '' }))}</a>` : '';
+    return `lm-eval task <code>${esc(b.lm_eval_task)}</code>${link ? t(' (prompt and answer extraction from the {link})', { link }) : ''}
+      · <a href="${esc(b.dataset_url)}">${t('dataset')}</a>${b.paper_url ? ` · <a href="${esc(b.paper_url)}">${t('paper')}</a>` : ''}`;
   }
   // 목록이 길어서 입력(텍스트·이미지)으로 나누고, 넓은 화면에서는 두 열로 놓는다
   function renderBenchList() {
     const item = (b) => `
       <details class="lb-bench"><summary><span class="lb-bench-name">${esc(b.name)}</span>${langBadge(b.language)}
-        <span class="lb-bench-meta" title="${esc(b.metric_label)}">${b.n_items.toLocaleString()} items · ${esc(b.metric_label)}</span></summary>
-        <p>${esc(b.description)} Score: ${esc(b.metric_label)}.</p>
+        <span class="lb-bench-meta" title="${esc(I18N.field(b, 'metric_label'))}">${esc(t('{n} items · {metric}', { n: b.n_items.toLocaleString('en-US'), metric: I18N.field(b, 'metric_label') }))}</span></summary>
+        <p>${esc(t('{desc} Score: {metric}.', { desc: I18N.field(b, 'description'), metric: I18N.field(b, 'metric_label') }))}</p>
         <p>${benchLinks(b)}</p></details>`;
-    const groups = [['Text', META.benchmarks.filter((b) => b.modality !== 'image')], ['Image', META.benchmarks.filter((b) => b.modality === 'image')]];
-    $('#bench-list').innerHTML = '<h2>Benchmarks</h2><p class="lb-help">Click a benchmark to see how it is run and scored.</p>' + groups.filter(([, bs]) => bs.length).map(([name, bs]) =>
+    const groups = [[t('Text'), META.benchmarks.filter((b) => b.modality !== 'image')], [t('Image'), META.benchmarks.filter((b) => b.modality === 'image')]];
+    $('#bench-list').innerHTML = `<h2>${t('Benchmarks')}</h2><p class="lb-help">${t('Click a benchmark to see how it is run and scored.')}</p>` + groups.filter(([, bs]) => bs.length).map(([name, bs]) =>
       `<h3 class="lb-bench-group">${name} <span class="muted">${bs.length}</span></h3><div class="lb-bench-grid">${bs.map(item).join('')}</div>`).join('');
   }
 
@@ -1332,6 +1350,28 @@
     try { localStorage.setItem('lb-contribute', contribute.open ? 'open' : 'closed'); } catch (e) { /* 무시 */ }
   });
 
+  // 갱신 시각만 적는다. 몇 개가 돌고 있는지는 표의 running·queued 칸이 보여 준다
+  function statusLine() {
+    if (!RES.generated_at || RES.sample) return;
+    const at = new Date(RES.generated_at).toLocaleString('en-CA', { timeZone: 'Asia/Seoul', hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+    $('#status-line').textContent = t('Last updated {t} KST.', { t: at.replace(',', '') }) + ((RES.in_progress || []).length ? t(' Cells marked queued or running are still being evaluated.') : '');
+  }
+
+  // 언어 단추: index.html 문구는 i18n.js 가 바꾸고, JS 가 그린 것은 다시 그린다. 고른 언어는 다음 방문에도 쓴다
+  $('.lb-lang').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-lang]');
+    if (!b || b.dataset.lang === I18N.lang) return;
+    I18N.set(b.dataset.lang);
+    avgPop.setAttribute('aria-label', t('Benchmarks in the average'));
+    if (!META) return;
+    fillControls();
+    statusLine();
+    renderBenchList();
+    render();
+    if (sampleState.row) renderSamplePanel();
+    if ($('#model-dialog').open && view.detailRow) openDetail(view.detailRow);
+  });
+
   // ?data=sample loads placeholder results that cover every thinking setting
   const RESULTS = new URLSearchParams(location.search).get('data') === 'sample' ? 'data/results.sample.json' : 'data/results.json';
   Promise.all([fetch('data/benchmarks.json').then((r) => r.json()), fetch(RESULTS).then((r) => r.json())])
@@ -1339,12 +1379,7 @@
       META = meta;
       RES = res;
       $('#sample-note').hidden = !res.sample;
-      const ip = res.in_progress || [];
-      // 갱신 시각만 적는다. 몇 개가 돌고 있는지는 표의 running·queued 칸이 보여 준다
-      if (res.generated_at && !res.sample) {
-        const t = new Date(res.generated_at).toLocaleString('en-CA', { timeZone: 'Asia/Seoul', hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
-        $('#status-line').textContent = `Last updated ${t.replace(',', '')} KST.` + (ip.length ? ' Cells marked queued or running are still being evaluated.' : '');
-      }
+      statusLine();
       CELLS = P.cells(META);
       state.avgChecked = new Set(META.benchmarks.map((b) => b.id));
       buildRows();
@@ -1353,6 +1388,6 @@
       render();
     })
     .catch((err) => {
-      $('#table').innerHTML = `<tbody><tr><td style="padding:24px;color:#b91c1c">Could not load leaderboard data: ${esc(err.message)}</td></tr></tbody>`;
+      $('#table').innerHTML = `<tbody><tr><td style="padding:24px;color:#b91c1c">${esc(t('Could not load leaderboard data: {msg}', { msg: err.message }))}</td></tr></tbody>`;
     });
 })();

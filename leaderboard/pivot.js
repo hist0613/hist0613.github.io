@@ -26,12 +26,15 @@
     return out;
   }
 
+  // 묶음 이름(언어, 분야 ...)은 화면 언어로 옮긴다(i18n.js). node 테스트처럼 i18n.js 가 없으면 그대로 둔다
+  const tr = (s) => (globalThis.LBI18N ? globalThis.LBI18N.t(s) : s);
+
   // path 는 이 칸 위에 있는 줄들. Benchmark 줄이 위에 없으면 subtask 이름만으로는 어느 benchmark 것인지 몰라 이름을 붙인다
   function label(axis, value, cell, path = []) {
-    if (value === NONE) return NONE;
+    if (value === NONE) return tr(NONE);
     if (axis === 'benchmark') return cell.bench.name;
     if (axis === 'subtask') return !cell.sub ? cell.bench.name : path.includes('benchmark') ? cell.sub.name : `${cell.bench.name} · ${cell.sub.name}`;
-    return value.split('/').pop();
+    return tr(value.split('/').pop());
   }
 
   // 한 칸이 이 단계에서 갖는 값들. 위아래 단계가 있는 속성은 prefix 아래의 다음 단계 값만 낸다
