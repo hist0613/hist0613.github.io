@@ -55,9 +55,8 @@ test('MIH-Bench splits 27,660 items by conflict level and by layer pair', () => 
   assert.equal(k.reduce((a, x) => a + x.n_items, 0), 27660);
 });
 
-test('benchmarks run with their official code list the settings they support', () => {
-  const limited = META.benchmarks.filter((b) => b.settings).map((b) => b.id).sort();
-  assert.deepEqual(limited, ['bfcl', 'chembench', 'mih']);
+// #33 부터 MIH·BFCL·ChemBench 도 모든 thinking 설정으로 돌아 settings 를 다는 benchmark 가 없다. 다시 달면 아는 설정만 쓴다
+test('benchmarks that list settings use known settings', () => {
   const ids = META.settings.map((s) => s.id);
   for (const b of META.benchmarks.filter((x) => x.settings)) assert.ok(b.settings.every((s) => ids.includes(s)), b.id);
 });
