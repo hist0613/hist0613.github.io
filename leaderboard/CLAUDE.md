@@ -4,6 +4,8 @@ LLM leaderboard 화면. 평가 실행 코드와 운영 절차는 seungtaek `proj
 
 benchmark 를 `data/benchmarks.json` 에 더할 때 `metric_short`, benchmark·subtask 의 `tags`(축 목록은 파일 맨 위 `axes`), 같은 문항을 다르게 채점한 subtask 의 `slice: false` 를 함께 단다. `tests/leaderboard/` 의 테스트(`node --test tests/leaderboard/*.test.mjs`)가 빠진 것을 잡는다.
 
+화면은 영어/한국어로 바뀐다(`i18n.js`, 고른 언어는 브라우저에 저장). benchmark 를 더할 때 `description_ko`·`metric_label_ko` 도 단다. JS 에서 화면 문구를 새로 쓰면 `t('English {x}', { x })` 로 쓰고 `i18n.js` 의 `KO` 에 한국어를 넣는다. index.html 문구는 `data-i18n="id"` 를 달고 `HTML_KO` 에 넣는다. 빠지면 `tests/leaderboard/i18n.test.mjs` 가 잡는다. 한국어 문구도 기술 용어(benchmark, thinking, decoding, token ...)는 영어 그대로 쓴다.
+
 ## PR
 
 - branch 를 따서 draft PR 로 올리고, 사용자가 괜찮다고 하면 squash merge 한다. 성격이 다른 변경은 PR 을 나눈다.

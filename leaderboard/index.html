@@ -28,32 +28,33 @@
     <div class="lb-head">
       <div>
         <h1>Open-weight LLM Leaderboard</h1>
-        <p class="lb-lede">LLMs with downloadable weights, evaluated on public benchmarks with the same harness, prompts and scoring for every model. Requests come in as GitHub issues and are
+        <p class="lb-lede" data-i18n="lede">LLMs with downloadable weights, evaluated on public benchmarks with the same harness, prompts and scoring for every model. Requests come in as GitHub issues and are
           evaluated in a queue, so new results appear over time.</p>
       </div>
+      <div class="lb-lang" role="group" aria-label="Language"><button type="button" data-lang="en" lang="en">English</button><button type="button" data-lang="ko" lang="ko">한국어</button></div>
     </div>
     <details class="lb-collab" id="contribute" open>
-      <summary>How to contribute</summary>
+      <summary data-i18n="contribute">How to contribute</summary>
       <ul>
-        <li>If there is a model or benchmark you would like to see here, please submit it as a GitHub issue with the
+        <li data-i18n="contribute_request">If there is a model or benchmark you would like to see here, please submit it as a GitHub issue with the
           <a id="submit-link" href="https://github.com/hist0613/hist0613.github.io/issues/new?template=eval-request.yml">evaluation request form</a>.</li>
-        <li>If you would like to collaborate on LLM evaluation research, or can offer data, GPU time or compute credits,
+        <li data-i18n="contribute_contact">If you would like to collaborate on LLM evaluation research, or can offer data, GPU time or compute credits,
           please contact me at <a href="mailto:seungtaek.choi@hufs.ac.kr">seungtaek.choi@hufs.ac.kr</a>.</li>
       </ul>
     </details>
 
     <p class="lb-status" id="status-line"></p>
-    <p class="lb-sample" id="sample-note" hidden>These numbers are placeholder data for building the page. They are not evaluation results.</p>
+    <p class="lb-sample" id="sample-note" hidden data-i18n="sample_note">These numbers are placeholder data for building the page. They are not evaluation results.</p>
 
     <!-- 찾기(어떤 행을 볼지)와 보기(칸에 무엇을 보일지)를 줄로 나눈다 -->
     <div class="lb-toolbar">
       <div class="lb-row lb-row-search">
         <label class="lb-search">
-          <span class="lb-label">Model</span>
-          <input id="q" type="search" autocomplete="off" spellcheck="false"
+          <span class="lb-label" data-i18n="model">Model</span>
+          <input id="q" type="search" autocomplete="off" spellcheck="false" data-i18n-attr="placeholder"
             placeholder="e.g. Qwen/*, *-Instruct, /llama|gemma/, !*-2B">
         </label>
-        <p class="lb-help lb-search-help" id="search-help">
+        <p class="lb-help lb-search-help" id="search-help" data-i18n="search_help">
           Comma separates patterns. <code>*</code> matches anything, <code>/…/</code> is a regular expression, a leading <code>!</code> excludes.
         </p>
       </div>
@@ -65,87 +66,88 @@
         <legend class="lb-label">Decoding</legend>
       </fieldset>
       <fieldset class="lb-group" id="size-filter">
-        <legend class="lb-label">Size</legend>
+        <legend class="lb-label" data-i18n="size">Size</legend>
       </fieldset>
       </div>
     </div>
 
     <div class="lb-toolbar lb-view">
       <fieldset class="lb-group lb-seg" id="mode">
-        <legend class="lb-label">Cells show</legend>
-        <label><input type="radio" name="mode" value="score" checked>Score</label>
-        <label><input type="radio" name="mode" value="time">Eval time</label>
-        <label><input type="radio" name="mode" value="tokens">Output tokens</label>
+        <legend class="lb-label" data-i18n="cells_show">Cells show</legend>
+        <label><input type="radio" name="mode" value="score" checked><span data-i18n="mode_score">Score</span></label>
+        <label><input type="radio" name="mode" value="time"><span data-i18n="mode_time">Eval time</span></label>
+        <label><input type="radio" name="mode" value="tokens"><span data-i18n="mode_tokens">Output tokens</span></label>
       </fieldset>
       <fieldset class="lb-group lb-rows">
-        <legend class="lb-label">Rows</legend>
-        <label class="lb-check"><input type="checkbox" id="group-variants" checked>Group settings of the same model</label>
+        <legend class="lb-label" data-i18n="rows">Rows</legend>
+        <label class="lb-check"><input type="checkbox" id="group-variants" checked><span data-i18n="group_variants">Group settings of the same model</span></label>
       </fieldset>
     </div>
 
-    <p class="lb-help">Click a benchmark name to show its subtasks, a column title to sort, a model name for details.</p>
+    <p class="lb-help" data-i18n="table_help">Click a benchmark name to show its subtasks, a column title to sort, a model name for details.</p>
 
-    <ul class="lb-legend" aria-label="What the cells mean">
-      <li><span class="lg st-todo"><span class="why">to be added</span></span> not evaluated yet and not in the queue yet</li>
-      <li><span class="lg st-queued"><span class="pend queued">queued</span></span> in the queue</li>
-      <li><span class="lg st-running"><span class="pend running">running</span></span> being evaluated now</li>
-      <li><span class="lg st-cannot">0.0</span> the model cannot take this benchmark, such as images for a text-only model; counted as 0 in averages, hover for the reason</li>
-      <li><span class="lg st-notyet"><span class="why">not supported yet</span></span> this leaderboard does not run the benchmark with this setting yet</li>
-      <li><span class="lg">68.1*</span> average over only some of the checked benchmarks; hover for which are missing</li>
-      <li><span class="lg">–</span> no value</li>
+    <ul class="lb-legend" aria-label="What the cells mean" data-i18n-attr="aria-label">
+      <li data-i18n="lg_todo"><span class="lg st-todo"><span class="why">to be added</span></span> not evaluated yet and not in the queue yet</li>
+      <li data-i18n="lg_queued"><span class="lg st-queued"><span class="pend queued">queued</span></span> in the queue</li>
+      <li data-i18n="lg_running"><span class="lg st-running"><span class="pend running">running</span></span> being evaluated now</li>
+      <li data-i18n="lg_cannot"><span class="lg st-cannot">0.0</span> the model cannot take this benchmark, such as images for a text-only model; counted as 0 in averages, hover for the reason</li>
+      <li data-i18n="lg_notyet"><span class="lg st-notyet"><span class="why">not supported yet</span></span> this leaderboard does not run the benchmark with this setting yet</li>
+      <li data-i18n="lg_partial"><span class="lg">68.1*</span> average over only some of the checked benchmarks; hover for which are missing</li>
+      <li data-i18n="lg_none"><span class="lg">–</span> no value</li>
     </ul>
     <div class="lb-scrollnav">
-      <button type="button" id="prev-bench" title="Previous benchmark (Shift + ←)">◀ Previous benchmark</button>
-      <span class="lb-scrollhint">Scroll sideways with ← → while the table is focused, Shift + wheel, or the wheel over the header.</span>
-      <button type="button" id="next-bench" title="Next benchmark (Shift + →)">Next benchmark ▶</button>
+      <button type="button" id="prev-bench" title="Previous benchmark (Shift + ←)" data-i18n-attr="title" data-i18n="prev_bench">◀ Previous benchmark</button>
+      <span class="lb-scrollhint" data-i18n="scroll_hint">Scroll sideways with ← → while the table is focused, Shift + wheel, or the wheel over the header.</span>
+      <button type="button" id="next-bench" title="Next benchmark (Shift + →)" data-i18n-attr="title" data-i18n="next_bench">Next benchmark ▶</button>
     </div>
     <!-- 가로 스크롤바는 움직이는 표 바로 위에 붙인다 -->
     <div class="lb-scrollbar" id="topbar" aria-hidden="true"><div id="topbar-inner"></div></div>
-    <div class="lb-wrap" id="wrap" tabindex="0" aria-label="Leaderboard table">
+    <div class="lb-wrap" id="wrap" tabindex="0" aria-label="Leaderboard table" data-i18n-attr="aria-label">
       <table class="lb-table" id="table"></table>
     </div>
     <dialog id="model-dialog" class="lb-dialog" aria-labelledby="model-dialog-title">
-      <div class="lb-dialog-head"><h3 id="model-dialog-title"></h3><button type="button" id="model-dialog-close" aria-label="Close" autofocus>×</button></div>
+      <div class="lb-dialog-head"><h3 id="model-dialog-title"></h3><button type="button" id="model-dialog-close" aria-label="Close" data-i18n-attr="aria-label" autofocus>×</button></div>
       <div id="model-dialog-body"></div>
     </dialog>
     <p class="lb-count" id="count"></p>
 
-    <h2>Score vs. cost</h2>
-    <p class="lb-help">Each point is one model in one thinking setting, and a line joins the settings of the same model.
+    <h2 data-i18n="cost_title">Score vs. cost</h2>
+    <p class="lb-help" data-i18n="cost_help">Each point is one model in one thinking setting, and a line joins the settings of the same model.
       Hollow points are thinking off. The dotted line is the Pareto front: no other point scores higher at a lower cost.
       Hover a point for details. The model filters, the benchmarks checked for Average and the column grouping of the table above apply here too.</p>
     <div class="lb-toolbar lb-cost-controls">
-      <label class="lb-select"><span class="lb-label">Plot</span><select id="cost-bench"></select></label>
-      <fieldset class="lb-group lb-seg" id="cost-x"><legend class="lb-label">Cost axis</legend></fieldset>
+      <label class="lb-select"><span class="lb-label" data-i18n="plot">Plot</span><select id="cost-bench"></select></label>
+      <fieldset class="lb-group lb-seg" id="cost-x"><legend class="lb-label" data-i18n="cost_axis">Cost axis</legend></fieldset>
     </div>
     <p class="lb-help" id="cost-note"></p>
     <div class="lb-cost" id="cost-chart"></div>
     <div class="lb-setting-wrap"><table class="lb-setting-table" id="setting-table"></table></div>
 
-    <h2>How models are evaluated</h2>
+    <h2 data-i18n="how_title">How models are evaluated</h2>
     <ul class="lb-notes">
-      <li>Each model is evaluated with <a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-evaluation-harness</a> on vLLM,
+      <li data-i18n="how_harness">Each model is evaluated with <a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-evaluation-harness</a> on vLLM,
         in bfloat16 with greedy decoding and the model's own chat template.</li>
-      <li><b>Decoding</b> follows each model's own recommendation: the sampling values its card gives for that thinking mode, or its <code>generation_config.json</code>, with greedy decoding when it recommends none (seed 1234). Runs before 2026-11-05 used greedy decoding for every model and are kept as separate <i>greedy</i> rows, the way thinking off and on are separate rows. Hovering a cell shows the values used and how many items hit the generation limit of this evaluation.</li>
-      <li><b>Thinking</b> is the chat template's thinking mode. <i>off</i> and <i>on</i> are for models with an on/off switch, where <i>on</i> is the model's own default amount of thinking. <i>low</i>, <i>medium</i> and <i>high</i> are for models that take an effort level instead. With thinking on, the answer may use the output length the model recommends, or 30,720 tokens when it gives none, in a context of that length plus 8,192 tokens for the prompt (about 28,000 for LoCoMo, whose conversations are long), within the model's own context window. MIH, BFCL and ChemBench, which run on their official code, may use whatever the prompt leaves of that context. Only the text after the thinking section is scored. A response whose thinking does not finish within that limit counts as unanswered.</li>
-      <li>With thinking off, benchmarks run in an 8,192-token context (AIME 2025, LoCoMo and image benchmarks in 32K). A model whose context window is shorter is run within its own window, with up to half of it for the answer; items that do not fit count as wrong. LoCoMo inputs alone run to about 26,000 tokens, so such a model shows it as one it cannot take.</li>
-      <li>Benchmarks marked <span class="modality">image</span> come with images and are run only on models that take images,
+      <li data-i18n="how_decoding"><b>Decoding</b> follows each model's own recommendation: the sampling values its card gives for that thinking mode, or its <code>generation_config.json</code>, with greedy decoding when it recommends none (seed 1234). Runs before 2026-11-05 used greedy decoding for every model and are kept as separate <i>greedy</i> rows, the way thinking off and on are separate rows. Hovering a cell shows the values used and how many items hit the generation limit of this evaluation.</li>
+      <li data-i18n="how_thinking"><b>Thinking</b> is the chat template's thinking mode. <i>off</i> and <i>on</i> are for models with an on/off switch, where <i>on</i> is the model's own default amount of thinking. <i>low</i>, <i>medium</i> and <i>high</i> are for models that take an effort level instead. With thinking on, the answer may use the output length the model recommends, or 30,720 tokens when it gives none, in a context of that length plus 8,192 tokens for the prompt (about 28,000 for LoCoMo, whose conversations are long), within the model's own context window. MIH, BFCL and ChemBench, which run on their official code, may use whatever the prompt leaves of that context. Only the text after the thinking section is scored. A response whose thinking does not finish within that limit counts as unanswered.</li>
+      <li data-i18n="how_context">With thinking off, benchmarks run in an 8,192-token context (AIME 2025, LoCoMo and image benchmarks in 32K). A model whose context window is shorter is run within its own window, with up to half of it for the answer; items that do not fit count as wrong. LoCoMo inputs alone run to about 26,000 tokens, so such a model shows it as one it cannot take.</li>
+      <li data-i18n="how_image">Benchmarks marked <span class="modality">image</span> come with images and are run only on models that take images,
         with every image scaled down to at most 2,048 pixels on the longer side.</li>
-      <li><b>Average</b> is the macro average of the official scores of the checked benchmarks, and Avg rank uses the same benchmarks. All benchmarks are checked by default, image benchmarks included. A benchmark a model cannot take (for example, images for a text-only model) counts as 0 unless you choose to leave it out, and a benchmark this leaderboard does not run with a setting yet is always left out. Use the button under Average to change either.</li>
-      <li>Columns can be regrouped by benchmark properties such as language, task type, or domain with the tags above the Model column. A group shows the macro average of the columns under it (and the micro average, weighted by items, in its tooltip when every column is an accuracy); a value marked * is missing some columns.</li>
-      <li>Eval time is the wall-clock time of one benchmark on the listed GPU, including model loading.</li>
-      <li>Output tokens are the generated tokens per item, counted with the model's own tokenizer and including any thinking text.</li>
-      <li>GPU memory is the model weights plus the KV cache for one 8,192-token request, as allocated by vLLM.</li>
-      <li>Only models that load with standard transformers architectures (no remote code) are evaluated automatically. Others are reviewed first.</li>
+      <li data-i18n="how_average"><b>Average</b> is the macro average of the official scores of the checked benchmarks, and Avg rank uses the same benchmarks. All benchmarks are checked by default, image benchmarks included. A benchmark a model cannot take (for example, images for a text-only model) counts as 0 unless you choose to leave it out, and a benchmark this leaderboard does not run with a setting yet is always left out. Use the button under Average to change either.</li>
+      <li data-i18n="how_group">Columns can be regrouped by benchmark properties such as language, task type, or domain with the tags above the Model column. A group shows the macro average of the columns under it (and the micro average, weighted by items, in its tooltip when every column is an accuracy); a value marked * is missing some columns.</li>
+      <li data-i18n="how_time">Eval time is the wall-clock time of one benchmark on the listed GPU, including model loading.</li>
+      <li data-i18n="how_tokens">Output tokens are the generated tokens per item, counted with the model's own tokenizer and including any thinking text.</li>
+      <li data-i18n="how_memory">GPU memory is the model weights plus the KV cache for one 8,192-token request, as allocated by vLLM.</li>
+      <li data-i18n="how_auto">Only models that load with standard transformers architectures (no remote code) are evaluated automatically. Others are reviewed first.</li>
     </ul>
     <div id="bench-list"></div>
-    <p class="lb-help">Flag icons are from <a href="https://github.com/jdecked/twemoji">Twemoji</a>, licensed under CC-BY 4.0.</p>
+    <p class="lb-help" data-i18n="flags">Flag icons are from <a href="https://github.com/jdecked/twemoji">Twemoji</a>, licensed under CC-BY 4.0.</p>
 
   </div>
 
   <div class="lb-tip" id="tip" role="tooltip" hidden></div>
-  <aside class="lb-sample" id="sample-panel" hidden aria-label="Sample answers"></aside>
+  <aside class="lb-sample" id="sample-panel" hidden aria-label="Sample answers" data-i18n-attr="aria-label"></aside>
   <div class="lb-lightbox" id="lightbox" hidden><img alt=""></div>
+  <script src="/leaderboard/i18n.js"></script>
   <script src="/leaderboard/pivot.js"></script>
   <script src="/leaderboard/leaderboard.js"></script>
   <script data-goatcounter="https://hist0613.goatcounter.com/count"
