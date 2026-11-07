@@ -82,8 +82,23 @@
       }
     }
     ROWS = [...byKey.values()];
-    view.hasRec = new Set(ROWS.filter((r) => !r.greedy && Object.keys(r.runs).length).map((r) => `${r.model}|${r.setting}`));
-    view.hasGreedy = new Set(ROWS.filter((r) => r.greedy).map((r) => `${r.model}|${r.setting}`));
+    // 기본 보기(pref): (모델, 설정)마다 한 행. 칸마다 권장 decoding 결과가 있으면 그것을, 없으면 greedy 결과를 쓴다.
+    // 행 단위로 고르면 권장 결과가 몇 개뿐인 행이 greedy 행을 가려 평균이 1~2개 benchmark 로 계산된다(2026-11-07)
+    const merged = new Map();
+    for (const r of ROWS) {
+      const k = `${r.model}|${r.setting}|pref`;
+      if (!merged.has(k)) merged.set(k, { key: k, model: r.model, setting: r.setting, raw: r.setting, greedy: false, merged: true, meta: r.meta, runs: {}, greedyBench: new Set() });
+      const m = merged.get(k);
+      for (const [b, run] of Object.entries(r.runs)) {
+        if (!r.greedy) { m.runs[b] = run; m.greedyBench.delete(b); }
+        else if (!m.runs[b]) { m.runs[b] = run; m.greedyBench.add(b); }
+      }
+      if (r.unsupported) {
+        m.unsupported = { ...m.unsupported, ...r.unsupported };
+        m.unsupportedDetail = { ...m.unsupportedDetail, ...r.unsupportedDetail };
+      }
+    }
+    ROWS.push(...merged.values());
     // one color per model, stable across filters
     const ids = [...new Set(ROWS.map((r) => r.model))].sort();
     view.colorIdx = Object.fromEntries(ids.map((m, i) => [m, i]));
@@ -132,11 +147,10 @@
 
   function matches(row) {
     if (!state.settings.has(row.setting)) return false;
+    // pref 는 합친 행만, 나머지는 원래 행(권장 / greedy / 둘 다)
+    if (state.decoding === 'pref' ? !row.merged : row.merged) return false;
     if (state.decoding === 'rec' && row.greedy) return false;
     if (state.decoding === 'greedy' && !row.greedy) return false;
-    if (state.decoding === 'pref' && row.greedy && view.hasRec.has(`${row.model}|${row.setting}`)) return false;
-    // 결과 없이 대기열에만 있는 권장 행은, greedy 행이 대신 보이고 그 칸에 대기 상태가 나오므로 따로 보이지 않는다
-    if (state.decoding === 'pref' && !row.greedy && !Object.keys(row.runs).length && view.hasGreedy.has(`${row.model}|${row.setting}`)) return false;
     const p = row.meta.params_b;
     if (p != null && !SIZE_BUCKETS.some((b) => state.sizes.has(b.id) && b.test(p))) return false;
     const pos = state.query.filter((q) => !q.neg);
@@ -726,13 +740,14 @@
       }
       const prec = precLabel(r.meta);
       const summary = summaryValue(r);
-      const partial = state.mode === 'score' && r.avg != null && r.n < r.nOf ? ` title="Average over ${r.n} of ${r.nOf} benchmarks"` : '';
+      const partial = state.mode === 'score' && r.avg != null && r.n < r.nOf;
       html += `<tr class="${line.child ? 'child' : ''}" data-row="${esc(r.key)}">
         <td class="fz c-rank">${line.rank ?? ''}</td>
         <td class="fz c-model"><button type="button" class="m-link" data-detail="${esc(r.key)}" title="Details of ${esc(r.model)}">${name}</button>${prec ? `<span class="prec" title="Weights in ${esc(prec)}">${esc(prec)}</span>` : ''}<span class="m-sub"><span class="m-setting">thinking ${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${more}</span></td>
-        <td class="fz c-setting"><span class="badge ${esc(r.setting)}">${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${r.greedy ? '<span class="dec" title="Greedy decoding (runs before 2026-11-05)">greedy</span>' : ''}</td>
+        <td class="fz c-setting"><span class="badge ${esc(r.setting)}">${esc(SETTING_LABEL[r.setting] || r.setting)}</span>${r.greedy ? '<span class="dec" title="Greedy decoding (runs before 2026-11-05)">greedy</span>'
+          : r.greedyBench?.size ? `<span class="dec" title="${r.greedyBench.size} cells show greedy results until the run with the model's recommended decoding finishes">${r.greedyBench.size} greedy</span>` : ''}</td>
         <td class="fz fz-last c-params">${fmtParams(r.meta.params_b)}</td>
-        <td class="v first stat" style="${heat(summary, view.colStats.__avg)}"${partial}>${fmt(summary)}${partial ? '*' : ''}</td>`;
+        <td class="v first stat" data-col="__avg" style="${heat(summary, view.colStats.__avg)}">${fmt(summary)}${partial ? '*' : ''}</td>`;
       if (showRank()) html += `<td class="v stat">${r.avgRank == null ? '–' : r.avgRank.toFixed(1)}</td>`;
       for (const c of view.cols) {
         const res = cellResult(r, c);
@@ -762,7 +777,9 @@
           if (v != null && res.partial) title = `Average over ${res.m} of ${res.n}`;
           if (v != null && res.micro != null) title += `${title ? '. ' : ''}macro ${fmtScore(v)}, micro ${fmtScore(res.micro)}`;
         }
-        html += `<td class="v${c.kind === 'leaf' && c.sub ? ' sub' : ' first'}${v == null ? ' na' : ''}${cls}" data-col="${esc(c.id)}" style="${cls ? '' : heat(v, view.colStats[c.id])}"${title ? ` data-note="${esc(title)}"` : ''}${tag ? ` data-tag="${esc(tag)}"` : ''}>${text}</td>`;
+        // 기본 보기에서 권장 decoding 결과가 아직 없어 greedy 결과를 대신 보이는 칸
+        const fromGreedy = v != null && !cls && c.bench && r.greedyBench?.has(c.bench.id);
+        html += `<td class="v${c.kind === 'leaf' && c.sub ? ' sub' : ' first'}${v == null ? ' na' : ''}${cls}${fromGreedy ? ' from-greedy' : ''}" data-col="${esc(c.id)}" style="${cls ? '' : heat(v, view.colStats[c.id])}"${title ? ` data-note="${esc(title)}"` : ''}${tag ? ` data-tag="${esc(tag)}"` : ''}>${text}</td>`;
       }
       html += '</tr>';
     }
@@ -784,13 +801,23 @@
     return [['vLLM', v.vllm], ['transformers', v.transformers], ['lm-eval', v.lm_eval]].filter(([, x]) => x).map(([k, x]) => `${k} ${x}`).join(' · ');
   };
 
+  // Average 칸 툴팁: 체크한 benchmark 중 몇 개로 낸 평균인지, 빠진 것, greedy 로 채운 것
+  function avgDetail(row) {
+    const checked = META.benchmarks.filter((b) => state.avgChecked.has(b.id));
+    const missing = checked.filter((b) => row.runs[b.id]?.score == null && !row.unsupported?.[b.id]);
+    const greedy = checked.filter((b) => row.greedyBench?.has(b.id) && row.runs[b.id]?.score != null);
+    const items = [['Benchmarks', `average of ${row.n} of the ${row.nOf} checked`], ['Missing', missing.map((b) => b.name).join(', ')],
+      ['Greedy results', greedy.length ? `${greedy.length} (${greedy.map((b) => b.name).join(', ')}), shown until the run with the recommended decoding finishes` : '']]
+      .filter(([, v]) => v);
+    return `<dl class="tip-grid">${items.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>`;
+  }
+
   // 대기열 상태. greedy 행이 권장 decoding 행 대신 보일 때는 그 칸의 권장 decoding job 이 대기·실행 중인지도 본다
-  const pendingFor = (row, bench) => view.inProgress.get(`${row.model}|${row.raw}|${bench}`)
-    || (row.greedy && state.decoding === 'pref' ? view.inProgress.get(`${row.model}|${row.setting}|${bench}`) : null);
+  const pendingFor = (row, bench) => view.inProgress.get(`${row.model}|${row.raw}|${bench}`);
 
   // decoding 과 생성 한도: 모델 권장 sampling 값(없으면 greedy), 그리고 우리 평가의 생성 한도에 걸린 문항 비율(그중 같은 구절을 되풀이한 것)
   const decLabel = (run, row) => {
-    if (row.greedy) return 'greedy (runs before 2026-11-05)';
+    if (row.greedy || run.setting?.startsWith('greedy-')) return 'greedy (runs before 2026-11-05)';
     if (!run.decoding) return '';
     const s = run.sampling;
     if (!s) return 'greedy (the model recommends no sampling)';
@@ -967,6 +994,7 @@
     const head = `<div class="tip-head"><b>${esc(row.model)}</b>${chips}</div><div class="tip-bench">${esc(c.label)}</div>`;
     const note = td.dataset.note ? `<div class="tip-note">${esc(td.dataset.note)}</div>` : '';
     if (td.dataset.tag) return `${head}<div class="tip-status"><span class="tip-tag">${esc(td.dataset.tag)}</span></div>${note}`;
+    if (td.dataset.col === '__avg') return `${head}<div class="tip-score">${fmt(summaryValue(row))}</div>${state.mode === 'score' ? avgDetail(row) : ''}`;
     if (!c.bench) return `${head}<div class="tip-score">${fmt(cellValue(row, c))}</div>${note}`;
     const run = row?.runs[c.bench.id];
     if (!run) {

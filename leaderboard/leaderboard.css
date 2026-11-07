@@ -478,3 +478,6 @@ tr.child td.fz { background: #fcfcfd; }
 /* decoding 선택: Thinking·Size 와 같은 줄에 놓이는 선택 상자 */
 .lb-decoding { display: grid; gap: 4px; align-content: start; }
 .lb-decoding select { font: inherit; font-size: 13px; padding: 3px 6px; max-width: 100%; }
+
+/* 기본 보기에서 권장 decoding 결과 대신 보이는 greedy 결과 칸: 숫자 뒤에 작은 g */
+td.from-greedy::after { content: "g"; font-size: 9px; color: #6b7280; margin-left: 2px; vertical-align: super; }
