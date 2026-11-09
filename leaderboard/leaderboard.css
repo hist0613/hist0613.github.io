@@ -172,6 +172,8 @@
   vertical-align: bottom;
 }
 .lb-table thead tr:first-child th { top: 0; height: 30px; box-sizing: border-box; }
+/* 왼쪽 고정 열 머리글은 본문 칸과 같이 content-box 로 둔다. border-box 면 width 에 padding 이 들어가, 결과가 없어 본문 칸이 없을 때 열이 좁아지고 "파라미터" 가 옆 열로 넘친다(2026-11-09) */
+.lb-table thead tr:first-child th.fz { box-sizing: content-box; }
 /* 머리글을 셀 내용과 맞춘다: 순위는 셀처럼 오른쪽 정렬, 모델 이름은 앞의 펼침 단추(14px) 만큼 들여 쓴다 */
 .lb-table thead th.c-rank { text-align: right; }
 .lb-table thead th.c-model { padding-left: 22px; }
@@ -184,6 +186,8 @@
 .lb-table .fz-last { box-shadow: 1px 0 0 #d1d5db; }
 .c-rank { width: 34px; min-width: 34px; max-width: 34px; text-align: right; color: #9ca3af; }
 .c-model { width: 290px; min-width: 290px; max-width: 290px; overflow: hidden; text-overflow: ellipsis; }
+/* 머리글은 content-box 라 왼쪽 padding(22px)이 본문 칸(8px)보다 14px 커서, 그만큼 줄여 열 너비를 본문 칸과 같게 둔다 */
+.lb-table th.c-model { width: 276px; min-width: 276px; max-width: 276px; }
 .c-setting { width: 64px; min-width: 64px; max-width: 64px; }  /* 가장 긴 배지(medium)에 맞춘다 */
 .c-setting .dec { display: block; font-size: 10px; color: #6b7280; margin-top: 1px; }  /* greedy ablation 행 표시 */
 .c-params { width: 44px; min-width: 44px; max-width: 44px; text-align: right; }
