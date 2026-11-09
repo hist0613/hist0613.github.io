@@ -35,6 +35,21 @@
    "method": "RL로 reasoning 학습"
   },
   {
+   "id": "ccore/Qwen3.5-4B-GLB-3D-Coder",
+   "added": "2026-11-07",
+   "source": "trending https://huggingface.co/ccore/Qwen3.5-4B-GLB-3D-Coder",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.5-4B"
+   ],
+   "method": "fine-tuning (카드에 구체 기법 없음)"
+  },
+  {
    "id": "DALabCommunity/Haidass1.5-143M",
    "added": "2026-11-01",
    "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
@@ -167,6 +182,21 @@
    "method": "학습 없이 weight editing (down_proj 64개 열에서 루프 방향 제거)"
   },
   {
+   "id": "LastMachine/Qwen3-8B-ZeroZero-Heretic",
+   "added": "2026-11-07",
+   "source": "trending https://huggingface.co/LastMachine/Qwen3-8B-ZeroZero-Heretic",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3-8B"
+   ],
+   "method": "Heretic 2 (training-free abliteration, refusal+slop 제거)"
+  },
+  {
    "id": "LiquidAI/LFM2.5-2.6B",
    "added": "2026-11-01",
    "source": "https://openrouter.ai/liquid/lfm-2.5-2.6b",
@@ -194,6 +224,21 @@
    "settings": [
     "think-off"
    ]
+  },
+  {
+   "id": "maritaca-ai/S5-nano",
+   "added": "2026-11-09",
+   "source": "trending https://huggingface.co/maritaca-ai/S5-nano",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.5-4B"
+   ],
+   "method": "post-training (Think/Instruct 모드, 브라질 포르투갈어 중심)"
   },
   {
    "id": "meta-llama/Llama-3.2-1B-Instruct",
@@ -232,6 +277,22 @@
    ],
    "kind": "official",
    "method": "9.8T tokens pretraining(synthetic 포함) + SFT + iterative DPO"
+  },
+  {
+   "id": "Mincofficial/Minico-M1-1105",
+   "added": "2026-11-07",
+   "source": "new https://huggingface.co/Mincofficial/Minico-M1-1105",
+   "settings": [
+    "think-low",
+    "think-medium",
+    "think-high"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "LiquidAI/LFM2.5-350M"
+   ],
+   "method": "SFT(1.2B Thinking/Instruct 에서 distill) → SFT → DPO → GRPO → ExPO extrapolation merge"
   },
   {
    "id": "ML-Intern-lab/Qwen3.5-0.8B-weight-space-programming",
@@ -279,6 +340,19 @@
    "think_gen_kwargs": "skip_special_tokens=False"
   },
   {
+   "id": "p-e-w/Oc-e-Non-v1",
+   "added": "2026-11-07",
+   "source": "new https://huggingface.co/p-e-w/Oc-e-Non-v1",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3-4B-Instruct-2507"
+   ],
+   "method": "Heretic v2.1.0.dev0 (config.terse.toml, Arbitrary-Rank Ablation)"
+  },
+  {
    "id": "Qwen/Qwen2.5-7B-Instruct",
    "added": "2026-11-01",
    "source": "https://openrouter.ai/qwen/qwen-2.5-7b-instruct",
@@ -315,6 +389,21 @@
    ],
    "kind": "official",
    "method": "pretraining + post-training"
+  },
+  {
+   "id": "sakamakismile/DeepSeek-V4-Pro-Qwen3.5-9B-UNCENSORED-heretic-NVFP4",
+   "added": "2026-11-09",
+   "source": "new https://huggingface.co/sakamakismile/DeepSeek-V4-Pro-Qwen3.5-9B-UNCENSORED-heretic-NVFP4",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "quantized",
+   "parents": [
+    "xtools-at/DeepSeek-V4-Pro-Qwen3.5-9B-UNCENSORED-heretic"
+   ],
+   "method": "NVFP4A16 weight-only 양자화 (LLM Compressor, compressed-tensors, calibration 없음)"
   },
   {
    "id": "Sao10K/L3-8B-Lunaris-v1",
@@ -382,6 +471,19 @@
    ]
   },
   {
+   "id": "taobao-mnn/MNN-Pocket-0.3B",
+   "added": "2026-11-07",
+   "source": "trending https://huggingface.co/taobao-mnn/MNN-Pocket-0.3B",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "parents": [
+    "taobao-mnn/MNN-Pocket-0.3B-Base"
+   ],
+   "method": "Base → SFT → instruction tuning (post-training)"
+  },
+  {
    "id": "ThingAI/Quark-135m",
    "added": "2026-11-01",
    "source": "https://huggingface.co/spaces/AxiomicLabs/Open_SLM_Leaderboard",
@@ -446,6 +548,22 @@
    ]
   },
   {
+   "id": "webAI-Official/TwIL-8B",
+   "added": "2026-11-07",
+   "source": "trending https://huggingface.co/webAI-Official/TwIL-8B",
+   "settings": [
+    "think-low",
+    "think-medium",
+    "think-high"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "ibm-granite/granite-4.2-8b"
+   ],
+   "method": "Full-parameter SFT on reasoning traces → GRPO/DAPO RL → length-aware RL"
+  },
+  {
    "id": "xiaomi-research/Xiaomi-OCR-0",
    "added": "2026-11-01",
    "source": "trending https://huggingface.co/xiaomi-research/Xiaomi-OCR-0",
@@ -459,6 +577,21 @@
     "Qwen/Qwen3.5-0.8B-Base"
    ],
    "method": "Q-Mask text anchoring + OCR continued pretraining(170M samples) + RL(verifiable rewards)"
+  },
+  {
+   "id": "xtools-at/DeepSeek-V4-Pro-Qwen3.5-9B-UNCENSORED-heretic",
+   "added": "2026-11-09",
+   "source": "trending https://huggingface.co/xtools-at/DeepSeek-V4-Pro-Qwen3.5-9B-UNCENSORED-heretic",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Jackrong/DeepSeek-V4-Pro-Qwen3.5-9B"
+   ],
+   "method": "Heretic (Arbitrary-Rank Ablation, layers 9-24) 로 decensoring"
   }
  ]
 }
