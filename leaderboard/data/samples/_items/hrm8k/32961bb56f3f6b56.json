@@ -1,0 +1,1 @@
+{"images":[],"messages":[{"content":"주어진 문제를 풀어보세요.\n문제를 푼 후, 최종 답변을 다음과 같은 형식으로 작성하세요: $\\boxed{N}$.\n\n문제: 삼각형 $\\triangle ABC$에서 $AB = 6,$ $BC = 8,$ $CA = 10$ 입니다. $AD$는 $\\angle BAC$의 각의 이등분선이며 $D$는 $BC$ 위에 있습니다. $AD^2$의 값을 구하세요.\n답변:","role":"user"}]}
