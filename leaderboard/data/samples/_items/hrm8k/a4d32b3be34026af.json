@@ -1,0 +1,1 @@
+{"images":[],"messages":[{"content":"주어진 문제를 풀어보세요.\n문제를 푼 후, 최종 답변을 다음과 같은 형식으로 작성하세요: $\\boxed{N}$.\n\n문제: Kathy는 유럽 여행을 위해 돈이 필요합니다. 그녀는 은행에 300 US dollars를 가지고 있지만, 그 중 절반을 British pounds로, 나머지 절반을 euros로 인출하고 싶습니다. 그녀는 pounds보다 몇 유로를 더 가지게 될까요? 1 pound = 1.64 USD이고 1 euro = 1.32 USD라고 가정하고, 가장 가까운 정수로 반올림하세요.\n답변:","role":"user"}]}

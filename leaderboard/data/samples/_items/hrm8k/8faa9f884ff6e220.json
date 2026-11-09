@@ -1,0 +1,1 @@
+{"images":[],"messages":[{"content":"주어진 문제를 풀어보세요.\n문제를 푼 후, 주어진 선택지 (1, 2, 3, 4) 중 최종 선택지를 다음 형식으로 작성하세요: $\\boxed{N}$.\n\n문제: $$\\lceil\\sqrt{5}\\rceil + \\lceil\\sqrt{6}\\rceil + \\lceil\\sqrt{7}\\rceil + \\cdots + \\lceil\\sqrt{29}\\rceil$$의 값을 구하십시오. 참고: 실수 $x$에 대해 $\\lceil x \\rceil$은 $x$보다 크거나 같은 가장 작은 정수를 나타냅니다.\n\n1. 112\n2. 111\n3. 2006\n4. 110\n답변:","role":"user"}]}

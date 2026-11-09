@@ -1,0 +1,1 @@
+{"images":[],"messages":[{"content":"주어진 문제를 풀어보세요.\n문제를 푼 후, 최종 답변을 다음과 같은 형식으로 작성하세요: $\\boxed{N}$.\n\n문제: $a=42$일 때 $\\left(\\frac{1}{a}\\right)^4 \\cdot 2 \\cdot a^4 + a^{2+1-3}$를 계산하세요.\n답변:","role":"user"}]}
