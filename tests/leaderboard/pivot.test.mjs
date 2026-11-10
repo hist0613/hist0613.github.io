@@ -248,3 +248,10 @@ test('benchmarks not run with a setting yet are left out without a star', () => 
   close(a.value, 0.5);
   assert.equal(a.partial, false);
 });
+
+test('rows with under half of the checked benchmarks are ranked after the rest', () => {
+  assert.equal(P.belowCoverage({ n: 1, nOf: 24 }), true);
+  assert.equal(P.belowCoverage({ n: 11, nOf: 24 }), true);
+  assert.equal(P.belowCoverage({ n: 12, nOf: 24 }), false);
+  assert.equal(P.belowCoverage({ n: 0, nOf: 0 }), false);
+});

@@ -296,7 +296,7 @@
     lg_running: '<span class="lg st-running"><span class="pend running">평가 중</span></span> 지금 평가하고 있음',
     lg_cannot: '<span class="lg st-cannot">0.0</span> 모델이 받을 수 없는 benchmark (예: 텍스트 전용 모델의 이미지 문항). 평균에는 0점으로 들어가고, 마우스를 올리면 이유가 보임',
     lg_notyet: '<span class="lg st-notyet"><span class="why">아직 미지원</span></span> 이 leaderboard 가 이 설정으로는 아직 돌리지 않는 benchmark',
-    lg_partial: '<span class="lg">68.1*</span> 체크한 benchmark 중 일부로만 낸 평균. 마우스를 올리면 빠진 것이 보임',
+    lg_partial: '<span class="lg">68.1*</span> 체크한 benchmark 중 일부로만 낸 평균. 마우스를 올리면 빠진 것이 보임. 절반이 안 되는 행은 평균·평균 순위로 정렬할 때 나머지 행 아래에 놓임',
     lg_none: '<span class="lg">–</span> 값 없음',
     prev_bench: '◀ 이전 benchmark',
     scroll_hint: '표를 누른 상태에서 ← →, Shift + 휠, 또는 머리글 위에서 휠로 옆으로 넘깁니다.',
