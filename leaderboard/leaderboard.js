@@ -213,6 +213,10 @@
     if (va == null && vb == null) return 0;
     if (va == null) return 1;
     if (vb == null) return -1;
+    if ((state.sort.key === 'avg' && state.mode === 'score') || state.sort.key === 'rank') {
+      const la = P.belowCoverage(a), lb = P.belowCoverage(b);
+      if (la !== lb) return la ? 1 : -1;
+    }
     if (typeof va === 'string') return state.sort.dir * va.localeCompare(vb);
     return state.sort.dir * (va - vb);
   }

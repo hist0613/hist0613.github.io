@@ -218,5 +218,9 @@
     return mean(bs.map((b) => benchValue(b, row, mode, opts)));
   }
 
-  globalThis.LBPivot = { cells, buildTree, nodeValue, average, isOfficial, benchesOf, NONE };
+  // 체크한 benchmark 의 절반도 끝내지 않은 행은 평균·평균 순위로 정렬할 때 나머지 행 아래로 보낸다(값은 그대로 보인다)
+  const MIN_COVERAGE = 0.5;
+  const belowCoverage = (row) => row.nOf > 0 && row.n / row.nOf < MIN_COVERAGE;
+
+  globalThis.LBPivot = { cells, buildTree, nodeValue, average, belowCoverage, isOfficial, benchesOf, NONE };
 })();
