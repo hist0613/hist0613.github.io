@@ -152,6 +152,21 @@
    "method": "vocab 확장 + mid-training 302B tokens + SFT + GRPO"
   },
   {
+   "id": "Jackrong/DeepSeek-V4-Pro-Qwen3.5-9B",
+   "added": "2026-11-10",
+   "source": "trending https://huggingface.co/Jackrong/DeepSeek-V4-Pro-Qwen3.5-9B",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "distill",
+   "parents": [
+    "Qwen/Qwen3.5-9B"
+   ],
+   "method": "DeepSeek-V4-Pro 응답으로 SFT 후 GSPO RL (Unsloth)"
+  },
+  {
    "id": "JetBrains/Mellum2.1-12B-A2.5B-Thinking-MTP",
    "added": "2026-11-01",
    "source": "new https://huggingface.co/JetBrains/Mellum2.1-12B-A2.5B-Thinking-MTP",
@@ -324,6 +339,21 @@
    "settings": [
     "think-off"
    ]
+  },
+  {
+   "id": "OmniJev/OneJev1.6-0.8B",
+   "added": "2026-11-10",
+   "source": "https://news.hada.io/topic?id=36894",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "merge",
+   "parents": [
+    "Qwen/Qwen3.5-0.8B"
+   ],
+   "method": "풀 fine-tune 3개 가중치 평균(weight averaging)"
   },
   {
    "id": "openai/gpt-oss-20b",
