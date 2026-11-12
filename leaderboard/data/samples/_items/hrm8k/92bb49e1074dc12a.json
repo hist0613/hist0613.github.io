@@ -1,0 +1,1 @@
+{"images":[],"messages":[{"content":"주어진 문제를 풀어보세요.\n문제를 푼 후, 최종 답변을 다음과 같은 형식으로 작성하세요: $\\boxed{N}$.\n\n문제: 보여진 합에서 각 문자는 서로 다른 숫자를 나타내며 $T \\neq 0$ 그리고 $W \\neq 0$ 입니다. $U$의 가능한 값은 몇 개입니까? \n\n\\begin{tabular}{rrrrr} \n& $W$ & $X$ & $Y$ & $Z$ \\\\ \n+ & $W$ & $X$ & $Y$ & $Z$ \\\\ \n\\hline & $W$ & $U$ & $Y$ & $V$ \n\\end{tabular>\n답변:","role":"user"}]}
