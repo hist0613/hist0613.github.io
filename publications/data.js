@@ -10,6 +10,22 @@
 //   related                 — optional [{text, url}] for model/code links
 const PUBLICATIONS = [
   {
+    "id": "C27",
+    "type": "conference",
+    "title": "Overthinking Loops in Tool-Using LLM Agents: Structural Cost Amplification via MCP Tool Registries",
+    "authors": [
+      {"name": "Yohan Lee"},
+      {"name": "Jisoo Jang"},
+      {"name": "Seoyeon Choi"},
+      {"name": "Sangyeop Kim"},
+      {"name": "Seungtaek Choi", "self": true, "corresponding": true}
+    ],
+    "venue": "Findings of EACL",
+    "year": 2027,
+    "url": "https://arxiv.org/pdf/2602.14798",
+    "note": null
+  },
+  {
     "id": "W2",
     "type": "workshop",
     "title": "HUFS-DILAB at WMT 2026 Automated Translation Quality Evaluation Task 1: Language-Pair Prompt Routing for Error Span Annotation",
@@ -22,22 +38,6 @@ const PUBLICATIONS = [
     "year": 2026,
     "url": "https://www2.statmt.org/wmt26/pdf/2026.wmt-1.99.pdf",
     "poster": "/publications/posters/wmt26-task1-system.pdf",
-    "note": null
-  },
-  {
-    "id": "A3",
-    "type": "arxiv",
-    "title": "Overthinking Loops in Agents: A Structural Risk via MCP Tools",
-    "authors": [
-      {"name": "Yohan Lee"},
-      {"name": "Jisoo Jang"},
-      {"name": "Seoyeon Choi"},
-      {"name": "Sangyeop Kim"},
-      {"name": "Seungtaek Choi", "self": true, "corresponding": true}
-    ],
-    "venue": "arXiv",
-    "year": 2026,
-    "url": "https://arxiv.org/pdf/2602.14798",
     "note": null
   },
   {
