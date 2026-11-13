@@ -105,8 +105,8 @@ python3 -m http.server 8001      # -> http://localhost:8001/blog/
 ## News 항목 규칙 (index.html)
 
 - 항목은 **지우지 않고** 최신 것을 위에 쌓는다.
-- 예외: preprint 가 학회·저널에 accept 되면 preprint 항목을 지우고 accept 항목에 합친다
-  (논문 제목과 arXiv 링크를 accept 항목으로 옮긴다).
+- 예외: preprint 가 학회·저널에 accept 되면 preprint 항목을 지운다. accept 항목은
+  다른 accept 항목과 같은 `One paper got accepted in <학회>.` 형식으로 쓰고, 논문 제목이나 arXiv 링크를 넣지 않는다.
 - 예외: **소속 이동**(`I joined ...`) 항목은 가장 최근 하나만 남기고,
   이전 소속은 News에서 빼고 `Experience` 섹션으로 이관한다.
 - 형식은 `<li><b>MMM YYYY</b>: 문장.</li>`. 날짜 외에 `<b>`로 강조하는 것은
