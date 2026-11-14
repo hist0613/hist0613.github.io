@@ -241,6 +241,21 @@
    ]
   },
   {
+   "id": "LiquidAI/LFM3-1.7B",
+   "added": "2026-11-12",
+   "source": "trending https://huggingface.co/LiquidAI/LFM3-1.7B",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "official",
+   "parents": [
+    "LiquidAI/LFM3-1.7B-Base"
+   ],
+   "method": "SFT → mixed RL → multi-domain on-policy distillation → agentic RL"
+  },
+  {
    "id": "maritaca-ai/S5-nano",
    "added": "2026-11-09",
    "source": "trending https://huggingface.co/maritaca-ai/S5-nano",
@@ -323,6 +338,21 @@
     "Qwen/Qwen3.5-0.8B"
    ],
    "method": "학습 없이 weight editing (layer 15·19 down_proj)"
+  },
+  {
+   "id": "moganai/MoganOCR-TR",
+   "added": "2026-11-12",
+   "source": "new https://huggingface.co/moganai/MoganOCR-TR",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.5-2B"
+   ],
+   "method": "full fine-tune (vision encoder 포함)"
   },
   {
    "id": "nkthebass/tinybrainbot-100m-v3-base",
@@ -607,6 +637,21 @@
     "Qwen/Qwen3.5-0.8B-Base"
    ],
    "method": "Q-Mask text anchoring + OCR continued pretraining(170M samples) + RL(verifiable rewards)"
+  },
+  {
+   "id": "xtools-at/DeepSeek-V4-Pro-Qwen3.5-4B-UNCENSORED-heretic",
+   "added": "2026-11-12",
+   "source": "trending https://huggingface.co/xtools-at/DeepSeek-V4-Pro-Qwen3.5-4B-UNCENSORED-heretic",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Jackrong/DeepSeek-V4-Pro-Qwen3.5-4B"
+   ],
+   "method": "Heretic v2.0.0 Arbitrary-Rank Ablation (ARA), layers 16-32 abliteration"
   },
   {
    "id": "xtools-at/DeepSeek-V4-Pro-Qwen3.5-9B-UNCENSORED-heretic",
