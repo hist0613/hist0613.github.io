@@ -1,0 +1,1 @@
+{"images":[],"messages":[{"content":"주어진 문제를 풀어보세요.\n문제를 푼 후, 최종 답변을 다음과 같은 형식으로 작성하세요: $\\boxed{N}$.\n\n문제: $x+y\\neq -1$일 때, 다음 식을 만족하는 $a+b+c$의 값을 구하시오: \n\\begin{align*} \nax+by+c&=x+7,\\\\ \na+bx+cy&=2x+6y,\\\\ \nay+b+cx&=4x+y. \n\\end{align*}\n답변:","role":"user"}]}
