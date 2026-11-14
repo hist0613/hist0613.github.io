@@ -1,0 +1,1 @@
+{"images":[],"messages":[{"content":"주어진 문제를 풀어보세요.\n문제를 푼 후, 최종 답변을 다음과 같은 형식으로 작성하세요: $\\boxed{N}$.\n\n문제: 덧셈군 \\( G = \\mathbb{Z}_{12} \\times \\mathbb{Z}_6 \\)에서 \\( (5, 5) \\in G \\)로 생성된 부분군을 \\( H \\)라 하자. 잉여군(quotient group, factor group) \\( G/H \\)에서 원소 \\( (3, 3) + H \\)의 위수(order)를 구하시오.\n답변:","role":"user"}]}
