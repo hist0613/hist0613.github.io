@@ -1109,6 +1109,132 @@
    ]
   },
   {
+   "id": "humaneval_plus",
+   "name": "HumanEval+",
+   "description": "Python function-writing problems from HumanEval, graded by running the answer against EvalPlus's extended tests (about 80 times more test inputs than the original). The prompt is EvalPlus's instruction for chat models, with no prefilled answer, and the code block in the answer is run. The main score is pass@1.",
+   "description_ko": "HumanEval 의 Python 함수 작성 문제를, EvalPlus 가 늘린 테스트(원래보다 약 80배 많은 입력)로 실행해 채점합니다. 프롬프트는 EvalPlus 가 chat 모델에 쓰는 지시문이고 답 앞부분을 미리 채우지 않으며, 답의 코드 블록을 실행합니다. 대표 점수는 pass@1 입니다.",
+   "language": "en",
+   "n_items": 164,
+   "metric": "pass@1",
+   "metric_label": "pass@1",
+   "metric_label_ko": "pass@1",
+   "metric_short": "pass@1",
+   "lm_eval_task": "humaneval_plus_chat",
+   "dataset_url": "https://huggingface.co/datasets/evalplus/humanevalplus",
+   "paper_url": "https://arxiv.org/abs/2305.01210",
+   "subtasks": [],
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Text"
+    ],
+    "task_type": [
+     "Code generation"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "scoring": [
+     "Code execution"
+    ],
+    "domain": [
+     "STEM/Computer science"
+    ]
+   }
+  },
+  {
+   "id": "mbpp_plus",
+   "name": "MBPP+",
+   "description": "Basic Python programming problems from MBPP, graded by running the answer against EvalPlus's extended tests. The problem shows one example assertion, as in EvalPlus. The prompt is EvalPlus's instruction for chat models, with no prefilled answer. The main score is pass@1.",
+   "description_ko": "MBPP 의 기초 Python 프로그래밍 문제를 EvalPlus 가 늘린 테스트로 실행해 채점합니다. 문제에는 EvalPlus 처럼 예시 assert 하나가 함께 나옵니다. 프롬프트는 EvalPlus 가 chat 모델에 쓰는 지시문이고 답 앞부분을 미리 채우지 않습니다. 대표 점수는 pass@1 입니다.",
+   "language": "en",
+   "n_items": 378,
+   "metric": "pass@1",
+   "metric_label": "pass@1",
+   "metric_label_ko": "pass@1",
+   "metric_short": "pass@1",
+   "lm_eval_task": "mbpp_plus_chat",
+   "dataset_url": "https://huggingface.co/datasets/evalplus/mbppplus",
+   "paper_url": "https://arxiv.org/abs/2305.01210",
+   "subtasks": [],
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Text"
+    ],
+    "task_type": [
+     "Code generation"
+    ],
+    "difficulty": [
+     "General"
+    ],
+    "scoring": [
+     "Code execution"
+    ],
+    "domain": [
+     "STEM/Computer science"
+    ]
+   }
+  },
+  {
+   "id": "livecodebench",
+   "name": "LiveCodeBench",
+   "description": "Competitive programming problems from LeetCode, AtCoder and Codeforces published between May 2023 and April 2025 (release_v6, code generation). Each item records its contest date. Prompts, code extraction and grading use the official code; an answer is correct when it passes all public and hidden tests (6 seconds per test). The official protocol samples 10 answers per problem to estimate pass@1; here, as for every other benchmark, one answer is generated with the model's recommended decoding.",
+   "description_ko": "LeetCode·AtCoder·Codeforces 에 2023년 5월부터 2025년 4월까지 나온 경시 프로그래밍 문제입니다(release_v6, code generation). 문항마다 대회 날짜가 남습니다. 프롬프트, 코드 추출, 채점은 공식 코드를 쓰고, 공개·비공개 테스트를 모두 통과하면 맞습니다(테스트당 6초). 공식 방식은 문항마다 답을 10번 뽑아 pass@1 을 추정하지만, 여기서는 다른 benchmark 와 같게 모델 권장 decoding 으로 한 번만 뽑습니다.",
+   "language": "en",
+   "n_items": 1055,
+   "metric": "acc",
+   "metric_label": "Accuracy: the code passes all public and hidden tests",
+   "metric_label_ko": "정확도: 코드가 공개·비공개 테스트를 모두 통과",
+   "metric_short": "Accuracy",
+   "lm_eval_task": "livecodebench (official code)",
+   "dataset_url": "https://huggingface.co/datasets/livecodebench/code_generation_lite",
+   "paper_url": "https://arxiv.org/abs/2403.07974",
+   "protocol_url": "https://github.com/LiveCodeBench/LiveCodeBench",
+   "protocol_name": "LiveCodeBench",
+   "tags": {
+    "language": [
+     "English"
+    ],
+    "input": [
+     "Text"
+    ],
+    "task_type": [
+     "Code generation"
+    ],
+    "difficulty": [
+     "Olympiad"
+    ],
+    "scoring": [
+     "Code execution"
+    ],
+    "domain": [
+     "STEM/Computer science"
+    ]
+   },
+   "subtasks": [
+    {
+     "id": "livecodebench_easy",
+     "name": "easy",
+     "n_items": 322
+    },
+    {
+     "id": "livecodebench_medium",
+     "name": "medium",
+     "n_items": 383
+    },
+    {
+     "id": "livecodebench_hard",
+     "name": "hard",
+     "n_items": 350
+    }
+   ]
+  },
+  {
    "id": "mmmu",
    "name": "MMMU",
    "description": "College-level questions with one or more images across 30 subjects, mostly multiple choice. Validation split, lm-eval prompt.",
