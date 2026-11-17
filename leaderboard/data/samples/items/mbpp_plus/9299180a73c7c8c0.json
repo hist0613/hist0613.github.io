@@ -1,0 +1,1 @@
+{"images":[],"messages":[{"content":"Please provide a self-contained Python script that solves the following problem in a markdown code block:\n```python\n\"\"\"\nWrite function to find the sum of all items in the given dictionary.\nassert return_sum({'a': 100, 'b':200, 'c':300}) == 600\n\"\"\"\n```","role":"user"}]}
