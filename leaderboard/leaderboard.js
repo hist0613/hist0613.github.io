@@ -1026,7 +1026,7 @@
 
   // 문항 본문(대화·이미지)은 benchmark 별 공용 파일(_items)에 있다. 문항 순서가 모든 모델에 같아 여러 모델이 같은 파일을 쓴다
   async function loadItem(bench, ref) {
-    const path = `data/samples/_items/${bench}/${ref}.json`;
+    const path = `data/samples/items/${bench}/${ref}.json`;
     if (!sampleCache.has(path)) sampleCache.set(path, fetch(path).then((r) => (r.ok ? r.json() : {})).catch(() => ({})));
     return sampleCache.get(path);
   }
