@@ -1,0 +1,1 @@
+{"images":[],"messages":[{"content":"Please provide a self-contained Python script that solves the following problem in a markdown code block:\n```python\n\"\"\"\nWrite a python function to convert a given string to uppercase.\nassert is_upper(\"person\") ==\"PERSON\"\n\"\"\"\n```","role":"user"}]}

@@ -1,0 +1,1 @@
+{"images":[],"messages":[{"content":"Please provide a self-contained Python script that solves the following problem in a markdown code block:\n```python\n\"\"\"\nWrite a function to find the median of two sorted lists of same size.\nassert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 5) == 16.0\n\"\"\"\n```","role":"user"}]}

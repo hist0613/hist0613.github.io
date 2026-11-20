@@ -1,0 +1,1 @@
+{"images":[],"messages":[{"content":"주어진 문제를 풀어보세요.\n문제를 푼 후, 최종 답변을 다음과 같은 형식으로 작성하세요: $\\boxed{N}$.\n\n문제: $\\alpha, \\beta, \\gamma, \\delta$가 다음 방정식의 근이라고 하자:  \n\\[x^4 + kx^2 + 90x - 2009 = 0.\\]  \n단, $\\alpha \\beta = 49$일 때, $k$를 구하라.\n답변:","role":"user"}]}

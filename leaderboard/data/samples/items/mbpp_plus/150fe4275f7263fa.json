@@ -1,0 +1,1 @@
+{"images":[],"messages":[{"content":"Please provide a self-contained Python script that solves the following problem in a markdown code block:\n```python\n\"\"\"\nWrite a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.\nassert validate(1234) == True\n\"\"\"\n```","role":"user"}]}

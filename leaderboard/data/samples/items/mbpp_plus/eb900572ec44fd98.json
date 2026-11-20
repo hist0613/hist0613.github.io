@@ -1,0 +1,1 @@
+{"images":[],"messages":[{"content":"Please provide a self-contained Python script that solves the following problem in a markdown code block:\n```python\n\"\"\"\nWrite a python function to check whether a list is sublist of another or not.\nassert is_Sub_Array([1,4,3,5],[1,2]) == False\n\"\"\"\n```","role":"user"}]}
