@@ -129,6 +129,7 @@
         `레벨 통과: 그 level agent 와 ${C.seeds}판 중 ${C.clear_wins}판 이상 승리. 채점은 통과한 레벨 수입니다.${full}`,
         `순위는 학생 model 끼리 둔 결과로 매긴 Elo 이고 점수에는 들어가지 않습니다.`,
         `개인 과제입니다. 다른 학생과 코드나 model 을 주고받지 않습니다.`,
+        `정상적인 프로젝트 수행이 아닌 악의적 시도(평가 환경이나 리더보드를 노린 공격, 다른 학생 제출물 방해, 평가 규칙 우회 등)는 0점 처리합니다.`,
       ].filter(Boolean).map(x => `<li>${x}</li>`).join("");
       document.getElementById("sample-note").hidden = !sample;
       const wip = document.getElementById("wip-note"); wip.textContent = C.notice || ""; wip.hidden = !C.notice;
