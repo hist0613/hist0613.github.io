@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tetris Battle Leaderboard · Seungtaek Choi</title>
+  <meta name="description" content="기계학습의이해 기말 프로젝트 Tetris Battle 리더보드.">
+  <meta name="robots" content="noindex, nofollow">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="tetris.css" rel="stylesheet">
+</head>
+
+<body class="tb-body">
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Seungtaek Choi</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">About</a>
+        <a href="/publications/" class="nav-link">Publications</a>
+        <a href="/teaching/" class="nav-link active">Teaching</a>
+        <a href="/blog/" class="nav-link">Blog</a>
+        <a href="/leaderboard/" class="nav-link">Leaderboard</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content tb-content">
+    <p class="tb-crumb"><a href="/teaching/">Teaching</a> / <a href="/teaching/2026-2/HUFS-LAI-ML/">기계학습의이해</a> / Leaderboard</p>
+    <div class="tb-head">
+      <h1>Tetris Battle Leaderboard</h1>
+      <p class="tb-lede">기계학습의이해(2026-2) 기말 프로젝트. 게임 화면만 보고 키를 누르는 agent 끼리 겨룹니다.</p>
+      <a class="tb-play-link" href="play/">직접 해 보기 (나 vs level1) →</a>
+    </div>
+    <p class="tb-sample" id="wip-note" hidden></p>
+    <p class="tb-sample" id="sample-note" hidden>화면을 만들기 위한 예시 데이터입니다. 학생 자리에 heuristic agent 를 넣어 둔 결과이고 실제 제출이 아닙니다.</p>
+    <div class="tb-tabs" role="tablist" id="tabs"></div>
+    <p class="tb-past" id="past-note" hidden></p>
+
+    <div class="tb-layout">
+      <div class="tb-main">
+        <div class="tb-wrap">
+          <table class="tb-table">
+            <thead><tr><th class="c-rank">#</th><th>이름</th><th class="c-elo">Elo</th><th class="c-rec tb-hide-m">전적</th><th class="c-lv">레벨 통과</th><th class="c-games"></th></tr></thead>
+            <tbody id="rows"><tr><td colspan="6" class="tb-empty">불러오는 중…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="tb-legend">
+          <span><span class="tb-lv on"></span>통과한 레벨</span>
+          <span><span class="tb-lv"></span>미통과</span>
+          <span id="status"></span>
+        </div>
+        <details class="tb-note">
+          <summary>참여와 채점</summary>
+          <ul id="rules"></ul>
+        </details>
+      </div>
+
+      <aside class="tb-side">
+        <div class="tb-podium" id="podium"></div>
+        <section class="tb-section">
+          <h2 class="tb-h">주목할 경기</h2>
+          <div class="tb-games" id="featured"></div>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <div class="tb-modal" id="modal" role="dialog" aria-modal="true"><div class="box">
+    <button class="close" aria-label="닫기">×</button><div id="player"></div>
+  </div></div>
+
+  <div class="tb-modal" id="play-modal" role="dialog" aria-modal="true"><div class="box">
+    <button class="close" aria-label="닫기">×</button><div id="play"></div>
+  </div></div>
+
+  <script src="player.js"></script>
+  <script src="tetris.js"></script>
+  <script src="play.js"></script>
+  <script>
+  (function () {
+    const esc = TetrisReplay.esc;
+    const sample = new URLSearchParams(location.search).get("data") === "sample";
+    const BASE = sample ? "data/sample/" : "data/";   // ?data=sample 은 화면 확인용 예시 (commit 하지 않음)
+    const mmss = s => { s = Math.round(s); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
+    const WORD = {W: "승", L: "패", D: "무"};
+    const modal = document.getElementById("modal");
+    let B = null, current = null;
+
+    function openGame(id) {
+      if (current) current.stop();
+      current = TetrisReplay.mount(document.getElementById("player"), id, {base: BASE});
+      modal.classList.add("open");
+      history.replaceState(null, "", `${location.pathname}${location.search}#g=${encodeURIComponent(id)}`);
+    }
+    function closeGame() {
+      if (current) current.stop();
+      modal.classList.remove("open");
+      history.replaceState(null, "", location.pathname + location.search);
+    }
+    modal.querySelector(".close").onclick = closeGame;
+    modal.addEventListener("click", e => { if (e.target === modal) closeGame(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && modal.classList.contains("open")) closeGame(); });
+    document.addEventListener("click", e => {
+      const t = e.target.closest("[data-game]"); if (t) { e.preventDefault(); openGame(t.dataset.game); }
+    });
+
+    function cards(el, list, tag) {
+      el.innerHTML = list.map(f => `<button class="tb-game" data-game="${esc(f.id)}">
+          <div class="tb-thumb"><canvas width="640" height="384"></canvas><span class="tb-play"></span></div>
+          <div class="tb-game-body"><div class="tb-tag">${esc(tag(f))}</div>
+          <div class="tb-vs">${esc(f.a)} vs ${esc(f.b)}</div>
+          <div class="tb-res">${f.winner ? esc(f.winner) + " 승" : "무승부"} · ${mmss(f.sec)}</div></div></button>`).join("");
+      el.querySelectorAll(".tb-game").forEach(b => TetrisReplay.thumb(b.querySelector("canvas"), b.dataset.game, 0.6, BASE));
+    }
+
+    const dateKo = d => { const [y, m, dd] = d.split("-").map(Number); return `${m}월 ${dd}일`; };
+    let LATEST = null, rowsBound = false;
+
+    function render(b, isPast) {
+      B = b;
+      const st = B.students, lv = B.levels, C = B.config, nlv = C.levels.length;
+      const full = !C.full_marks_levels ? "" : C.full_marks_levels >= nlv ? ` ${nlv}개 모두 통과하면 만점입니다.` : ` ${nlv}개 중 ${C.full_marks_levels}개 이상 통과하면 만점입니다.`;
+      const form = C.form_url ? `<a href="${esc(C.form_url)}" target="_blank" rel="noopener">제출 양식</a>` : "제출 양식";
+      document.getElementById("rules").innerHTML = [
+        C.code_url ? `코드: <a href="${esc(C.code_url)}" target="_blank" rel="noopener">tetris-battle.zip</a>` : "",
+        `학습한 model 을 <code>model.onnx</code> 로 Hugging Face 에 올리고, ${form}에 model id 를 냅니다.`,
+        `제출은 ${esc(B.schedule)}. 그 시각까지 낸 model id 와 그 시각의 repo commit 으로 하루에 한 번 평가합니다.`,
+        `레벨 통과: 그 level agent 와 ${C.seeds}판 중 ${C.clear_wins}판 이상 승리. 채점은 통과한 레벨 수입니다.${full}`,
+        `순위는 학생 model 끼리 둔 결과로 매긴 Elo 이고 점수에는 들어가지 않습니다.`,
+        `개인 과제입니다. 다른 학생과 코드나 model 을 주고받지 않습니다.`,
+      ].filter(Boolean).map(x => `<li>${x}</li>`).join("");
+      document.getElementById("sample-note").hidden = !sample;
+      const wip = document.getElementById("wip-note"); wip.textContent = C.notice || ""; wip.hidden = !C.notice;
+      document.getElementById("status").textContent = `마지막 갱신 ${LATEST.updated} KST`;
+      const canReplay = (LATEST.replay_dates || [LATEST.date]).includes(B.date);
+      const past = document.getElementById("past-note");
+      past.hidden = canReplay;
+      past.textContent = `${dateKo(B.date)} 기록입니다. 경기 다시보기는 최근 ${(LATEST.replay_dates || []).length}일 치만 남겨 둡니다.`;
+      document.getElementById("tabs").innerHTML = (LATEST.archive || [LATEST.date]).map((d, k) =>
+        `<button role="tab" class="tb-tab" data-date="${esc(d)}" aria-selected="${d === B.date}">${dateKo(d)}${k === 0 ? `<span class="tb-new">최신</span>` : ""}</button>`).join("");
+      const on = document.querySelector(".tb-tab[aria-selected=true]"); if (on) on.scrollIntoView({block: "nearest", inline: "nearest"});
+
+      // 그날의 시상대: 2·1·3 순서
+      const top = r => st.find(s => s.rank === r);
+      const CROWN = `<svg class="pd-crown" viewBox="0 0 24 16" aria-hidden="true"><path d="M2 14 L4 4 L9 9 L12 2 L15 9 L20 4 L22 14 Z"/></svg>`;
+      const slot = r => { const s = top(r); return `<div class="pd-col p${r}">
+          <div class="pd-who">${s ? `${r === 1 ? CROWN : ""}<div class="pd-avatar"><span>${esc([...s.nickname][0] || "?")}</span></div>
+            <b>${esc(s.nickname)}</b><span class="pd-elo">Elo ${s.elo}</span>` : ""}</div>
+          <div class="pd-block"><span>${r}</span></div></div>`; };
+      document.getElementById("podium").innerHTML = st.length ? `<h2 class="tb-h">명예의 전당<small>${dateKo(B.date)}</small></h2>
+          <div class="pd-stage">${slot(2)}${slot(1)}${slot(3)}</div>` : "";
+      document.getElementById("podium").hidden = !st.length;
+
+      const fe = canReplay ? B.featured || [] : [];
+      document.getElementById("featured").closest("section").hidden = !canReplay;
+      document.querySelector(".tb-side").classList.toggle("no-games", !canReplay);
+      if (fe.length) cards(document.getElementById("featured"), fe, f => f.label);
+      else document.getElementById("featured").innerHTML = `<p class="tb-empty">아직 경기가 없습니다.</p>`;
+
+      const elos = st.map(s => s.elo);
+      const lo = Math.min(...elos), span = Math.max(1, Math.max(...elos) - lo);
+      const bar = e => `<span class="tb-bar"><i style="width:${(6 + 94 * (e - lo) / span).toFixed(0)}%"></i></span>`;
+      let html = "";
+      st.forEach((s, i) => {
+        const boxes = Object.entries(s.levels).map(([k, v]) =>
+          `<span class="tb-lv ${v.cleared ? "on" : ""}" title="${esc(k)}: ${v.wins}/${v.games}승">${esc(k.replace(/^level/, ""))}</span>`).join("");
+        const shown = s.model.startsWith("hf:") ? s.model.slice(3) : s.model.split("/").pop();
+        const model = s.link ? `<a href="${esc(s.link)}" target="_blank" rel="noopener">${esc(shown)}</a>` : esc(shown);
+        html += `<tr class="${s.rank <= 3 ? `top r${s.rank}` : ""}"><td class="c-rank">${s.rank <= 3 ? `<span class="tb-medal m${s.rank}">${s.rank}</span>` : s.rank}</td>
+          <td class="c-name"><b>${esc(s.nickname)}</b><small>${model} · 평가 ${s.submissions}회</small></td>
+          <td class="c-elo"><b>${s.elo}</b>${bar(s.elo)}</td>
+          <td class="c-rec tb-hide-m">${s.wins}승 ${s.losses}패${s.draws ? ` ${s.draws}무` : ""}</td>
+          <td class="c-lv"><span class="tb-levels">${boxes}</span><span class="tb-lvcnt ${s.levels_cleared >= C.full_marks_levels ? "full" : ""}">${s.levels_cleared}/${nlv}</span></td>
+          <td class="c-games"><span class="tb-acts">${canReplay ? `<button class="tb-btn" data-i="${i}" aria-expanded="false" title="이 agent 가 둔 경기 ${s.games.length}판">다시보기</button>` : ""}${
+            (s.onnx_url || s.heuristic) && !isPast ? `<button class="tb-btn tb-vs-btn" data-vs="${i}" title="이 agent 와 키보드로 직접 둡니다">플레이</button>` : ""}</span></td></tr>`;
+      });
+      const rows = document.getElementById("rows");
+      rows.innerHTML = html || `<tr><td colspan="6" class="tb-empty">아직 제출이 없습니다.</td></tr>`;
+      if (!rowsBound) {
+        rowsBound = true;
+        rows.addEventListener("click", e => {
+          const btn = e.target.closest("button.tb-btn[data-i]"); if (!btn) return;
+          const tr = btn.closest("tr"), next = tr.nextElementSibling;
+          if (next && next.classList.contains("games")) { next.remove(); btn.setAttribute("aria-expanded", "false"); return; }
+          const s = B.students[+btn.dataset.i];
+          const chips = s.games.map(g => `<button class="tb-chip" data-game="${esc(g.id)}"><b class="${g.result}">${WORD[g.result]}</b>vs ${esc(g.opp)}<span>${mmss(g.sec)}</span></button>`).join("");
+          tr.insertAdjacentHTML("afterend", `<tr class="games"><td colspan="6"><div class="tb-chips">${chips || "경기 없음"}</div></td></tr>`);
+          btn.setAttribute("aria-expanded", "true");
+        });
+      }
+    }
+
+    // 플레이: 순위 표에서 고른 학생의 agent 와 직접 둔다
+    const playModal = document.getElementById("play-modal");
+    let play = null;
+    document.addEventListener("click", e => {
+      const btn = e.target.closest("button.tb-vs-btn"); if (!btn) return;
+      const s = B.students[+btn.dataset.vs];
+      const opp = s.onnx_url ? {label: `${s.nickname} (${s.rank}위)`, kind: "onnx", url: s.onnx_url}
+        : {label: `${s.nickname} (${s.rank}위)`, kind: "heuristic", heuristic: s.heuristic};
+      if (play) play.destroy();
+      play = window.tbPlay = TetrisPlay.mount(document.getElementById("play"), opp);
+      playModal.classList.add("open");
+    });
+    const closePlay = () => { if (play) { play.destroy(); play = null; } playModal.classList.remove("open"); };
+    playModal.querySelector(".close").onclick = closePlay;
+    playModal.addEventListener("click", e => { if (e.target === playModal) closePlay(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && playModal.classList.contains("open")) closePlay(); });
+
+    const getJSON = url => fetch(url, {cache: "no-store"}).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+    // 날짜 탭: ?date=YYYY-MM-DD 로 주소에도 남겨 그 날짜를 바로 열 수 있게 한다
+    function showDate(d) {
+      const q = new URLSearchParams(location.search);
+      if (!d || d === LATEST.date) q.delete("date"); else q.set("date", d);
+      history.replaceState(null, "", `${location.pathname}${q.toString() ? "?" + q : ""}`);
+      if (!d || d === LATEST.date) { render(LATEST, false); return; }
+      getJSON(`${BASE}archive/${encodeURIComponent(d)}.json`).then(b => render(b, true)).catch(() => {
+        const p = document.getElementById("past-note"); p.hidden = false; p.textContent = `${dateKo(d)} 기록을 불러오지 못했습니다`;
+      });
+    }
+    document.addEventListener("click", e => {
+      const t = e.target.closest(".tb-tab"); if (t) { showDate(t.dataset.date); return; }
+    });
+
+    getJSON(`${BASE}leaderboard.json`).then(b => {
+      LATEST = b;
+      if (!LATEST.date) LATEST.date = (LATEST.updated || "").slice(0, 10);
+      const want = new URLSearchParams(location.search).get("date");
+      if (want && want !== LATEST.date) showDate(want); else render(LATEST, false);
+      const m = location.hash.match(/^#g=(.+)$/);
+      if (m) openGame(decodeURIComponent(m[1]));
+    }).catch(e => {
+      document.getElementById("rows").innerHTML = `<tr><td colspan="6" class="tb-empty">리더보드를 불러오지 못했습니다 (${esc(e.message)})</td></tr>`;
+    });
+  })();
+  </script>
+</body>
+
+</html>

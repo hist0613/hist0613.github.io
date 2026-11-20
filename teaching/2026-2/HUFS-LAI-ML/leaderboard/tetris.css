@@ -1,0 +1,202 @@
+/* Tetris Battle leaderboard. 사이트 공통 style.css(nav, .content 카드)와 LLM leaderboard 의 모양을 따른다. */
+
+.tb-body .nav-inner { max-width: 1240px; }
+.tb-content { max-width: 1240px; padding: 24px 28px; }
+
+/* 순위 표가 왼쪽 넓게, 경기는 오른쪽 좁은 열 */
+.tb-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 28px; align-items: start; }
+.tb-side { position: sticky; top: 16px; }
+.tb-side .tb-section { margin: 0 0 22px; }
+
+/* 그날의 시상대: 사이트 남색 바탕, 금·은·동 입체 단상, 단상 위에 이름 */
+.tb-podium { position: relative; margin: 0 0 26px; }
+.pd-stage { position: relative; display: flex; align-items: flex-end; gap: 3px; margin-top: 4px; }
+.pd-stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: #d1d5db; }
+.pd-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; }
+.pd-who { display: flex; flex-direction: column; align-items: center; padding: 0 2px 8px; max-width: 100%; }
+.pd-crown { width: 26px; height: 17px; fill: #ffd25a; margin-bottom: 2px; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .35)); }
+.pd-avatar { width: 40px; height: 40px; border-radius: 50%; padding: 3px; box-sizing: border-box; box-shadow: 0 1px 4px rgba(0, 0, 0, .18); }
+.pd-avatar span { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; background: #fff;
+  font-size: 15px; font-weight: 700; color: #374151; }
+.pd-col.p1 .pd-avatar span { color: #9a7410; } .pd-col.p2 .pd-avatar span { color: #6b7280; } .pd-col.p3 .pd-avatar span { color: #8a5228; }
+.pd-col.p1 .pd-avatar { width: 50px; height: 50px; } .pd-col.p1 .pd-avatar span { font-size: 19px; }
+.pd-who b { margin-top: 6px; font-size: 13px; font-weight: 700; color: #111827; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pd-col.p1 .pd-who b { font-size: 15px; }
+.pd-elo { font-size: 11px; color: #6b7280; font-variant-numeric: tabular-nums; }
+/* 단상: 금속 몸통 + 밝은 윗면 */
+.pd-block { position: relative; width: 100%; display: grid; place-items: center; border-radius: 3px 3px 0 0; padding-top: 6px; box-sizing: border-box; }
+.pd-block::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 7px; border-radius: 3px 3px 0 0;
+  background: rgba(255, 255, 255, .45); clip-path: polygon(0 0, 100% 0, 94% 100%, 6% 100%); }
+.pd-block span { font-size: 24px; font-weight: 900; color: rgba(0, 0, 0, .28); text-shadow: 0 1px 0 rgba(255, 255, 255, .5); }
+.pd-col.p1 .pd-block span { font-size: 30px; }
+.pd-col.p1 .pd-block { height: 82px; background: linear-gradient(180deg, #f9df84 0%, #e1b23a 55%, #b88a17 100%); }
+.pd-col.p2 .pd-block { height: 62px; background: linear-gradient(180deg, #f1f4f8 0%, #c2c9d3 55%, #939ca8 100%); }
+.pd-col.p3 .pd-block { height: 48px; background: linear-gradient(180deg, #f2c49c 0%, #cf8a52 55%, #a0612e 100%); }
+.pd-col.p1 .pd-avatar { background: linear-gradient(160deg, #fff1a8, #e1a90f); }
+.pd-col.p2 .pd-avatar { background: linear-gradient(160deg, #ffffff, #9aa3b0); }
+.pd-col.p3 .pd-avatar { background: linear-gradient(160deg, #ffd8b4, #b3652a); }
+
+.tb-crumb { font-size: 12px; color: #6b7280; margin: 0 0 8px; }
+.tb-crumb a { color: #6b7280; }
+.tb-head h1 { margin: 0 0 6px; }
+.pl-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-right: 28px; }
+.pl-ctrl { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #374151; }
+.pl-ctrl button { font: inherit; font-size: 13px; font-weight: 700; padding: 5px 14px; border-radius: 6px; border: 1px solid #035384;
+  background: #035384; color: #fff; cursor: pointer; }
+.pl-ctrl button:disabled { opacity: .5; cursor: default; }
+.pl-status { font-size: 12px; color: #6b7280; margin: 6px 0 10px; min-height: 18px; }
+.pl-keys { font-size: 12px; color: #6b7280; margin: 10px 0 0; }
+.tp-stage canvas:focus { outline: none; }
+.tb-lede { margin: 0; color: #4b5563; }
+
+.tb-note { border: 1px solid #e5e7eb; border-left: 3px solid #035384; border-radius: 6px; padding: 14px 18px;
+  background: #f9fafb; margin: 14px 0 10px; }
+.tb-note summary { cursor: pointer; list-style: none; color: #111827; }
+.tb-note summary::-webkit-details-marker { display: none; }
+.tb-note summary::before { content: "▸"; display: inline-block; width: 14px; margin-right: 4px; text-align: center;
+  color: #6b7280; font-size: 11px; transition: transform .15s; }
+.tb-note[open] summary::before { transform: rotate(90deg); }
+.tb-note[open] summary { margin-bottom: 4px; }
+.tb-note ul { margin: 0; padding-left: 18px; color: #374151; }
+.tb-note li { margin: 2px 0; }
+.tb-sample { margin: 14px 0 0; padding: 8px 12px; border-left: 3px solid #d97706; background: #fffbeb; color: #92400e; }
+.tb-status { margin: 0 0 10px; font-size: 12px; color: #6b7280; }
+/* 날짜 탭: 사이트 nav 처럼 아래 파란 줄. 날이 많으면 옆으로 넘긴다 */
+.tb-tabs { display: flex; gap: 2px; overflow-x: auto; border-bottom: 1px solid #e5e7eb; margin: 0 0 18px; scrollbar-width: thin; }
+.tb-tab { all: unset; cursor: pointer; flex: 0 0 auto; padding: 8px 14px 9px; font-size: 14px; color: #6b7280; position: relative;
+  white-space: nowrap; }
+.tb-tab:hover { color: #111827; }
+.tb-tab[aria-selected="true"] { color: #111827; font-weight: 700; }
+.tb-tab[aria-selected="true"]::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: -1px; height: 2px; background: #2563eb; }
+.tb-tab:focus-visible { outline: 2px solid #93c5fd; }
+.tb-new { margin-left: 6px; font-size: 10px; font-weight: 700; color: #035384; background: #e0edf7; border-radius: 4px; padding: 1px 5px; vertical-align: 1px; }
+.tb-past { margin: 0 0 14px; padding: 8px 12px; border-left: 3px solid #1378b2; background: #eff6ff; color: #1e3a5f; font-size: 13px; }
+
+.tb-medal { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; font-size: 11px; font-weight: 700; color: #fff; }
+.tb-medal.m1 { background: #c9a227; } .tb-medal.m2 { background: #9aa3b0; } .tb-medal.m3 { background: #b07a4f; }
+
+/* 절 제목: 사이트 h3 처럼 아래 짧은 파란 줄 */
+.tb-h { font-size: 16px; font-weight: 700; color: #222; margin: 0 0 22px; position: relative; }
+.tb-h::after { content: ""; position: absolute; left: 0; bottom: -8px; width: 56px; height: 1px; background: #1378b2; }
+.tb-h small { font-weight: 300; font-size: 12px; color: #6b7280; margin-left: 8px; }
+.tb-section { margin: 0 0 30px; width: auto; max-width: none; }  /* 공통 style.css 의 section { width: 70% } 를 덮는다 */
+
+/* 경기 카드: 실제 장면 미리보기 + 두 이름 */
+.tb-games { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.tb-game { all: unset; box-sizing: border-box; cursor: pointer; display: block; border: 1px solid #e5e7eb; border-radius: 6px;
+  overflow: hidden; background: #fff; transition: border-color .15s, box-shadow .15s; }
+.tb-game:hover, .tb-game:focus-visible { border-color: #035384; box-shadow: 0 1px 6px rgba(3, 83, 132, .12); }
+.tb-thumb { position: relative; background: #0c0c10; aspect-ratio: 640 / 384; }
+.tb-thumb canvas { display: block; width: 100%; height: 100%; image-rendering: pixelated; }
+.tb-thumb .tb-play { position: absolute; right: 8px; bottom: 8px; width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(0, 0, 0, .6); }
+.tb-thumb .tb-play::after { content: ""; position: absolute; left: 11px; top: 8px; border-left: 9px solid #fff;
+  border-top: 6px solid transparent; border-bottom: 6px solid transparent; }
+.tb-game-body { padding: 9px 12px 11px; }
+.tb-tag { font-size: 11px; color: #035384; font-weight: 700; }
+.tb-vs { font-weight: 700; color: #111827; margin: 2px 0 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tb-res { font-size: 12px; color: #6b7280; }
+.tb-empty { font-size: 13px; color: #9ca3af; }
+
+/* 순위 표: LLM leaderboard 의 lb-table 과 같은 결 */
+.tb-wrap { overflow-x: auto; border: 1px solid #e5e7eb; border-radius: 6px; }
+.tb-table { border-collapse: collapse; width: 100%; font-size: 13px; font-variant-numeric: tabular-nums; margin: 0; }
+.tb-table th, .tb-table td { padding: 8px 10px; border-bottom: 1px solid #f0f0f0; white-space: nowrap; text-align: left; }
+.tb-table thead th { font-weight: 400; color: #374151; border-bottom: 1px solid #d1d5db; background: #fff; }
+.tb-table tbody tr:last-child td { border-bottom: 0; }
+.tb-table .c-rank { width: 34px; text-align: right; color: #9ca3af; }
+.tb-table tr.top .c-rank { color: #035384; font-weight: 700; }
+.tb-table tr.top.r1 td { background: #fffbea; } .tb-table tr.top.r2 td { background: #f8fafc; } .tb-table tr.top.r3 td { background: #fdf6f1; }
+.tb-table .c-rank .tb-medal { width: 22px; height: 22px; }
+.tb-table .c-name b { font-weight: 700; color: #111827; }
+.tb-table .c-name small { display: block; font-size: 11px; color: #6b7280; max-width: 260px; overflow: hidden; text-overflow: ellipsis; }
+.tb-table .c-name small a { color: #6b7280; }
+.tb-table .c-elo { width: 160px; }
+.tb-table .c-elo b { font-weight: 700; color: #111827; }
+.tb-bar { display: block; height: 3px; margin-top: 4px; background: #eef2f7; border-radius: 2px; }
+.tb-bar i { display: block; height: 100%; background: #1378b2; border-radius: 2px; }
+.tb-table .c-rec { color: #4b5563; }
+.tb-table .c-games { text-align: right; width: 1%; }
+/* 남는 폭은 이름 칸이 받고, 나머지 칸은 내용 폭만큼 */
+.tb-table .c-rec, .tb-table .c-lv { width: 1%; padding-right: 28px; }
+
+/* 기준 agent 줄: 표 사이의 가는 기준선 */
+.tb-table tr.ref td { padding-top: 3px; padding-bottom: 3px; background: #f8fafc; color: #6b7280; font-size: 12px; font-style: italic; }
+.tb-table tr.ref .tb-bar i { background: #9ca3af; }
+
+/* 레벨 통과: 다섯 칸 */
+.tb-levels { display: inline-flex; gap: 3px; vertical-align: middle; }
+.tb-lv { min-width: 18px; padding: 0 2px; height: 18px; border-radius: 3px; border: 1px solid #cbd5e1; background: #fff; font-size: 10px; line-height: 16px;
+  text-align: center; color: #9ca3af; box-sizing: border-box; }
+.tb-lv.on { background: #035384; border-color: #035384; color: #fff; }
+.tb-lvcnt { margin-left: 8px; color: #374151; vertical-align: middle; }
+.tb-lvcnt.full { color: #035384; font-weight: 700; }
+
+.tb-btn { font: inherit; font-size: 12px; padding: 3px 10px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff;
+  color: #374151; cursor: pointer; }
+.tb-btn:hover, .tb-btn[aria-expanded="true"] { border-color: #035384; color: #035384; }
+.tb-acts { display: inline-flex; gap: 6px; }
+.tb-table tr.games td { background: #f9fafb; white-space: normal; padding: 10px 12px 12px; }
+.tb-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.tb-chip { font: inherit; font-size: 12px; padding: 3px 9px; border: 1px solid #e5e7eb; border-radius: 999px; background: #fff;
+  color: #374151; cursor: pointer; }
+.tb-chip:hover { border-color: #035384; }
+.tb-chip b { font-weight: 700; margin-right: 3px; }
+.tb-chip b.W { color: #035384; } .tb-chip b.L { color: #b91c1c; } .tb-chip b.D { color: #6b7280; }
+.tb-chip span { color: #9ca3af; margin-left: 3px; }
+
+.tb-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: #6b7280; margin: 10px 0 0; align-items: center; }
+.tb-legend .tb-lv { display: inline-block; width: 12px; height: 12px; vertical-align: -2px; margin-right: 4px; }
+
+/* 다시보기 팝업 */
+.tb-modal { position: fixed; inset: 0; background: rgba(17, 24, 39, .55); display: none; align-items: flex-start;
+  justify-content: center; padding: 40px 16px; overflow-y: auto; z-index: 50; }
+.tb-modal.open { display: flex; }
+.tb-modal .box { background: #fff; border-radius: 8px; border-top: 3px solid #035384; padding: 18px 22px 20px;
+  width: min(900px, 100%); position: relative; }
+.tb-modal .close { position: absolute; right: 14px; top: 10px; font: inherit; font-size: 22px; line-height: 1; background: none;
+  border: 0; color: #6b7280; cursor: pointer; }
+.tp-title { font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 2px; }
+.tp-sub { font-size: 12px; color: #6b7280; margin-bottom: 10px; }
+.tp-names { display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 4px; font-weight: 700; font-size: 13px; color: #111827; }
+.tp-names .win::after { content: " 승"; color: #035384; }
+.tp-stage { background: #0c0c10; border-radius: 6px; overflow: hidden; }
+.tp-stage canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+.tp-ctrl { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.tp-ctrl button { font: inherit; font-size: 12px; padding: 4px 10px; border: 1px solid #d1d5db; background: #fff; color: #374151;
+  border-radius: 6px; cursor: pointer; }
+.tp-speeds { display: inline-flex; }
+.tp-speeds button { border-radius: 0; }
+.tp-speeds button + button { border-left: 0; }
+.tp-speeds button:first-child { border-radius: 6px 0 0 6px; }
+.tp-speeds button:last-child { border-radius: 0 6px 6px 0; }
+.tp-ctrl button.on { background: #035384; border-color: #035384; color: #fff; }
+.tp-seek { flex: 1; min-width: 120px; accent-color: #035384; }
+.tp-time { font-size: 12px; color: #6b7280; font-variant-numeric: tabular-nums; min-width: 84px; text-align: right; }
+
+@media screen and (max-width: 980px) {
+  .tb-layout { grid-template-columns: minmax(0, 1fr); }  /* 표가 칸을 밀어내지 않고 안에서 가로로 넘기게 */
+  .tb-side { position: static; }
+  .tb-games { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+}
+
+@media screen and (max-width: 720px) {
+  .tb-content { padding: 18px 16px; }
+  .tb-games { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tb-game-body { padding: 7px 9px 9px; }
+  .tb-hide-m { display: none; }
+  .tb-table .c-elo { width: 90px; }
+  .tb-modal { padding: 12px 8px; }
+}
+
+/* 직접 해 보기 페이지 (play/) */
+.tb-play-page { max-width: 900px; }
+.tb-play-box { background: #fff; border-radius: 8px; border-top: 3px solid #035384; padding: 16px 20px 18px; margin-top: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .08); }
+.tb-play-box .pl-head { margin-right: 0; }
+.tb-play-keys { display: flex; flex-wrap: wrap; gap: 8px 18px; list-style: none; padding: 0; margin: 14px 0 0; font-size: 14px; color: #374151; }
+.tb-play-keys b { display: inline-block; min-width: 2.2em; padding: 1px 7px; margin-right: 4px; border: 1px solid #d1d5db; border-radius: 4px;
+  background: #f9fafb; font-weight: 700; text-align: center; }
+.tb-play-note { font-size: 13px; color: #6b7280; margin: 10px 0 0; }
+.tb-play-link { display: inline-block; margin-top: 10px; font-weight: 700; }
+.tb-play-page .pl-keys { display: none; }

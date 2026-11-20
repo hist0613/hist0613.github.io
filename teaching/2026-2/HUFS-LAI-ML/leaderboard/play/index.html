@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tetris Battle Play · Seungtaek Choi</title>
+  <meta name="description" content="기계학습의이해 기말 프로젝트 Tetris Battle 을 브라우저에서 직접 둡니다.">
+  <meta name="robots" content="noindex, nofollow">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="../tetris.css" rel="stylesheet">
+</head>
+
+<body class="tb-body">
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Seungtaek Choi</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">About</a>
+        <a href="/publications/" class="nav-link">Publications</a>
+        <a href="/teaching/" class="nav-link active">Teaching</a>
+        <a href="/blog/" class="nav-link">Blog</a>
+        <a href="/leaderboard/" class="nav-link">Leaderboard</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content tb-content tb-play-page">
+    <p class="tb-crumb"><a href="/teaching/">Teaching</a> / <a href="/teaching/2026-2/HUFS-LAI-ML/">기계학습의이해</a> / <a href="../">Leaderboard</a> / Play</p>
+    <div class="tb-head">
+      <h1>Let's Play!</h1>
+      <p class="tb-lede">Tetris Battle 을 브라우저에서 바로 둡니다. 왼쪽이 나, 오른쪽이 level1 (공개 heuristic agent).</p>
+    </div>
+    <div class="tb-play-box" id="play"></div>
+    <ul class="tb-play-keys">
+      <li><b>← →</b> 이동</li>
+      <li><b>↑ / X</b> 시계 방향 회전</li>
+      <li><b>Z</b> 반시계 방향 회전</li>
+      <li><b>↓</b> 천천히 내리기</li>
+      <li><b>Space</b> 바로 내리기</li>
+      <li><b>C / Shift</b> hold</li>
+    </ul>
+    <p class="tb-play-note">줄을 지우면 상대 판 아래에 회색 garbage 줄이 올라갑니다. 먼저 판 위로 넘친 쪽이 집니다. 5분이 지나면 보낸 줄이 많은 쪽이 이깁니다.</p>
+  </div>
+
+  <script src="../tetris.js"></script>
+  <script src="../play.js"></script>
+  <script>
+    window.tbPlay = TetrisPlay.mount(document.getElementById("play"), {label: "level1", kind: "level1"});
+  </script>
+</body>
+
+</html>
