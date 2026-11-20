@@ -35,6 +35,21 @@
    "method": "RL로 reasoning 학습"
   },
   {
+   "id": "ccore/Qwen3-1.7B-GLB-3D-Coder",
+   "added": "2026-11-17",
+   "source": "trending https://huggingface.co/ccore/Qwen3-1.7B-GLB-3D-Coder",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3-1.7B"
+   ],
+   "method": "ThreeJS-3D-GLB-Assets 데이터로 fine-tune (기법 미기재)"
+  },
+  {
    "id": "ccore/Qwen3.5-4B-GLB-3D-Coder",
    "added": "2026-11-07",
    "source": "trending https://huggingface.co/ccore/Qwen3.5-4B-GLB-3D-Coder",
@@ -48,6 +63,21 @@
     "Qwen/Qwen3.5-4B"
    ],
    "method": "fine-tuning (카드에 구체 기법 없음)"
+  },
+  {
+   "id": "Cloudflare/clairic-flash",
+   "added": "2026-11-19",
+   "source": "https://blog.cloudflare.com/open-clairic/",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.5-9B"
+   ],
+   "method": "fine-tune (세부 방법 카드에 미기재)"
   },
   {
    "id": "DALabCommunity/Haidass1.5-143M",
@@ -152,6 +182,48 @@
    "method": "vocab 확장 + mid-training 302B tokens + SFT + GRPO"
   },
   {
+   "id": "HuggingFaceTB/SmolVLM2-256M-Video-Instruct",
+   "added": "2026-11-19",
+   "source": "trending https://huggingface.co/HuggingFaceTB/SmolVLM2-256M-Video-Instruct",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "method": "SigLIP + SmolLM2 기반 Idefics3 구조를 약 330만 샘플로 학습"
+  },
+  {
+   "id": "ibm-granite/granite-4.1-3b-llmon-preview",
+   "added": "2026-11-19",
+   "source": "trending https://huggingface.co/ibm-granite/granite-4.1-3b-llmon-preview",
+   "settings": [
+    "think-low",
+    "think-medium",
+    "think-high"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "ibm-granite/granite-4.1-3b-base"
+   ],
+   "method": "SFT + RL 반복 (LLMON 프롬프트 형식)"
+  },
+  {
+   "id": "ibm-granite/granite-4.1-8b-llmon-preview",
+   "added": "2026-11-17",
+   "source": "trending https://huggingface.co/ibm-granite/granite-4.1-8b-llmon-preview",
+   "settings": [
+    "think-low",
+    "think-medium",
+    "think-high"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "ibm-granite/granite-4.1-8b-base"
+   ],
+   "method": "SFT 와 RL 을 반복 (LLMON 형식 학습)"
+  },
+  {
    "id": "Jackrong/DeepSeek-V4-Pro-Qwen3.5-9B",
    "added": "2026-11-10",
    "source": "trending https://huggingface.co/Jackrong/DeepSeek-V4-Pro-Qwen3.5-9B",
@@ -195,6 +267,51 @@
     "Qwen/Qwen3.5-0.8B"
    ],
    "method": "학습 없이 weight editing (down_proj 64개 열에서 루프 방향 제거)"
+  },
+  {
+   "id": "KORMo-VL/KORMo-Web-4B",
+   "added": "2026-11-17",
+   "source": "trending https://huggingface.co/KORMo-VL/KORMo-Web-4B",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.5-4B"
+   ],
+   "method": "web pretraining 샘플과 브라우저 interaction trajectory 로 fine-tune"
+  },
+  {
+   "id": "KORMo-VL/KORMo-Web-4B-mlx-4bit",
+   "added": "2026-11-17",
+   "source": "new https://huggingface.co/KORMo-VL/KORMo-Web-4B-mlx-4bit",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "quantized",
+   "parents": [
+    "KORMo-VL/KORMo-Web-4B"
+   ],
+   "method": "MLX 4-bit quantization"
+  },
+  {
+   "id": "KORMo-VL/KORMo-Web-9B",
+   "added": "2026-11-17",
+   "source": "trending https://huggingface.co/KORMo-VL/KORMo-Web-9B",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.5-9B"
+   ],
+   "method": "web pretraining 샘플과 브라우저 interaction trajectory 로 fine-tune"
   },
   {
    "id": "LastMachine/Qwen3-8B-ZeroZero-Heretic",
@@ -256,6 +373,19 @@
    "method": "SFT → mixed RL → multi-domain on-policy distillation → agentic RL"
   },
   {
+   "id": "Lythri/Lythri-Wink-2B",
+   "added": "2026-11-17",
+   "source": "new https://huggingface.co/Lythri/Lythri-Wink-2B",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "distill",
+   "parents": [
+    "google/gemma-4-E2B"
+   ],
+   "method": "structural shearing 후 teacher distillation, CoT SFT, 대화 SFT, 선호 최적화"
+  },
+  {
    "id": "maritaca-ai/S5-nano",
    "added": "2026-11-09",
    "source": "trending https://huggingface.co/maritaca-ai/S5-nano",
@@ -297,6 +427,16 @@
     "meta-llama/Llama-3.1-70B"
    ],
    "method": "pruning + Llama 3.1 8B/70B logit distillation, SFT + rejection sampling + DPO"
+  },
+  {
+   "id": "microsoft/Aion-1.0-Instruct-2.3B",
+   "added": "2026-11-19",
+   "source": "trending https://huggingface.co/microsoft/Aion-1.0-Instruct-2.3B",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "method": "자체 학습 (Phi Silica 데이터 확장 + 공개 문서·합성 데이터), 안전성 정렬"
   },
   {
    "id": "microsoft/phi-4",
@@ -413,6 +553,21 @@
    "method": "Heretic v2.1.0.dev0 (config.terse.toml, Arbitrary-Rank Ablation)"
   },
   {
+   "id": "qvac/BotPsy-0.8B",
+   "added": "2026-11-17",
+   "source": "trending https://huggingface.co/qvac/BotPsy-0.8B",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.5-0.8B"
+   ],
+   "method": "SFT, multi-teacher on-policy distillation, RL 2 라운드"
+  },
+  {
    "id": "Qwen/Qwen2.5-7B-Instruct",
    "added": "2026-11-01",
    "source": "https://openrouter.ai/qwen/qwen-2.5-7b-instruct",
@@ -424,6 +579,21 @@
     "Qwen/Qwen2.5-7B"
    ],
    "method": "pretraining + post-training"
+  },
+  {
+   "id": "Qwen/Qwen3-0.6B",
+   "added": "2026-11-20",
+   "source": "trending https://huggingface.co/Qwen/Qwen3-0.6B",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "official",
+   "parents": [
+    "Qwen/Qwen3-0.6B-Base"
+   ],
+   "method": "Pretraining & Post-training (thinking/non-thinking 모드 지원)"
   },
   {
    "id": "Qwen/Qwen3-14B",
@@ -529,6 +699,29 @@
    "settings": [
     "think-off"
    ]
+  },
+  {
+   "id": "SupraLabs/Supra2.5-Pro-Base",
+   "added": "2026-11-17",
+   "source": "new https://huggingface.co/SupraLabs/Supra2.5-Pro-Base",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "method": "from-scratch pretraining 100B tokens (WSD LR schedule)"
+  },
+  {
+   "id": "SupraLabs/Supra2.5-Pro-Instruct",
+   "added": "2026-11-17",
+   "source": "new https://huggingface.co/SupraLabs/Supra2.5-Pro-Instruct",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "finetune",
+   "parents": [
+    "SupraLabs/Supra2.5-Pro-Base"
+   ],
+   "method": "SFT 2 epoch (synthetic 대화 약 9천 건, SmolTalk2 prompt 일부 사용)"
   },
   {
    "id": "taobao-mnn/MNN-Pocket-0.3B",
