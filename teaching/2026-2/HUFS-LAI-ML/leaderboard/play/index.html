@@ -29,8 +29,9 @@
     <p class="tb-crumb"><a href="/teaching/">Teaching</a> / <a href="/teaching/2026-2/HUFS-LAI-ML/">기계학습의이해</a> / <a href="../">Leaderboard</a> / Play</p>
     <div class="tb-head">
       <h1>Let's Play!</h1>
-      <p class="tb-lede">Tetris Battle 을 브라우저에서 바로 둡니다. 왼쪽이 나, 오른쪽이 level1 (공개 heuristic agent).</p>
+      <p class="tb-lede">Tetris Battle 을 브라우저에서 바로 둡니다. 왼쪽이 나, 오른쪽이 고른 상대.</p>
     </div>
+    <div class="tb-opp" id="opp" role="group" aria-label="상대 고르기"></div>
     <div class="tb-play-box" id="play"></div>
     <ul class="tb-play-keys">
       <li><b>← →</b> 이동</li>
@@ -46,7 +47,24 @@
   <script src="../tetris.js"></script>
   <script src="../play.js"></script>
   <script>
-    window.tbPlay = TetrisPlay.mount(document.getElementById("play"), {label: "level1", kind: "level1"});
+    // 상대: 공개 레벨 model (../data/levels.json, level1~5 중 올라간 것). 없으면 heuristic level1~5
+    const box = document.getElementById("opp"), root = document.getElementById("play");
+    function pick(o, btn) {
+      if (window.tbPlay) window.tbPlay.destroy();
+      window.tbPlay = TetrisPlay.mount(root, o);
+      box.querySelectorAll("button").forEach(b => b.classList.toggle("on", b === btn));
+    }
+    fetch("../data/levels.json", {cache: "no-store"}).then(r => r.ok ? r.json() : []).catch(() => []).then(levels => {
+      // ONNX 레벨이 없으면 평가와 같은 heuristic 레벨 (instructor/levels.py level1~5: wait 24·20·18·16·14, WEAK_WEIGHTS)
+      const opps = levels.length ? levels.map(l => ({label: l.name, kind: "onnx", url: "../" + l.url}))
+        : [24, 20, 18, 16, 14].map((wait, i) => ({label: `level${i + 1}`, kind: "heuristic", heuristic: {wait}}));
+      box.innerHTML = '<span class="tb-opp-label">상대</span>';
+      opps.forEach((o, i) => {
+        const b = document.createElement("button");
+        b.textContent = o.label; b.onclick = () => pick(o, b); box.appendChild(b);
+        if (i === 0) pick(o, b);
+      });
+    });
   </script>
 </body>
 
