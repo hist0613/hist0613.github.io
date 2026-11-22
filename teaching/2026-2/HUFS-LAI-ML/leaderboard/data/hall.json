@@ -1,6 +1,13 @@
 [
  {
-  "date": "2026-11-19",
-  "top": []
+  "date": "2026-11-22",
+  "top": [
+   {
+    "rank": 1,
+    "nickname": "Prof. Choi",
+    "elo": 327,
+    "levels_cleared": 0
+   }
+  ]
  }
 ]
