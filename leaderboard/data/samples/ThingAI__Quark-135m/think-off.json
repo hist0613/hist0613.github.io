@@ -1,0 +1,1 @@
+{"mmlu":{"correct":{"answer":"The answer is (D).","category":"mmlu_pro_style_other","doc_id":1551,"extracted":"D","item_id":1551,"ref":"bd0490745fc2e755","reference":"D","verified":true},"hidden":false,"wrong":{"answer":"The answer is (D).\n\n","category":"mmlu_pro_style_law","doc_id":1369,"extracted":"D","item_id":1369,"ref":"52c1f2a71df53547","reference":"C","verified":true}}}

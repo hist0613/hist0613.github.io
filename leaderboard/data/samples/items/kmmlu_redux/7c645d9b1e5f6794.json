@@ -1,0 +1,1 @@
+{"images":[],"messages":[{"content":"다음 문제에 대해 정답을 고르세요. 당신의 최종 정답은 ABCD 중 하나이고, \"정답:\" 뒤에 와야 합니다. 정답을 고르기 전에 차근차근 생각하고 추론하세요.\n \n다음 중 도심부 신호교차로의 서비스수준을 분석할 때 고려하는 지체가 아닌 것은?\n\nA) 균일지체(uniform delay)\nB) 상관지체(interaction delay)\nC) 증분지체(incremental delay)\nD) 추가지체(initial queue delay)","role":"user"}]}
