@@ -373,7 +373,7 @@
     return [[landing, eroded, rowT, colT, holes, wells], tooHigh];
   }
   class HeuristicAgent {
-    constructor(wait = 16, weights = WEAK_WEIGHTS) { this.wait = wait; this.weights = weights; this.last = null; this.target = null; this.rotTries = 0; }
+    constructor(wait = 16, weights = WEAK_WEIGHTS, delay = 0) { this.wait = wait; this.weights = weights; this.delay = delay; this.pause = 0; this.last = null; this.target = null; this.rotTries = 0; }
     plan(board, kind) {
       let best = null; const seen = [];
       for (let k = 0; k < 4; k++) {
@@ -396,7 +396,8 @@
       const active = g.cells().filter(([r]) => r >= FIRST_ROW);
       if (active.length !== 4) return [NOOP, this.wait];
       const key = String(board) + g.kind;
-      if (key !== this.last) { this.last = key; this.target = this.plan(board, g.kind); this.rotTries = 0; }
+      if (key !== this.last) { this.last = key; this.target = this.plan(board, g.kind); this.rotTries = 0; this.pause = this.delay; }
+      if (this.pause > 0) { this.pause--; return [NOOP, this.wait]; }   // 새 블록을 delay 번 보고 나서 움직임 (Python 과 같다)
       if (!this.target) return [HARD_DROP, this.wait];
       const [shape, col] = this.target, cur = norm(active);
       if (!same(cur, shape) && this.rotTries < 4) {
