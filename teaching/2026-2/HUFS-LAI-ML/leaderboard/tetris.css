@@ -199,6 +199,7 @@
   background: #f9fafb; font-weight: 700; text-align: center; }
 .tb-play-note { font-size: 13px; color: #6b7280; margin: 10px 0 0; }
 .tb-play-link { display: inline-block; margin-top: 10px; font-weight: 700; }
+.tb-links { display: flex; flex-wrap: wrap; gap: 0 22px; }
 .tb-play-page .pl-keys { display: none; }
 
 .tb-opp { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 16px; }

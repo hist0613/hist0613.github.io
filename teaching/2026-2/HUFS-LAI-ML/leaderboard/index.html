@@ -30,7 +30,11 @@
     <div class="tb-head">
       <h1>Tetris Battle Leaderboard</h1>
       <p class="tb-lede">기계학습의이해(2026-2) 기말 프로젝트. 게임 화면만 보고 키를 누르는 agent 끼리 겨룹니다.</p>
-      <a class="tb-play-link" href="play/">직접 해 보기 (나 vs level1) →</a>
+      <div class="tb-links">
+        <a class="tb-play-link" href="play/">직접 해 보기 (나 vs level1~5) →</a>
+        <a class="tb-play-link" id="slides-link" target="_blank" rel="noopener" hidden>강의자료 (11주차)</a>
+        <a class="tb-play-link" id="code-link" target="_blank" rel="noopener" hidden>코드 (tetris-battle.zip)</a>
+      </div>
     </div>
     <p class="tb-sample" id="wip-note" hidden></p>
     <p class="tb-sample" id="sample-note" hidden>화면을 만들기 위한 예시 데이터입니다. 학생 자리에 heuristic agent 를 넣어 둔 결과이고 실제 제출이 아닙니다.</p>
@@ -133,6 +137,9 @@
       ].filter(Boolean).map(x => `<li>${x}</li>`).join("");
       document.getElementById("sample-note").hidden = !sample;
       const wip = document.getElementById("wip-note"); wip.textContent = C.notice || ""; wip.hidden = !C.notice;
+      for (const [id, url] of [["slides-link", C.slides_url], ["code-link", C.code_url]]) {   // 위쪽 링크 (2026-11-23)
+        const el = document.getElementById(id); if (url) el.href = url; el.hidden = !url;
+      }
       document.getElementById("status").textContent = `마지막 갱신 ${LATEST.updated} KST`;
       const canReplay = (LATEST.replay_dates || [LATEST.date]).includes(B.date);
       const past = document.getElementById("past-note");
