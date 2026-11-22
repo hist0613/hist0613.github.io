@@ -167,6 +167,19 @@
    "method": "fine-tune (세부 미기재)"
   },
   {
+   "id": "haruuuuu-1256/aoi-gemma-4-E4B-it",
+   "added": "2026-11-21",
+   "source": "new https://huggingface.co/haruuuuu-1256/aoi-gemma-4-E4B-it",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "finetune",
+   "parents": [
+    "google/gemma-4-E4B-it"
+   ],
+   "method": "QLoRA SFT(손으로 쓴 대화 + 페르소나 카드 증류 데이터) 후 DPO, LoRA 를 BF16 base 에 융합"
+  },
+  {
    "id": "HuggingFaceBio/Carbon-X",
    "added": "2026-11-01",
    "source": "trending https://huggingface.co/HuggingFaceBio/Carbon-X",
@@ -799,6 +812,19 @@
    "settings": [
     "think-off"
    ]
+  },
+  {
+   "id": "voyager-so/shot-reader-8b",
+   "added": "2026-11-21",
+   "source": "trending https://huggingface.co/voyager-so/shot-reader-8b",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3-VL-8B-Instruct"
+   ],
+   "method": "LoRA r64 (언어 모델 attention·MLP) 학습 후 가중치에 병합"
   },
   {
    "id": "webAI-Official/TwIL-8B",
