@@ -1,6 +1,6 @@
 {
  "mode": "daily",
- "updated": "2026-11-23 01:02",
+ "updated": "2026-11-23 01:59",
  "schedule": "매일 00:00 (한국시간) 마감",
  "config": {
   "levels": [
@@ -19,7 +19,8 @@
   "clear_wins": 4,
   "full_marks_levels": null,
   "form_url": "https://docs.google.com/forms/d/e/1FAIpQLScFzuyU977dskypIr0wCPjZq2C6k-YmYMUlfSdqrhe4gAWAyA/viewform",
-  "code_url": "",
+  "code_url": "https://drive.google.com/file/d/1Rnhhh-MUxeQ8x9CPccfKVJiLT3TcGWYq/view?usp=sharing",
+  "slides_url": "https://drive.google.com/file/d/1SIvN81CnWC6S_OlHGLiTpP0jFifiJgQE/view?usp=sharing",
   "notice": "level agent 와 채점 기준은 업데이트될 수 있습니다."
  },
  "total_games": 140,
