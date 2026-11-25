@@ -308,7 +308,7 @@
     plot: '그릴 값',
     cost_axis: '비용 축',
     how_title: '평가 방식',
-    how_harness: '모든 모델은 vLLM 위에서 <a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-evaluation-harness</a> 로 평가하고, bfloat16, greedy decoding, 모델 자신의 chat template 을 씁니다.',
+    how_harness: '모든 모델은 vLLM 위에서 모델 자신의 chat template 으로 돌리고, 공개된 checkpoint 의 정밀도(bfloat16, FP8·NVFP4 로 공개된 것은 그대로)를 씁니다. 대부분의 benchmark 는 <a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-evaluation-harness</a> 로 채점하고, MIH, BFCL, ChemBench, LiveCodeBench 는 공식 코드로 돌립니다.',
     how_decoding: '<b>Decoding</b> 은 모델마다 권장하는 값을 따릅니다. 카드가 그 thinking 모드에 주는 sampling 값이나 <code>generation_config.json</code> 을 쓰고, 권장이 없으면 greedy decoding 을 씁니다(seed 1234). 2026-11-05 이전 결과는 모든 모델을 greedy decoding 으로 돌린 것이라, thinking off 와 on 처럼 따로 <i>greedy</i> 행으로 남겨 둡니다. 칸에 마우스를 올리면 쓴 값과, 이 평가의 생성 한도에 걸린 문항 수가 보입니다.',
     how_thinking: '<b>Thinking</b> 은 chat template 의 thinking 모드입니다. <i>off</i> 와 <i>on</i> 은 켜고 끌 수 있는 모델용이고, <i>on</i> 은 모델 기본 thinking 양입니다. <i>low</i>, <i>medium</i>, <i>high</i> 는 effort 수준을 받는 모델용입니다. thinking 을 켜면 답에 모델이 권장하는 출력 길이를, 권장이 없으면 30,720 token 을 쓸 수 있고, context 는 그 길이에 prompt 몫 8,192 token 을 더한 만큼입니다(대화가 긴 LoCoMo 는 약 28,000). 모델 자신의 context window 를 넘지는 않습니다. 공식 코드로 돌리는 MIH, BFCL, ChemBench 는 그 context 에서 prompt 가 남긴 만큼 쓸 수 있습니다. 채점은 thinking 뒤의 글만 봅니다. 한도 안에 thinking 이 끝나지 않은 응답은 무응답으로 셉니다.',
     how_context: 'thinking off 에서는 benchmark 를 8,192-token context 로 돌립니다(AIME 2025, LoCoMo, 이미지 benchmark 는 32K). context window 가 이보다 짧은 모델은 자기 window 안에서 돌리고 그 절반까지 답에 씁니다. 들어가지 않는 문항은 오답으로 셉니다. LoCoMo 는 입력만 약 26,000 token 이어서, 그런 모델에서는 받을 수 없는 benchmark 로 보입니다.',
