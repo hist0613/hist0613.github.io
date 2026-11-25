@@ -1,0 +1,437 @@
+{
+ "mode": "daily",
+ "updated": "2026-11-26 00:19",
+ "schedule": "매일 00:00 (한국시간) 마감",
+ "config": {
+  "levels": [
+   "level1",
+   "level2",
+   "level3",
+   "level4",
+   "level5",
+   "level6",
+   "level7",
+   "level8",
+   "level9",
+   "level10"
+  ],
+  "seeds": 5,
+  "clear_wins": 4,
+  "full_marks_levels": null,
+  "form_url": "https://docs.google.com/forms/d/e/1FAIpQLScFzuyU977dskypIr0wCPjZq2C6k-YmYMUlfSdqrhe4gAWAyA/viewform",
+  "code_url": "https://drive.google.com/file/d/1Rnhhh-MUxeQ8x9CPccfKVJiLT3TcGWYq/view?usp=sharing",
+  "slides_url": "https://drive.google.com/file/d/1SIvN81CnWC6S_OlHGLiTpP0jFifiJgQE/view?usp=sharing",
+  "notice": "level agent 와 채점 기준은 업데이트될 수 있습니다."
+ },
+ "total_games": 140,
+ "students": [
+  {
+   "student_id": "2025122",
+   "nickname": "Prof. Choi",
+   "elo": 368,
+   "wins": 0,
+   "losses": 50,
+   "draws": 0,
+   "levels": {
+    "level1": {
+     "wins": 0,
+     "games": 5,
+     "cleared": false
+    },
+    "level2": {
+     "wins": 0,
+     "games": 5,
+     "cleared": false
+    },
+    "level3": {
+     "wins": 0,
+     "games": 5,
+     "cleared": false
+    },
+    "level4": {
+     "wins": 0,
+     "games": 5,
+     "cleared": false
+    },
+    "level5": {
+     "wins": 0,
+     "games": 5,
+     "cleared": false
+    },
+    "level6": {
+     "wins": 0,
+     "games": 5,
+     "cleared": false
+    },
+    "level7": {
+     "wins": 0,
+     "games": 5,
+     "cleared": false
+    },
+    "level8": {
+     "wins": 0,
+     "games": 5,
+     "cleared": false
+    },
+    "level9": {
+     "wins": 0,
+     "games": 5,
+     "cleared": false
+    },
+    "level10": {
+     "wins": 0,
+     "games": 5,
+     "cleared": false
+    }
+   },
+   "levels_cleared": 0,
+   "submissions": 1,
+   "model": "hf:hist0613/w7-tetris-cellmlp",
+   "model_id": "2f924cc178da",
+   "link": "https://huggingface.co/hist0613/w7-tetris-cellmlp/tree/2f924cc178da0019187187abf36e734e0b4f348e",
+   "onnx_url": "https://huggingface.co/hist0613/w7-tetris-cellmlp/resolve/2f924cc178da0019187187abf36e734e0b4f348e/model.onnx",
+   "ms_per_decision": 0.2,
+   "games": [
+    {
+     "id": "level_2f924cc178da_level9_s1003",
+     "opp": "level9",
+     "kind": "level",
+     "result": "L",
+     "sec": 6.9,
+     "at": "2026-11-23 23:53:06"
+    },
+    {
+     "id": "level_2f924cc178da_level10_s1003",
+     "opp": "level10",
+     "kind": "level",
+     "result": "L",
+     "sec": 6.2,
+     "at": "2026-11-23 23:53:06"
+    },
+    {
+     "id": "level_2f924cc178da_level10_s1004",
+     "opp": "level10",
+     "kind": "level",
+     "result": "L",
+     "sec": 7.0,
+     "at": "2026-11-23 23:53:06"
+    },
+    {
+     "id": "level_2f924cc178da_level9_s1004",
+     "opp": "level9",
+     "kind": "level",
+     "result": "L",
+     "sec": 7.8,
+     "at": "2026-11-23 23:53:06"
+    },
+    {
+     "id": "level_2f924cc178da_level9_s1005",
+     "opp": "level9",
+     "kind": "level",
+     "result": "L",
+     "sec": 7.8,
+     "at": "2026-11-23 23:53:06"
+    },
+    {
+     "id": "level_2f924cc178da_level10_s1005",
+     "opp": "level10",
+     "kind": "level",
+     "result": "L",
+     "sec": 13.0,
+     "at": "2026-11-23 23:53:06"
+    },
+    {
+     "id": "level_2f924cc178da_level7_s1005",
+     "opp": "level7",
+     "kind": "level",
+     "result": "L",
+     "sec": 9.8,
+     "at": "2026-11-23 23:53:05"
+    },
+    {
+     "id": "level_2f924cc178da_level8_s1004",
+     "opp": "level8",
+     "kind": "level",
+     "result": "L",
+     "sec": 7.8,
+     "at": "2026-11-23 23:53:05"
+    },
+    {
+     "id": "level_2f924cc178da_level8_s1005",
+     "opp": "level8",
+     "kind": "level",
+     "result": "L",
+     "sec": 6.6,
+     "at": "2026-11-23 23:53:05"
+    },
+    {
+     "id": "level_2f924cc178da_level9_s1001",
+     "opp": "level9",
+     "kind": "level",
+     "result": "L",
+     "sec": 5.8,
+     "at": "2026-11-23 23:53:05"
+    },
+    {
+     "id": "level_2f924cc178da_level10_s1001",
+     "opp": "level10",
+     "kind": "level",
+     "result": "L",
+     "sec": 6.2,
+     "at": "2026-11-23 23:53:05"
+    },
+    {
+     "id": "level_2f924cc178da_level9_s1002",
+     "opp": "level9",
+     "kind": "level",
+     "result": "L",
+     "sec": 5.5,
+     "at": "2026-11-23 23:53:05"
+    },
+    {
+     "id": "level_2f924cc178da_level8_s1002",
+     "opp": "level8",
+     "kind": "level",
+     "result": "L",
+     "sec": 11.8,
+     "at": "2026-11-23 23:53:05"
+    },
+    {
+     "id": "level_2f924cc178da_level10_s1002",
+     "opp": "level10",
+     "kind": "level",
+     "result": "L",
+     "sec": 5.5,
+     "at": "2026-11-23 23:53:05"
+    },
+    {
+     "id": "level_2f924cc178da_level7_s1002",
+     "opp": "level7",
+     "kind": "level",
+     "result": "L",
+     "sec": 18.4,
+     "at": "2026-11-23 23:53:05"
+    },
+    {
+     "id": "level_2f924cc178da_level8_s1001",
+     "opp": "level8",
+     "kind": "level",
+     "result": "L",
+     "sec": 5.3,
+     "at": "2026-11-23 23:53:04"
+    },
+    {
+     "id": "level_2f924cc178da_level7_s1004",
+     "opp": "level7",
+     "kind": "level",
+     "result": "L",
+     "sec": 7.5,
+     "at": "2026-11-23 23:53:04"
+    },
+    {
+     "id": "level_2f924cc178da_level8_s1003",
+     "opp": "level8",
+     "kind": "level",
+     "result": "L",
+     "sec": 6.4,
+     "at": "2026-11-23 23:53:04"
+    },
+    {
+     "id": "level_2f924cc178da_level7_s1001",
+     "opp": "level7",
+     "kind": "level",
+     "result": "L",
+     "sec": 6.8,
+     "at": "2026-11-23 23:53:03"
+    },
+    {
+     "id": "level_2f924cc178da_level6_s1004",
+     "opp": "level6",
+     "kind": "level",
+     "result": "L",
+     "sec": 7.1,
+     "at": "2026-11-23 23:53:03"
+    },
+    {
+     "id": "level_2f924cc178da_level6_s1003",
+     "opp": "level6",
+     "kind": "level",
+     "result": "L",
+     "sec": 6.9,
+     "at": "2026-11-23 23:53:03"
+    },
+    {
+     "id": "level_2f924cc178da_level7_s1003",
+     "opp": "level7",
+     "kind": "level",
+     "result": "L",
+     "sec": 6.9,
+     "at": "2026-11-23 23:53:03"
+    },
+    {
+     "id": "level_2f924cc178da_level5_s1002",
+     "opp": "level5",
+     "kind": "level",
+     "result": "L",
+     "sec": 19.0,
+     "at": "2026-11-23 23:53:02"
+    },
+    {
+     "id": "level_2f924cc178da_level6_s1005",
+     "opp": "level6",
+     "kind": "level",
+     "result": "L",
+     "sec": 4.6,
+     "at": "2026-11-23 23:53:02"
+    },
+    {
+     "id": "level_2f924cc178da_level6_s1002",
+     "opp": "level6",
+     "kind": "level",
+     "result": "L",
+     "sec": 5.5,
+     "at": "2026-11-23 23:53:02"
+    },
+    {
+     "id": "level_2f924cc178da_level6_s1001",
+     "opp": "level6",
+     "kind": "level",
+     "result": "L",
+     "sec": 5.8,
+     "at": "2026-11-23 23:53:02"
+    },
+    {
+     "id": "level_2f924cc178da_level2_s1004",
+     "opp": "level2",
+     "kind": "level",
+     "result": "L",
+     "sec": 7.7,
+     "at": "2026-11-23 23:53:01"
+    },
+    {
+     "id": "level_2f924cc178da_level3_s1003",
+     "opp": "level3",
+     "kind": "level",
+     "result": "L",
+     "sec": 6.9,
+     "at": "2026-11-23 23:53:01"
+    },
+    {
+     "id": "level_2f924cc178da_level3_s1004",
+     "opp": "level3",
+     "kind": "level",
+     "result": "L",
+     "sec": 7.7,
+     "at": "2026-11-23 23:53:01"
+    },
+    {
+     "id": "level_2f924cc178da_level1_s1002",
+     "opp": "level1",
+     "kind": "level",
+     "result": "L",
+     "sec": 17.8,
+     "at": "2026-11-23 23:53:01"
+    }
+   ],
+   "rank": 1
+  }
+ ],
+ "levels": [
+  {
+   "name": "level1",
+   "elo": 1000
+  },
+  {
+   "name": "level2",
+   "elo": 1057
+  },
+  {
+   "name": "level3",
+   "elo": 1166
+  },
+  {
+   "name": "level4",
+   "elo": 1000
+  },
+  {
+   "name": "level5",
+   "elo": 1112
+  },
+  {
+   "name": "level6",
+   "elo": 1335
+  },
+  {
+   "name": "level7",
+   "elo": 1774
+  },
+  {
+   "name": "level8",
+   "elo": 1664
+  },
+  {
+   "name": "level9",
+   "elo": 1857
+  },
+  {
+   "name": "level10",
+   "elo": 1664
+  }
+ ],
+ "featured": [
+  {
+   "id": "level_2f924cc178da_level1_s1002",
+   "label": "1위 vs level1",
+   "a": "Prof. Choi",
+   "b": "level1",
+   "winner": "level1",
+   "sec": 17.8
+  }
+ ],
+ "date": "2026-11-25",
+ "hall": [
+  {
+   "date": "2026-11-25",
+   "top": [
+    {
+     "rank": 1,
+     "nickname": "Prof. Choi",
+     "elo": 368,
+     "levels_cleared": 0
+    }
+   ]
+  },
+  {
+   "date": "2026-11-24",
+   "top": [
+    {
+     "rank": 1,
+     "nickname": "Prof. Choi",
+     "elo": 368,
+     "levels_cleared": 0
+    }
+   ]
+  },
+  {
+   "date": "2026-11-23",
+   "top": [
+    {
+     "rank": 1,
+     "nickname": "Prof. Choi",
+     "elo": 368,
+     "levels_cleared": 0
+    }
+   ]
+  }
+ ],
+ "archive": [
+  "2026-11-25",
+  "2026-11-24",
+  "2026-11-23"
+ ],
+ "replay_dates": [
+  "2026-11-25",
+  "2026-11-24",
+  "2026-11-23"
+ ]
+}
