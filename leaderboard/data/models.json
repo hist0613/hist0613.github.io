@@ -35,6 +35,21 @@
    "method": "RL로 reasoning 학습"
   },
   {
+   "id": "ccore/CCORE-Web-Coder-4B",
+   "added": "2026-11-24",
+   "source": "trending https://huggingface.co/ccore/CCORE-Web-Coder-4B",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.5-4B-Base"
+   ],
+   "method": "브리프와 완성된 React 문서 쌍으로 학습(세부 방식은 카드에 명시 없음)"
+  },
+  {
    "id": "ccore/Qwen3-1.7B-GLB-3D-Coder",
    "added": "2026-11-17",
    "source": "trending https://huggingface.co/ccore/Qwen3-1.7B-GLB-3D-Coder",
@@ -384,6 +399,21 @@
     "LiquidAI/LFM3-1.7B-Base"
    ],
    "method": "SFT → mixed RL → multi-domain on-policy distillation → agentic RL"
+  },
+  {
+   "id": "llamaindex/OCRia-1",
+   "added": "2026-11-25",
+   "source": "trending https://huggingface.co/llamaindex/OCRia-1",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.5-4B"
+   ],
+   "method": "SFT 후 GRPO(verifiable rewards), 두 RL 체크포인트의 uniform average"
   },
   {
    "id": "Lythri/Lythri-Wink-2B",
@@ -825,6 +855,21 @@
     "Qwen/Qwen3-VL-8B-Instruct"
    ],
    "method": "LoRA r64 (언어 모델 attention·MLP) 학습 후 가중치에 병합"
+  },
+  {
+   "id": "voyager-so/shot-reader-v2",
+   "added": "2026-11-24",
+   "source": "new https://huggingface.co/voyager-so/shot-reader-v2",
+   "settings": [
+    "think-off",
+    "think-on"
+   ],
+   "think_end_token": "</think>",
+   "kind": "finetune",
+   "parents": [
+    "Qwen/Qwen3.5-9B"
+   ],
+   "method": "언어 모델에 LoRA(r64)를 학습한 뒤 병합"
   },
   {
    "id": "webAI-Official/TwIL-8B",
