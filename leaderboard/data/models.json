@@ -152,6 +152,19 @@
    "method": "pretraining + instruction tuning (카드에 세부 미기재)"
   },
   {
+   "id": "google/gemma-3-1b-it",
+   "added": "2026-11-28",
+   "source": "trending https://huggingface.co/google/gemma-3-1b-it",
+   "settings": [
+    "think-off"
+   ],
+   "kind": "official",
+   "parents": [
+    "google/gemma-3-1b-pt"
+   ],
+   "method": "instruction tuning"
+  },
+  {
    "id": "GrootTeam/Groot-19B-A3B-261023",
    "added": "2026-11-01",
    "source": "trending https://huggingface.co/GrootTeam/Groot-19B-A3B-261023",
